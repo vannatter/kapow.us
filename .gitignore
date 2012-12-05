@@ -7,3 +7,5 @@
 /dist
 .DS_Store
 /tags
+/app/webroot/img/covers
+/app/webroot/img/covers/*
