@@ -18,6 +18,7 @@ class ToolsController extends AppController {
 		$check_next_for_section = false;
 		$date = "";
 		
+		$cnt = 0;
 		foreach ($arr as $a) {
 		
 			if (substr($a, 0, 17) == "New Releases For ") {
@@ -44,14 +45,15 @@ class ToolsController extends AppController {
 			
 			if ($part_2) {
 				$this->_getItem($part_1, $part_2, $section, $date);		
-				break;	
+				$cnt++;
+				
+				if ($cnt >= 6) {
+					break;
+				}
 			}
 		}
-			
 		exit;
-		
 	}
-
 
 	function _getItem($item_id, $item_name, $section, $date) {
 		$rand = rand(500,999);
@@ -79,6 +81,15 @@ class ToolsController extends AppController {
 			    $stock_url = $tag->getAttribute('href');
 				$stock_parts = split("=", $stock_url);		
 				$item['stock_id'] = $stock_parts[1];
+				
+				// parse item_name by # to get series name..
+				$series_parts = split("#", $item['item_name']);				
+				
+				$item['series_name'] = trim($series_parts[0]);				
+				if (@$series_parts[1]) {
+					$series_num_parts = split(" ", $series_parts[1]);
+					$item['series_num'] = $series_num_parts[0];
+				}
 			}
 			
 			$publisher = $xpath->query('//div[@class="StockCodePublisher"]');
@@ -98,6 +109,7 @@ class ToolsController extends AppController {
 						foreach ($e as $el) {
 							$creator_names = split(",", $creator_pieces[1]);
 							foreach ($creator_names as $cn) {
+								$cn = str_replace("& Various", "", $cn);
 								$cz[$el][] = trim($cn);
 							}
 						}
@@ -124,7 +136,7 @@ class ToolsController extends AppController {
 	
 	
 			// see if we have data; site can sometimes respond w/ an error..
-			if ($item['item_name']) {
+			if (@$item['item_name']) {
 	
 				// load section, get section id
 				$item['section_id'] = $this->Section->getsetSection($section);

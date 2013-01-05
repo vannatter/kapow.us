@@ -27,7 +27,7 @@
         		return $web_path;        
       		} else {
         		$img_path = Configure::read('Settings.root_domain') . strtolower($img);
-        		mkdir(dirname($local_path), 0755, true);        		
+        		@mkdir(dirname($local_path), 0755, true);        		
         
         		$ch = curl_init();
 		        curl_setopt ($ch, CURLOPT_URL, $img_path);
