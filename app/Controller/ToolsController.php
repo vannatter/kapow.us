@@ -5,13 +5,21 @@ App::uses('AppController', 'Controller');
 class ToolsController extends AppController {
 
 	public $name = 'Tools';
-	public $uses = array('Item','Section');
+	public $uses = array('Item','Section','Publisher','Series','Creator','CreatorType','ItemCreator');
 	public $components = array('Curl');
 
 	public function import() {
 	
+		set_time_limit(9000);	
+		echo "starting import.. <br/>";
+	
 		list ($d, $i) = $this->Curl->getRaw("http://www.previewsworld.com/shipping/newreleases.txt");
 		$d = trim($d);
+		
+		echo "<pre>";
+		print_r($d);
+		echo "</pre>";
+		
 		$arr = explode("\n", $d);
 		
 		$section = "";
@@ -47,9 +55,11 @@ class ToolsController extends AppController {
 				$this->_getItem($part_1, $part_2, $section, $date);		
 				$cnt++;
 				
+/*
 				if ($cnt >= 6) {
 					break;
 				}
+*/
 			}
 		}
 		exit;
@@ -77,7 +87,10 @@ class ToolsController extends AppController {
 			// name and stock_id				
 			$stock_code_desc = $xpath->query('//div[@class="StockCodeDescription"]/a');
 			foreach ($stock_code_desc as $tag) {
+				
 				$item['item_name'] = trim($tag->nodeValue);
+				$item['item_name'] = trim(preg_replace("/\(\C\:[^)]+\)/","",$item['item_name']));
+				
 			    $stock_url = $tag->getAttribute('href');
 				$stock_parts = split("=", $stock_url);		
 				$item['stock_id'] = $stock_parts[1];
@@ -85,10 +98,13 @@ class ToolsController extends AppController {
 				// parse item_name by # to get series name..
 				$series_parts = split("#", $item['item_name']);				
 				
-				$item['series_name'] = trim($series_parts[0]);				
+				$item['series_name'] = trim($series_parts[0]);
+				$item['series_name'] = trim(preg_replace("/\([^)]+\)/","",$item['series_name']));
+				$item['series_name'] = trim(str_replace(" TP", "", $item['series_name']));
+						
 				if (@$series_parts[1]) {
 					$series_num_parts = split(" ", $series_parts[1]);
-					$item['series_num'] = $series_num_parts[0];
+					$item['series_num'] = (int) $series_num_parts[0];
 				}
 			}
 			
@@ -134,20 +150,45 @@ class ToolsController extends AppController {
 				$item['srp'] = $pri;
 			}		
 	
-	
 			// see if we have data; site can sometimes respond w/ an error..
 			if (@$item['item_name']) {
-	
-				// load section, get section id
+
 				$item['section_id'] = $this->Section->getsetSection($section);
-	
+				$item['publisher_id'] = $this->Publisher->getsetPublisher($item['publisher']);
+				$item['series_id'] = $this->Series->getsetSeries($item['series_name']);
+
 				// get local image
 				$imgpath = $this->Curl->getImage($item['img']);
-				echo "imgpath=" . $imgpath;
+				$item['img_fullpath'] = $imgpath;
 
 				echo "<pre>";
 				print_r($item);
 				echo "</pre>";
+				
+				// save item
+				$item_id = $this->Item->saveItem($item);
+				echo "item-id=>" . $item_id . "<br/>";
+
+				// save creators
+				if (is_array(@$item['creators'])) {
+					foreach (@$item['creators'] as $k=>$v) {
+						$creator_type_id = $this->CreatorType->getsetCreatorType($k);
+						echo "k=" . $k . "<br/>";					
+						foreach ($v as $x) {
+							$creator_id = $this->Creator->getsetCreator($x);
+							echo "v=" . $x . "<br/>";
+							
+							//save to item_creators
+							$item_creators = array();
+							$item_creators['item_id'] = $item_id;
+							$item_creators['creator_type_id'] = $creator_type_id;
+							$item_creators['creator_id'] = $creator_id;
+	
+							$this->ItemCreator->create();
+							$this->ItemCreator->save($item_creators);						
+						}
+					}
+				}
 
 			} else {
 				echo "server responded without data (" . $item_id . ") <br/>\n";
@@ -157,5 +198,5 @@ class ToolsController extends AppController {
 			echo "already have this item (" . $item_id . ") <br/>\n";
 		}
 	}
-
+	
 }
