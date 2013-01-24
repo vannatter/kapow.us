@@ -54,18 +54,13 @@ class ToolsController extends AppController {
 			if ($part_2) {
 				$this->_getItem($part_1, $part_2, $section, $date);		
 				$cnt++;
-				
-/*
-				if ($cnt >= 6) {
-					break;
-				}
-*/
 			}
 		}
 		exit;
 	}
 
 	function _getItem($item_id, $item_name, $section, $date) {
+		$print = 1;
 		$rand = rand(500,999);
 		$url = Configure::read('Settings.root_domain') . Configure::read('Settings.root_domain_path') . $rand . "?stockItemID=" . $item_id;
 
@@ -95,7 +90,7 @@ class ToolsController extends AppController {
 			
 			$item = array();
 			$item['item_id'] = $item_id;
-			$item['item_date'] = $date;
+			$item['item_date'] = date("Y-m-d", strtotime($date));
 			$item['printing'] = $print;
 	
 			// name and stock_id				
@@ -151,6 +146,7 @@ class ToolsController extends AppController {
 			$description = $xpath->query('//div[@class="PreviewsHtml"]');
 			foreach ($description as $tag) {
 				$item['description'] = trim($tag->nodeValue);
+				$item['description'] = trim(preg_replace('/[^a-zA-Z0-9_ %\;\:\@\*\$\?\,\"\'\!\[\]\.\(\)%&-]/s', '', $item['description']));
 			}
 			
 			$img = $xpath->query('//div[@class="StockCodeImage"]/a');
