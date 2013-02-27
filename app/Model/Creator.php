@@ -2,6 +2,10 @@
 App::uses('AppModel', 'Model');
 class Creator extends AppModel {
 
+	public $actsAs = array('Containable');
+
+	
+
 	public function getsetCreator($creator_name) {
 
 		$creator = $this->find('first', array('conditions' => array('Creator.creator_name' => $creator_name), 'limit' => 1, 'recursive' => -1));

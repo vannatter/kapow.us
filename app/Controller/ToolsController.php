@@ -8,12 +8,18 @@ class ToolsController extends AppController {
 	public $uses = array('Item','Section','Publisher','Series','Creator','CreatorType','ItemCreator');
 	public $components = array('Curl');
 
-	public function import() {
+	public function import_next() {
+		echo "importing upcoming... <br/>";
+		$this->import("http://www.previewsworld.com/shipping/upcomingreleases.txt");
+		exit;
+	}
+
+	public function import($url="http://www.previewsworld.com/shipping/newreleases.txt") {
 	
 		set_time_limit(9000);	
 		echo "starting import.. <br/>";
 	
-		list ($d, $i) = $this->Curl->getRaw("http://www.previewsworld.com/shipping/newreleases.txt");
+		list ($d, $i) = $this->Curl->getRaw($url);
 		$d = trim($d);
 		
 		echo "<pre>";
@@ -31,6 +37,9 @@ class ToolsController extends AppController {
 		
 			if (substr($a, 0, 17) == "New Releases For ") {
 				$date = trim(substr($a, 17));
+			}
+			if (substr($a, 0, 22) == "Upcoming Releases For ") {
+				$date = trim(substr($a, 22));
 			}
 		
 			$a = trim($a);
@@ -60,6 +69,7 @@ class ToolsController extends AppController {
 	}
 
 	function _getItem($item_id, $item_name, $section, $date) {
+	
 		$print = 1;
 		$rand = rand(500,999);
 		$url = Configure::read('Settings.root_domain') . Configure::read('Settings.root_domain_path') . $rand . "?stockItemID=" . $item_id;
@@ -183,10 +193,8 @@ class ToolsController extends AppController {
 				if (is_array(@$item['creators'])) {
 					foreach (@$item['creators'] as $k=>$v) {
 						$creator_type_id = $this->CreatorType->getsetCreatorType($k);
-						echo "k=" . $k . "<br/>";					
 						foreach ($v as $x) {
 							$creator_id = $this->Creator->getsetCreator($x);
-							echo "v=" . $x . "<br/>";
 							
 							//save to item_creators
 							$item_creators = array();
@@ -210,3 +218,5 @@ class ToolsController extends AppController {
 	}
 	
 }
+
+?>
