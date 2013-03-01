@@ -7,6 +7,7 @@ class ToolsController extends AppController {
 	public $name = 'Tools';
 	public $uses = array('Item','Section','Publisher','Series','Creator','CreatorType','ItemCreator');
 	public $components = array('Curl');
+	public $helpers = array('Common');
 
 	public function import_next() {
 		echo "importing upcoming... <br/>";
@@ -74,18 +75,7 @@ class ToolsController extends AppController {
 		$rand = rand(500,999);
 		$url = Configure::read('Settings.root_domain') . Configure::read('Settings.root_domain_path') . $rand . "?stockItemID=" . $item_id;
 
-		if (strpos($item_name, "2ND PTG")) {
-			$print = 2;
-		}
-		if (strpos($item_name, "3RD PTG")) {
-			$print = 3;
-		}
-		if (strpos($item_name, "4TH PTG")) {
-			$print = 4;
-		}
-		if (strpos($item_name, "5TH PTG")) {
-			$print = 5;
-		}
+
 
 		// check if we need this item, if its already been parsed, don't do it again..
 		$item = $this->Item->find('first', array('conditions' => array('Item.item_id' => $item_id), 'limit' => 1, 'recursive' => 1));
@@ -101,7 +91,6 @@ class ToolsController extends AppController {
 			$item = array();
 			$item['item_id'] = $item_id;
 			$item['item_date'] = date("Y-m-d", strtotime($date));
-			$item['printing'] = $print;
 	
 			// name and stock_id				
 			$stock_code_desc = $xpath->query('//div[@class="StockCodeDescription"]/a');
@@ -126,6 +115,36 @@ class ToolsController extends AppController {
 					$item['series_num'] = (int) $series_num_parts[0];
 				}
 			}
+
+			if (strpos($item['item_name'], "2ND PTG")) {
+				$print = 2;
+			}
+			if (strpos($item['item_name'], "3RD PTG")) {
+				$print = 3;
+			}
+			if (strpos($item['item_name'], "4TH PTG")) {
+				$print = 4;
+			}
+			if (strpos($item['item_name'], "5TH PTG")) {
+				$print = 5;
+			}
+			
+			if ($print == 1) {
+				if (strpos($item_name, "2ND PTG")) {
+					$print = 2;
+				}
+				if (strpos($item_name, "3RD PTG")) {
+					$print = 3;
+				}
+				if (strpos($item_name, "4TH PTG")) {
+					$print = 4;
+				}
+				if (strpos($item_name, "5TH PTG")) {
+					$print = 5;
+				}
+			}
+			
+			$item['printing'] = $print;
 			
 			$publisher = $xpath->query('//div[@class="StockCodePublisher"]');
 			foreach ($publisher as $tag) {
@@ -178,6 +197,9 @@ class ToolsController extends AppController {
 				$item['series_id'] = $this->Series->getsetSeries($item['series_name']);
 
 				// get local image
+				
+				echo "img=" . $item['img'] . "<br/>";
+				
 				$imgpath = $this->Curl->getImage($item['img']);
 				$item['img_fullpath'] = $imgpath;
 

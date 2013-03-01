@@ -13,6 +13,7 @@
 			echo $this->Html->css('bootstrap.min');
 			echo $this->Html->css('bootstrap-responsive.min');
 			echo $this->Html->css('core');
+			echo $this->Html->css('color');
 			echo $this->Html->css('style');
 
 			echo $this->fetch('css');
@@ -22,6 +23,7 @@
 			
 			echo $this->fetch('script');
 		?>
+		<link href='http://fonts.googleapis.com/css?family=Open+Sans+Condensed:300' rel='stylesheet' type='text/css'>
 	</head>
 
 	<body>

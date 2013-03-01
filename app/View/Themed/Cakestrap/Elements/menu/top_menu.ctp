@@ -6,10 +6,9 @@
 				<span class="icon-bar"></span>
 				<span class="icon-bar"></span>
 			</a>
-			<a class="brand" target="_blank" href="http://twitter.github.com/bootstrap/"><?php echo __('CakeStrap'); ?></a>
+			<a class="brand" href="/"><img src="/img/logo.png" /></a>
 			<div class="nav-collapse">
 				<ul class="nav">
-					<?php //Fill me with your sweet, sweet menu items. ?>
 				</ul>
 			</div>
 		</div>

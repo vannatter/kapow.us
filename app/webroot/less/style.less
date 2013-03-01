@@ -3,4 +3,113 @@
 
 body {
 	background-color: @kapow_blue;
+	font-family: 'Open Sans Condensed', sans-serif;
 }
+
+.preview_img {
+	min-height: 215px;
+	max-height: 215px;
+	overflow: hidden;
+	margin-bottom: 5px;
+	clear: both;
+}
+
+.preview_img img {
+	border: 3px solid darken(@kapow_blue, 90%);
+/* 	box-shadow: 0 0 8px darken(@kapow_blue, 30%); */
+	width: 96%;
+}
+
+.thisweek h4, .thisweek h4 a {
+	color: darken(@kapow_blue, 90%);
+	font-weight: bold;
+	font-size: 19px;
+}
+
+#header {
+	margin-top: 10px;
+}
+
+.navbar {
+	margin-bottom: 0;
+}
+.navbar-inner {
+	background: transparent;	
+	border: none;
+	border-radius: 0;
+	padding-left: 10px;
+	border-radius: 0;
+	box-shadow: none;
+}
+.navbar .brand {
+	padding: 0;
+}
+
+.item_desc, .item_desc p {
+	color: #78b0e9;
+	overflow: hidden;
+	font-size: 14px;
+}
+
+.btn.disabled {
+	color: #fff;
+	cursor: pointer;
+}
+
+.preview_block {
+	min-height: 400px;
+	max-height: 500px;
+	margin-bottom: 20px;
+	overflow: hidden;
+}
+
+body {
+	background: rgb(44,83,158); /* Old browsers */
+	background: -moz-radial-gradient(center, ellipse cover,  rgba(44,83,158,1) 0%, rgba(44,83,158,1) 100%); /* FF3.6+ */
+	background: -webkit-gradient(radial, center center, 0px, center center, 100%, color-stop(0%,rgba(44,83,158,1)), color-stop(100%,rgba(44,83,158,1))); /* Chrome,Safari4+ */
+	background: -webkit-radial-gradient(center, ellipse cover,  rgba(44,83,158,1) 0%,rgba(44,83,158,1) 100%); /* Chrome10+,Safari5.1+ */
+	background: -o-radial-gradient(center, ellipse cover,  rgba(44,83,158,1) 0%,rgba(44,83,158,1) 100%); /* Opera 12+ */
+	background: -ms-radial-gradient(center, ellipse cover,  rgba(44,83,158,1) 0%,rgba(44,83,158,1) 100%); /* IE10+ */
+	background: radial-gradient(ellipse at center,  rgba(44,83,158,1) 0%,rgba(44,83,158,1) 100%); /* W3C */
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#2c539e', endColorstr='#2c539e',GradientType=1 ); /* IE6-9 fallback on horizontal gradient */
+}
+
+.filter_box {
+	padding: 0 10px 0 0;
+	text-align: right;
+	border-top: 2px solid darken(@kapow_blue, 15%);
+	border-bottom: 2px solid darken(@kapow_blue, 15%);
+	margin-bottom: 15px;
+	overflow: hidden;
+	clear: both;
+}
+
+.filter_tab {
+	background-color: darken(@kapow_blue, 15%);
+	float: right;
+	margin-right: 5px;
+	color: lighten(@kapow_blue, 30%);
+	overflow: hidden;
+	padding: 2px 10px 0 10px;
+	font-size: 14px;
+	margin-top: 20px;
+}
+
+.filter_tab_on {
+	background-color: darken(@kapow_blue, 20%);
+	color: lighten(@kapow_blue, 35%);
+}
+
+
+.bread {
+	float: left;
+	margin: 0;
+	padding: 0;
+}
+.bread h3 {
+	color: lighten(@kapow_blue, 60%);
+	margin: 0;
+	padding: 0;
+	font-size: 16px;
+}
+
