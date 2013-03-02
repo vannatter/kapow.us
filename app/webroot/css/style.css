@@ -15,3 +15,6 @@ body{background:#2c539e;background:-moz-radial-gradient(center, ellipse cover, #
 .filter_tab_on{background-color:#1f3d7a;color:#c2d1f0;}
 .bread{float:left;margin:0;padding:0;}
 .bread h3{color:#ffffff;margin:0;padding:0;font-size:16px;}
+.navbar .nav>li>a{text-shadow:0 1px 0 #1f3d7a;}
+.navbar a:hover{color:#adc2eb !important;text-shadow:0 2px 0 #000 !important;}
+.nav{float:right;}

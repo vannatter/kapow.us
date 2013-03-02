@@ -229,8 +229,8 @@ input[type="color"],
 
 .navbar .nav > li > a {
   padding: 10px 10px 11px;
-  font-size: 14px;
-  color: #666666;
+  font-size: 2em;
+  color: #fff;
 }
 
 .navbar .nav > .active > a,
