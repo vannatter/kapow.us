@@ -196,8 +196,12 @@ class ToolsController extends AppController {
 				$item['publisher_id'] = $this->Publisher->getsetPublisher($item['publisher']);
 				$item['series_id'] = $this->Series->getsetSeries($item['series_name']);
 
+				// override section_id for items matching t-shirt (T/S)
+				if (strpos($item_name, "T/S")) {
+					$item['section_id'] = 9;				
+				}
+
 				// get local image
-				
 				echo "img=" . $item['img'] . "<br/>";
 				
 				$imgpath = $this->Curl->getImage($item['img']);

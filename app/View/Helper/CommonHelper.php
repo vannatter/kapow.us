@@ -24,20 +24,8 @@ class CommonHelper extends Helper {
 				break;
 			
 		}
-		
 	}
 	
-	public function tab_categories($categories) {
-
-		foreach ($categories as $category) {
-			?>
-
-			<div class="tab">x</div>			
-			
-			<?php
-#			echo "<button data-filter_id=\"" . $category['Category']['id'] . "\" class=\"btn btn-mini btn_filter\">" . $category['Category']['category_name'] . "</button>";
-		}
-		
-	}
-
 }
+
+?>

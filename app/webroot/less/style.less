@@ -4,20 +4,27 @@
 body {
 	background-color: @kapow_blue;
 	font-family: 'Open Sans Condensed', sans-serif;
+/*
+	background: rgb(44,83,158);
+	background: -moz-radial-gradient(center, ellipse cover,  rgba(44,83,158,1) 0%, rgba(44,83,158,1) 100%);
+	background: -webkit-gradient(radial, center center, 0px, center center, 100%, color-stop(0%,rgba(44,83,158,1)), color-stop(100%,rgba(44,83,158,1)));
+	background: -webkit-radial-gradient(center, ellipse cover,  rgba(44,83,158,1) 0%,rgba(44,83,158,1) 100%);
+	background: -o-radial-gradient(center, ellipse cover,  rgba(44,83,158,1) 0%,rgba(44,83,158,1) 100%);
+	background: -ms-radial-gradient(center, ellipse cover,  rgba(44,83,158,1) 0%,rgba(44,83,158,1) 100%);
+	background: radial-gradient(ellipse at center,  rgba(44,83,158,1) 0%,rgba(44,83,158,1) 100%);
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#2c539e', endColorstr='#2c539e',GradientType=1 );
+*/
 }
 
 .preview_img {
-	min-height: 215px;
-	max-height: 215px;
 	overflow: hidden;
 	margin-bottom: 5px;
 	clear: both;
 }
 
 .preview_img img {
-	border: 3px solid darken(@kapow_blue, 90%);
-/* 	box-shadow: 0 0 8px darken(@kapow_blue, 30%); */
 	width: 96%;
+	border: 3px solid darken(@kapow_blue, 90%);
 }
 
 .thisweek h4, .thisweek h4 a {
@@ -61,17 +68,6 @@ body {
 	max-height: 500px;
 	margin-bottom: 20px;
 	overflow: hidden;
-}
-
-body {
-	background: rgb(44,83,158); /* Old browsers */
-	background: -moz-radial-gradient(center, ellipse cover,  rgba(44,83,158,1) 0%, rgba(44,83,158,1) 100%); /* FF3.6+ */
-	background: -webkit-gradient(radial, center center, 0px, center center, 100%, color-stop(0%,rgba(44,83,158,1)), color-stop(100%,rgba(44,83,158,1))); /* Chrome,Safari4+ */
-	background: -webkit-radial-gradient(center, ellipse cover,  rgba(44,83,158,1) 0%,rgba(44,83,158,1) 100%); /* Chrome10+,Safari5.1+ */
-	background: -o-radial-gradient(center, ellipse cover,  rgba(44,83,158,1) 0%,rgba(44,83,158,1) 100%); /* Opera 12+ */
-	background: -ms-radial-gradient(center, ellipse cover,  rgba(44,83,158,1) 0%,rgba(44,83,158,1) 100%); /* IE10+ */
-	background: radial-gradient(ellipse at center,  rgba(44,83,158,1) 0%,rgba(44,83,158,1) 100%); /* W3C */
-	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#2c539e', endColorstr='#2c539e',GradientType=1 ); /* IE6-9 fallback on horizontal gradient */
 }
 
 .filter_box {
@@ -124,3 +120,11 @@ body {
 .nav {
 	float: right;
 }
+
+@import "media_min768max979.less";
+@import "media_max979.less";
+@import "media_max767.less";
+@import "media_max480.less";
+@import "media_min980.less";
+@import "media_min1200.less";
+
