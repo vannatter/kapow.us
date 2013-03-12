@@ -9,6 +9,8 @@
     	'root_domain' => 'http://www.previewsworld.com',
     	'root_domain_path' => '/Home/1/1/71/',
     	'icon_path' => '/Users/dustin/documents/workspace/kapow.biz/app/webroot/img/covers',
-    	'icon_web_path' => '/img/covers'
+    	'icon_web_path' => '/img/covers',
+    	'thumb_path' => '/Users/dustin/documents/workspace/kapow.biz/app/webroot/img/covers/thumbs',
+    	'thumb_web_path' => '/img/covers/thumbs'
   	);
 ?>
