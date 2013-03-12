@@ -242,7 +242,62 @@ class ToolsController extends AppController {
 			echo "already have this item (" . $item_id . ") <br/>\n";
 		}
 	}
-	
+
+	public function parseStores() {
+		$url = 'http://the-master-list.com/USA/Alabama/index.shtml';
+
+		$this->log(sprintf('getting data from: %s', $url));
+
+		$data = file_get_contents($url);
+
+		$this->log(sprintf('%s bytes', number_format(strlen($data))));
+
+		$html = new DOMDocument();
+
+		libxml_use_internal_errors(true);
+		$html->loadHTML($data);
+
+		$xpath = new DOMXPath($html);
+
+		$tables = $xpath->query("//table[@width=550]");
+		$this->log(sprintf('found %s tables', $tables->length));
+
+		for($i=0;$i<$tables->length;$i++) {
+			$table = $tables->item($i);
+
+			$storeName = '';
+			$address = '';
+			$phoneNo = '';
+
+			echo 'table<br>';
+			for($q=0;$q<$table->childNodes->length;$q++) {
+				$value = $table->childNodes->item($q)->nodeValue;
+
+				if(strpos($value, 'last verified:') !== false) {
+					## get the store name
+					$storeName = substr($value, 0, strpos($value, ':'));
+				} elseif(substr_count($value, ',') == 3) {
+					$address = $value;
+				} elseif(strpos($value, 'Ph:') !== false) {
+					$phoneNo = $value;
+				}
+			}
+
+			if(!empty($storeName)) {
+				echo sprintf('store name: %s<br>', $storeName);
+				echo sprintf('address: %s<br>', $address);
+				echo sprintf('phone #: %s<br>', $phoneNo);
+			}
+		}
+
+		exit;
+	}
+
+	public function log($data="") {
+		echo sprintf('%s<br />', $data);
+
+		parent::log($data);
+	}
 }
 
 ?>
