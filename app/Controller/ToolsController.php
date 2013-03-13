@@ -2,10 +2,13 @@
 
 App::uses('AppController', 'Controller');
 
+/**
+ * @property Store $Store
+ */
 class ToolsController extends AppController {
 
 	public $name = 'Tools';
-	public $uses = array('Item','Section','Publisher','Series','Creator','CreatorType','ItemCreator');
+	public $uses = array('Item','Section','Publisher','Series','Creator','CreatorType','ItemCreator', 'Store');
 	public $components = array('Curl');
 	public $helpers = array('Common');
 
@@ -243,8 +246,15 @@ class ToolsController extends AppController {
 		}
 	}
 
-	public function parseStores() {
-		$url = 'http://the-master-list.com/USA/Alabama/index.shtml';
+	public function parseStoresAll() {
+		$this->_parseStores('Ohio');
+		$this->_parseStores('Michigan');
+	}
+
+	private function _parseStores($state=null) {
+		set_time_limit(0);   ## process could take a while
+
+		$url = sprintf('http://the-master-list.com/USA/%s/index.shtml', $state);
 
 		$this->log(sprintf('getting data from: %s', $url));
 
@@ -262,14 +272,20 @@ class ToolsController extends AppController {
 		$tables = $xpath->query("//table[@width=550]");
 		$this->log(sprintf('found %s tables', $tables->length));
 
+		$storesLogPath = APP . 'tmp' . DS . 'logs' . DS . 'stores.txt';
+		$storeDetailsLogPath = APP . 'tmp' . DS . 'logs' . DS . 'details.txt';
+
+		## clear current log files
+		file_put_contents($storesLogPath, '');
+		file_put_contents($storeDetailsLogPath, '');
+
 		for($i=0;$i<$tables->length;$i++) {
 			$table = $tables->item($i);
 
-			$storeName = '';
-			$address = '';
-			$phoneNo = '';
+			$storeName = null;
+			$address = null;
+			$phoneNo = null;
 
-			echo 'table<br>';
 			for($q=0;$q<$table->childNodes->length;$q++) {
 				$value = $table->childNodes->item($q)->nodeValue;
 
@@ -278,25 +294,247 @@ class ToolsController extends AppController {
 					$storeName = substr($value, 0, strpos($value, ':'));
 				} elseif(substr_count($value, ',') == 3) {
 					$address = $value;
+
+					## address can use a little cleanup
+					$address = str_replace(', ....', '', $address);
+
 				} elseif(strpos($value, 'Ph:') !== false) {
 					$phoneNo = $value;
 				}
-			}
 
-			if(!empty($storeName)) {
-				echo sprintf('store name: %s<br>', $storeName);
-				echo sprintf('address: %s<br>', $address);
-				echo sprintf('phone #: %s<br>', $phoneNo);
+				if(!empty($storeName) && !empty($address)) {
+					$this->log(sprintf('STORE: %s; ADDRESS: %s', $storeName, $address));
+
+					if(!empty($storeName)) {
+						$storeSearchString = urlencode($storeName . ' ' . $address);
+
+						$this->log(sprintf('searching for store with: %s', $storeSearchString));
+
+						if($results = $this->_googlePlacesSearch($storeSearchString, $storesLogPath)) {
+							$stores = $results->results;
+
+							if(count($stores) > 0) {
+								$store = $stores[0];   ## take the first store, should be the correct one
+
+								$storeName = $store->name;
+
+								if($storeDetails = $this->_googleDetailsSearch($store->reference, $storeDetailsLogPath)) {
+									$storeDetails = $this->_processStore($storeDetails);
+
+									if($storeDetails && !empty($storeDetails['name'])) {
+										## valid store information
+
+										$this->Store->add(array('Store' => $storeDetails));
+									}
+								}
+							} else {
+								$this->log('no stores found; adding basic store info');
+
+								$addressParts = explode(',', $address);
+
+								$store = array(
+									'Store' => array(
+										'name' => $storeName,
+										'address' => @trim($addressParts[0]),
+										'city' => @trim($addressParts[1]),
+										'state' => @trim($addressParts[2]),
+										'zip' => @trim($addressParts[3]),
+										'status_id' => 99,   ## NEEDS ATTENTION
+									)
+								);
+
+								$this->Store->add($store);
+							}
+						}
+					}
+
+					$storeName = null;
+					$address = null;
+				}
 			}
 		}
 
+		$this->log('done');
+
 		exit;
+	}
+
+	private function _googlePlacesSearch($searchText=null, $log=null) {
+		if($searchText) {
+			$url = sprintf(Configure::read('Settings.API.google.places_url'), $searchText, Configure::read('Settings.API.google.key'));
+
+			$this->log(sprintf('googlePlacesSearch: %s', $url));
+
+			$results = file_get_contents($url);
+
+			if($log) {
+				file_put_contents($log, print_r($results, true), FILE_APPEND);
+			}
+
+			$results = json_decode($results);
+
+			switch($results->status) {
+				case 'OVER_QUERY_LIMIT':
+					$this->log('googlePlacesSearch - OVER QUERY LIMIT');
+					exit;
+					break;
+			}
+
+			return $results;
+		} else {
+			$this->log('invalid search text for _googlePlacesSearch()');
+		}
+
+		return false;
+	}
+
+	private function _googleDetailsSearch($reference=null, $log=null) {
+		if($reference) {
+			$url = sprintf(Configure::read('Settings.API.google.details_url'), $reference, Configure::read('Settings.API.google.key'));
+
+			$this->log(sprintf('googleDetailsSearch: %s', $url));
+
+			$results = file_get_contents($url);
+
+			if($log) {
+				file_put_contents($log, print_r($results, true), FILE_APPEND);
+			}
+
+			$results = json_decode($results);
+
+			switch($results->status) {
+				case 'OVER_QUERY_LIMIT':
+					$this->log('googleDetailsSearch - OVER QUERY LIMIT');
+					exit;
+					break;
+			}
+
+			return $results;
+		} else {
+			$this->log('invalid reference for _googleDetailsSearch()');
+		}
+
+		return false;
+	}
+
+	private function _processStore($data=null) {
+		if(!$data) {
+			$file = APP . 'tmp' . DS . 'logs' . DS . 'storeDetails.txt';
+			$data = json_decode(file_get_contents($file));
+		}
+
+		$store = array(
+			'name' => '',
+			'address' => '',
+			'city' => '',
+			'state' => '',
+			'zip' => '',
+			'phone_no' => '',
+			'latitude' => 0,
+			'longitude' => 0,
+			'Hour' => array(
+				'sunday_open' => 0,
+				'sunday_close' => 0,
+				'monday_open' => 0,
+				'monday_close' => 0,
+				'tuesday_open' => 0,
+				'tuesday_close' => 0,
+				'wednesday_open' => 0,
+				'wednesday_close' => 0,
+				'thursday_open' => 0,
+				'thursday_close' => 0,
+				'friday_open' => 0,
+				'friday_close' => 0,
+				'saturday_open' => 0,
+				'saturday_close' => 0,
+			),
+			'website' => '',
+			'google_reference' => '',
+		);
+
+		foreach($data->result->address_components as $addressParts) {
+			switch($addressParts->types[0]) {
+				case 'street_number':
+					$store['address'] = $addressParts->long_name;
+					break;
+				case 'route':
+					$store['address'] .= ' ' . $addressParts->long_name;
+					break;
+				case 'administrative_area_level_1':
+					$store['state'] = $addressParts->long_name;
+					break;
+				case 'postal_code':
+					$store['zip'] = $addressParts->long_name;
+					break;
+				case 'locality':
+					$store['city'] = $addressParts->long_name;
+					break;
+			}
+		}
+
+		if(isset($data->result->formatted_phone_number)) {
+			$store['phone_no'] = $data->result->formatted_phone_number;
+		}
+
+		if(isset($data->result->geometry->location->lat) && isset($data->result->geometry->location->lng)) {
+			$store['latitude'] = $data->result->geometry->location->lat;
+			$store['longitude'] = $data->result->geometry->location->lng;
+		}
+
+		if(isset($data->result->name)) {
+			$store['name'] = $data->result->name;
+		}
+
+		if(isset($data->result->opening_hours->periods)) {
+			foreach($data->result->opening_hours->periods as $day) {
+				switch($day->close->day) {
+					case 0:   ## SUNDAY
+						$store['Hour']['sunday_close'] = (int)$day->close->time;
+						$store['Hour']['sunday_open'] = (int)$day->open->time;
+						break;
+					case 1:   ## MONDAY
+						$store['Hour']['monday_close'] = (int)$day->close->time;
+						$store['Hour']['monday_open'] = (int)$day->open->time;
+						break;
+					case 2:   ## TUESDAY
+						$store['Hour']['tuesday_close'] = (int)$day->close->time;
+						$store['Hour']['tuesday_open'] = (int)$day->open->time;
+						break;
+					case 3:   ## WEDNESDAY
+						$store['Hour']['wednesday_close'] = (int)$day->close->time;
+						$store['Hour']['wednesday_open'] = (int)$day->open->time;
+						break;
+					case 4:   ## THURSDAY
+						$store['Hour']['thursday_close'] = (int)$day->close->time;
+						$store['Hour']['thursday_open'] = (int)$day->open->time;
+						break;
+					case 5:   ## FRIDAY
+						$store['Hour']['friday_close'] = (int)$day->close->time;
+						$store['Hour']['friday_open'] = (int)$day->open->time;
+						break;
+					case 6:   ## SATURDAY
+						$store['Hour']['saturday_close'] = (int)$day->close->time;
+						$store['Hour']['saturday_open'] = (int)$day->open->time;
+						break;
+				}
+			}
+		}
+
+		if(isset($data->result->website)) {
+			$store['website'] = $data->result->website;
+		}
+
+		if(isset($data->result->reference)) {
+			$store['google_reference'] = $data->result->reference;
+		}
+
+		return $store;
 	}
 
 	public function log($data="") {
 		echo sprintf('%s<br />', $data);
 
-		parent::log($data);
+		parent::log($data, 'tools');
 	}
 }
 

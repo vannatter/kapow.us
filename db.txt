@@ -6241,3 +6241,61 @@ INSERT INTO `series` (`id`, `series_name`, `created`, `modified`) VALUES
 (1087, 'Z-DAY SURVIVAL CHECKLIST WHT T/S XXL', '2013-03-07 11:14:44', '2013-03-07 11:14:44'),
 (1088, 'ZOMBIE MASSACRE ARMY OF THE DEAD DVD', '2013-03-07 11:14:46', '2013-03-07 11:14:46'),
 (1089, 'YU GI OH TCG STAR PACK 2013 DISPLAY   (PP', '2013-03-07 11:14:47', '2013-03-07 11:14:47');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `hours`
+--
+
+CREATE TABLE IF NOT EXISTS `hours` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `store_id` int(11) NOT NULL,
+  `sunday_open` int(11) NOT NULL,
+  `sunday_close` int(11) NOT NULL,
+  `monday_open` int(11) NOT NULL,
+  `monday_close` int(11) NOT NULL,
+  `tuesday_open` int(11) NOT NULL,
+  `tuesday_close` int(11) NOT NULL,
+  `wednesday_open` int(11) NOT NULL,
+  `wednesday_close` int(11) NOT NULL,
+  `thursday_open` int(11) NOT NULL,
+  `thursday_close` int(11) NOT NULL,
+  `friday_open` int(11) NOT NULL,
+  `friday_close` int(11) NOT NULL,
+  `saturday_open` int(11) NOT NULL,
+  `saturday_close` int(11) NOT NULL,
+  `created` datetime NOT NULL,
+  `modified` datetime NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `stores`
+--
+
+CREATE TABLE IF NOT EXISTS `stores` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `status_id` int(11) NOT NULL DEFAULT '0',
+  `name` varchar(100) NOT NULL DEFAULT '',
+  `address` varchar(100) NOT NULL DEFAULT '',
+  `address_2` varchar(100) NOT NULL DEFAULT '',
+  `city` varchar(50) NOT NULL DEFAULT '',
+  `state` varchar(2) NOT NULL DEFAULT '',
+  `zip` varchar(10) NOT NULL DEFAULT '',
+  `phone_no` varchar(15) NOT NULL DEFAULT '',
+  `latitude` float NOT NULL,
+  `longitude` float NOT NULL,
+  `website` varchar(150) NOT NULL DEFAULT '',
+  `google_reference` text NOT NULL,
+  `created` datetime NOT NULL,
+  `modified` datetime NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `status_id` (`status_id`),
+  KEY `state` (`state`),
+  KEY `latitude` (`latitude`),
+  KEY `longitude` (`longitude`),
+  FULLTEXT KEY `name` (`name`)
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
