@@ -249,6 +249,8 @@ class ToolsController extends AppController {
 	public function parseStoresAll() {
 		$this->_parseStores('Ohio');
 		$this->_parseStores('Michigan');
+
+		exit;
 	}
 
 	private function _parseStores($state=null) {
@@ -529,7 +531,7 @@ class ToolsController extends AppController {
 		return $store;
 	}
 
-	public function log($data="") {
+	public function log($data="", $type=4) {
 		echo sprintf('%s<br />', $data);
 
 		parent::log($data, 'tools');
