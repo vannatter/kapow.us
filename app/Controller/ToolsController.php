@@ -355,8 +355,6 @@ class ToolsController extends AppController {
 		}
 
 		$this->log('done');
-
-		exit;
 	}
 
 	private function _googlePlacesSearch($searchText=null, $log=null) {
