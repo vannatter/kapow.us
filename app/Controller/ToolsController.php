@@ -245,7 +245,6 @@ class ToolsController extends AppController {
 	}
 
 	public function parseStoresAll() {
-	
 		$us_states = array(
 			'AL'=>"Alabama",  
 			'AK'=>"Alaska",  
@@ -594,9 +593,8 @@ class ToolsController extends AppController {
 		return $store;
 	}
 
-	public function log($data="") {
+	public function log($data="", $type=4) {
 		echo sprintf('%s<br />', $data);
-
 		parent::log($data, 'tools');
 	}
 }
