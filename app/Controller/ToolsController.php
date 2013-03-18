@@ -78,8 +78,6 @@ class ToolsController extends AppController {
 		$rand = rand(500,999);
 		$url = Configure::read('Settings.root_domain') . Configure::read('Settings.root_domain_path') . $rand . "?stockItemID=" . $item_id;
 
-
-
 		// check if we need this item, if its already been parsed, don't do it again..
 		$item = $this->Item->find('first', array('conditions' => array('Item.item_id' => $item_id), 'limit' => 1, 'recursive' => 1));
 		if (!$item) {
@@ -247,26 +245,97 @@ class ToolsController extends AppController {
 	}
 
 	public function parseStoresAll() {
-		$this->_parseStores('Ohio');
-		$this->_parseStores('Michigan');
+	
+		$us_states = array(
+			'AL'=>"Alabama",  
+			'AK'=>"Alaska",  
+			'AZ'=>"Arizona",  
+			'AR'=>"Arkansas",  
+			'CA'=>"California",  
+			'CO'=>"Colorado",  
+			'CT'=>"Connecticut",  
+			'DC'=>"District_of_Columbia",
+			'DE'=>"Delaware",  
+			'FL'=>"Florida",  
+			'GA'=>"Georgia",  
+			'HI'=>"Hawaii",  
+			'ID'=>"Idaho",  
+			'IL'=>"Illinois",  
+			'IN'=>"Indiana",  
+			'IA'=>"Iowa",  
+			'KS'=>"Kansas",  
+			'KY'=>"Kentucky",  
+			'LA'=>"Louisiana",  
+			'ME'=>"Maine",  
+			'MD'=>"Maryland",  
+			'MA'=>"Massachusetts",  
+			'MI'=>"Michigan",  
+			'MN'=>"Minnesota",  
+			'MS'=>"Mississippi",  
+			'MO'=>"Missouri",  
+			'MT'=>"Montana",
+			'NE'=>"Nebraska",
+			'NV'=>"Nevada",
+			'NH'=>"New_Hampshire",
+			'NJ'=>"New_Jersey",
+			'NM'=>"New_Mexico",
+			'NY'=>"New_York",
+			'NC'=>"North_Carolina",
+			'ND'=>"North_Dakota",
+			'OH'=>"Ohio",  
+			'OK'=>"Oklahoma",  
+			'OR'=>"Oregon",  
+			'PA'=>"Pennsylvania",
+			'RI'=>"Rhode_Island",  
+			'SC'=>"South_Carolina",  
+			'SD'=>"South_Dakota",
+			'TN'=>"Tennessee",  
+			'TX'=>"Texas",  
+			'UT'=>"Utah",  
+			'VT'=>"Vermont",  
+			'VA'=>"Virginia",  
+			'WA'=>"Washington",  
+			'WV'=>"West_Virginia",  
+			'WI'=>"Wisconsin",  
+			'WY'=>"Wyoming"
+		);
+		
+		$ca_states = array(			
+			'AC' => "Alberta",
+			'BC' => "British_Columbia",
+			'MB' => "Manitoba",
+			'NB' => "New_Brunswick",
+			'NL' => "Newfoundland_&_Labrador",
+			'NS' => "Nova_Scotia",
+			'ON' => "Ontario",
+			'PE' => "Prince_Edward_Island",
+			'QU' => "Quebec",
+			'SA' => "Saskatchewan"
+		);	
+		
+		foreach ($us_states as $code => $state){
+			$this->_parseStores('USA', $state);
+		}		
+
+		foreach ($ca_states as $code => $state){
+			$this->_parseStores('Canada', $state);
+		}		
+		
+		exit;
 	}
 
-	private function _parseStores($state=null) {
+	private function _parseStores($country="USA", $state=null) {
 		set_time_limit(0);   ## process could take a while
 
-		$url = sprintf('http://the-master-list.com/USA/%s/index.shtml', $state);
-
+		$url = "http://the-master-list.com/" . $country . "/" . $state . "/index.shtml";
 		$this->log(sprintf('getting data from: %s', $url));
-
 		$data = file_get_contents($url);
 
 		$this->log(sprintf('%s bytes', number_format(strlen($data))));
 
 		$html = new DOMDocument();
-
 		libxml_use_internal_errors(true);
 		$html->loadHTML($data);
-
 		$xpath = new DOMXPath($html);
 
 		$tables = $xpath->query("//table[@width=550]");
@@ -279,17 +348,17 @@ class ToolsController extends AppController {
 		file_put_contents($storesLogPath, '');
 		file_put_contents($storeDetailsLogPath, '');
 
-		for($i=0;$i<$tables->length;$i++) {
+		for ($i=0;$i<$tables->length;$i++) {
 			$table = $tables->item($i);
 
 			$storeName = null;
 			$address = null;
 			$phoneNo = null;
 
-			for($q=0;$q<$table->childNodes->length;$q++) {
+			for ($q=0;$q<$table->childNodes->length;$q++) {
 				$value = $table->childNodes->item($q)->nodeValue;
 
-				if(strpos($value, 'last verified:') !== false) {
+				if (strpos($value, 'last verified:') !== false) {
 					## get the store name
 					$storeName = substr($value, 0, strpos($value, ':'));
 				} elseif(substr_count($value, ',') == 3) {
@@ -302,36 +371,31 @@ class ToolsController extends AppController {
 					$phoneNo = $value;
 				}
 
-				if(!empty($storeName) && !empty($address)) {
+				if (!empty($storeName) && !empty($address)) {
 					$this->log(sprintf('STORE: %s; ADDRESS: %s', $storeName, $address));
 
-					if(!empty($storeName)) {
+					if (!empty($storeName)) {
 						$storeSearchString = urlencode($storeName . ' ' . $address);
-
 						$this->log(sprintf('searching for store with: %s', $storeSearchString));
 
-						if($results = $this->_googlePlacesSearch($storeSearchString, $storesLogPath)) {
+						if ($results = $this->_googlePlacesSearch($storeSearchString, $storesLogPath)) {
 							$stores = $results->results;
 
-							if(count($stores) > 0) {
+							if (count($stores) > 0) {
 								$store = $stores[0];   ## take the first store, should be the correct one
-
 								$storeName = $store->name;
 
-								if($storeDetails = $this->_googleDetailsSearch($store->reference, $storeDetailsLogPath)) {
+								if ($storeDetails = $this->_googleDetailsSearch($store->reference, $storeDetailsLogPath)) {
 									$storeDetails = $this->_processStore($storeDetails);
-
-									if($storeDetails && !empty($storeDetails['name'])) {
+									if ($storeDetails && !empty($storeDetails['name'])) {
 										## valid store information
-
+										$storeDetails['country_code'] = $country;
 										$this->Store->add(array('Store' => $storeDetails));
 									}
 								}
 							} else {
 								$this->log('no stores found; adding basic store info');
-
 								$addressParts = explode(',', $address);
-
 								$store = array(
 									'Store' => array(
 										'name' => $storeName,
@@ -339,6 +403,7 @@ class ToolsController extends AppController {
 										'city' => @trim($addressParts[1]),
 										'state' => @trim($addressParts[2]),
 										'zip' => @trim($addressParts[3]),
+										'country_code' => $country,
 										'status_id' => 99,   ## NEEDS ATTENTION
 									)
 								);
@@ -355,8 +420,6 @@ class ToolsController extends AppController {
 		}
 
 		$this->log('done');
-
-		exit;
 	}
 
 	private function _googlePlacesSearch($searchText=null, $log=null) {
