@@ -12,15 +12,138 @@ class ToolsController extends AppController {
 	public $components = array('Curl');
 	public $helpers = array('Common');
 
+
+	public function update_images() {
+		set_time_limit(0);	
+
+		## get a list of items that have no images..
+		$items = $this->Item->find('all', array('conditions' => array('Item.img_fullpath' => "/img/covers"), 'limit' => 2500, 'recursive' => 1));
+		foreach ($items as $item) {
+
+			$save = array();
+			$updated_image = false;
+			$rand = rand(500,999);
+			$url = Configure::read('Settings.root_domain') . Configure::read('Settings.root_domain_path') . $rand . "?stockItemID=" . $item['Item']['item_id'];
+			
+			echo "updating image for (" . $item['Item']['item_id'] . ")  from [" . $url . "] .. <br/>";
+			
+			## first check if we have an image now in the file; sometimes they get updated..
+			list ($d, $i) = $this->Curl->getRaw($url);
+			$dom = new DOMDocument();
+			@$dom->loadHTML($d);
+			$xpath = new DOMXPath($dom);
+			
+			$img = $xpath->query('//div[@class="StockCodeImage"]/a');
+			$final_img = "";
+			foreach ($img as $tag) {
+				$final_img = trim($tag->getAttribute('href'));
+			}
+			
+			echo "img=" . $final_img . "<br/>";
+			if ($final_img) {
+				echo "[1] updating to use - " . $final_img . "<br/>";
+				$imgpath = $this->Curl->getImage($final_img);
+				
+				$save['id'] = $item['Item']['id'];
+				$save['img_fullpath'] = $imgpath;
+				$this->Item->save($save);
+				
+				$updated_image = true;
+			}
+			
+			## if not, see if this item is a reprint. if it is, try using the image from the first print.
+			if (!$updated_image) {
+				if ($item['Item']['printing'] > 1) {
+					$first_print = $this->Item->find('first', array('conditions' => array('Item.series_id' => $item['Item']['series_id'], 'Item.printing' => 1), 'limit' => 1, 'recursive' => 1));
+
+					if (@$first_print['Item']['id']) {
+						echo "[2] updating to " . $first_print['Item']['img_fullpath'] . "<br/>";						
+						$save['id'] = $item['Item']['id'];
+						$save['img_fullpath'] = $first_print['Item']['img_fullpath'];
+						$this->Item->save($save);
+						
+						$updated_image = true;
+					}
+				} else {
+					## its not a reprint, try getting the cover from a duplicate (variant)
+					$first_print = $this->Item->find('first', array('conditions' => array('Item.series_id' => $item['Item']['series_id'], 'Item.printing' => 1), 'limit' => 1, 'recursive' => 1));
+
+					if (@$first_print['Item']['id']) {
+						if (@$first_print['Item']['img_fullpath'] != "/img/covers") {
+							echo "[3] updating to " . $first_print['Item']['img_fullpath'] . "<br/>";						
+							$save['id'] = $item['Item']['id'];
+							$save['img_fullpath'] = $first_print['Item']['img_fullpath'];
+							$this->Item->save($save);
+							
+							$updated_image = true;
+						}
+					}
+									
+				}			
+			}			
+			
+			## still nothing, try getting anything from this series and using that..
+			if (!$updated_image) {
+			
+				$series_print = $this->Item->find('first', array('conditions' => array('Item.series_id' => $item['Item']['series_id'], 'Item.img_fullpath != "/img/covers"'), 'limit' => 1, 'recursive' => 1));
+
+				if (@$series_print['Item']['id']) {
+					echo "[4] updating to " . $series_print['Item']['img_fullpath'] . "<br/>";						
+					$save['id'] = $item['Item']['id'];
+					$save['img_fullpath'] = $series_print['Item']['img_fullpath'];
+					$this->Item->save($save);
+					
+					$updated_image = true;
+				}
+
+			}
+			
+			## still nothing?! try something external (google)
+						
+			echo "<br/>";
+			
+		}
+		
+		exit;				
+	}
+
+	public function import_archives() {
+		set_time_limit(0);	
+
+		## first get a list of all the files..
+		list ($d, $i) = $this->Curl->getRaw("http://www.previewsworld.com/Archive/1/1/71/994");
+		$dom = new DOMDocument();
+		@$dom->loadHTML($d);
+		$xpath = new DOMXPath($dom);		
+
+		$archive_files = $xpath->query('//div[@class="ArchiveFile"]/a');
+		foreach ($archive_files as $file) {		
+			$date = trim($file->nodeValue);
+			$url = trim($file->getAttribute('href'));
+
+			echo "date= " . $date . "<br/>";
+			echo "getting archive url= " . $url . "<br/>";
+			
+			$this->_import("http://www.previewsworld.com".$url);
+			echo "<br/><br/>";
+		}
+		exit;
+	}
+
 	public function import_next() {
 		echo "importing upcoming... <br/>";
-		$this->import("http://www.previewsworld.com/shipping/upcomingreleases.txt");
+		$this->_import("http://www.previewsworld.com/shipping/upcomingreleases.txt");
 		exit;
 	}
 
 	public function import($url="http://www.previewsworld.com/shipping/newreleases.txt") {
+		$this->_import($url);
+		exit;
+	}
 	
-		set_time_limit(9000);	
+	public function _import($url="http://www.previewsworld.com/shipping/newreleases.txt") {
+	
+		set_time_limit(0);	
 		echo "starting import.. <br/>";
 	
 		list ($d, $i) = $this->Curl->getRaw($url);
@@ -45,13 +168,27 @@ class ToolsController extends AppController {
 			if (substr($a, 0, 22) == "Upcoming Releases For ") {
 				$date = trim(substr($a, 22));
 			}
-		
+			if (substr($a, 0, 9) == "Shipping ") {
+				$date = trim(substr($a, 9));
+			}
+			
+//			echo "date=" . $date . "<br/>";
+			
 			$a = trim($a);
-			$parts = explode(" 	", $a);
+			$parts = explode("  ", $a);
 			$part_1 = @$parts[0];
 			$part_2 = @$parts[1];
 			$part_1 = trim($part_1);
 			$part_2 = trim($part_2);
+			
+			if (!$part_2) {
+				## try getting it w/ tabs
+				$parts = explode("	", $a);
+				$part_1 = @$parts[0];
+				$part_2 = @$parts[1];
+				$part_1 = trim($part_1);
+				$part_2 = trim($part_2);
+			}
 			
 			if ($check_next_for_section) {
 				if ( ($part_1) && (!$part_2) ) {
@@ -69,8 +206,8 @@ class ToolsController extends AppController {
 				$cnt++;
 			}
 		}
-		exit;
-	}
+	}	
+	
 
 	function _getItem($item_id, $item_name, $section, $date) {
 	
@@ -97,8 +234,54 @@ class ToolsController extends AppController {
 			$stock_code_desc = $xpath->query('//div[@class="StockCodeDescription"]/a');
 			foreach ($stock_code_desc as $tag) {
 				
+				// item cleanup
 				$item['item_name'] = trim($tag->nodeValue);
 				$item['item_name'] = trim(preg_replace("/\(\C\:[^)]+\)/","",$item['item_name']));
+				$item['item_name'] = trim(preg_replace("/\(\C\: [^)]+\)/","",$item['item_name']));
+				$item['item_name'] = trim(preg_replace("/\(\PP[^)]+\)/","",$item['item_name']));
+				$item['item_name'] = trim(preg_replace("/\(NET\)/","",$item['item_name']));
+				$item['item_name'] = trim(preg_replace("/\(Net\)/","",$item['item_name']));
+				$item['item_name'] = trim(preg_replace("/\(MR\)/","",$item['item_name']));
+				$item['item_name'] = trim(preg_replace("/\(N52\)/","",$item['item_name']));
+				$item['item_name'] = trim(preg_replace("/\(RES\)/","",$item['item_name']));
+				$item['item_name'] = trim(preg_replace("/\(O\/A\)/","",$item['item_name']));
+
+				$item['item_name'] = trim(preg_replace("/\(JAN[^)]+\)/","",$item['item_name']));
+				$item['item_name'] = trim(preg_replace("/\(FEB[^)]+\)/","",$item['item_name']));
+				$item['item_name'] = trim(preg_replace("/\(MAR[^)]+\)/","",$item['item_name']));
+				$item['item_name'] = trim(preg_replace("/\(APR[^)]+\)/","",$item['item_name']));
+				$item['item_name'] = trim(preg_replace("/\(MAY[^)]+\)/","",$item['item_name']));
+				$item['item_name'] = trim(preg_replace("/\(JUN[^)]+\)/","",$item['item_name']));
+				$item['item_name'] = trim(preg_replace("/\(JUL[^)]+\)/","",$item['item_name']));
+				$item['item_name'] = trim(preg_replace("/\(AUG[^)]+\)/","",$item['item_name']));
+				$item['item_name'] = trim(preg_replace("/\(SEP[^)]+\)/","",$item['item_name']));
+				$item['item_name'] = trim(preg_replace("/\(OCT[^)]+\)/","",$item['item_name']));
+				$item['item_name'] = trim(preg_replace("/\(NOV[^)]+\)/","",$item['item_name']));
+				$item['item_name'] = trim(preg_replace("/\(DEC[^)]+\)/","",$item['item_name']));
+				
+				// fix 'of x' formatting..
+				$item['item_name'] = trim(str_replace("Of(1)", "(OF 1)", $item['item_name']));
+				$item['item_name'] = trim(str_replace("Of(2)", "(OF 2)", $item['item_name']));
+				$item['item_name'] = trim(str_replace("Of(3)", "(OF 3)", $item['item_name']));
+				$item['item_name'] = trim(str_replace("Of(4)", "(OF 4)", $item['item_name']));
+				$item['item_name'] = trim(str_replace("Of(5)", "(OF 5)", $item['item_name']));
+				$item['item_name'] = trim(str_replace("Of(6)", "(OF 6)", $item['item_name']));
+				$item['item_name'] = trim(str_replace("Of(7)", "(OF 7)", $item['item_name']));
+				$item['item_name'] = trim(str_replace("Of(8)", "(OF 8)", $item['item_name']));
+				$item['item_name'] = trim(str_replace("Of(9)", "(OF 9)", $item['item_name']));
+				$item['item_name'] = trim(str_replace("Of(10)", "(OF 10)", $item['item_name']));
+				$item['item_name'] = trim(str_replace("Of(11)", "(OF 11)", $item['item_name']));
+				$item['item_name'] = trim(str_replace("Of(12)", "(OF 12)", $item['item_name']));
+				$item['item_name'] = trim(str_replace("Of(13)", "(OF 13)", $item['item_name']));
+				$item['item_name'] = trim(str_replace("Of(14)", "(OF 14)", $item['item_name']));
+				$item['item_name'] = trim(str_replace("Of(15)", "(OF 15)", $item['item_name']));
+				$item['item_name'] = trim(str_replace("Of(16)", "(OF 16)", $item['item_name']));
+				$item['item_name'] = trim(str_replace("Of(17)", "(OF 17)", $item['item_name']));
+				$item['item_name'] = trim(str_replace("Of(18)", "(OF 18)", $item['item_name']));
+
+				// remove 'COMBO PACK'..
+				$item['item_name'] = trim(str_replace("COMBO PACK", "", $item['item_name']));
+
 				
 			    $stock_url = $tag->getAttribute('href');
 				$stock_parts = split("=", $stock_url);		
@@ -129,6 +312,9 @@ class ToolsController extends AppController {
 			if (strpos($item['item_name'], "5TH PTG")) {
 				$print = 5;
 			}
+			if (strpos($item['item_name'], "6TH PTG")) {
+				$print = 6;
+			}
 			
 			if ($print == 1) {
 				if (strpos($item_name, "2ND PTG")) {
@@ -143,7 +329,17 @@ class ToolsController extends AppController {
 				if (strpos($item_name, "5TH PTG")) {
 					$print = 5;
 				}
+				if (strpos($item_name, "6TH PTG")) {
+					$print = 6;
+				}
 			}
+			
+			// remove printing strings from item name..
+			$item['item_name'] = trim(str_replace("2ND PTG", "", $item['item_name']));
+			$item['item_name'] = trim(str_replace("3RD PTG", "", $item['item_name']));
+			$item['item_name'] = trim(str_replace("4TH PTG", "", $item['item_name']));
+			$item['item_name'] = trim(str_replace("5TH PTG", "", $item['item_name']));
+			$item['item_name'] = trim(str_replace("6TH PTG", "", $item['item_name']));
 			
 			$item['printing'] = $print;
 			
@@ -197,9 +393,26 @@ class ToolsController extends AppController {
 				$item['publisher_id'] = $this->Publisher->getsetPublisher($item['publisher']);
 				$item['series_id'] = $this->Series->getsetSeries($item['series_name']);
 
-				// override section_id for items matching t-shirt (T/S)
+				// override section_id for items matching t-shirt (T/S) and hoodies..
 				if (strpos($item_name, "T/S")) {
 					$item['section_id'] = 9;				
+				}
+				if (strpos($item_name, "HOODIE")) {
+					$item['section_id'] = 9;				
+				}
+				if (strpos($item_name, "POSTER")) {
+					$item['section_id'] = 9;				
+				}
+
+				// check for digital packs / combo packs, set combo_pack flag if found..
+				if (strpos($item_name, "DIG/P+")) {
+					$item['combo_pack'] = 1;
+					$item['item_name'] .= " (COMBO)";
+				} elseif (strpos($item_name, "COMBO PACK")) {
+					$item['combo_pack'] = 1;
+					$item['item_name'] .= " (COMBO)";
+				} else {
+					$item['combo_pack'] = 0;
 				}
 
 				// get local image
@@ -241,6 +454,14 @@ class ToolsController extends AppController {
 
 		} else {
 			echo "already have this item (" . $item_id . ") <br/>\n";
+			
+			## go ahead and update the date field..
+/*
+			$save = array();			
+			$save['id'] = $item['Item']['id'];
+			$save['item_date'] = date("Y-m-d", strtotime($date));
+			$this->Item->save($save);
+*/
 		}
 	}
 
