@@ -20,6 +20,7 @@
 			
 			echo $this->Html->script('libs/jquery');
 			echo $this->Html->script('libs/bootstrap.min');
+		  echo $this->Html->script('jquery-ui-map');
 			
 			echo $this->fetch('script');
 		?>
@@ -52,5 +53,5 @@
 			</div>
 		</div>		
 	</body>
-
+	<script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?key=AIzaSyClOyMOup8oRCO_g9sl82pIHePtosMA7w8&sensor=true"></script>
 </html>

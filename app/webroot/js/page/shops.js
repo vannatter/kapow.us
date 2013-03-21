@@ -1,5 +1,7 @@
 $(document).ready(function() {
 	var $content = $('#content');
+	var $map = $('#map-canvas');
+	var map = null;
 
 	$content.find('button#btnSearch').on('click', function(e) {
 		e.preventDefault();
@@ -14,44 +16,36 @@ $(document).ready(function() {
 		}
 	});
 
-	if(navigator.geolocation) {
-		navigator.geolocation.getCurrentPosition(function(location) {
-			var lat = location.coords.latitude;
-			var long = location.coords.longitude;
-
-			$.getJSON('/shops/getStores', { 'lat': lat, 'long': long }, function(data) {
-				if(data.error == false) {
-					doMap(data);
-				}
+	$content.find('#map-canvas').gmap().bind('init', function(ev, map) {
+		if(navigator.geolocation) {
+			navigator.geolocation.getCurrentPosition(function(location) {
+				$.getJSON('/shops/getStores', { 'lat': location.coords.latitude, 'long': location.coords.longitude }, function(data) {
+					if(data.error == false) {
+						doMap(data);
+					}
+				});
 			});
-		});
-	}
+		}
+	});
 
 	function doMap(data) {
 		var storeList = $content.find('div#storeList');
-		var markers = '';
+		$map.gmap('clear', 'markers');
 
 		// clear previous stores
 		storeList.empty();
 
 		$.each(data.stores, function(index, store) {
-			markers += '&markers=color:blue%7C' + store.latitude + ',' + store.longitude;
+			$map.gmap('addMarker', { 'position': new google.maps.LatLng(store.latitude, store.longitude), 'bounds': 'true' });
 
-			$('div#storeList').append(store.name + ' - ' + parseFloat(store.distance).toFixed(3) + ' miles<br/>');
+			storeList.append(store.name + ' - ' + parseFloat(store.distance).toFixed(3) + ' miles<br/>');
 		});
 
-		// remove previous map
-		$content.find('#map').remove();
-
-		var map = $content.find('#locMap');
-		var img = $('<img id="map">');
-
-		var zoom = 10;
-		var size = '700x300';
-
-		img.attr('src', 'http://maps.googleapis.com/maps/api/staticmap?center=' + data.location.replace(' ', '') + markers + '&zoom=' + zoom + '&size=' + size + '&maptype=roadmap&sensor=false');
-		img.appendTo(map);
-
-		$content.find('input#location').val(data.location);
+		var bounds = new google.maps.LatLngBounds();
+		var markers = $map.gmap('get', 'markers');
+		$.each(markers, function(key, value) {
+			bounds.extend(value.position);
+		});
+		$map.gmap('get', 'map').setCenter(new google.maps.LatLng(data.latitude, data.longitude));
 	}
 });

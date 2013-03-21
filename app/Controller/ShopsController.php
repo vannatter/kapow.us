@@ -82,6 +82,8 @@ class ShopsController extends AppController {
 			if(!empty($lat) && !empty($long)) {
 				if($data = $this->Store->radius2($lat, $long, 10)) {
 					$result['location'] = $coordAddress;
+					$result['latitude'] = $lat;
+					$result['longitude'] = $long;
 					$result['stores'] = array();
 
 					foreach($data as $store) {
