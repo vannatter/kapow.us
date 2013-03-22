@@ -74,5 +74,17 @@ class Store extends AppModel {
 		
 		
 	}
-	
+
+	public function radius2($lat, $long, $rad=10) {
+		$distanceQuery = '(3959 * acos( cos( radians(' . $lat . ') ) * cos( radians( ' . $this->alias. '.latitude ) ) * cos( radians( ' . $this->alias . '.longitude ) - radians(' . $long . ') ) + sin( radians(' . $lat . ') ) * sin( radians( ' . $this->alias . '.latitude ) ) ) )';
+		$query = '
+			SELECT Store.*, Hour.*, ' . $distanceQuery . ' AS distance
+				FROM stores AS Store
+				LEFT JOIN hours AS Hour ON Hour.store_id = Store.id
+				HAVING distance < ' . $rad . '
+				ORDER BY distance
+		';
+
+		return $this->query($query);
+	}
 }
