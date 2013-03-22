@@ -43,6 +43,10 @@ class CommonHelper extends Helper {
 		}
         return ($orig . $thumb_ext);
     }
+    
+    public function seoize($id, $string) {
+	    return $id . "--" . low(Inflector::slug($string, '-'));
+    }
 	
 }
 

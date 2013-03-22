@@ -8,7 +8,12 @@ class ItemsController extends AppController {
 	public $uses = array('Item','Section','Publisher','Series','Creator','CreatorType','ItemCreator','Category');
 
 	public function detail($item_string) {
-		
+
+/*
+		$item = $this->Item->find('all', array('conditions' => array('Item.id' => $release_date, 'Section.category_id' => $content_type), 'limit' => 2500, 'recursive' => 4));
+		$this->set('item', $item);
+		$this->set('title_for_layout','Detail for ' . );
+*/
 	}
 
 	public function next_week($content_type="1") {
@@ -38,6 +43,7 @@ class ItemsController extends AppController {
 		$this->set('categories', $categories);
 		$this->set('content_type', $content_type);
 		$this->set('release_date_formatted', date("m/d/Y", strtotime($release_date)));
+		$this->set('title_for_layout','New Next Week (' . date("m/d/Y", strtotime($release_date)) . ')');
 	}
 
 	public function this_week($content_type="1") {
@@ -67,6 +73,7 @@ class ItemsController extends AppController {
 		$this->set('categories', $categories);
 		$this->set('content_type', $content_type);
 		$this->set('release_date_formatted', date("m/d/Y", strtotime($release_date)));
+		$this->set('title_for_layout','New This Week (' . date("m/d/Y", strtotime($release_date)) . ')');
 	}
 		
 }
