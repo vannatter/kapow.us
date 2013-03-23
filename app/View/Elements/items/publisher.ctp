@@ -1,0 +1,2 @@
+<div class="span2 item_grid_lbl">Publisher:</div>
+<div class="span4 item_grid_row"><a href="/publishers/<?php echo $this->Common->seoize($item['Item']['publisher_id'], $item['Publisher']['publisher_name']); ?>"><?php echo ucwords(strtolower($item['Publisher']['publisher_name'])); ?></a></div>

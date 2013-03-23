@@ -26,9 +26,11 @@ class CommonHelper extends Helper {
 		}
 	}
 	
-    public function thumb($orig) {
+    public function thumb($orig, $which="25p") {
+
+		// build 50p    
 		$percent = 0.5;
-		$thumb_ext = '_thumb.jpg';
+		$thumb_ext = '_50p.jpg';
     
         if (!is_file(WWW_ROOT . $orig . $thumb_ext)) {
  			list($width, $height) = getimagesize(WWW_ROOT . $orig);
@@ -41,12 +43,64 @@ class CommonHelper extends Helper {
 			
 			imagejpeg($image_p, WWW_ROOT . $orig . $thumb_ext, 100);	    
 		}
-        return ($orig . $thumb_ext);
+
+		// build 25p
+		$percent = 0.25;
+		$thumb_ext = '_25p.jpg';
+    
+        if (!is_file(WWW_ROOT . $orig . $thumb_ext)) {
+ 			list($width, $height) = getimagesize(WWW_ROOT . $orig);
+			$new_width = $width * $percent;
+			$new_height = $height * $percent;
+			
+			$image_p = imagecreatetruecolor($new_width, $new_height);
+			$image = imagecreatefromjpeg(WWW_ROOT . $orig);
+			imagecopyresampled($image_p, $image, 0, 0, 0, 0, $new_width, $new_height, $width, $height);
+			
+			imagejpeg($image_p, WWW_ROOT . $orig . $thumb_ext, 100);	    
+		}
+		
+        return ($orig . "_" . $which . ".jpg");
     }
     
     public function seoize($id, $string) {
-	    return $id . "--" . low(Inflector::slug($string, '-'));
+	    return $id . "--" . strtolower(Inflector::slug($string, '-'));
     }
+    
+    public function creators($creator_array) {
+		$formatted = array();	    
+		$output = "";
+	    foreach ($creator_array as $c) {
+		    $formatted[$c['CreatorType']['creator_type_name']][$c['Creator']['id']] = $c['Creator']['creator_name'];
+	    }
+
+		$output .= "<div class='creators'>";
+		foreach ($formatted as $k=>$v) {
+			$output .= "<div class='creator_type'><h4>" . $k . "(s):</h4>";
+			$creator_string = "";
+			foreach ($v as $x=>$y) {
+				$creator_string .= "<a href='/creators/" . $this->seoize($x, $y) . "'>" . $y . "</a>, ";
+			}
+			$output .= substr($creator_string, 0, -2);
+			$output .= "</div>";
+						
+		}
+		$output .= "</div>";	    
+	    return $output;
+    }
+    
+    public function series($series_num, $series_data, $show_name_only=0) {
+		$output = "";
+	    
+	    if ( ($series_num > 0) && ($show_name_only == 0) ) {
+		    $output .= "#" . $series_num . " of ";
+	    }
+
+		$output .= "<a href='/series/" . $this->seoize($series_data['id'], $series_data['series_name']) . "'>" . $series_data['series_name'] . "</a>";	    
+	    
+	    return $output;
+    }
+    
 	
 }
 

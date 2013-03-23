@@ -3,32 +3,27 @@
 
 	<head>
 		<?php echo $this->Html->charset(); ?>
-		<title>Kapow! <?php echo $title_for_layout; ?>
-		</title>
+		<title>Kapow! <?php echo $title_for_layout; ?></title>
 		<?php
 			echo $this->Html->meta('icon');
-			
 			echo $this->fetch('meta');
-
+			
 			echo $this->Html->css('bootstrap.min');
 			echo $this->Html->css('bootstrap-responsive.min');
 			echo $this->Html->css('core');
 			echo $this->Html->css('color');
 			echo $this->Html->css('style');
-
 			echo $this->fetch('css');
 			
 			echo $this->Html->script('libs/jquery');
 			echo $this->Html->script('libs/bootstrap.min');
-		  echo $this->Html->script('jquery-ui-map');
-			
+			echo $this->Html->script('jquery-ui-map');
 			echo $this->fetch('script');
 		?>
 		<link href='http://fonts.googleapis.com/css?family=Open+Sans+Condensed:300' rel='stylesheet' type='text/css'>
  	</head>
 
 	<body>
-
 		<div id="main-container">
 		
 			<div id="header" class="container">
@@ -45,6 +40,7 @@
 			
 		</div>
 		
+<!--
 		<div class="container">
 			<div class="well">
 				<small>
@@ -52,6 +48,7 @@
 				</small>
 			</div>
 		</div>		
+-->
 	</body>
 	<script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?key=AIzaSyClOyMOup8oRCO_g9sl82pIHePtosMA7w8&sensor=true"></script>
 </html>

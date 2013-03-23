@@ -9,11 +9,24 @@ class ItemsController extends AppController {
 
 	public function detail($item_string) {
 
-/*
-		$item = $this->Item->find('all', array('conditions' => array('Item.id' => $release_date, 'Section.category_id' => $content_type), 'limit' => 2500, 'recursive' => 4));
+		$item_parts = @explode("--", $item_string);
+		$item_id = $item_parts[0];
+		
+		if (!$item_id) {
+			$this->Session->setFlash('Item ID not found.', 'flash_neg');
+			$this->redirect("/");
+			exit;
+		}
+
+		$item = $this->Item->find('first', array('conditions' => array('Item.id' => $item_id), 'limit' => 1, 'recursive' => 4));
+		if (!$item) {
+			$this->Session->setFlash('Item not found.', 'flash_neg');
+			$this->redirect("/");
+			exit;
+		}
+		
 		$this->set('item', $item);
-		$this->set('title_for_layout','Detail for ' . );
-*/
+		$this->set('title_for_layout', $item['Item']['item_name']);
 	}
 
 	public function next_week($content_type="1") {
