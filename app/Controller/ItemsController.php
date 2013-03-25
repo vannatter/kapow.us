@@ -7,6 +7,11 @@ class ItemsController extends AppController {
 	public $name = 'Items';
 	public $uses = array('Item','Section','Publisher','Series','Creator','CreatorType','ItemCreator','Category');
 
+	public function index() {
+		$this->redirect("/items/this_week");
+		exit;
+	}
+	
 	public function detail($item_string) {
 
 		$item_parts = @explode("--", $item_string);
