@@ -12,6 +12,35 @@ class ToolsController extends AppController {
 	public $components = array('Curl');
 	public $helpers = array('Common');
 
+	public function cleanup_series() {
+		
+		## first, start looping the series'...
+		## get the first x ordered by name asc..
+				
+		$series = $this->Series->find('all', array('conditions' => array('Series.status' => 1), 'order' => array('Series.series_name ASC'), 'limit' => 150, 'recursive' => 1));
+
+		foreach ($series as $s) {
+			
+			echo "series = " . $s['Series']['series_name'] . "<br/>";
+			
+			## check if > 1 series matches this name; if so, skip it..
+			
+			$series_count = $this->Series->query("SELECT count(*) as 'series_cnt' FROM Series WHERE series_name LIKE '" . $s['Series']['series_name'] . "%'");			
+			echo "series_count = " . $series_count[0][0]['series_cnt'] . "<br/>";
+			
+			if ($series_count[0][0]['series_cnt'] > 1) {
+				## do nothing, probably already a root..
+			} else {
+				## start trying to limit this down by breaking off sections of the string.
+				
+			}
+			
+		}
+		
+		exit;
+		
+		
+	}
 
 	public function update_images() {
 		set_time_limit(0);	
@@ -233,19 +262,40 @@ class ToolsController extends AppController {
 			// name and stock_id				
 			$stock_code_desc = $xpath->query('//div[@class="StockCodeDescription"]/a');
 			foreach ($stock_code_desc as $tag) {
-				
-				// item cleanup
+
 				$item['item_name'] = trim($tag->nodeValue);
-				$item['item_name'] = trim(preg_replace("/\(\C\:[^)]+\)/","",$item['item_name']));
-				$item['item_name'] = trim(preg_replace("/\(\C\: [^)]+\)/","",$item['item_name']));
-				$item['item_name'] = trim(preg_replace("/\(\PP[^)]+\)/","",$item['item_name']));
+				echo "item_name  = [" . $item['item_name'] . "]<br/>";
+				
+				// fix 'of x' formatting..
+				$item['item_name'] = trim(str_replace("Of(1)", "[OF 1]", $item['item_name']));
+				$item['item_name'] = trim(str_replace("Of(2)", "[OF 2]", $item['item_name']));
+				$item['item_name'] = trim(str_replace("Of(3)", "[OF 3]", $item['item_name']));
+				$item['item_name'] = trim(str_replace("Of(4)", "[OF 4]", $item['item_name']));
+				$item['item_name'] = trim(str_replace("Of(5)", "[OF 5]", $item['item_name']));
+				$item['item_name'] = trim(str_replace("Of(6)", "[OF 6]", $item['item_name']));
+				$item['item_name'] = trim(str_replace("Of(7)", "[OF 7]", $item['item_name']));
+				$item['item_name'] = trim(str_replace("Of(8)", "[OF 8]", $item['item_name']));
+				$item['item_name'] = trim(str_replace("Of(9)", "[OF 9]", $item['item_name']));
+				$item['item_name'] = trim(str_replace("Of(10)", "[OF 10]", $item['item_name']));
+				$item['item_name'] = trim(str_replace("Of(11)", "[OF 11]", $item['item_name']));
+				$item['item_name'] = trim(str_replace("Of(12)", "[OF 12]", $item['item_name']));
+				$item['item_name'] = trim(str_replace("Of(13)", "[OF 13]", $item['item_name']));
+				$item['item_name'] = trim(str_replace("Of(14)", "[OF 14]", $item['item_name']));
+				$item['item_name'] = trim(str_replace("Of(15)", "[OF 15]", $item['item_name']));
+				$item['item_name'] = trim(str_replace("Of(16)", "[OF 16]", $item['item_name']));
+				$item['item_name'] = trim(str_replace("Of(17)", "[OF 17]", $item['item_name']));
+				$item['item_name'] = trim(str_replace("Of(18)", "[OF 18]", $item['item_name']));
+
+				$item['item_name'] = trim(preg_replace("/\(C\:[^)]+\)/","",$item['item_name']));
+				$item['item_name'] = trim(preg_replace("/\(C\: [^)]+\)/","",$item['item_name']));
+				$item['item_name'] = trim(preg_replace("/\(PP[^)]+\)/","",$item['item_name']));
 				$item['item_name'] = trim(preg_replace("/\(NET\)/","",$item['item_name']));
 				$item['item_name'] = trim(preg_replace("/\(Net\)/","",$item['item_name']));
 				$item['item_name'] = trim(preg_replace("/\(MR\)/","",$item['item_name']));
 				$item['item_name'] = trim(preg_replace("/\(N52\)/","",$item['item_name']));
 				$item['item_name'] = trim(preg_replace("/\(RES\)/","",$item['item_name']));
 				$item['item_name'] = trim(preg_replace("/\(O\/A\)/","",$item['item_name']));
-
+				
 				$item['item_name'] = trim(preg_replace("/\(JAN[^)]+\)/","",$item['item_name']));
 				$item['item_name'] = trim(preg_replace("/\(FEB[^)]+\)/","",$item['item_name']));
 				$item['item_name'] = trim(preg_replace("/\(MAR[^)]+\)/","",$item['item_name']));
@@ -259,26 +309,6 @@ class ToolsController extends AppController {
 				$item['item_name'] = trim(preg_replace("/\(NOV[^)]+\)/","",$item['item_name']));
 				$item['item_name'] = trim(preg_replace("/\(DEC[^)]+\)/","",$item['item_name']));
 				
-				// fix 'of x' formatting..
-				$item['item_name'] = trim(str_replace("Of(1)", "(OF 1)", $item['item_name']));
-				$item['item_name'] = trim(str_replace("Of(2)", "(OF 2)", $item['item_name']));
-				$item['item_name'] = trim(str_replace("Of(3)", "(OF 3)", $item['item_name']));
-				$item['item_name'] = trim(str_replace("Of(4)", "(OF 4)", $item['item_name']));
-				$item['item_name'] = trim(str_replace("Of(5)", "(OF 5)", $item['item_name']));
-				$item['item_name'] = trim(str_replace("Of(6)", "(OF 6)", $item['item_name']));
-				$item['item_name'] = trim(str_replace("Of(7)", "(OF 7)", $item['item_name']));
-				$item['item_name'] = trim(str_replace("Of(8)", "(OF 8)", $item['item_name']));
-				$item['item_name'] = trim(str_replace("Of(9)", "(OF 9)", $item['item_name']));
-				$item['item_name'] = trim(str_replace("Of(10)", "(OF 10)", $item['item_name']));
-				$item['item_name'] = trim(str_replace("Of(11)", "(OF 11)", $item['item_name']));
-				$item['item_name'] = trim(str_replace("Of(12)", "(OF 12)", $item['item_name']));
-				$item['item_name'] = trim(str_replace("Of(13)", "(OF 13)", $item['item_name']));
-				$item['item_name'] = trim(str_replace("Of(14)", "(OF 14)", $item['item_name']));
-				$item['item_name'] = trim(str_replace("Of(15)", "(OF 15)", $item['item_name']));
-				$item['item_name'] = trim(str_replace("Of(16)", "(OF 16)", $item['item_name']));
-				$item['item_name'] = trim(str_replace("Of(17)", "(OF 17)", $item['item_name']));
-				$item['item_name'] = trim(str_replace("Of(18)", "(OF 18)", $item['item_name']));
-
 				// remove 'COMBO PACK'..
 				$item['item_name'] = trim(str_replace("COMBO PACK", "", $item['item_name']));
 
