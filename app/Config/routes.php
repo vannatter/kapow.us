@@ -29,6 +29,15 @@ Router::connect(
 	)
 );
 
+Router::connect(
+	'/publishers/:id--:name',
+	array('controller' => 'publishers', 'action' => 'view'),
+	array(
+		'pass' => array('id', 'name'),
+		'id' => '[0-9]+'
+	)
+);
+
 	CakePlugin::routes();
 
 	require CAKE . 'Config' . DS . 'routes.php';
