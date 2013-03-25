@@ -1,5 +1,6 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
+<!-- <html xmlns="http://www.w3.org/1999/xhtml"> -->
+<?php echo $this->Facebook->html(); ?>
 
 	<head>
 		<?php echo $this->Html->charset(); ?>
@@ -51,4 +52,5 @@
 -->
 	</body>
 	<script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?key=AIzaSyClOyMOup8oRCO_g9sl82pIHePtosMA7w8&sensor=true"></script>
+	<?php echo $this->Facebook->init(); ?>
 </html>

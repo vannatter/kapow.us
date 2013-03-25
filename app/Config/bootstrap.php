@@ -182,3 +182,4 @@ CakeLog::config('error', array(
 
 Configure::load('config', 'default');
 CakePlugin::load('TwitterBootstrap');
+CakePlugin::load('Facebook');

@@ -1,4 +1,5 @@
-<html xmlns="http://www.w3.org/1999/xhtml">
+<!-- <html xmlns="http://www.w3.org/1999/xhtml"> -->
+<?php echo $this->Facebook->html(); ?>
 
 	<head>
 		<?php echo $this->Html->charset(); ?>
@@ -29,5 +30,5 @@
 		
 		<?php echo $this->element('sql_dump'); ?>
 	</body>
-
+	<?php echo $this->Facebook->init(); ?>
 </html>
