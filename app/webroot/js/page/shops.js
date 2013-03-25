@@ -3,17 +3,21 @@ $(document).ready(function() {
 	var $map = $('#map-canvas');
 	var map = null;
 
-	$content.find('button#btnSearch').on('click', function(e) {
+	$content.find('form#ShopIndexForm').on('submit', function(e) {
 		e.preventDefault();
 
-		var location = $content.find('input#location').val();
+		var location = $content.find('input#ShopLocation').val();
+		var radius = $content.find('select#ShopRadius').val();
+
 		if(location != '') {
-			$.getJSON('/shops/getStores', { 'location': location }, function(data) {
+			$.getJSON('/shops/getStores', { 'location': location, 'radius': radius }, function(data) {
 				if(data.error == false) {
 					doMap(data);
 				}
 			});
 		}
+
+		return false;
 	});
 
 	$content.find('#map-canvas').gmap().bind('init', function(ev, map) {
