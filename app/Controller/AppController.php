@@ -18,15 +18,45 @@ App::uses('Controller', 'Controller');
 
 class AppController extends Controller {
 	public $theme = "Kapow";
-	
-    public $helpers = array(
-      'Common',
-			'Session',
-			'Html' => array('className' => 'TwitterBootstrap.BootstrapHtml'),
-			'Form' => array('className' => 'TwitterBootstrap.BootstrapForm'),
-			'Paginator' => array('className' => 'TwitterBootstrap.BootstrapPaginator'),
-    );
-    	
+	public $components = array(
+		'Auth' => array(
+			'authenticate' => array(
+				'Form' => array(
+					'fields' => array('username' => 'email')
+				)
+			),
+			'authorize' => 'Controller'
+		),
+		'Facebook.Connect' => array('model' => 'User'),
+		'Session'
+	);
+	public $helpers = array(
+		'Common',
+		'Session',
+		'Html' => array('className' => 'TwitterBootstrap.BootstrapHtml'),
+		'Form' => array('className' => 'TwitterBootstrap.BootstrapForm'),
+		'Paginator' => array('className' => 'TwitterBootstrap.BootstrapPaginator'),
+		'Facebook.Facebook'
+	);
+
+	public function beforeFilter() {
+		$this->Auth->allow('*');
+	}
+
+	## this is a callback for the Facebook plugin
+	public function afterFacebookLogin() {
+		$this->redirect('/');
+	}
+
+	## this is a callback for the Facebook plugin
+	public function beforeFacebookSave() {
+		$this->Connect->authUser['User']['email'] = $this->Connect->user('email');
+		return true; //Must return true or will not save.
+	}
+
+	## this is a callback for the Facebook plugin
+	public function afterFacebookSave($memberId=null) {
+	}
 }
 
 ?>
