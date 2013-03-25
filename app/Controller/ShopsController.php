@@ -20,6 +20,8 @@ class ShopsController extends AppController {
 			$long = '';
 			$coordAddress = '';
 
+			$radius = 25;
+
 			if(isset($this->request->query['lat']) && isset($this->request->query['long'])) {
 				$lat = $this->request->query['lat'];
 				$long = $this->request->query['long'];
@@ -70,6 +72,10 @@ class ShopsController extends AppController {
 			} elseif(isset($this->request->query['location'])) {
 				$coordAddress = $this->request->query['location'];
 
+				if(isset($this->request->query['radius'])) {
+					$radius = (int)$this->request->query['radius'];
+				}
+
 				## get lat/long from location
 				$loc = json_decode(file_get_contents('http://where.yahooapis.com/geocode?q=' . str_replace(' ', '+', $coordAddress) . '&flags=J&appid=S7cyGA32'));
 
@@ -80,7 +86,7 @@ class ShopsController extends AppController {
 			}
 
 			if(!empty($lat) && !empty($long)) {
-				if($data = $this->Store->radius2($lat, $long, 10)) {
+				if($data = $this->Store->radius($lat, $long, $radius)) {
 					$result['location'] = $coordAddress;
 					$result['latitude'] = $lat;
 					$result['longitude'] = $long;

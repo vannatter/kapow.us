@@ -57,25 +57,8 @@ class Store extends AppModel {
 			}
 		}
 	}
-	
-	public function radius($lat, $lon, $rad) {
 
-		$lat = '34.7405350';
-		$lon = '-92.3245120';
-		
-		$sql = "SELECT Stores.*, ACOS(COS(RADIANS(lat)) *
-		COS(RADIANS(lon)) * COS(RADIANS($lat)) * COS(RADIANS($lon)) +
-		COS(RADIANS(lat)) * SIN(RADIANS(lon)) * COS(RADIANS($lat)) * 
-		SIN(RADIANS($lon)) + SIN(RADIANS(lat)) * SIN(RADIANS($lat))) * 
-		3963.1 AS Distance
-		FROM Stores 
-		WHERE 1
-		HAVING Distance <= 50";
-		
-		
-	}
-
-	public function radius2($lat, $long, $rad=10) {
+	public function radius($lat, $long, $rad=25) {
 		$distanceQuery = '(3959 * acos( cos( radians(' . $lat . ') ) * cos( radians( ' . $this->alias. '.latitude ) ) * cos( radians( ' . $this->alias . '.longitude ) - radians(' . $long . ') ) + sin( radians(' . $lat . ') ) * sin( radians( ' . $this->alias . '.latitude ) ) ) )';
 		$query = '
 			SELECT Store.*, Hour.*, ' . $distanceQuery . ' AS distance
