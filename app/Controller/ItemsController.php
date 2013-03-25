@@ -1,5 +1,4 @@
 <?php
-
 App::uses('AppController', 'Controller');
 
 class ItemsController extends AppController {
@@ -13,10 +12,6 @@ class ItemsController extends AppController {
 	}
 	
 	public function detail($item_id, $item_name) {
-
-		#$item_parts = @explode("--", $item_string);
-		#$item_id = $item_parts[0];
-		
 		if (!$item_id) {
 			$this->Session->setFlash('Item ID not found.', 'flash_neg');
 			$this->redirect("/");
@@ -30,6 +25,13 @@ class ItemsController extends AppController {
 			exit;
 		}
 		
+		## get a distinct set of creators for the 'favorites' logic..
+		$unique_creators = array();
+	    foreach ($item['ItemCreator'] as $c) {
+		    $unique_creators[$c['Creator']['id']] = $c['Creator']['creator_name'];
+	    }
+
+		$this->set('unique_creators', $unique_creators);
 		$this->set('item', $item);
 		$this->set('title_for_layout', $item['Item']['item_name']);
 	}
@@ -48,12 +50,7 @@ class ItemsController extends AppController {
 		if ($first_day > 4) {
 			$release_date = date("Y-m-d", strtotime("this wednesday"));
 		}
-		
-/*
-		echo "first_day = " . $first_day . "<br/>";
-		echo "release_date = " . $release_date . "<br/>";
-*/
-
+	
 		$items = $this->Item->find('all', array('conditions' => array('Item.item_date' => $release_date, 'Section.category_id' => $content_type), 'limit' => 2500, 'recursive' => 4));
 		$categories = $this->Category->find('all', array('limit' => 2500, 'recursive' => -1));
 		
@@ -79,11 +76,6 @@ class ItemsController extends AppController {
 			$release_date = date("Y-m-d", strtotime("last wednesday"));
 		}
 
-/*
-		echo "first_day = " . $first_day . "<br/>";
-		echo "release_date = " . $release_date . "<br/>";
-*/
-		
 		$items = $this->Item->find('all', array('conditions' => array('Item.item_date' => $release_date, 'Section.category_id' => $content_type), 'limit' => 2500, 'recursive' => 4));
 		$categories = $this->Category->find('all', array('limit' => 2500, 'recursive' => -1));
 		
