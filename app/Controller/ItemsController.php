@@ -12,10 +12,10 @@ class ItemsController extends AppController {
 		exit;
 	}
 	
-	public function detail($item_string) {
+	public function detail($item_id, $item_name) {
 
-		$item_parts = @explode("--", $item_string);
-		$item_id = $item_parts[0];
+		#$item_parts = @explode("--", $item_string);
+		#$item_id = $item_parts[0];
 		
 		if (!$item_id) {
 			$this->Session->setFlash('Item ID not found.', 'flash_neg');

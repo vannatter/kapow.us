@@ -7,9 +7,12 @@ class CreatorsController extends AppController {
 	public $name = 'Creators';
 	public $uses = array('Item','Section','Publisher','Series','Creator','CreatorType','ItemCreator','Category');
 
-	public function index($creator_string) {
-		$creator_parts = @explode("--", $creator_string);
-		$creator_id = $creator_parts[0];
+	public function index() {
+	}
+
+	public function view($creator_id, $creator_name) {
+		##$creator_parts = @explode("--", $creator_string);
+		##$creator_id = $creator_parts[0];
 
 		if (!$creator_id) {
 			$this->Session->setFlash('Creator ID not found.', 'flash_neg');
