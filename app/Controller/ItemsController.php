@@ -5,10 +5,19 @@ class ItemsController extends AppController {
 
 	public $name = 'Items';
 	public $uses = array('Item','Section','Publisher','Series','Creator','CreatorType','ItemCreator','Category');
+	public $paginate = array(
+		'Item' => array(
+			'limit' => 25,
+			'order' => array('Item.id' => 'desc')
+		)
+	);
 
 	public function index() {
-		$this->redirect("/items/this_week");
-		exit;
+		#$this->redirect("/items/this_week");
+		#exit;
+
+		$this->Item->recursive = 0;
+		$this->set('items', $this->paginate('Item'));
 	}
 	
 	public function detail($item_id, $item_name) {

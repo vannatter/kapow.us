@@ -19,6 +19,7 @@
 			echo $this->Html->script('libs/jquery');
 			echo $this->Html->script('libs/bootstrap.min');
 			echo $this->Html->script('jquery-ui-map');
+			echo $this->Html->script('jquery.infinitescroll');
 			echo $this->fetch('script');
 		?>
 		<link href='http://fonts.googleapis.com/css?family=Open+Sans+Condensed:300' rel='stylesheet' type='text/css'>
