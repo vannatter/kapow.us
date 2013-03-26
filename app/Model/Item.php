@@ -15,7 +15,20 @@ class Item extends AppModel {
 			'exclusive' => '',
 			'finderQuery' => '',
 			'counterQuery' => ''
-		)
+		),
+		'ItemTag' => array(
+			'className' => 'ItemTag',
+			'foreignKey' => 'item_id',
+			'dependent' => false,
+			'conditions' => '',
+			'fields' => '',
+			'order' => '',
+			'limit' => '',
+			'offset' => '',
+			'exclusive' => '',
+			'finderQuery' => '',
+			'counterQuery' => ''
+		)		
 	);
 	
 	public $belongsTo = array(

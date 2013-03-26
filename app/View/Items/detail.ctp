@@ -7,9 +7,7 @@
 	
 	<div class="span6 item_detail">
 		<h2><?php echo $item['Item']['item_name']; ?></h2>
-
 		<?php echo $this->Element('items/actions'); ?>
-		
 		<?php echo $this->Common->creators($item['ItemCreator']); ?>		
 		<?php echo $this->Element('items/description'); ?>
 
@@ -22,7 +20,7 @@
 			<?php echo $this->Element('items/section'); ?>
 			<?php echo $this->Element('items/stock'); ?>
 		</div>
-		
+		<?php echo $this->Element('items/tags'); ?>
 	</div>
 
 </div>
