@@ -44,6 +44,30 @@ class AppController extends Controller {
 		$this->Auth->allow('*');
 	}
 
+	public function hasAdminSession() {
+		if(!$this->Auth->user() || (int)$this->Auth->user('access_level') !== 99) {
+			$this->Session->setFlash(__('Invalid Access'), 'alert', array(
+				'plugin' => 'TwitterBootstrap',
+				'class' => 'alert-error'
+			));
+
+			$this->redirect('/');
+			exit;
+		}
+	}
+
+	public function hasSession() {
+		if(!$this->Auth->user()) {
+			$this->Session->setFlash(__('Invalid Access'), 'alert', array(
+				'plugin' => 'TwitterBootstrap',
+				'class' => 'alert-error'
+			));
+
+			$this->redirect('/');
+			exit;
+		}
+	}
+
 	## this is a callback for the Facebook plugin
 	public function afterFacebookLogin() {
 		$this->redirect('/');
