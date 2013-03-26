@@ -15,6 +15,7 @@
  * @property SessionComponent $Session
  */
 App::uses('Controller', 'Controller');
+App::uses('Sanitize', 'Utility');
 
 class AppController extends Controller {
 	public $theme = "Kapow";
