@@ -1,9 +1,9 @@
 <div class="item_actions">
 
-	<button class="btn btn-primary" type="button"><i class="icon-shopping-cart icon-white"></i> Add to My Pull List</button>
+	<button class="btn btn-custom" type="button"><i class="icon-shopping-cart icon-white"></i> Add to My Pull List</button>
 
     <div class="btn-group">
-        <button class="btn btn-primary dropdown-toggle" data-toggle="dropdown"><i class="icon-heart icon-white"></i> Add Favorite <span class="caret"></span></button>
+        <button class="btn btn-custom dropdown-toggle" data-toggle="dropdown"><i class="icon-heart icon-white"></i> Add Favorite <span class="caret white-caret"></span></button>
         <ul class="dropdown-menu fav_menu" role="menu">
         
         	<?php foreach ($unique_creators as $k=>$v) { ?>

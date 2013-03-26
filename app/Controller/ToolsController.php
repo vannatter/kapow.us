@@ -8,9 +8,48 @@ App::uses('AppController', 'Controller');
 class ToolsController extends AppController {
 
 	public $name = 'Tools';
-	public $uses = array('Item','Section','Publisher','Series','Creator','CreatorType','ItemCreator', 'Store');
+	public $uses = array('Item','Section','Publisher','Series','Creator','CreatorType','ItemCreator', 'Store','Tag','ItemTag');
 	public $components = array('Curl');
 	public $helpers = array('Common');
+	
+	
+	public function process_tags() {
+		
+		## delete all existing tags..
+		$this->ItemTag->query('TRUNCATE item_tags;');
+		echo "truncated item_tags, beginning run... <br/>";
+
+		$items = $this->Item->find('all', array('fields' => array('Item.id', 'Item.item_name'), 'conditions' => array('Item.status' => 1), 'recursive' => -1));
+		$tags = $this->Tag->find('all', array('conditions' => array('Tag.approved' => 1), 'recursive' => -1));
+		
+		foreach ($items as $i) {
+		
+			echo "processing item_id = " . $i['Item']['id'] . " [" . $i['Item']['item_name'] . "]<br/>";
+			
+			$item_string = trim(strtolower($i['Item']['item_name']));
+			$item_string = " " . $item_string . " ";
+			
+			## find matching tags; loop through active tags and look for matches..
+			foreach ($tags as $t) {
+				
+				if (strpos($item_string, $t['Tag']['tag_name'])) {
+					## tag matched..
+					
+					$tmp = array();
+					$tmp['item_id'] = $i['Item']['id'];
+					$tmp['tag_id']  = $t['Tag']['id'];
+					
+					$this->ItemTag->create();
+					$this->ItemTag->save($tmp);
+				}
+			}
+
+
+		}
+		
+		exit;
+	}
+	
 
 	public function cleanup_series() {
 		
