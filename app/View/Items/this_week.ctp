@@ -1,3 +1,2 @@
-<?php echo $this->Element('filters/this_week'); ?>
-
-<?php echo $this->element('items/scroll_list'); ?>
+<?php echo $this->Element('headers/items/this_week'); ?>
+<?php echo $this->Element('items/scroll_list'); ?>

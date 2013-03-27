@@ -1,4 +1,4 @@
-<?php echo $this->Element('filters/next_week'); ?>
+<?php echo $this->Element('headers/items/next_week'); ?>
 
 <?php $row = 0; ?>
 <?php foreach ($items as $item) { ?>

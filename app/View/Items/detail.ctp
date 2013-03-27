@@ -1,4 +1,4 @@
-<?php echo $this->Element('filters/detail'); ?>
+<?php echo $this->Element('headers/items/detail'); ?>
 
 <div class="row">
 	<div class="span6 item_detail_img">	
