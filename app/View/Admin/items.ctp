@@ -22,7 +22,11 @@
 			<td><?php echo $item['Section']['section_name']; ?></td>
 			<td><?php echo $item['Publisher']['publisher_name']; ?></td>
 			<td><?php echo $item['Series']['series_name']; ?></td>
-			<td>edit</td>
+			<td>
+				<?php echo $this->Html->link(__('edit'), sprintf('/admin/items/edit/%s', $item['Item']['id']), array(
+					'class' => 'btn btn-small btn-inverse'
+				)); ?>
+			</td>
 		</tr>
 	<?php } ?>
 	</tbody>
