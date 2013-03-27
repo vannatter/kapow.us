@@ -19,4 +19,10 @@ class SeriesController extends AppController {
 			echo 'not found';
 		}
 	}
+
+	public function viewById($id) {
+		if($series = $this->Series->findById($id)) {
+			$this->redirect(sprintf('/series/%s', parent::seoize($id, $series['Series']['series_name'])), 301);
+		}
+	}
 }

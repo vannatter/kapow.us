@@ -68,6 +68,10 @@ class AppController extends Controller {
 		}
 	}
 
+	public function seoize($id, $string) {
+		return $id . "--" . strtolower(Inflector::slug($string, '-'));
+	}
+
 	## this is a callback for the Facebook plugin
 	public function afterFacebookLogin() {
 		$this->redirect('/');

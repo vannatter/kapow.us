@@ -105,6 +105,11 @@ class ItemsController extends AppController {
 		$this->set('release_date_formatted', date("m/d/Y", strtotime($release_date)));
 		$this->set('title_for_layout','New This Week (' . date("m/d/Y", strtotime($release_date)) . ')');
 	}
-		
+
+	public function viewById($id) {
+		if($item = $this->Item->findById($id)) {
+			$this->redirect(sprintf('/items/%s', parent::seoize($id, $item['Item']['item_name'])), 301);
+		}
+	}
 }
 ?>
