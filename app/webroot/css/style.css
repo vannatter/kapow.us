@@ -29,6 +29,7 @@ h2{color:#000 !important;}
 .item_grid_lbl{color:#fff;}
 .item_detail_img{text-align:center;}
 .item_actions{background-color:#24478f;padding:12px;margin-bottom:10px;clear:both;}
+.store_search_bar{background-color:#24478f;padding:12px;margin-bottom:10px;clear:both;overflow:hidden;}
 .fav_menu a{color:#000 !important;font-size:15px;}
 #map-canvas img{max-width:none;}
 #map-canvas label{width:auto;display:inline;}
