@@ -74,6 +74,24 @@ Router::connect(
 	)
 );
 
+##### SHOPS
+Router::connect(
+	'/shops/:id--:name',
+	array('controller' => 'shops', 'action' => 'view'),
+	array(
+		'pass' => array('id', 'name'),
+		'id' => '[0-9]+'
+	)
+);
+Router::connect(
+	'/shops/:id',
+	array('controller' => 'shops', 'action' => 'viewById'),
+	array(
+		'pass' => array('id'),
+		'id' => '[0-9]+'
+	)
+);
+
 ##### ADMIN
 Router::connect(
 	'/admin/items/edit/:id',

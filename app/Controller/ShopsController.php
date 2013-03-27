@@ -12,6 +12,39 @@ class ShopsController extends AppController {
 	public function index() {
 	}
 
+	public function view($id, $name) {
+		$this->Store->id = $id;
+		if(!$this->Store->exists()) {
+			$this->Session->setFlash(__('Store Not Found!'), 'alert', array(
+				'plugin' => 'TwitterBootstrap',
+				'class' => 'alert-error'
+			));
+
+			$this->redirect($this->referer());
+		}
+
+		$shop = $this->Store->read();
+
+		debug($shop);
+		exit;
+	}
+
+	public function viewById($id) {
+		$this->Store->id = $id;
+		if(!$this->Store->exists()) {
+			$this->Session->setFlash(__('Store Not Found!'), 'alert', array(
+				'plugin' => 'TwitterBootstrap',
+				'class' => 'alert-error'
+			));
+
+			$this->redirect($this->referer());
+		}
+
+		$shop = $this->Store->read('name');
+
+		$this->redirect(sprintf('/shops/%s', parent::seoize($id, $shop['Store']['name'])), 301);
+	}
+
 	public function getStores() {
 		if($this->request->is('ajax')) {
 			$result = array('error' => true, 'message' => '');
