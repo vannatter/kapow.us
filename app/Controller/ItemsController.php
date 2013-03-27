@@ -7,7 +7,7 @@ class ItemsController extends AppController {
 	public $uses = array('Item','Section','Publisher','Series','Creator','CreatorType','ItemCreator','Category');
 	public $paginate = array(
 		'Item' => array(
-			'limit' => 25,
+			'limit' => 24,
 			'order' => array('Item.id' => 'desc')
 		)
 	);
