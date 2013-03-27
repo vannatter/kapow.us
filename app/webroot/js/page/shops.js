@@ -25,6 +25,7 @@ $(document).ready(function() {
 			navigator.geolocation.getCurrentPosition(function(location) {
 				$.getJSON('/shops/getStores', { 'lat': location.coords.latitude, 'long': location.coords.longitude }, function(data) {
 					if(data.error == false) {
+						$content.find('input#ShopLocation').val(data.location);
 						doMap(data);
 					}
 				});
