@@ -31,14 +31,12 @@ class User extends AppModel {
 		'clear_password' => array(
 			'empty' => array(
 				'rule' => 'notEmpty',
-				'required' => true,
 				'allowEmpty' => false,
 				'on' => 'create',
 				'message' => 'Password is required',
 			),
 			'length' => array(
 				'rule' => array('minLength', 6),
-				'required' => true,
 				'allowEmpty' => false,
 				'message' => 'At least 6 characters',
 			),
@@ -46,21 +44,18 @@ class User extends AppModel {
 		'confirm_password' => array(
 			'empty_create' => array(
 				'rule' => 'notEmpty',
-				'required' => true,
 				'allowEmpty' => false,
 				'on' => 'create',
 				'message' => 'Please confirm the passwords',
 			),
 			'empty_update' => array(
 				'rule' => 'validateConfirmPasswordEmptyUpdate',
-				'required' => true,
 				'allowEmpty' => false,
 				'on' => 'update',
 				'message' => 'Please confirm the passwords',
 			),
 			'match' => array(
 				'rule' => 'validateConfirmPasswordMatch',
-				'required' => true,
 				'allowEmpty' => true,
 				'message' => 'The passwords do not match',
 			),
@@ -68,7 +63,11 @@ class User extends AppModel {
 	);
 
 	public function validateConfirmPasswordEmptyUpdate() {
-		return !empty($this->data[$this->alias]['clear_password']) && !empty($this->data[$this->alias]['confirm_password']);
+		if(isset($this->data[$this->alias]['clear_password']) && isset($this->data[$this->alias]['confirm_password'])) {
+			return !empty($this->data[$this->alias]['clear_password']) && !empty($this->data[$this->alias]['confirm_password']);
+		}
+
+		return true;
 	}
 
 	public function validateConfirmPasswordMatch() {

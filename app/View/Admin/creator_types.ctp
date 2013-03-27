@@ -18,7 +18,11 @@
 				<td><?php echo $type['CreatorType']['id']; ?></td>
 				<td><?php echo $type['CreatorType']['creator_short_name']; ?></td>
 				<td><?php echo $type['CreatorType']['creator_type_name']; ?></td>
-				<td>edit</td>
+				<td>
+					<?php echo $this->Html->link(__('edit'), sprintf('/admin/creatorTypes/edit/%s', $type['CreatorType']['id']), array(
+						'class' => 'btn btn-small btn-inverse'
+					)); ?>
+				</td>
 			</tr>
 		<?php } ?>
 		</tbody>

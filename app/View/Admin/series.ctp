@@ -16,7 +16,11 @@
 			<tr>
 				<td><?php echo $ser['Series']['id']; ?></td>
 				<td><?php echo $ser['Series']['series_name']; ?></td>
-				<td>edit</td>
+				<td>
+					<?php echo $this->Html->link(__('edit'), sprintf('/admin/series/edit/%s', $ser['Series']['id']), array(
+						'class' => 'btn btn-small btn-inverse'
+					)); ?>
+				</td>
 			</tr>
 		<?php } ?>
 		</tbody>

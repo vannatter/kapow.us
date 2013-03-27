@@ -101,6 +101,70 @@ Router::connect(
 		'id' => '[0-9]+'
 	)
 );
+
+Router::connect(
+	'/admin/categories/edit/:id',
+	array('controller' => 'admin', 'action' => 'categoriesEdit'),
+	array(
+		'pass' => array('id'),
+		'id' => '[0-9]+'
+	)
+);
+
+Router::connect(
+	'/admin/creators/edit/:id',
+	array('controller' => 'admin', 'action' => 'creatorsEdit'),
+	array(
+		'pass' => array('id'),
+		'id' => '[0-9]+'
+	)
+);
+
+Router::connect(
+	'/admin/creatorTypes/edit/:id',
+	array('controller' => 'admin', 'action' => 'creatorTypesEdit'),
+	array(
+		'pass' => array('id'),
+		'id' => '[0-9]+'
+	)
+);
+
+Router::connect(
+	'/admin/publishers/edit/:id',
+	array('controller' => 'admin', 'action' => 'publishersEdit'),
+	array(
+		'pass' => array('id'),
+		'id' => '[0-9]+'
+	)
+);
+
+Router::connect(
+	'/admin/series/edit/:id',
+	array('controller' => 'admin', 'action' => 'seriesEdit'),
+	array(
+		'pass' => array('id'),
+		'id' => '[0-9]+'
+	)
+);
+
+Router::connect(
+	'/admin/stores/edit/:id',
+	array('controller' => 'admin', 'action' => 'storesEdit'),
+	array(
+		'pass' => array('id'),
+		'id' => '[0-9]+'
+	)
+);
+
+Router::connect(
+	'/admin/users/edit/:id',
+	array('controller' => 'admin', 'action' => 'usersEdit'),
+	array(
+		'pass' => array('id'),
+		'id' => '[0-9]+'
+	)
+);
+
 	CakePlugin::routes();
 
 	require CAKE . 'Config' . DS . 'routes.php';

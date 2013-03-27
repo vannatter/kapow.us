@@ -20,7 +20,11 @@
 				<td><?php echo $store['Store']['name']; ?></td>
 				<td><?php echo $store['Store']['city']; ?></td>
 				<td><?php echo $store['Store']['state']; ?></td>
-				<td>edit</td>
+				<td>
+					<?php echo $this->Html->link(__('edit'), sprintf('/admin/stores/edit/%s', $store['Store']['id']), array(
+						'class' => 'btn btn-small btn-inverse'
+					)); ?>
+				</td>
 			</tr>
 		<?php } ?>
 		</tbody>

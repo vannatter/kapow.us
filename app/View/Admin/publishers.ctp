@@ -16,7 +16,11 @@
 			<tr>
 				<td><?php echo $publisher['Publisher']['id']; ?></td>
 				<td><?php echo $publisher['Publisher']['publisher_name']; ?></td>
-				<td>edit</td>
+				<td>
+					<?php echo $this->Html->link(__('edit'), sprintf('/admin/publishers/edit/%s', $publisher['Publisher']['id']), array(
+						'class' => 'btn btn-small btn-inverse'
+					)); ?>
+				</td>
 			</tr>
 		<?php } ?>
 		</tbody>

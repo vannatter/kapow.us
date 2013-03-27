@@ -16,7 +16,11 @@
 			<tr>
 				<td><?php echo $creator['Creator']['id']; ?></td>
 				<td><?php echo $creator['Creator']['creator_name']; ?></td>
-				<td>edit</td>
+				<td>
+					<?php echo $this->Html->link(__('edit'), sprintf('/admin/creators/edit/%s', $creator['Creator']['id']), array(
+						'class' => 'btn btn-small btn-inverse'
+					)); ?>
+				</td>
 			</tr>
 		<?php } ?>
 		</tbody>
