@@ -13,10 +13,16 @@ class PublishersController extends AppController {
 	}
 
 	public function view($id, $name) {
-		if($series = $this->Publisher->findById($id)) {
-			debug($series);
+		if($publisher = $this->Publisher->findById($id)) {
+			debug($publisher);
 		} else {
 			echo 'not found';
+		}
+	}
+
+	public function viewById($id) {
+		if($publisher = $this->Publisher->findById($id)) {
+			$this->redirect(sprintf('/publishers/%s', parent::seoize($id, $publisher['Publisher']['publisher_name'])), 301);
 		}
 	}
 }

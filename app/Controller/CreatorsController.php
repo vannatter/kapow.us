@@ -31,7 +31,11 @@ class CreatorsController extends AppController {
 		$this->set('title_for_layout', $creator['Creator']['creator_name']);
 
 	}
-	
 
+	public function viewById($id) {
+		if($creator = $this->Creator->findById($id)) {
+			$this->redirect(sprintf('/creators/%s', parent::seoize($id, $creator['Creator']['creator_name'])), 301);
+		}
+	}
 }
 ?>
