@@ -16,7 +16,11 @@
 		<tr>
 			<td><?php echo $category['Category']['id']; ?></td>
 			<td><?php echo $category['Category']['category_name']; ?></td>
-			<td>edit</td>
+			<td>
+				<?php echo $this->Html->link(__('edit'), sprintf('/admin/categories/edit/%s', $category['Category']['id']), array(
+					'class' => 'btn btn-small btn-inverse'
+				)); ?>
+			</td>
 		</tr>
 	<?php } ?>
 	</tbody>
