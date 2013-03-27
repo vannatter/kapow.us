@@ -21,9 +21,7 @@
 </div>
 <?php echo $this->Form->end(); ?>
 
-<!--
-<div class="row span12" style="background-color: #fff;">
-	<div class="span6" id="map-canvas" style="height: 400px;"></div>
-	<div class="span6" id="storeList"></div>
+<div class="row-fluid">
+	<div class="span7" id="map-canvas" style="height: 400px;"></div>
+	<div class="span5" id="storeList"></div>
 </div>
--->

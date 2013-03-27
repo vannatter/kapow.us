@@ -31,7 +31,8 @@ $(document).ready(function() {
 			});
 		}
 	});
-
+	
+	
 	function doMap(data) {
 		var storeList = $content.find('div#storeList');
 		$map.gmap('clear', 'markers');      // clear all markers
@@ -41,22 +42,36 @@ $(document).ready(function() {
 		// clear previous stores
 		storeList.empty();
 
+		var cnt = 1;
+		var ele = 1;
 		$.each(data.stores, function(index, store) {
+		
+			var icon = 'http://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=' + cnt + '|2c539e|ffffff';
+		
 			$map.gmap('addMarker', {
 				'position': new google.maps.LatLng(store.latitude, store.longitude),
-				'bounds': 'true'
+				'bounds': 'true',
+				'icon': icon
 			}).click(function() {
 				$map.gmap('openInfoWindow', { 'content': store.name }, this);
 			});
 
-			storeList.append(store.name + ' - ' + parseFloat(store.distance).toFixed(3) + ' miles<br/>');
+			if (ele == 1) {
+				storeList.append('<div class="row store_map_row">');
+				ele++;
+			}
+
+			storeList.append('<div class="span1 map_marker"><img src="' + icon + '" /></div><div class="store_map_listing span4"><h5><a href="/shops/' + store.link + '">' + store.name + '</a></h5><div class="store_map_address">' + store.address + "<br/>" + store.city + ", " + store.state + " " + store.zip + "</div>" + parseFloat(store.distance).toFixed(2) + ' miles</div>');
+			cnt++;
+			
+			if (ele == 3) {
+				storeList.append('</div>');
+				ele = 1;				
+			} else {
+				ele++;
+			}
+			
 		});
 
-		/*var bounds = new google.maps.LatLngBounds();
-		var markers = $map.gmap('get', 'markers');
-		$.each(markers, function(key, value) {
-			bounds.extend(value.position);
-		});
-		$map.gmap('get', 'map').setCenter(new google.maps.LatLng(data.latitude, data.longitude));*/
 	}
 });

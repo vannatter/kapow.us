@@ -127,7 +127,12 @@ class ShopsController extends AppController {
 
 					foreach($data as $store) {
 						$result['stores'][] = array(
+							'link' => parent::seoize($store['Store']['id'], $store['Store']['name']),
 							'name' => $store['Store']['name'],
+							'city' => $store['Store']['city'],
+							'state' => $store['Store']['state'],
+							'zip' => $store['Store']['zip'],
+							'address' => $store['Store']['address'],
 							'distance' => $store[0]['distance'],
 							'latitude' => $store['Store']['latitude'],
 							'longitude' => $store['Store']['longitude'],
