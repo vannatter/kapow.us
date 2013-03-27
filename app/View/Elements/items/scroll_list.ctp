@@ -9,7 +9,18 @@
 			navSelector: '#item-scroll-nav',
 			nextSelector: $('#item-scroll-nav a').last(),
 			itemSelector: '.scroll-list-item',
-			debug: true
+			debug: true,
+			path: function(nextPage) {
+				var path = $('#item-scroll-nav a').last().attr("href");
+				if(path) {
+					var start = path.indexOf('page:');
+					var left = path.substring(0, start);
+
+					path = left + 'page:' + nextPage;
+				}
+
+				return path;
+			}
 		});
 	});
 </script>
