@@ -141,7 +141,7 @@ class ShopsController extends AppController {
 
 					$result['error'] = false;
 				} else {
-					$result['message'] = __('No Stores Found!');
+					$result['message'] = __('No Shops Found!');
 				}
 			} else {
 				$result['message'] = __('Invalid Location!');

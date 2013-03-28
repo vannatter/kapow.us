@@ -10,10 +10,22 @@ $(document).ready(function() {
 		var radius = $content.find('select#ShopRadius').val();
 
 		if(location != '') {
+			var btn = $(this).find('button');
+			var caption = btn.html();
+			console.log(caption);
+
+			btn.attr("disabled", true).html('Searching');
+
 			$.getJSON('/shops/getStores', { 'location': location, 'radius': radius }, function(data) {
 				if(data.error == false) {
 					doMap(data);
+				} else {
+					alert(data.message);
+
+					clearShops();
 				}
+
+				btn.attr("disabled", false).html(caption);
 			});
 		}
 
@@ -32,16 +44,22 @@ $(document).ready(function() {
 			});
 		}
 	});
-	
-	
-	function doMap(data) {
+
+	function clearShops() {
 		var storeList = $content.find('div#storeList');
-		$map.gmap('clear', 'markers');      // clear all markers
-		$map.gmap('set', 'bounds', null);   // reset bounds for zooming to markers
-		$map.gmap('closeInfoWindow');       // close open info windows
 
 		// clear previous stores
 		storeList.empty();
+
+		$map.gmap('clear', 'markers');      // clear all markers
+		$map.gmap('set', 'bounds', null);   // reset bounds for zooming to markers
+		$map.gmap('closeInfoWindow');       // close open info windows
+	}
+
+	function doMap(data) {
+		var storeList = $content.find('div#storeList');
+
+		clearShops();
 
 		var cnt = 1;
 		var ele = 1;
