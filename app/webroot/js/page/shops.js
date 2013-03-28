@@ -1,7 +1,6 @@
 $(document).ready(function() {
 	var $content = $('#content');
 	var $map = $('#map-canvas');
-	var map = null;
 
 	$content.find('form#ShopIndexForm').on('submit', function(e) {
 		e.preventDefault();
@@ -11,10 +10,14 @@ $(document).ready(function() {
 
 		if(location != '') {
 			var btn = $(this).find('button');
+			var controls = $(this).find('input, select');
+
 			var caption = btn.html();
 			console.log(caption);
 
-			btn.attr("disabled", true).html('Searching');
+			controls.attr("disabled", true);
+
+			btn.html('Searching');
 
 			$.getJSON('/shops/getStores', { 'location': location, 'radius': radius }, function(data) {
 				if(data.error == false) {
@@ -25,7 +28,8 @@ $(document).ready(function() {
 					clearShops();
 				}
 
-				btn.attr("disabled", false).html(caption);
+				btn.html(caption);
+				controls.attr("disabled", false);
 			});
 		}
 
