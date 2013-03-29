@@ -92,6 +92,24 @@ Router::connect(
 	)
 );
 
+##### TAGS
+Router::connect(
+	'/tags/:id--:name',
+	array('controller' => 'tags', 'action' => 'view'),
+	array(
+		'pass' => array('id', 'name'),
+		'id' => '[0-9]+'
+	)
+);
+Router::connect(
+	'/tags/:id',
+	array('controller' => 'tags', 'action' => 'viewById'),
+	array(
+		'pass' => array('id'),
+		'id' => '[0-9]+'
+	)
+);
+
 ##### ADMIN
 Router::connect(
 	'/admin/items/edit/:id',

@@ -13,8 +13,8 @@ class ItemTag extends AppModel {
 			'conditions' => '',
 			'fields' => '',
 			'order' => ''
-		)
-		
+		),
+		'Item'
 	);		
 	
 	
