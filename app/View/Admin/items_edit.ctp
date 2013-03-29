@@ -12,10 +12,8 @@
 <?php echo $this->Form->input('printing', array('class' => 'span2')); ?>
 <?php echo $this->Form->input('series_num', array('class' => 'span2')); ?>
 <?php echo $this->Form->input('item_date'); ?>
-<?php echo $this->Form->input('img_fullpath', array('disabled' => true, 'label' => __('Image Fullpath'), 'class' => 'span10')); ?>
+<?php echo $this->Form->input('img_fullpath', array('label' => __('Image Fullpath'), 'class' => 'span10')); ?>
 <?php echo $this->Form->input('srp', array('label' => __('SRP'), 'class' => 'span4', 'prepend' => '$')); ?>
 <?php echo $this->Form->input('description', array('class' => 'span8', 'rows' => 5)); ?>
-<?php echo $this->Form->input('created', array('type' => 'text', 'disabled' => true, 'class' => 'span4')); ?>
-<?php echo $this->Form->input('modified', array('type' => 'text', 'disabled' => true, 'class' => 'span4')); ?>
 <?php echo $this->Form->submit(__('Save Item')); ?>
 <?php echo $this->Form->end(); ?>
