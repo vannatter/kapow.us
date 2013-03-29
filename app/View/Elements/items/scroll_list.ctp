@@ -2,9 +2,9 @@
 	$(document).ready(function() {
 		$('#item-scroll-list').infinitescroll({
 			loading: {
-				finishedMsg: '<em>That is all!</em>',
-				msgText: '<div class="row"><div class="span4 offset4"><em>Loading more items, please wait...</em></div></div>',
-				img: undefined
+				finishedMsg: '<div class="row"><div class="span4 offset4 infin_txt">Nothing else!</div></div>',
+				msgText: '',
+				img: '/img/ajax-loader.gif'
 			},
 			navSelector: '#item-scroll-nav',
 			nextSelector: $('#item-scroll-nav a').last(),

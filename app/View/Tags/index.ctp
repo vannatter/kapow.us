@@ -2,9 +2,9 @@
 	$(document).ready(function() {
 		$('#item-scroll-list').infinitescroll({
 			loading: {
-				finishedMsg: '<em>That is all!</em>',
-				msgText: '<div class="row"><div class="span4 offset4"><em>Loading more items, please wait...</em></div></div>',
-				img: undefined
+				finishedMsg: '<div class="row"><div class="span4 offset4 infin_txt">Nothing else!</div></div>',
+				msgText: '',
+				img: '/img/ajax-loader.gif'
 			},
 			navSelector: '#item-scroll-nav',
 			nextSelector: $('#item-scroll-nav a').last(),
@@ -24,10 +24,11 @@
 		});
 	});
 </script>
+<?php echo $this->Element('headers/tags/index'); ?>
 <div id="item-scroll-list">
 	<?php foreach($tags as $tag) { ?>
 		<div class="tag-row">
-			<h2><?php echo $tag['Tag']['tag_name']; ?></h2>
+			<h3><a href="/tags/<?php echo $this->Common->seoize($tag['Tag']['id'], $tag['Tag']['tag_name']); ?>"><?php echo $tag['Tag']['tag_name']; ?></a></h3>
 			<div class="row thisweek scroll-list-item">
 			<?php foreach($tag['ItemTag'] as $item) { ?>
 				<div class="span2 preview_block">

@@ -27,12 +27,12 @@ class ToolsController extends AppController {
 			echo "processing item_id = " . $i['Item']['id'] . " [" . $i['Item']['item_name'] . "]<br/>";
 			
 			$item_string = trim(strtolower($i['Item']['item_name']));
-			$item_string = " " . $item_string . " ";
+			$item_string = "  " . $item_string . "  ";
 			
 			## find matching tags; loop through active tags and look for matches..
 			foreach ($tags as $t) {
 				
-				if (strpos($item_string, $t['Tag']['tag_name'])) {
+				if (strpos($item_string, " ".$t['Tag']['tag_name']." ")) {
 					## tag matched..
 					
 					$tmp = array();

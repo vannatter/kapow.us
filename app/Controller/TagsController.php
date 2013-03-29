@@ -39,12 +39,15 @@ class TagsController extends AppController {
 		$this->paginate = array(
 			'ItemTag' => array(
 				'limit' => 24,
-				'contain' => 'Item'
+				'contain' => 'Item',
+				'order' => array('Item.id' => 'desc')
 			)
 		);
+		
 
 		$items = $this->paginate('ItemTag', array('ItemTag.tag_id' => $id));
 		$this->set('items', $items);
+		$this->set('tagged', $items[0]['Tag']['tag_name']);
 	}
 
 	public function viewById($id) {
