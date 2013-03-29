@@ -9,6 +9,7 @@
 			navSelector: '#item-scroll-nav',
 			nextSelector: $('#item-scroll-nav a').last(),
 			itemSelector: '.tag-row',
+			animate: false,
 			debug: true,
 			path: function(nextPage) {
 				var path = $('#item-scroll-nav a').last().attr("href");

@@ -10,6 +10,7 @@
 			nextSelector: $('#item-scroll-nav a').last(),
 			itemSelector: '.scroll-list-item',
 			debug: true,
+			animate: false,
 			path: function(nextPage) {
 				var path = $('#item-scroll-nav a').last().attr("href");
 				if(path) {
