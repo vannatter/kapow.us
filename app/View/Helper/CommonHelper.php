@@ -101,7 +101,12 @@ class CommonHelper extends Helper {
 	    return $output;
     }
     
-	
+
+	public function formatMoney($amount=0.00) {
+		setlocale(LC_ALL, ''); // Locale will be different on each system.
+		$locale = localeconv();
+		echo $locale['currency_symbol'], number_format($amount, 2, $locale['decimal_point'], $locale['thousands_sep']);
+	}
 }
 
 ?>
