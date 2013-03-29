@@ -10,6 +10,7 @@
 
 		echo $this->Html->css('bootstrap.min');
 		echo $this->Html->css('bootstrap-responsive.min');
+		echo $this->Html->css('datepicker');
 		//echo $this->Html->css('core');
 		//echo $this->Html->css('style');
 
@@ -17,6 +18,7 @@
 
 		echo $this->Html->script('libs/jquery');
 		echo $this->Html->script('libs/bootstrap.min');
+		echo $this->Html->script('libs/bootstrap-datepicker');
 
 		echo $this->fetch('script');
 		?>

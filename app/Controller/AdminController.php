@@ -75,7 +75,7 @@ class AdminController extends AppController {
 					'class' => 'alert-success'
 				));
 
-				$this->redirect($this->referer());
+				$this->redirect('/admin/items');
 			}
 		} else {
 			$this->Item->id = $id;
@@ -112,7 +112,7 @@ class AdminController extends AppController {
 					'plugin' => 'TwitterBootstrap',
 					'class' => 'alert-success'
 				));
-				$this->redirect($this->referer());
+				$this->redirect('/admin/creators');
 			}
 		} else {
 			$this->Creator->id = $id;
@@ -121,7 +121,7 @@ class AdminController extends AppController {
 					'plugin' => 'TwitterBootstrap',
 					'class' => 'alert-error'
 				));
-				$this->redirect($this->referer());
+				$this->redirect('/admin/creators');
 			}
 
 			$creator = $this->Creator->read();
@@ -145,7 +145,7 @@ class AdminController extends AppController {
 					'plugin' => 'TwitterBootstrap',
 					'class' => 'alert-success'
 				));
-				$this->redirect($this->referer());
+				$this->redirect('/admin/creatorTypes');
 			}
 		} else {
 			$this->CreatorType->id = $id;
@@ -154,7 +154,7 @@ class AdminController extends AppController {
 					'plugin' => 'TwitterBootstrap',
 					'class' => 'alert-error'
 				));
-				$this->redirect($this->referer());
+				$this->redirect('/admin/creatorTypes');
 			}
 
 			$creatorType = $this->CreatorType->read();
@@ -178,7 +178,7 @@ class AdminController extends AppController {
 					'plugin' => 'TwitterBootstrap',
 					'class' => 'alert-success'
 				));
-				$this->redirect($this->referer());
+				$this->redirect('/admin/publishers');
 			}
 		} else {
 			$this->Publisher->id = $id;
@@ -187,7 +187,7 @@ class AdminController extends AppController {
 					'plugin' => 'TwitterBootstrap',
 					'class' => 'alert-error'
 				));
-				$this->redirect($this->referer());
+				$this->redirect('/admin/publishers');
 			}
 
 			$publisher = $this->Publisher->read();
@@ -211,7 +211,7 @@ class AdminController extends AppController {
 					'plugin' => 'TwitterBootstrap',
 					'class' => 'alert-success'
 				));
-				$this->redirect($this->referer());
+				$this->redirect('/admin/series');
 			}
 		} else {
 			$this->Series->id = $id;
@@ -220,7 +220,7 @@ class AdminController extends AppController {
 					'plugin' => 'TwitterBootstrap',
 					'class' => 'alert-error'
 				));
-				$this->redirect($this->referer());
+				$this->redirect('/admin/series');
 			}
 
 			$series = $this->Series->read();
@@ -244,7 +244,7 @@ class AdminController extends AppController {
 					'plugin' => 'TwitterBootstrap',
 					'class' => 'alert-success'
 				));
-				$this->redirect($this->referer());
+				$this->redirect('/admin/stores');
 			}
 		} else {
 			$this->Store->id = $id;
@@ -253,7 +253,7 @@ class AdminController extends AppController {
 					'plugin' => 'TwitterBootstrap',
 					'class' => 'alert-error'
 				));
-				$this->redirect($this->referer());
+				$this->redirect('/admin/stores');
 			}
 
 			$store = $this->Store->read();
@@ -277,7 +277,7 @@ class AdminController extends AppController {
 					'plugin' => 'TwitterBootstrap',
 					'class' => 'alert-success'
 				));
-				$this->redirect($this->referer());
+				$this->redirect('/admin/users');
 			}
 		} else {
 			$this->User->id = $id;
@@ -286,7 +286,7 @@ class AdminController extends AppController {
 					'plugin' => 'TwitterBootstrap',
 					'class' => 'alert-error'
 				));
-				$this->redirect($this->referer());
+				$this->redirect('/admin/users');
 			}
 
 			$user = $this->User->read();
@@ -310,7 +310,7 @@ class AdminController extends AppController {
 					'plugin' => 'TwitterBootstrap',
 					'class' => 'alert-success'
 				));
-				$this->redirect($this->referer());
+				$this->redirect('/admin/categories');
 			}
 		} else {
 			$this->Category->id = $id;
@@ -319,7 +319,7 @@ class AdminController extends AppController {
 					'plugin' => 'TwitterBootstrap',
 					'class' => 'alert-error'
 				));
-				$this->redirect($this->referer());
+				$this->redirect('/admin/categories');
 			}
 
 			$category = $this->Category->read();
