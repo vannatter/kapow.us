@@ -15,6 +15,7 @@ App::uses('AppController', 'Controller');
 class AdminController extends AppController {
 	public $name = 'Admin';
 	public $uses = array('Item', 'Creator', 'Publisher', 'Series', 'Store', 'User', 'Category', 'CreatorType');
+	public $helpers = array('States');
 	public $paginate = array(
 		'Item' => array(
 			'limit' => 25,
