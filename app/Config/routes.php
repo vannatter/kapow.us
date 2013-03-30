@@ -183,6 +183,15 @@ Router::connect(
 	)
 );
 
+Router::connect(
+	'/admin/sections/edit/:id',
+	array('controller' => 'admin', 'action' => 'sectionsEdit'),
+	array(
+		'pass' => array('id'),
+		'id' => '[0-9]+'
+	)
+);
+
 	CakePlugin::routes();
 
 	require CAKE . 'Config' . DS . 'routes.php';

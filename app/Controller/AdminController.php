@@ -11,10 +11,11 @@ App::uses('AppController', 'Controller');
  * @property Store $Store
  * @property User $User
  * @property Category $Category
+ * @property Section $Section
  */
 class AdminController extends AppController {
 	public $name = 'Admin';
-	public $uses = array('Item', 'Creator', 'Publisher', 'Series', 'Store', 'User', 'Category', 'CreatorType');
+	public $uses = array('Item', 'Creator', 'Publisher', 'Series', 'Store', 'User', 'Category', 'CreatorType', 'Section');
 	public $helpers = array('States');
 	public $paginate = array(
 		'Item' => array(
@@ -44,6 +45,10 @@ class AdminController extends AppController {
 		'Category' => array(
 			'limit' => 25,
 			'order' => array('Category.id' => 'asc')
+		),
+		'Section' => array(
+			'limit' => 25,
+			'order' => array('Section.id' => 'asc')
 		)
 	);
 
@@ -325,5 +330,40 @@ class AdminController extends AppController {
 			$category = $this->Category->read();
 			$this->request->data = $category;
 		}
+	}
+
+	public function sections() {
+		$this->Section->recursive = 0;
+		$this->set('sections', $this->paginate('Section'));
+	}
+
+	public function sectionsEdit($id) {
+		if($this->request->is('put')) {
+			$data = Sanitize::clean($this->request->data);
+
+			$data['Section']['id'] = $id;
+
+			if($this->Section->save($data)) {
+				$this->Session->setFlash(__('Section Saved!'), 'alert', array(
+					'plugin' => 'TwitterBootstrap',
+					'class' => 'alert-success'
+				));
+				$this->redirect('/admin/sections');
+			}
+		} else {
+			$this->Section->id = $id;
+			if(!$this->Section->exists()) {
+				$this->Session->setFlash(__('Section Not Found'), 'alert', array(
+					'plugin' => 'TwitterBootstrap',
+					'class' => 'alert-error'
+				));
+				$this->redirect('/admin/sections');
+			}
+
+			$section = $this->Section->read();
+			$this->request->data = $section;
+		}
+
+		$this->set('categories', $this->Category->find('list', array('fields' => array('id', 'category_name'))));
 	}
 }
