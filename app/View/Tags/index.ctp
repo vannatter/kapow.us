@@ -25,6 +25,7 @@
 		});
 	});
 </script>
+
 <?php echo $this->Element('headers/tags/index'); ?>
 <div id="item-scroll-list">
 	<?php foreach($tags as $tag) { ?>

@@ -24,9 +24,8 @@ class ShopsController extends AppController {
 		}
 
 		$shop = $this->Store->read();
-
-		debug($shop);
-		exit;
+		$this->set('shop', $shop);
+		$this->set('title_for_layout', $shop['Store']['name']);
 	}
 
 	public function viewById($id) {
@@ -41,7 +40,6 @@ class ShopsController extends AppController {
 		}
 
 		$shop = $this->Store->read('name');
-
 		$this->redirect(sprintf('/shops/%s', parent::seoize($id, $shop['Store']['name'])), 301);
 	}
 
