@@ -72,6 +72,7 @@ class ItemsController extends AppController {
 
 	public function this_week($content_type="1") {
 		$first_day = date("N", strtotime("today"));
+		
 		if ($first_day < 3) {
 			$release_date = date("Y-m-d", strtotime("this wednesday"));
 		}
@@ -81,8 +82,9 @@ class ItemsController extends AppController {
 		if ($first_day == 4) {
 			$release_date = date("Y-m-d", strtotime("yesterday"));
 		}
+		
 		if ($first_day > 4) {
-			$release_date = date("Y-m-d", strtotime("last wednesday"));
+			$release_date = date("Y-m-d", strtotime("last wednesday") );
 		}
 
 		$this->paginate = array(
