@@ -1,3 +1,9 @@
+<?php
+/**
+ *@var $this View
+ */
+?>
+<?php $this->Html->script('page/shops.view.js', array('inline' => false)); ?>
 <?php echo $this->Element('headers/shops/view'); ?>
 
 <div class="row">
@@ -17,10 +23,15 @@
 				    <a href="<?php echo $photo['photo_path']; ?>" title="<?php echo $shop['Store']['name']; ?> Photo" class="shop_photo" data-gallery="gallery" <?php if ($cnt==0) { echo " style='display:none;' "; } ?>><img src="<?php echo $photo['photo_path']; ?>" border="0" /></a>
 				    <?php $cnt++; ?>
 				<?php } ?>
-			</div>		
+			</div>
 
 		<?php } ?>
 
+		<?php if($shop['Store']['latitude'] && $shop['Store']['longitude']) { ?>
+			<div class="row">
+				<div id="shop-map" class="span4" data-lat="<?php echo $shop['Store']['latitude']; ?>" data-long="<?php echo $shop['Store']['longitude']; ?>"></div>
+			</div>
+		<?php } ?>
 	</div>
 
 	<div class="span8 shop_detail">
