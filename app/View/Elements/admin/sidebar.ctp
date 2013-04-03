@@ -11,8 +11,11 @@
 		<li><?php echo $this->Html->link(__('Creator Types'), array('controller' => 'admin', 'action' => 'creatorTypes')); ?></li>
 		<li><?php echo $this->Html->link(__('Publishers'), array('controller' => 'admin', 'action' => 'publishers')); ?></li>
 		<li><?php echo $this->Html->link(__('Series'), array('controller' => 'admin', 'action' => 'series')); ?></li>
+		<li><?php echo $this->Html->link(__('Sections'), array('controller' => 'admin', 'action' => 'sections')); ?></li>
 		<li><?php echo $this->Html->link(__('Stores'), array('controller' => 'admin', 'action' => 'stores')); ?></li>
 		<li><?php echo $this->Html->link(__('Users'), array('controller' => 'admin', 'action' => 'users')); ?></li>
+		<li class="divider"></li>
+		<li><?php echo $this->Html->link(__('Index'), '/'); ?></li>
 		<li class="divider"></li>
 		<li><?= $this->Session->read('Auth.User.email'); ?></li>
 	</ul>
