@@ -122,7 +122,7 @@ a {
 	float: right;
 }
 
-.item_detail {
+.item_detail, .shop_detail {
 	font-size: 20px;
 	color: #78b0e9;
 }
@@ -135,15 +135,34 @@ h2 {
 	border: 3px solid #000;
 }
 
-
-.creator_type h4 {
+.creator_type h4, .store_hours h4 {
 	color: #fff !important;
 	padding-bottom: 2px;
 	margin: 5px 0px 0px 0px;
 }
 
+.store_hours {
+	margin-top: 20px;
+}
+
 .item_description {
 	margin-top: 20px;
+}
+
+.shop_photo img {
+	max-width: 60px;
+	overflow: hidden;
+	max-height: 60px;
+	border: 3px solid darken(@kapow_blue, 90%);
+	margin: 4px 3px 1px 0px;
+}
+
+.store_main_photo {
+	border: 3px solid darken(@kapow_blue, 90%);
+}
+
+#gallery {
+	margin-top: 10px;
 }
 
 #footer {

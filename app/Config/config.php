@@ -8,6 +8,10 @@
     	),
     	'root_domain' => 'http://www.previewsworld.com',
     	'root_domain_path' => '/Home/1/1/71/',
+
+    	'store_img_path' => '/Users/dustin/documents/workspace/kapow.biz/app/webroot/img/stores',
+    	'store_img_web_path' => '/img/stores',
+    	
     	'icon_path' => '/Users/dustin/documents/workspace/kapow.biz/app/webroot/img/covers',
     	'icon_web_path' => '/img/covers',
     	'thumb_path' => '/Users/dustin/documents/workspace/kapow.biz/app/webroot/img/covers/thumbs',
@@ -17,6 +21,7 @@
 					'key' => 'AIzaSyClOyMOup8oRCO_g9sl82pIHePtosMA7w8',
 					'places_url' => 'https://maps.googleapis.com/maps/api/place/textsearch/json?query=%s&key=%s&sensor=false&types=book_store',
 					'details_url' => 'https://maps.googleapis.com/maps/api/place/details/json?reference=%s&sensor=false&key=%s',
+					'photos_url' => 'https://maps.googleapis.com/maps/api/place/photo?maxwidth=%s&photoreference=%s&sensor=false&key=%s'		
 				)
 			)
   	);

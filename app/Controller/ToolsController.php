@@ -8,7 +8,7 @@ App::uses('AppController', 'Controller');
 class ToolsController extends AppController {
 
 	public $name = 'Tools';
-	public $uses = array('Item','Section','Publisher','Series','Creator','CreatorType','ItemCreator', 'Store','Tag','ItemTag');
+	public $uses = array('Item','Section','Publisher','Series','Creator','CreatorType','ItemCreator', 'Store','Tag','ItemTag','StorePhoto');
 	public $components = array('Curl');
 	public $helpers = array('Common');
 	
@@ -887,6 +887,55 @@ class ToolsController extends AppController {
 		echo sprintf('%s<br />', $data);
 		parent::log($data, 'tools');
 	}
+	
+	
+	
+	public function import_store_photos() {
+
+		set_time_limit(0);	
+		
+		## get stores that have a google reference id..
+		$i = 0;
+		$stores = $this->Store->find('all', array('conditions' => array('Store.google_reference <> ""'), 'recursive' => -1));
+		foreach ($stores as $s) {
+
+			$i++;
+			echo "$i ] working [" . $s['Store']['name'] . "] ... <br/>";
+			
+			$url = sprintf(Configure::read('Settings.API.google.details_url'), $s['Store']['google_reference'], Configure::read('Settings.API.google.key'));
+			$results = file_get_contents($url);
+			$results = json_decode($results);
+
+			$pc = 1;
+			if (@$results->result->photos) {
+				foreach ($results->result->photos as $p) {
+
+					$photo_url = sprintf(Configure::read('Settings.API.google.photos_url'), $p->width, $p->photo_reference, Configure::read('Settings.API.google.key'));
+					$img = $this->Curl->getStoreImage($photo_url, $s['Store']['id'], $pc);
+					
+					echo "img = " . $img . "<br/>";
+
+					## store this in store_photos... 
+					$store_photo = array();
+					$store_photo['store_id'] = $s['Store']['id'];
+					$store_photo['photo_path'] = $img;
+					
+					$this->StorePhoto->create();
+					$this->StorePhoto->save($store_photo);					
+					
+					$pc++;					
+				}
+			}
+			
+			
+			
+		}
+
+		exit;
+		
+	}
+	
+	
 }
 
 ?>

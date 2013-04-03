@@ -41,6 +41,32 @@
 		        return $web_path;
       		}       
     	}		
+    	
+	    function getStoreImage($img, $store_id, $image_id) {
+	    
+			set_time_limit(0);	
+	    
+      		$local_path = Configure::read('Settings.store_img_path') . "/" . $store_id . "/" . $image_id . ".jpg";
+      		$web_path   = Configure::read('Settings.store_img_web_path') . "/" . $store_id . "/" . $image_id . ".jpg";
+      		
+      		if (file_exists($local_path)) {
+        		return $web_path;        
+      		} else {
+        		@mkdir(dirname($local_path), 0755, true);        		
+        
+        		$ch = curl_init();
+		        curl_setopt ($ch, CURLOPT_URL, $img);
+		        curl_setopt ($ch, CURLOPT_RETURNTRANSFER, 1);
+		        curl_setopt ($ch, CURLOPT_CONNECTTIMEOUT, 0);
+		        curl_setopt($ch, CURLOPT_FOLLOWLOCATION, TRUE);			
+		        $fc = curl_exec($ch);
+		        curl_close($ch);
+    
+		        $new_img = imagecreatefromstring($fc);
+		        imagejpeg($new_img, $local_path, 100);
+		        return $web_path;
+      		}       
+    	}	    	
     			
 		function _getUniqueName() {
 			$chars = "abcdefghijkmnopqrstuvwxyz023456789";

@@ -14,6 +14,7 @@
 			echo $this->Html->css('core');
 			echo $this->Html->css('color');
 			echo $this->Html->css('style');
+			echo $this->Html->css('bootstrap-image-gallery.min');
 			echo $this->fetch('css');
 			
 			echo $this->Html->script('libs/jquery');
@@ -21,6 +22,9 @@
 			echo $this->Html->script('libs/jquery-ui-map');
 			echo $this->Html->script('libs/jquery.infinitescroll');
 
+			echo $this->Html->script('libs/image-load');
+			echo $this->Html->script('libs/bootstrap-image-gallery.min');
+			
 			echo $this->fetch('script');
 		?>
 		<link href='http://fonts.googleapis.com/css?family=Open+Sans+Condensed:300' rel='stylesheet' type='text/css'>
@@ -42,17 +46,8 @@
 			</div>
 			
 		</div>
-		
-<!--
-		<div class="container">
-			<div class="well">
-				<small>
-					<?php echo $this->element('sql_dump'); ?>
-				</small>
-			</div>
-		</div>		
--->
+
 	</body>
-	<script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?key=AIzaSyClOyMOup8oRCO_g9sl82pIHePtosMA7w8&sensor=true"></script>
+	<script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?key=AIzaSyAf5DtChzuCwa8uGr4gehSrhklvVHjzKhk&sensor=true"></script>
 	<?php echo $this->Facebook->init(); ?>
 </html>

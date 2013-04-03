@@ -18,11 +18,15 @@ body{background-color:#3366cc;font-family:'Open Sans Condensed',sans-serif;backg
 a:hover{color:#85a3e0 !important;}
 a{color:#adc2eb !important;}
 .nav{float:right;}
-.item_detail{font-size:20px;color:#78b0e9;}
+.item_detail,.shop_detail{font-size:20px;color:#78b0e9;}
 h2{color:#000 !important;}
 .detail_img{border:3px solid #000;}
-.creator_type h4{color:#fff !important;padding-bottom:2px;margin:5px 0px 0px 0px;}
+.creator_type h4,.store_hours h4{color:#fff !important;padding-bottom:2px;margin:5px 0px 0px 0px;}
+.store_hours{margin-top:20px;}
 .item_description{margin-top:20px;}
+.shop_photo img{max-width:60px;overflow:hidden;max-height:60px;border:3px solid #000000;margin:4px 3px 1px 0px;}
+.store_main_photo{border:3px solid #000000;}
+#gallery{margin-top:10px;}
 #footer{margin-bottom:50px;}
 .item_grid{margin-top:30px;}
 .item_grid_row{margin-bottom:5px;}

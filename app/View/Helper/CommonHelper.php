@@ -6,6 +6,41 @@ class CommonHelper extends Helper {
 
     public $helpers = array('Html');
 
+    public function store_hours($open, $close) {
+	    $tim = "";
+	    if ($open == 0) {
+		    return "Closed";
+	    } else {
+
+		    ## split parts by last two chars to get mins, remainder is time..
+		    $open_hour = substr($open."", 0, -2);
+		    $open_min  = substr($open."", -2);
+		    
+		    if ($open_min != "00") { $open_sub = ":" . $open_min; } else { $open_sub = ""; }
+		    if ($open_hour > 12) {
+			    $tim = (($open_hour+0)-12) . $open_sub . " PM to ";
+		    } elseif ($open_hour == 12) {
+			    $tim = "12" . $open_sub . " PM to ";
+		    } else {
+			    $tim = $open_hour . $open_sub . " AM to ";
+		    }
+
+		    $close_hour = substr($close."", 0, -2);
+		    $close_min  = substr($close."", -2);
+					    
+		    if ($close_min != "00") { $close_sub = ":" . $close_min; } else { $close_sub = ""; }
+		    if ($close_hour > 12) {
+			    $tim .= (($close_hour+0)-12) . $close_sub . " PM";
+		    } elseif ($close_hour == 12) {
+			    $tim .= "12" . $close_sub . " PM";
+		    } else {
+			    $tim .= $close_hour . $close_sub . " AM";
+		    }					    
+					    
+			return $tim;		    
+	    }
+    }
+
 	public function printing($printing) {
 		switch ($printing) {			
 			case "1":

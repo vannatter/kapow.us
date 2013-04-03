@@ -31,6 +31,22 @@ class Store extends AppModel {
 			'order' => ''
 		)
 	);
+	
+	public $hasMany = array(
+		'StorePhoto' => array(
+			'className' => 'StorePhoto',
+			'foreignKey' => 'store_id',
+			'dependent' => false,
+			'conditions' => '',
+			'fields' => '',
+			'order' => '',
+			'limit' => '',
+			'offset' => '',
+			'exclusive' => '',
+			'finderQuery' => '',
+			'counterQuery' => ''
+		)
+	);	
 
 	public function add($store=array()) {
 		if($store && count($store) > 0) {
