@@ -27,6 +27,7 @@
 			
 			echo $this->fetch('script');
 		?>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 		<link href='http://fonts.googleapis.com/css?family=Open+Sans+Condensed:300' rel='stylesheet' type='text/css'>
  	</head>
 
