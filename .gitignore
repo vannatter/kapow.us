@@ -9,3 +9,5 @@
 /app/webroot/img/covers/*
 /app/webroot/img/stores
 /app/webroot/img/stores/*
+/app/Config/database.php
+/app/Config/config.php
