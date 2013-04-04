@@ -1,4 +1,6 @@
-/app/tmp
+/app/tmp/cache/models/*
+/app/tmp/cache/persistent/*
+/app/tmp/logs/*
 /lib/Cake/Console/Templates/skel/tmp/
 /vendors
 /build
