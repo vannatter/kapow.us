@@ -59,8 +59,19 @@ class ItemsController extends AppController {
 		if ($first_day > 4) {
 			$release_date = date("Y-m-d", strtotime("this wednesday"));
 		}
-	
-		$items = $this->Item->find('all', array('conditions' => array('Item.item_date' => $release_date, 'Section.category_id' => $content_type), 'limit' => 2500, 'recursive' => 4));
+
+		$this->paginate = array(
+			'conditions' => array(
+				'Item.item_date' => $release_date,
+				'Section.category_id' => $content_type
+			),
+			'limit' => 24,
+			'recursive' => 4
+		);
+
+		$items = $this->paginate('Item');
+
+		#$items = $this->Item->find('all', array('conditions' => array('Item.item_date' => $release_date, 'Section.category_id' => $content_type), 'limit' => 2500, 'recursive' => 4));
 		$categories = $this->Category->find('all', array('limit' => 2500, 'recursive' => -1));
 		
 		$this->set('items', $items);

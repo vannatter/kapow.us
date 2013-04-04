@@ -30,6 +30,7 @@
  *@var $this View
  */
 ?>
+<?php if(isset($items) && is_array($items) && count($items) > 0) { ?>
 <div id="item-scroll-list">
 	<?php $row = 0; ?>
 	<?php foreach($items as $item) { ?>
@@ -60,3 +61,4 @@
 		<?php echo $this->Paginator->next('next'); ?>
 	</div>
 </div>
+<?php } ?>
