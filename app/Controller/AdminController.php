@@ -211,14 +211,49 @@ class AdminController extends AppController {
 		if($this->request->is('put')) {
 			$data = Sanitize::clean($this->request->data);
 
-			$data['Publisher']['id'] = $id;
+			$skip = false;
+			if(isset($data['Publisher']['photo_upload']['name'])) {
+				$uploadPath = Configure::read('Settings.publisher_img_path');
+				$uploadPath .= '/' . $id . '/';
 
-			if($this->Publisher->save($data)) {
-				$this->Session->setFlash(__('Publisher Saved!'), 'alert', array(
-					'plugin' => 'TwitterBootstrap',
-					'class' => 'alert-success'
-				));
-				$this->redirect('/admin/publishers');
+				## process the upload, make sure its valid
+				$upload = $data['Publisher']['photo_upload'];
+
+				if((isset($upload['error']) && $upload['error'] == 0) || (!empty($upload['tmp_name']) && $upload['tmp_name'] != 'none')) {
+					$name = $upload['name'];
+
+					$allowedExts = array('jpg', 'jpeg', 'gif', 'png');
+					$allowedTypes = array('image/gif', 'image/jpeg', 'image/pjpeg', 'image/png');
+					$extension = end(explode(".", $name));
+
+					if(!in_array($upload['type'], $allowedTypes) || !in_array($extension, $allowedExts)) {
+						$this->Publisher->validationErrors['publisher_photo'] = array('Invalid Type');
+						$skip = true;
+					} else {
+						if(!file_exists($uploadPath)) {
+							mkdir($uploadPath);
+							//copy(Configure::read('Settings.Paths.Raw.media') . 'index.php', $uploadPath . 'index.php');
+						}
+
+						move_uploaded_file($upload['tmp_name'], $uploadPath . $name);
+
+						unlink($upload['tmp_name']);
+
+						$data['Publisher']['publisher_photo'] = Configure::read('Settings.publisher_img_web_path') . '/' . $id . '/' . $name;
+					}
+				}
+			}
+
+			if(!$skip) {
+				$data['Publisher']['id'] = $id;
+
+				if($this->Publisher->save($data)) {
+					$this->Session->setFlash(__('Publisher Saved!'), 'alert', array(
+						'plugin' => 'TwitterBootstrap',
+						'class' => 'alert-success'
+					));
+					$this->redirect('/admin/publishers');
+				}
 			}
 		} else {
 			$this->Publisher->id = $id;
