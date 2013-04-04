@@ -107,17 +107,52 @@ class AdminController extends AppController {
 	}
 
 	public function creatorsEdit($id) {
-		if($this->request->is('put')) {
+		if($this->request->is('put') || $this->request->is('post')) {
 			$data = Sanitize::clean($this->request->data);
 
-			$data['Creator']['id'] = $id;
+			$skip = false;
+			if(isset($data['Creator']['photo_upload']['name'])) {
+				$uploadPath = Configure::read('Settings.creator_img_path');
+				$uploadPath .= '/' . $id . '/';
 
-			if($this->Creator->save($data)) {
-				$this->Session->setFlash(__('Creator Saved!'), 'alert', array(
-					'plugin' => 'TwitterBootstrap',
-					'class' => 'alert-success'
-				));
-				$this->redirect('/admin/creators');
+				## process the upload, make sure its valid
+				$upload = $data['Creator']['photo_upload'];
+
+				if((isset($upload['error']) && $upload['error'] == 0) || (!empty($upload['tmp_name']) && $upload['tmp_name'] != 'none')) {
+					$name = $upload['name'];
+
+					$allowedExts = array('jpg', 'jpeg', 'gif', 'png');
+					$allowedTypes = array('image/gif', 'image/jpeg', 'image/pjpeg', 'image/png');
+					$extension = end(explode(".", $name));
+
+					if(!in_array($upload['type'], $allowedTypes) || !in_array($extension, $allowedExts)) {
+						$this->Creator->validationErrors['creator_photo'] = array('Invalid Type');
+						$skip = true;
+					} else {
+						if(!file_exists($uploadPath)) {
+							mkdir($uploadPath);
+							//copy(Configure::read('Settings.Paths.Raw.media') . 'index.php', $uploadPath . 'index.php');
+						}
+
+						move_uploaded_file($upload['tmp_name'], $uploadPath . $name);
+
+						unlink($upload['tmp_name']);
+
+						$data['Creator']['creator_photo'] = Configure::read('Settings.creator_img_web_path') . '/' . $id . '/' . $name;
+					}
+				}
+			}
+
+			if(!$skip) {
+				$data['Creator']['id'] = $id;
+
+				if($this->Creator->save($data)) {
+					$this->Session->setFlash(__('Creator Saved!'), 'alert', array(
+						'plugin' => 'TwitterBootstrap',
+						'class' => 'alert-success'
+					));
+					$this->redirect('/admin/creators');
+				}
 			}
 		} else {
 			$this->Creator->id = $id;
