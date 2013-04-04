@@ -63,8 +63,6 @@ class CommonHelper extends Helper {
 	
     public function thumb($orig, $which="25p") {
 
-	    echo "WWW_ROOT=" . WWW_ROOT . "<br/>";
-	    
 		// build 50p    
 		$percent = 0.5;
 		$thumb_ext = '_50p.jpg';
