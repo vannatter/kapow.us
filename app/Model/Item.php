@@ -2,6 +2,8 @@
 App::uses('AppModel', 'Model');
 class Item extends AppModel {
 
+	public $actsAs = array('Containable');
+
 	public $hasMany = array(
 		'ItemCreator' => array(
 			'className' => 'ItemCreator',
