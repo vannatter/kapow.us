@@ -27,10 +27,9 @@
 		Kapow! is creating a new platform for finding, tracking and interacting with your favorite comics, publishers, artists and local comic shops.
 		We're creating tools that make finding new stuff you want much easier (and keeping track of what you already love so you never miss something new).
 		<br/><br/>
-		Log into your account on the left using your Kapow! account or connect with Facebook, or you can create a new account now by clicking the big button below!
+		Log into your account on the left using your Kapow! account or connect with Facebook. If you need a new account, click the big button below to sign up for free today.
 		<br/><br/><br/>
 		
 		<?php echo $this->Html->link(__('Create Your Free Kapow! Account'), array('controller' => 'users', 'action' => 'register'), array('class' => 'create_account btn btn-large btn-custom')); ?>
-		
 	</div>
 </div>
