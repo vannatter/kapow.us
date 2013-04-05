@@ -44,6 +44,7 @@
 			</div>
 			
 			<div id="footer" class="container">
+				<?php echo $this->element('menu/footer'); ?>
 			</div>
 			
 		</div>
