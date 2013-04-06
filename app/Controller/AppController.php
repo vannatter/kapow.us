@@ -29,7 +29,8 @@ class AppController extends Controller {
 			'authorize' => 'Controller'
 		),
 		'Facebook.Connect' => array('model' => 'User'),
-		'Session'
+		'Session',
+		'DebugKit.Toolbar'
 	);
 	public $helpers = array(
 		'Common',
