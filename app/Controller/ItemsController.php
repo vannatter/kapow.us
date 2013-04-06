@@ -98,6 +98,7 @@ class ItemsController extends AppController {
 		}
 
 		$this->Publisher->unbindModel(array('hasMany' => array('Item')), false);
+		$this->Tag->unbindModel(array('hasMany' => array('ItemTag')), false);
 
 		$this->paginate = array(
 			'conditions' => array(
@@ -105,7 +106,7 @@ class ItemsController extends AppController {
 				'Section.category_id' => $content_type
 			),
 			'limit' => 1,
-			'recursive' => 3
+			'recursive' => 4
 		);
 
 		$items = $this->paginate('Item');
