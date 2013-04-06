@@ -4,7 +4,7 @@ App::uses('AppController', 'Controller');
 class ItemsController extends AppController {
 
 	public $name = 'Items';
-	public $uses = array('Item','Section','Publisher','Series','Creator','CreatorType','ItemCreator','Category');
+	public $uses = array('Item','Section','Publisher','Series','Creator','CreatorType','ItemCreator','Category','Tag');
 	public $paginate = array(
 		'Item' => array(
 			'limit' => 24,
@@ -97,8 +97,8 @@ class ItemsController extends AppController {
 			$release_date = date("Y-m-d", strtotime("last wednesday") );
 		}
 
-		$this->Item->Publisher->unbindModel(array('hasMany' => array('Item')), false);
-		$this->Item->Tag->unbindModel(array('hasMany' => array('ItemTag')), false);
+		$this->Publisher->unbindModel(array('hasMany' => array('Item')), false);
+		$this->Tag->unbindModel(array('hasMany' => array('ItemTag')), false);
 
 		$this->paginate = array(
 			'conditions' => array(
