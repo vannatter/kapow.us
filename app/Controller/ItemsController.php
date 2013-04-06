@@ -103,7 +103,7 @@ class ItemsController extends AppController {
 				'Section.category_id' => $content_type
 			),
 			'limit' => 1,
-			'recursive' => 4
+			'recursive' => 3
 		);
 
 		$items = $this->paginate('Item');
