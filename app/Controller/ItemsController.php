@@ -97,6 +97,8 @@ class ItemsController extends AppController {
 			$release_date = date("Y-m-d", strtotime("last wednesday") );
 		}
 
+		$this->Publisher->unbindModel(array('hasMany' => array('Item')), false);
+
 		$this->paginate = array(
 			'conditions' => array(
 				'Item.item_date' => $release_date,
