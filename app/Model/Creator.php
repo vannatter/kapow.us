@@ -4,7 +4,21 @@ class Creator extends AppModel {
 
 	public $actsAs = array('Containable');
 
-	
+	public $hasMany = array(
+		'ItemCreator' => array(
+			'className' => 'ItemCreator',
+			'foreignKey' => 'creator_id',
+			'dependent' => false,
+			'conditions' => '',
+			'fields' => '',
+			'order' => '',
+			'limit' => '',
+			'offset' => '',
+			'exclusive' => '',
+			'finderQuery' => '',
+			'counterQuery' => ''
+		)
+	);
 
 	public function getsetCreator($creator_name) {
 

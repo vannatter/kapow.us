@@ -6,8 +6,23 @@ class CreatorsController extends AppController {
 
 	public $name = 'Creators';
 	public $uses = array('Item','Section','Publisher','Series','Creator','CreatorType','ItemCreator','Category');
+	public $paginate = array(
+		'Creator' => array(
+			'order' => array('Creator.creator_name' => 'ASC'),
+			'limit' => 24,
+			'contain' => array(
+				'ItemCreator' => array(
+					'Item',
+					'limit' => 1,
+					'order' => array('ItemCreator.created' => 'DESC')
+				)
+			)
+		)
+	);
 
 	public function index() {
+		$creators = $this->paginate('Creator');
+		$this->set('creators', $creators);
 	}
 
 	public function view($creator_id, $creator_name) {

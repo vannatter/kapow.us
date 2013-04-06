@@ -2,6 +2,8 @@
 App::uses('AppModel', 'Model');
 class ItemCreator extends AppModel {
 
+	public $actsAs = array('Containable');
+
 	public $belongsTo = array(
 		'Creator' => array(
 			'className' => 'Creator',
@@ -16,8 +18,8 @@ class ItemCreator extends AppModel {
 			'conditions' => '',
 			'fields' => '',
 			'order' => ''
-		)
-		
+		),
+		'Item'
 	);		
 	
 	

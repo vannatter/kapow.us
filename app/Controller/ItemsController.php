@@ -27,11 +27,31 @@ class ItemsController extends AppController {
 			exit;
 		}
 
-		$this->Publisher->unbindModel(array('hasMany' => array('Item')), false);
-		$this->Tag->unbindModel(array('hasMany' => array('ItemTag')), false);
-		$this->ItemTag->unbindModel(array('belongsTo' => array('Item')), false);
+		#$this->Publisher->unbindModel(array('hasMany' => array('Item')), false);
+		#$this->Tag->unbindModel(array('hasMany' => array('ItemTag')), false);
+		#$this->ItemTag->unbindModel(array('belongsTo' => array('Item')), false);
 
-		$item = $this->Item->find('first', array('conditions' => array('Item.id' => $item_id), 'limit' => 1, 'recursive' => 4));
+		$item = $this->Item->find('first', array(
+			'conditions' => array(
+				'Item.id' => $item_id
+			),
+			'limit' => 1,
+			'contain' => array(
+				'Section' => array(
+					'Category'
+				),
+				'Publisher',
+				'Series',
+				'ItemCreator' => array(
+					'Creator',
+					'CreatorType'
+				),
+				'ItemTag' => array(
+					'Tag'
+				)
+			)
+		));
+
 		if (!$item) {
 			$this->Session->setFlash('Item not found.', 'flash_neg');
 			$this->redirect("/");
@@ -64,9 +84,9 @@ class ItemsController extends AppController {
 			$release_date = date("Y-m-d", strtotime("this wednesday"));
 		}
 
-		$this->Publisher->unbindModel(array('hasMany' => array('Item')), false);
-		$this->Tag->unbindModel(array('hasMany' => array('ItemTag')), false);
-		$this->ItemTag->unbindModel(array('belongsTo' => array('Item')), false);
+		#$this->Publisher->unbindModel(array('hasMany' => array('Item')), false);
+		#$this->Tag->unbindModel(array('hasMany' => array('ItemTag')), false);
+		#$this->ItemTag->unbindModel(array('belongsTo' => array('Item')), false);
 
 		$this->paginate = array(
 			'conditions' => array(
@@ -74,7 +94,16 @@ class ItemsController extends AppController {
 				'Section.category_id' => $content_type
 			),
 			'limit' => 24,
-			'recursive' => 4
+			'contain' => array(
+				'Section',
+				'Publisher',
+				'Series',
+				'ItemCreator' => array(
+					'Creator',
+					'CreatorType'
+				),
+				'ItemTag'
+			)
 		);
 
 		$items = $this->paginate('Item');
@@ -105,9 +134,9 @@ class ItemsController extends AppController {
 			$release_date = date("Y-m-d", strtotime("last wednesday") );
 		}
 
-		$this->Publisher->unbindModel(array('hasMany' => array('Item')), false);
-		$this->Tag->unbindModel(array('hasMany' => array('ItemTag')), false);
-		$this->ItemTag->unbindModel(array('belongsTo' => array('Item')), false);
+		#$this->Publisher->unbindModel(array('hasMany' => array('Item')), false);
+		#$this->Tag->unbindModel(array('hasMany' => array('ItemTag')), false);
+		#$this->ItemTag->unbindModel(array('belongsTo' => array('Item')), false);
 
 		$this->paginate = array(
 			'conditions' => array(
@@ -115,7 +144,16 @@ class ItemsController extends AppController {
 				'Section.category_id' => $content_type
 			),
 			'limit' => 24,
-			'recursive' => 4
+			'contain' => array(
+				'Section',
+				'Publisher',
+				'Series',
+				'ItemCreator' => array(
+					'Creator',
+					'CreatorType'
+				),
+				'ItemTag'
+			)
 		);
 
 		$items = $this->paginate('Item');
