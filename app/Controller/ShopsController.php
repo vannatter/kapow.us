@@ -108,11 +108,15 @@ class ShopsController extends AppController {
 				}
 
 				## get lat/long from location
-				$loc = json_decode(file_get_contents('http://where.yahooapis.com/geocode?q=' . str_replace(' ', '+', $coordAddress) . '&flags=J&appid=S7cyGA32'));
+				$locUrl = sprintf('http://maps.googleapis.com/maps/api/geocode/json?address=%s&sensor=false', str_replace(' ', '+', $coordAddress));
+				$loc = json_decode(file_get_contents($locUrl));
 
-				if($loc->ResultSet->Error == 0) {
-					$lat = $loc->ResultSet->Results[0]->latitude;
-					$long = $loc->ResultSet->Results[0]->longitude;
+				if($loc->status == 'OK') {
+					$loc = $loc->results;
+					$loc = $loc[0];
+
+					$lat = $loc->geometry->bounds->northeast->lat;
+					$long = $loc->geometry->bounds->northeast->lng;
 				}
 			}
 
