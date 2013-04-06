@@ -98,6 +98,9 @@ class ItemsController extends AppController {
 			$release_date = date("Y-m-d", strtotime("last wednesday") );
 		}
 
+		echo "x";
+		exit;
+		
 		$this->paginate = array(
 			'conditions' => array(
 				'Item.item_date' => $release_date,
@@ -107,12 +110,8 @@ class ItemsController extends AppController {
 			'recursive' => 4
 		);
 
+		
 		$items = $this->paginate('Item');
-		
-		echo "<pre>";
-		print_r($items);
-		
-		exit;
 		
 
 		#$items = $this->Item->find('all', array('conditions' => array('Item.item_date' => $release_date, 'Section.category_id' => $content_type), 'limit' => 2500, 'recursive' => 4));
