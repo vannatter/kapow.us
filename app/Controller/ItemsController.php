@@ -27,6 +27,10 @@ class ItemsController extends AppController {
 			exit;
 		}
 
+		$this->Publisher->unbindModel(array('hasMany' => array('Item')), false);
+		$this->Tag->unbindModel(array('hasMany' => array('ItemTag')), false);
+		$this->ItemTag->unbindModel(array('belongsTo' => array('Item')), false);
+
 		$item = $this->Item->find('first', array('conditions' => array('Item.id' => $item_id), 'limit' => 1, 'recursive' => 4));
 		if (!$item) {
 			$this->Session->setFlash('Item not found.', 'flash_neg');
