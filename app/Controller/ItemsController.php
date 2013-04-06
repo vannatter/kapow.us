@@ -99,7 +99,7 @@ class ItemsController extends AppController {
 
 		$this->Publisher->unbindModel(array('hasMany' => array('Item')), false);
 		$this->Tag->unbindModel(array('hasMany' => array('ItemTag')), false);
-		$this->ItemTag->unbindModel(array('hasMany' => array('Item')), false);
+		$this->ItemTag->unbindModel(array('belongsTo' => array('Item')), false);
 
 		$this->paginate = array(
 			'conditions' => array(
