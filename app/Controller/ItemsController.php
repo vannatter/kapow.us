@@ -60,6 +60,10 @@ class ItemsController extends AppController {
 			$release_date = date("Y-m-d", strtotime("this wednesday"));
 		}
 
+		$this->Publisher->unbindModel(array('hasMany' => array('Item')), false);
+		$this->Tag->unbindModel(array('hasMany' => array('ItemTag')), false);
+		$this->ItemTag->unbindModel(array('belongsTo' => array('Item')), false);
+
 		$this->paginate = array(
 			'conditions' => array(
 				'Item.item_date' => $release_date,
@@ -106,20 +110,12 @@ class ItemsController extends AppController {
 				'Item.item_date' => $release_date,
 				'Section.category_id' => $content_type
 			),
-			'limit' => 1,
+			'limit' => 24,
 			'recursive' => 4
 		);
 
 		$items = $this->paginate('Item');
 		
-		echo "<pre>";
-		print_r($items);
-		echo "</pre>";
-		
-
-echo "xxx";
-exit;
-
 		#$items = $this->Item->find('all', array('conditions' => array('Item.item_date' => $release_date, 'Section.category_id' => $content_type), 'limit' => 2500, 'recursive' => 4));
 		$categories = $this->Category->find('all', array('limit' => 2500, 'recursive' => -1));
 		
@@ -131,7 +127,7 @@ exit;
 	}
 
 	public function viewById($id) {
-		if($item = $this->Item->findById($id)) {
+		if ($item = $this->Item->findById($id)) {
 			$this->redirect(sprintf('/items/%s', parent::seoize($id, $item['Item']['item_name'])), 301);
 		}
 	}
