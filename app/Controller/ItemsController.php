@@ -4,7 +4,7 @@ App::uses('AppController', 'Controller');
 class ItemsController extends AppController {
 
 	public $name = 'Items';
-	public $uses = array('Item','Section','Publisher','Series','Creator','CreatorType','ItemCreator','Category','Tag');
+	public $uses = array('Item','Section','Publisher','Series','Creator','CreatorType','ItemCreator','Category','Tag','ItemTag');
 	public $paginate = array(
 		'Item' => array(
 			'limit' => 24,
@@ -99,6 +99,7 @@ class ItemsController extends AppController {
 
 		$this->Publisher->unbindModel(array('hasMany' => array('Item')), false);
 		$this->Tag->unbindModel(array('hasMany' => array('ItemTag')), false);
+		$this->ItemTag->unbindModel(array('hasMany' => array('Item')), false);
 
 		$this->paginate = array(
 			'conditions' => array(
