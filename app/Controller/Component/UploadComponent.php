@@ -2,9 +2,12 @@
 App::uses('Component', 'Controller');
 
 class UploadComponent extends Component {
-	public function image($upload, $uploadPath) {
+	public function image($upload, $uploadPath, $name=null) {
 		if((isset($upload['error']) && $upload['error'] == 0) || (!empty($upload['tmp_name']) && $upload['tmp_name'] != 'none')) {
-			$name = $upload['name'];
+
+			if(!$name) {
+				$name = $upload['name'];
+			}
 
 			$allowedExts = array('jpg', 'jpeg', 'gif', 'png');
 			$allowedTypes = array('image/gif', 'image/jpeg', 'image/pjpeg', 'image/png');

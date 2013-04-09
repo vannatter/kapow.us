@@ -35,8 +35,9 @@
 	</div>
 
 	<div class="span8 shop_detail">
+		<?php echo $this->Element('shops/actions'); ?>
 		<h2><?php echo $shop['Store']['name']; ?></h2>
-	
+
 		<div class="store_address">
 			<?php echo $shop['Store']['address']; ?><br/>
 			<?php echo $shop['Store']['city']; ?>, <?php echo $shop['Store']['state']; ?> <?php echo $shop['Store']['zip']; ?> <?php echo $shop['Store']['country_code']; ?><br/>

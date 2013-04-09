@@ -7,7 +7,8 @@ App::uses('AppController', 'Controller');
  */
 class ShopsController extends AppController {
 	public $name = 'Shops';
-	public $uses = array('Store');
+	public $uses = array('Store', 'StorePhoto');
+	public $components = array('Upload');
 
 	public function index() {
 	}
@@ -153,5 +154,66 @@ class ShopsController extends AppController {
 		}
 
 		return null;
+	}
+
+	public function addImage($id=null) {
+		if(!$id) {
+			$this->Session->setFlash(__('Invalid Shop'), 'alert', array(
+				'plugin' => 'TwitterBootstrap',
+				'class' => 'alert-error'
+			));
+			$this->redirect('/shops');
+		}
+
+		if(!$this->Session->read('Auth.User')) {
+			$this->Session->setFlash(__('Not Logged In'), 'alert', array(
+				'plugin' => 'TwitterBootstrap',
+				'class' => 'alert-error'
+			));
+			$this->redirect('/shops');
+		}
+
+		$this->Store->id = $id;
+		if(!$this->Store->exists()) {
+			$this->Session->setFlash(__('Invalid Shop'), 'alert', array(
+				'plugin' => 'TwitterBootstrap',
+				'class' => 'alert-error'
+			));
+			$this->redirect('/shops');
+		}
+
+		if($this->request->is('post') || $this->request->is('put')) {
+			$data = Sanitize::clean($this->request->data);
+
+			if(isset($data['StorePhoto']['photo_upload']['name']) && !empty($data['StorePhoto']['photo_upload']['name'])) {
+				$uploadPath = Configure::read('Settings.store_img_path');
+				$uploadPath .= '/' . $id . '/';
+
+				## process the upload, make sure its valid
+				$upload = $data['StorePhoto']['photo_upload'];
+				$name = uniqid() . '-' . $upload['name'];
+
+				if($msg = $this->Upload->image($upload, $uploadPath, $name)) {
+					$this->StorePhoto->validationErrors['photo_upload'] = $msg;
+				} else {
+					$data['StorePhoto']['photo_path'] = Configure::read('Settings.store_img_web_path') . '/' . $id . '/' . $name;
+					$data['StorePhoto']['uploader_user_id'] = $this->Auth->user('id');
+					$data['StorePhoto']['store_id'] = $id;
+
+					$this->StorePhoto->create($data);
+					if($this->StorePhoto->save($data)) {
+						$this->Session->setFlash(__('Photo Added'), 'alert', array(
+							'plugin' => 'TwitterBootstrap',
+							'class' => 'alert-success'
+						));
+					}
+				}
+			} else {
+				$this->StorePhoto->validationErrors['photo_upload'] = __('Invalid');
+			}
+		}
+
+		$this->Store->recursive = 0;
+		$this->set('shop', $this->Store->read(array('id', 'name')));
 	}
 }
