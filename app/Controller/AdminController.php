@@ -287,7 +287,7 @@ class AdminController extends AppController {
 	}
 
 	public function stores() {
-		$this->Store->recursive = 0;
+		$this->Store->recursive = -1;
 		$this->set('stores', $this->paginate('Store'));
 	}
 
