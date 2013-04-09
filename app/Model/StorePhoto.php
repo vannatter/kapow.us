@@ -12,5 +12,19 @@ class StorePhoto extends AppModel {
 		)
 	);		
 	
-	
+	public function remove($id) {
+		$this->id = $id;
+		if(!$this->exists()) {
+			return false;
+		}
+
+		$photo = $this->read();
+		$path = $photo['StorePhoto']['photo_path'];
+
+		unlink($path);
+
+		$this->delete($id);
+
+		return true;
+	}
 }

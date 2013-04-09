@@ -19,6 +19,7 @@
 		echo $this->Html->script('libs/jquery');
 		echo $this->Html->script('libs/bootstrap.min');
 		echo $this->Html->script('libs/bootstrap-datepicker');
+		echo $this->Html->script('admin');
 
 		echo $this->fetch('script');
 		?>

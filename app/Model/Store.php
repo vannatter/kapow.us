@@ -4,6 +4,7 @@ App::uses('AppModel', 'Model');
  * Store Model
  *
  * @property Hour $Hour
+ * @property StorePhoto $StorePhoto
  */
 class Store extends AppModel {
 
@@ -29,6 +30,10 @@ class Store extends AppModel {
 			'conditions' => '',
 			'fields' => '',
 			'order' => ''
+		),
+		'PrimaryPhoto' => array(
+			'className' => 'StorePhoto',
+			'conditions' => array('PrimaryPhoto.primary' => true)
 		)
 	);
 	

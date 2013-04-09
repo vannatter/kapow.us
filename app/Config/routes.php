@@ -192,6 +192,24 @@ Router::connect(
 	)
 );
 
+Router::connect(
+	'/admin/stores/deletePhoto/:id',
+	array('controller' => 'admin', 'action' => 'storesDeletePhoto'),
+	array(
+		'pass' => array('id'),
+		'id' => '[0-9]+'
+	)
+);
+
+Router::connect(
+	'/admin/stores/setPrimaryPhoto',
+	array('controller' => 'admin', 'action' => 'storesSetPrimaryPhoto'),
+	array(
+		'pass' => array('id'),
+		'id' => '[0-9]+'
+	)
+);
+
 	CakePlugin::routes();
 
 	require CAKE . 'Config' . DS . 'routes.php';

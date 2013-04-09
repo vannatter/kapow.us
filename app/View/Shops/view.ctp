@@ -11,7 +11,14 @@
 	
 		<?php if (@$shop['StorePhoto'][0]['photo_path']) { ?>
 		<div class="row">
-			<div class="span4"><img class="store_main_photo" src="<?php echo $shop['StorePhoto'][0]['photo_path']; ?>" /></div>			
+			<?php
+			if(isset($shop['PrimaryPhoto']['photo_path'])) {
+				$photoPath = $shop['PrimaryPhoto']['photo_path'];
+			} else {
+				$photoPath = $shop['StorePhoto'][0]['photo_path'];
+			}
+			?>
+			<div class="span4"><img class="store_main_photo" src="<?php echo $photoPath; ?>" /></div>
 		</div>
 		<?php } ?>
 

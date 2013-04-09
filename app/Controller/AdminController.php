@@ -319,6 +319,62 @@ class AdminController extends AppController {
 		}
 	}
 
+	public function storesDeletePhoto($id) {
+		$this->Store->StorePhoto->id = $id;
+		if(!$this->Store->StorePhoto->exists()) {
+			$this->Session->setFlash(__('Invalid Photo'), 'alert', array(
+				'plugin' => 'TwitterBootstrap',
+				'class' => 'alert-error'
+			));
+			$this->redirect($this->referer() . '#photos');
+		}
+
+		if($this->Store->StorePhoto->remove($id)) {
+			$this->Session->setFlash(__('Deleted'), 'alert', array(
+				'plugin' => 'TwitterBootstrap',
+				'class' => 'alert-success'
+			));
+		} else {
+			$this->Session->setFlash(__('Error deleting photo; try again'), 'alert', array(
+				'plugin' => 'TwitterBootstra',
+				'class' => 'alert-error'
+			));
+		}
+
+		$this->redirect($this->referer() . '#photos');
+	}
+
+	public function storesSetPrimaryPhoto() {
+		$result = array('error' => true, 'message' => __('Invalid'));
+
+		if(isset($this->request->query['photoId']) && isset($this->request->query['storeId'])) {
+			$id = Sanitize::clean($this->request->query['photoId']);
+			$storeId = Sanitize::clean($this->request->query['storeId']);
+
+			$this->Store->StorePhoto->id = $id;
+			if($this->Store->StorePhoto->exists()) {
+				## make sure the photo belongs to the current store
+				$photo = $this->Store->StorePhoto->read(array('id', 'store_id'));
+
+				if($photo['StorePhoto']['store_id'] == $storeId) {
+					## remove previous primary photo
+					$this->Store->StorePhoto->updateAll(array('StorePhoto.primary' => false), array('StorePhoto.store_id' => $storeId));
+
+					## set photo as primary
+					$this->Store->StorePhoto->id = $id;
+					$this->Store->StorePhoto->saveField('primary', true);
+
+					$result['error'] = false;
+				} else {
+					$result['message'] = __('Invalid Photo; wrong shop');
+				}
+			} else {
+				$result['message'] = __('Invalid Photo');
+			}
+		}
+		return new CakeResponse(array('body' => json_encode($result)));
+	}
+
 	public function users() {
 		$this->User->recursive = 0;
 		$this->set('users', $this->paginate('User'));
