@@ -23,8 +23,6 @@ class UploadComponent extends Component {
 
 				move_uploaded_file($upload['tmp_name'], $uploadPath . $name);
 
-				unlink($upload['tmp_name']);
-
 				return null;
 			}
 		}
