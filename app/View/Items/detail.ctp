@@ -22,5 +22,4 @@
 		</div>
 		<?php echo $this->Element('items/tags'); ?>
 	</div>
-
 </div>

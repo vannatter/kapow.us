@@ -26,7 +26,6 @@
 						path += '?terms='+ terms;
 					}
 				}
-
 				return path;
 			}
 		});

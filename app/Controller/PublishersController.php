@@ -55,15 +55,18 @@ class PublishersController extends AppController {
 	}
 
 	public function view($id, $name) {
-		if($publisher = $this->Publisher->findById($id)) {
-			debug($publisher);
+		if ($publisher = $this->Publisher->findById($id)) {
+			$this->set('publisher', $publisher);
+			$this->set('title_for_layout', ucwords(strtolower($publisher['Publisher']['publisher_name'])));
 		} else {
-			echo 'not found';
+			$this->Session->setFlash('Publisher not found!', 'flash_neg');
+			$this->redirect("/");
+			exit;
 		}
 	}
 
 	public function viewById($id) {
-		if($publisher = $this->Publisher->findById($id)) {
+		if ($publisher = $this->Publisher->findById($id)) {
 			$this->redirect(sprintf('/publishers/%s', parent::seoize($id, $publisher['Publisher']['publisher_name'])), 301);
 		}
 	}

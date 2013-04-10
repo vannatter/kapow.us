@@ -191,37 +191,35 @@ class AdminController extends AppController {
 	}
 
 	public function publishersEdit($id) {
-		if($this->request->is('put')) {
+		if ($this->request->is('put')) {
 			$data = Sanitize::clean($this->request->data);
 
 			$skip = false;
-			if(isset($data['Publisher']['photo_upload']['name'])) {
+			if (isset($data['Publisher']['photo_upload']['name'])) {
 				$uploadPath = Configure::read('Settings.publisher_img_path');
 				$uploadPath .= '/' . $id . '/';
 
 				## process the upload, make sure its valid
 				$upload = $data['Publisher']['photo_upload'];
 
-				if((isset($upload['error']) && $upload['error'] == 0) || (!empty($upload['tmp_name']) && $upload['tmp_name'] != 'none')) {
+				if ((isset($upload['error']) && $upload['error'] == 0) || (!empty($upload['tmp_name']) && $upload['tmp_name'] != 'none')) {
 					$name = $upload['name'];
 
 					$allowedExts = array('jpg', 'jpeg', 'gif', 'png');
 					$allowedTypes = array('image/gif', 'image/jpeg', 'image/pjpeg', 'image/png');
 					$extension = end(explode(".", $name));
 
-					if(!in_array($upload['type'], $allowedTypes) || !in_array($extension, $allowedExts)) {
+					if (!in_array($upload['type'], $allowedTypes) || !in_array($extension, $allowedExts)) {
 						$this->Publisher->validationErrors['publisher_photo'] = array('Invalid Type');
 						$skip = true;
 					} else {
-						if(!file_exists($uploadPath)) {
+						if (!file_exists($uploadPath)) {
 							mkdir($uploadPath);
 							//copy(Configure::read('Settings.Paths.Raw.media') . 'index.php', $uploadPath . 'index.php');
 						}
 
 						move_uploaded_file($upload['tmp_name'], $uploadPath . $name);
-
-						unlink($upload['tmp_name']);
-
+						@unlink($upload['tmp_name']);
 						$data['Publisher']['publisher_photo'] = Configure::read('Settings.publisher_img_web_path') . '/' . $id . '/' . $name;
 					}
 				}
@@ -230,7 +228,7 @@ class AdminController extends AppController {
 			if(!$skip) {
 				$data['Publisher']['id'] = $id;
 
-				if($this->Publisher->save($data)) {
+				if ($this->Publisher->save($data)) {
 					$this->Session->setFlash(__('Publisher Saved!'), 'alert', array(
 						'plugin' => 'TwitterBootstrap',
 						'class' => 'alert-success'
@@ -240,7 +238,7 @@ class AdminController extends AppController {
 			}
 		} else {
 			$this->Publisher->id = $id;
-			if(!$this->Publisher->exists()) {
+			if (!$this->Publisher->exists()) {
 				$this->Session->setFlash(__('Publisher Not Found'), 'alert', array(
 					'plugin' => 'TwitterBootstrap',
 					'class' => 'alert-error'
@@ -259,12 +257,12 @@ class AdminController extends AppController {
 	}
 
 	public function seriesEdit($id) {
-		if($this->request->is('put')) {
+		if ($this->request->is('put')) {
 			$data = Sanitize::clean($this->request->data);
 
 			$data['Series']['id'] = $id;
 
-			if($this->Series->save($data)) {
+			if ($this->Series->save($data)) {
 				$this->Session->setFlash(__('Series Saved!'), 'alert', array(
 					'plugin' => 'TwitterBootstrap',
 					'class' => 'alert-success'
@@ -273,7 +271,7 @@ class AdminController extends AppController {
 			}
 		} else {
 			$this->Series->id = $id;
-			if(!$this->Series->exists()) {
+			if (!$this->Series->exists()) {
 				$this->Session->setFlash(__('Series Not Found'), 'alert', array(
 					'plugin' => 'TwitterBootstrap',
 					'class' => 'alert-error'
@@ -292,12 +290,12 @@ class AdminController extends AppController {
 	}
 
 	public function storesEdit($id) {
-		if($this->request->is('put')) {
+		if ($this->request->is('put')) {
 			$data = Sanitize::clean($this->request->data);
 
 			$data['Store']['id'] = $id;
 
-			if($this->Store->save($data)) {
+			if ($this->Store->save($data)) {
 				$this->Session->setFlash(__('Store Saved!'), 'alert', array(
 					'plugin' => 'TwitterBootstrap',
 					'class' => 'alert-success'
@@ -306,7 +304,7 @@ class AdminController extends AppController {
 			}
 		} else {
 			$this->Store->id = $id;
-			if(!$this->Store->exists()) {
+			if (!$this->Store->exists()) {
 				$this->Session->setFlash(__('Store Not Found'), 'alert', array(
 					'plugin' => 'TwitterBootstrap',
 					'class' => 'alert-error'
@@ -321,7 +319,7 @@ class AdminController extends AppController {
 
 	public function storesDeletePhoto($id) {
 		$this->Store->StorePhoto->id = $id;
-		if(!$this->Store->StorePhoto->exists()) {
+		if (!$this->Store->StorePhoto->exists()) {
 			$this->Session->setFlash(__('Invalid Photo'), 'alert', array(
 				'plugin' => 'TwitterBootstrap',
 				'class' => 'alert-error'
@@ -329,7 +327,7 @@ class AdminController extends AppController {
 			$this->redirect($this->referer() . '#photos');
 		}
 
-		if($this->Store->StorePhoto->remove($id)) {
+		if ($this->Store->StorePhoto->remove($id)) {
 			$this->Session->setFlash(__('Deleted'), 'alert', array(
 				'plugin' => 'TwitterBootstrap',
 				'class' => 'alert-success'
@@ -347,7 +345,7 @@ class AdminController extends AppController {
 	public function storesSetPrimaryPhoto() {
 		$result = array('error' => true, 'message' => __('Invalid'));
 
-		if(isset($this->request->query['photoId']) && isset($this->request->query['storeId'])) {
+		if (isset($this->request->query['photoId']) && isset($this->request->query['storeId'])) {
 			$id = Sanitize::clean($this->request->query['photoId']);
 			$storeId = Sanitize::clean($this->request->query['storeId']);
 
