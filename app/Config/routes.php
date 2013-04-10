@@ -110,6 +110,12 @@ Router::connect(
 	)
 );
 
+##### USERS/MY
+Router::connect(
+	'/my',
+	array('controller' => 'users', 'action' => 'profile')
+);
+
 ##### ADMIN
 Router::connect(
 	'/admin/items/edit/:id',

@@ -50,4 +50,12 @@ class UsersController extends AppController {
 		$this->Session->destroy();
 		$this->redirect($this->Auth->logout());
 	}
+
+	public function profile($user=null) {
+		if(!$user && !$this->Auth->user()) {
+			$this->redirect('/');
+		}
+
+		$this->set('user', $this->Auth->user());
+	}
 }
