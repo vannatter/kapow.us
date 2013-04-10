@@ -31,6 +31,42 @@ class ItemsController extends AppController {
 		#$this->Tag->unbindModel(array('hasMany' => array('ItemTag')), false);
 		#$this->ItemTag->unbindModel(array('belongsTo' => array('Item')), false);
 
+		$this->Item->ItemCreator->Creator->bindModel(array(
+			'hasOne' => array(
+				'UserFavorite' => array(
+					'foreignKey' => 'favorite_item_id',
+					'conditions' => array(
+						'UserFavorite.user_id' => $this->Auth->user('id'),
+						'UserFavorite.item_type' => 3
+					)
+				)
+			)
+		));
+
+		$this->Item->Publisher->bindModel(array(
+			'hasOne' => array(
+				'UserFavorite' => array(
+					'foreignKey' => 'favorite_item_id',
+					'conditions' => array(
+						'UserFavorite.user_id' => $this->Auth->user('id'),
+						'UserFavorite.item_type' => 4
+					)
+				)
+			)
+		));
+
+		$this->Item->Series->bindModel(array(
+			'hasOne' => array(
+				'UserFavorite' => array(
+					'foreignKey' => 'favorite_item_id',
+					'conditions' => array(
+						'UserFavorite.user_id' => $this->Auth->user('id'),
+						'UserFavorite.item_type' => 2
+					)
+				)
+			)
+		));
+
 		$item = $this->Item->find('first', array(
 			'conditions' => array(
 				'Item.id' => $item_id
@@ -40,10 +76,16 @@ class ItemsController extends AppController {
 				'Section' => array(
 					'Category'
 				),
-				'Publisher',
-				'Series',
+				'Publisher' => array(
+					'UserFavorite'
+				),
+				'Series' => array(
+					'UserFavorite'
+				),
 				'ItemCreator' => array(
-					'Creator',
+					'Creator' => array(
+						'UserFavorite'
+					),
 					'CreatorType'
 				),
 				'ItemTag' => array(
@@ -61,7 +103,13 @@ class ItemsController extends AppController {
 		## get a distinct set of creators for the 'favorites' logic..
 		$unique_creators = array();
 	    foreach ($item['ItemCreator'] as $c) {
-		    $unique_creators[$c['Creator']['id']] = $c['Creator']['creator_name'];
+				$fav = false;
+
+				if(isset($c['Creator']['UserFavorite']['id'])) {
+					$fav = true;
+				}
+
+		    $unique_creators[$c['Creator']['id']] = array('name' => $c['Creator']['creator_name'], 'is_fav' => $fav);
 	    }
 
 		$this->set('unique_creators', $unique_creators);

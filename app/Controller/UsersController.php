@@ -56,6 +56,19 @@ class UsersController extends AppController {
 			$this->redirect('/');
 		}
 
-		$this->set('user', $this->Auth->user());
+		$this->User->id = $this->Auth->user('id');
+
+		$user = $this->User->read();
+
+		$this->User->UserFavorite->bindModel(array('belongsTo' => array('Publisher' => array('foreignKey' => 'favorite_item_id'))));
+		$user['favorites']['publishers'] = $this->User->UserFavorite->find('all', array('conditions' => array('UserFavorite.item_type' => 4)));
+
+		$this->User->UserFavorite->bindModel(array('belongsTo' => array('Creator' => array('foreignKey' => 'favorite_item_id'))));
+		$user['favorites']['creators'] = $this->User->UserFavorite->find('all', array('conditions' => array('UserFavorite.item_type' => 3)));
+
+		$this->User->UserFavorite->bindModel(array('belongsTo' => array('Series' => array('foreignKey' => 'favorite_item_id'))));
+		$user['favorites']['series'] = $this->User->UserFavorite->find('all', array('conditions' => array('UserFavorite.item_type' => 2)));
+
+		$this->set('user', $user);
 	}
 }
