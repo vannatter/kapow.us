@@ -12,12 +12,19 @@
 			debug: true,
 			animate: false,
 			path: function(nextPage) {
-				var path = $('#item-scroll-nav a').last().attr("href");
+				var $content = $('#content');
+				var path = $content.find('#item-scroll-nav a').last().attr("href");
 				if(path) {
 					var start = path.indexOf('page:');
 					var left = path.substring(0, start);
 
 					path = left + 'page:' + nextPage;
+
+					var terms = $content.find('input#CreatorTerms').val();
+
+					if(terms) {
+						path += '?terms='+ terms;
+					}
 				}
 
 				return path;
@@ -74,7 +81,9 @@
 	</div>
 	<div id="item-scroll-nav">
 		<div class="pagination">
-			<?php echo $this->Paginator->next('next'); ?>
+			<?php if(isset($this->request->params['paging']['Creator']['count']) && $this->request->params['paging']['Creator']['count'] > 1) { ?>
+				<?php echo $this->Paginator->next('next'); ?>
+			<?php } ?>
 		</div>
 	</div>
 <?php } ?>

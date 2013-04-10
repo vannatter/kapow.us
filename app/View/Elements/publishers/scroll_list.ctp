@@ -22,7 +22,9 @@
 
 					var terms = $content.find('input#PublisherTerms').val();
 
-					path += '?terms='+ terms;
+					if(terms) {
+						path += '?terms='+ terms;
+					}
 				}
 
 				return path;

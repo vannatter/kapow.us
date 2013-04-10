@@ -21,7 +21,34 @@ class CreatorsController extends AppController {
 	);
 
 	public function index() {
-		$creators = $this->paginate('Creator');
+		if($this->request->is('post') || $this->request->is('put')) {
+			$data = Sanitize::clean($this->request->data);
+
+			if(isset($data['Creator']['terms'])) {
+				if(empty($data['Creator']['terms'])) {
+					$this->redirect('/creators');
+				}
+
+				$this->set('terms', $data['Creator']['terms']);
+				$this->redirect(sprintf('/creators?terms=%s', $data['Creator']['terms']));
+			}
+		}
+
+		if(isset($this->request->query['terms'])) {
+			$terms = $this->request->query['terms'];
+
+			$con = array(
+				'OR' => array(
+					'Creator.creator_name LIKE' => '%' . $terms . '%',
+					'Creator.creator_bio LIKE' => '%' . $terms . '%'
+				)
+			);
+
+			$creators = $this->paginate('Creator', $con);
+		} else {
+			$creators = $this->paginate('Creator');
+		}
+
 		$this->set('creators', $creators);
 	}
 
