@@ -38,7 +38,7 @@
 				<div class="row thisweek scroll-list-item">
 			<?php } ?>
 			<?php $row++; ?>
-			<div class="span2 preview_block">
+			<div class="span2 publisher_block">
 				<?php
 				$id = $publisher['Publisher']['id'];
 				$name = $publisher['Publisher']['publisher_name'];
@@ -52,7 +52,7 @@
 				?>
 				<div class="preview_img">
 					<a href="/publishers/<?php echo $seoString; ?>">
-						<?php if (empty($img)) { ?>
+						<?php if (empty($img) || $img == "/img/covers") { ?>
 							<img border="0" alt="<?php echo $name; ?>" src="/img/nocover.png" width="210" height="140" />
 						<?php } else { ?>
 							<img border="0" alt="<?php echo $name; ?>" src="<?php echo $this->Common->thumb($img); ?>" />
