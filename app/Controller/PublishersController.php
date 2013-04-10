@@ -23,7 +23,34 @@ class PublishersController extends AppController {
 	);
 
 	public function index() {
-		$publishers = $this->paginate('Publisher');
+		if($this->request->is('post') || $this->request->is('put')) {
+			$data = Sanitize::clean($this->request->data);
+
+			if(isset($data['Publisher']['terms'])) {
+				if(empty($data['Publisher']['terms'])) {
+					$this->redirect('/publishers');
+				}
+
+				$this->set('terms', $data['Publisher']['terms']);
+				$this->redirect(sprintf('/publishers?terms=%s', $data['Publisher']['terms']));
+			}
+		}
+
+		if(isset($this->request->query['terms'])) {
+			$terms = $this->request->query['terms'];
+
+			$con = array(
+				'OR' => array(
+					'Publisher.publisher_name LIKE' => '%' . $terms . '%',
+					'Publisher.publisher_bio LIKE' => '%' . $terms . '%'
+				)
+			);
+
+			$publishers = $this->paginate('Publisher', $con);
+		} else {
+			$publishers = $this->paginate('Publisher');
+		}
+
 		$this->set('publishers', $publishers);
 	}
 
