@@ -62,7 +62,20 @@ class CreatorsController extends AppController {
 			exit;
 		}
 
-		$creator = $this->Creator->find('first', array('conditions' => array('Creator.id' => $creator_id), 'limit' => 1, 'recursive' => 4));
+		$creator = $this->Creator->find(
+			'first',
+			array(
+				'conditions' => array(
+					'Creator.id' => $creator_id
+				),
+				'contain' => array(
+					'ItemCreator' => array(
+						'Item'
+					)
+				),
+			)
+		);
+
 		if (!$creator) {
 			$this->Session->setFlash('Creator not found.', 'flash_neg');
 			$this->redirect("/");
