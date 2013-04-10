@@ -6,8 +6,8 @@
 	</div>
 	
 	<div class="span6 item_detail">
-		<h2><?php echo $item['Item']['item_name']; ?></h2>
 		<?php echo $this->Element('items/actions'); ?>
+		<h2><?php echo $item['Item']['item_name']; ?></h2>
 		<?php echo $this->Common->creators($item['ItemCreator']); ?>		
 		<?php echo $this->Element('items/description'); ?>
 
