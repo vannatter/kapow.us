@@ -19,7 +19,6 @@
 
 					path = left + 'page:' + nextPage;
 				}
-
 				return path;
 			}
 		});

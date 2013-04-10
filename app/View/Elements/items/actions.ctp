@@ -21,9 +21,9 @@
         <button class="btn btn-custom dropdown-toggle" data-toggle="dropdown"><i class="icon-cog icon-white"></i> Tools <span class="caret white-caret"></span></button>
         <ul class="dropdown-menu fav_menu" role="menu">
         
-            <li><a href="/improve/<?php echo $item['Item']['id']; ?>">Improve this content</a></li>
-            <li><a href="/report/<?php echo $item['Item']['id']; ?>">Report an issue</a></li>
-            <li><a href="/flag/<?php echo $item['Item']['id']; ?>">Flag as inappropriate</a></li>
+            <li><a href="/improve/i/<?php echo $item['Item']['id']; ?>">Improve this content</a></li>
+            <li><a href="/report/i/<?php echo $item['Item']['id']; ?>">Report an issue</a></li>
+            <li><a href="/flag/i/<?php echo $item['Item']['id']; ?>">Flag as inappropriate</a></li>
 
             <?php if ($this->Session->read('Auth.User.access_level') > 50) { ?>
 	            <li class="divider"></li>
