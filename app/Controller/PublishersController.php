@@ -7,7 +7,7 @@ App::uses('AppController', 'Controller');
  */
 class PublishersController extends AppController {
 	public $name = 'Publishers';
-	public $uses = array('Publisher');
+	public $uses = array('Publisher', 'Item');
 	public $paginate = array(
 		'Publisher' => array(
 			'order' => array('Publisher.publisher_name' => 'ASC'),
@@ -68,6 +68,26 @@ class PublishersController extends AppController {
 	public function viewById($id) {
 		if ($publisher = $this->Publisher->findById($id)) {
 			$this->redirect(sprintf('/publishers/%s', parent::seoize($id, $publisher['Publisher']['publisher_name'])), 301);
+		}
+	}
+
+	public function items($id) {
+		if($this->request->is('ajax')) {
+			$this->layout = 'blank';
+
+			$this->paginate = array(
+				'Item' => array(
+					'limit' => 16,
+					'order' => array(
+						'Item.created' => 'DESC'
+					)
+				)
+			);
+
+			$this->Item->recursive = 0;
+			$items = $this->paginate('Item', array('Item.publisher_id' => $id));
+
+			$this->set('items', $items);
 		}
 	}
 }
