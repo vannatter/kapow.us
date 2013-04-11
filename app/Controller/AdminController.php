@@ -112,7 +112,7 @@ class AdminController extends AppController {
 			$data = Sanitize::clean($this->request->data);
 
 			$skip = false;
-			if(isset($data['Creator']['photo_upload']['name'])) {
+			if(isset($data['Creator']['photo_upload']['name']) && !empty($data['Creator']['photo_upload']['name'])) {
 				$uploadPath = Configure::read('Settings.creator_img_path');
 				$uploadPath .= '/' . $id . '/';
 
