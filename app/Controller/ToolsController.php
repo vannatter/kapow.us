@@ -409,6 +409,8 @@ class ToolsController extends AppController {
 			$item['item_name'] = trim(str_replace("4TH PTG", "", $item['item_name']));
 			$item['item_name'] = trim(str_replace("5TH PTG", "", $item['item_name']));
 			$item['item_name'] = trim(str_replace("6TH PTG", "", $item['item_name']));
+
+			$item['item_name'] = trim(str_replace("()", "", $item['item_name']));
 			
 			$item['printing'] = $print;
 			
@@ -429,8 +431,11 @@ class ToolsController extends AppController {
 						foreach ($e as $el) {
 							$creator_names = split(",", $creator_pieces[1]);
 							foreach ($creator_names as $cn) {
-								$cn = str_replace("& Various", "", $cn);
-								$cz[$el][] = trim($cn);
+								$cn = trim($cn);
+								if ($cn) {
+									$cn = str_replace("& Various", "", $cn);
+									$cz[$el][] = trim($cn);
+								}
 							}
 						}
 					}
