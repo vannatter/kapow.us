@@ -49,7 +49,7 @@ class SeriesController extends AppController {
 
 			$this->paginate = array(
 				'Item' => array(
-					'limit' => 16,
+					'limit' => 24,
 					'order' => array(
 						'Item.created' => 'DESC'
 					)
