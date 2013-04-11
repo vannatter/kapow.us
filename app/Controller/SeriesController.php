@@ -14,9 +14,15 @@ class SeriesController extends AppController {
 
 	public function view($id, $name) {
 		if($series = $this->Series->findById($id)) {
-			debug($series);
+			$this->set('series', $series);
+			$this->set('title_for_layout', ucwords(strtolower($series['Series']['series_name'])));
+			
+			// jon to override
+			$this->set('userFav', false);
 		} else {
-			echo 'not found';
+			$this->Session->setFlash('Series not found.', 'flash_neg');
+			$this->redirect("/");
+			exit;
 		}
 	}
 
