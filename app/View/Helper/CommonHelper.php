@@ -4,7 +4,7 @@ App::uses('Helper', 'View');
 
 class CommonHelper extends Helper {
 
-    public $helpers = array('Html');
+    public $helpers = array('Html', 'Form');
 
     public function store_hours($open, $close) {
 	    $tim = "";
@@ -153,6 +153,14 @@ class CommonHelper extends Helper {
 		$locale = localeconv();
 		echo $locale['currency_symbol'], number_format($amount, 2, $locale['decimal_point'], $locale['thousands_sep']);
 	}
-}
 
-?>
+	public function addFavButton($id, $type, $isFav) {
+		$caption = __('Add Favorite');
+		if($isFav) {
+			$caption = __('Remove Favorite');
+		}
+		$caption = sprintf('<i class="icon-heart icon-white"></i> <span>%s</span>', $caption);
+
+		return $this->Form->button($caption, array('type' => 'button', 'class' => 'btn btn-custom toggle_favorite', 'data-id' => $id, 'data-type' => $type));
+	}
+}

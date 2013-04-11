@@ -1,5 +1,5 @@
 <div class="item_actions">
-	<button class="btn btn-custom toggle_favorite" data-type="publisher" data-id="<?php echo $publisher['Publisher']['id']; ?>" type="button"><i class="icon-heart icon-white"></i> <span><?php echo (@$userFav) ? __('Remove Favorite') : __('Add Favorite'); ?></span></button>
+	<?php echo $this->Common->addFavButton($publisher['Publisher']['id'], 'publisher', $userFav); ?>
     <div class="btn-group">
         <button class="btn btn-custom dropdown-toggle" data-toggle="dropdown"><i class="icon-cog icon-white"></i> Tools <span class="caret white-caret"></span></button>
         <ul class="dropdown-menu fav_menu" role="menu">
