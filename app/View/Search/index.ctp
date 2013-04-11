@@ -1,0 +1,1 @@
+<?php echo $this->Element('headers/search/index'); ?>
