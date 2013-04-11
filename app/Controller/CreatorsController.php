@@ -5,7 +5,7 @@ App::uses('AppController', 'Controller');
 class CreatorsController extends AppController {
 
 	public $name = 'Creators';
-	public $uses = array('Item','Section','Publisher','Series','Creator','CreatorType','ItemCreator','Category');
+	public $uses = array('Item','Section','Publisher','Series','Creator','CreatorType','ItemCreator','Category','UserFavorite');
 	public $paginate = array(
 		'Creator' => array(
 			'order' => array('Creator.creator_name' => 'ASC'),
@@ -81,13 +81,16 @@ class CreatorsController extends AppController {
 			$this->redirect("/");
 			exit;
 		}
-
-		// waiting on jon
-		$this->set('userFav', false);
 		
 		$this->set('creator', $creator);
 		$this->set('title_for_layout', $creator['Creator']['creator_name']);
 
+		## see if the current user (if there is one), fav'd this publisher
+		if($userFav = $this->UserFavorite->findByFavoriteItemIdAndUserIdAndItemType($creator_id, $this->Auth->user('id'), 3)) {
+			$this->set('userFav', true);
+		} else {
+			$this->set('userFav', false);
+		}
 	}
 
 	public function viewById($id) {
