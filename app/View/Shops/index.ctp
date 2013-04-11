@@ -16,7 +16,7 @@
 		'50' => __('50 miles'),
 		'100' => __('100 miles')
 	), 'value' => '25')); ?>
-	<?php echo $this->Form->button(__('Search'), array('class' => 'btn store_search_btn', 'style' => 'width: 125px;')); ?>
+	<?php echo $this->Form->button(__('Search'), array('class' => 'btn store_search_btn btn-custom btn-hgh', 'style' => 'width: 125px;')); ?>
 </div>
 </div>
 <?php echo $this->Form->end(); ?>

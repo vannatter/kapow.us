@@ -8,7 +8,7 @@
 <div class="store_search_bar">
 	<div class="pagination-centered">
 		<?php echo $this->Form->input('publisher_id', array('class' => 'span6', 'value' => @$this->request->query['pubid'])); ?>
-		<?php echo $this->Form->button(__('Filter'), array('class' => 'btn store_search_btn', 'style' => 'width: 125px;')); ?>
+		<?php echo $this->Form->button(__('Filter'), array('class' => 'btn btn-hgh btn-custom', 'style' => 'width: 125px;')); ?>
 	</div>
 </div>
 <?php echo $this->Form->end(); ?>
