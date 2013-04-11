@@ -12,12 +12,19 @@
 			debug: true,
 			animate: false,
 			path: function(nextPage) {
-				var path = $('#item-scroll-nav a').last().attr("href");
+				var $content = $('#content');
+				var path = $content.find('#item-scroll-nav a').last().attr("href");
 				if(path) {
 					var start = path.indexOf('page:');
 					var left = path.substring(0, start);
 
 					path = left + 'page:' + nextPage;
+
+					var pubid = $content.find('#ItemPublisherId').val();
+
+					if(pubid) {
+						path += '?pubid=' + pubid;
+					}
 				}
 
 				return path;

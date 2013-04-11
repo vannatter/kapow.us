@@ -118,6 +118,19 @@ class ItemsController extends AppController {
 	}
 
 	public function next_week($content_type="1") {
+		if($this->request->is('post') || $this->request->is('put')) {
+			$data = Sanitize::clean($this->request->data);
+
+			if(isset($data['Item']['publisher_id'])) {
+				if(empty($data['Item']['publisher_id'])) {
+					$this->redirect('/items/next_week');
+				}
+
+				$this->set('publisher_id', $data['Item']['publisher_id']);
+				$this->redirect(sprintf('/items/next_week?pubid=%s', $data['Item']['publisher_id']));
+			}
+		}
+
 		$first_day = date("N", strtotime("today"));
 		if ($first_day < 3) {
 			$release_date = date("Y-m-d", strtotime("+2 wednesdays"));
@@ -154,7 +167,21 @@ class ItemsController extends AppController {
 			)
 		);
 
+		if(isset($this->request->query['pubid']) && $this->request->query['pubid'] != 0) {
+			$this->paginate['conditions']['Item.publisher_id'] = $this->request->query['pubid'];
+		}
+
 		$items = $this->paginate('Item');
+
+		if(!$this->request->is('ajax')) {
+			$list = $this->Item->find('all', array('conditions' => array('Item.item_date' => $release_date, 'Section.category_id' => $content_type), 'fields' => array('Publisher.publisher_name'), 'group' => array('Publisher.publisher_name'), 'contain' => array('Publisher', 'Section'), 'order' => array('Publisher.publisher_name' => 'ASC')));
+
+			$publishers = array('0' => __('All'));
+			foreach($list as $pub) {
+				$publishers[$pub['Publisher']['id']] = $pub['Publisher']['publisher_name'];
+			}
+			$this->set('publishers', $publishers);
+		}
 
 		#$items = $this->Item->find('all', array('conditions' => array('Item.item_date' => $release_date, 'Section.category_id' => $content_type), 'limit' => 2500, 'recursive' => 4));
 		$categories = $this->Category->find('all', array('limit' => 2500, 'recursive' => -1));
@@ -167,6 +194,19 @@ class ItemsController extends AppController {
 	}
 
 	public function this_week($content_type="1") {
+		if($this->request->is('post') || $this->request->is('put')) {
+			$data = Sanitize::clean($this->request->data);
+
+			if(isset($data['Item']['publisher_id'])) {
+				if(empty($data['Item']['publisher_id'])) {
+					$this->redirect('/items/next_week');
+				}
+
+				$this->set('publisher_id', $data['Item']['publisher_id']);
+				$this->redirect(sprintf('/items/next_week?pubid=%s', $data['Item']['publisher_id']));
+			}
+		}
+
 		$first_day = date("N", strtotime("today"));
 		
 		if ($first_day < 3) {
@@ -204,8 +244,22 @@ class ItemsController extends AppController {
 			)
 		);
 
+		if(isset($this->request->query['pubid']) && $this->request->query['pubid'] != 0) {
+			$this->paginate['conditions']['Item.publisher_id'] = $this->request->query['pubid'];
+		}
+
 		$items = $this->paginate('Item');
-		
+
+		if(!$this->request->is('ajax')) {
+			$list = $this->Item->find('all', array('conditions' => array('Item.item_date' => $release_date, 'Section.category_id' => $content_type), 'fields' => array('Publisher.publisher_name'), 'group' => array('Publisher.publisher_name'), 'contain' => array('Publisher', 'Section'), 'order' => array('Publisher.publisher_name' => 'ASC')));
+
+			$publishers = array('0' => __('All'));
+			foreach($list as $pub) {
+				$publishers[$pub['Publisher']['id']] = $pub['Publisher']['publisher_name'];
+			}
+			$this->set('publishers', $publishers);
+		}
+
 		#$items = $this->Item->find('all', array('conditions' => array('Item.item_date' => $release_date, 'Section.category_id' => $content_type), 'limit' => 2500, 'recursive' => 4));
 		$categories = $this->Category->find('all', array('limit' => 2500, 'recursive' => -1));
 		
