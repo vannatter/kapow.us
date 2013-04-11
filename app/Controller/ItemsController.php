@@ -203,7 +203,7 @@ class ItemsController extends AppController {
 				}
 
 				$this->set('publisher_id', $data['Item']['publisher_id']);
-				$this->redirect(sprintf('/items/next_week?pubid=%s', $data['Item']['publisher_id']));
+				$this->redirect(sprintf('/items/this_week?pubid=%s', $data['Item']['publisher_id']));
 			}
 		}
 
