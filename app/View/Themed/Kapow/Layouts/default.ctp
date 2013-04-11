@@ -49,6 +49,9 @@
 				<?php echo $this->element('menu/footer'); ?>
 			</div>
 			
+			
+			<div id="flash_msg" class="flash_pos" style="display:none;"></div>
+			
 		</div>
 
 	</body>

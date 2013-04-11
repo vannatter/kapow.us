@@ -36,9 +36,11 @@ $(document).ready(function() {
 				if(data.type == 1) {
 					// added
 					obj.find('span').text('Remove Pull');
+					flash('Added to your pull list', 3000);
 				} else {
 					// removed
 					obj.find('span').text('Pull List');
+					flash('Removed from your pull list', 3000);
 				}
 			}
 		});

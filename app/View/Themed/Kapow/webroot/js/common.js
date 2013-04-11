@@ -1,3 +1,5 @@
+var msg_timeout;
+
 $(document).ready(function() {
 	$('button.toggle_favorite').on('click', function(e) {
 		e.preventDefault();
@@ -20,4 +22,15 @@ $(document).ready(function() {
 		// possibly change this later
 		return false;
 	});
+
 });
+
+function flash(msg, delay) {
+	if (!delay) {
+		delay = 3000;
+	}
+	clearTimeout(msg_timeout);
+	$('#flash_msg').html(msg);
+	$('#flash_msg').fadeIn();
+	msg_timeout = setTimeout( function() { $("#flash_msg").fadeOut(); }, delay );
+}
