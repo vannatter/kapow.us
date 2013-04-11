@@ -7,6 +7,28 @@
 		<div class="creator_desc">
 			<?php echo $creator['Creator']['creator_bio']; ?>		
 		</div>
+		
+		<?php if ($creator['Creator']['creator_website']) { ?>
+		<div class="element_sideblock">
+			<h4>Website:</h4>
+			<a href="<?php echo $creator['Creator']['creator_website']; ?>" target="_blank"><?php echo $creator['Creator']['creator_website']; ?></a>
+		</div>
+		<?php } ?>
+		
+		<?php if ($creator['Creator']['creator_facebook']) { ?>
+		<div class="element_sideblock">
+			<h4>Facebook:</h4>
+			<a href="<?php echo $creator['Creator']['creator_facebook']; ?>" target="_blank"><?php echo $creator['Creator']['creator_facebook']; ?></a>
+		</div>
+		<?php } ?>
+				
+		<?php if ($creator['Creator']['creator_twitter']) { ?>
+		<div class="element_sideblock">
+			<h4>Twitter:</h4>
+			<a href="<?php echo $creator['Creator']['creator_twitter']; ?>" target="_blank"><?php echo $creator['Creator']['creator_twitter']; ?></a>
+		</div>
+		<?php } ?>
+				
 	</div>
 	
 	<div class="span9 item_detail">

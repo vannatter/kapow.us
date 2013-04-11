@@ -14,5 +14,7 @@
 /app/webroot/img/stores/*
 /app/webroot/img/publishers
 /app/webroot/img/publishers/*
+/app/webroot/img/creators
+/app/webroot/img/creators/*
 /app/Config/database.php
 /app/Config/config.php

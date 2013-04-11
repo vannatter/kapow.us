@@ -6,12 +6,14 @@
 
 		<div class="publisher_desc">
 			<?php echo $publisher['Publisher']['publisher_bio']; ?>		
-			
-			<?php if ($publisher['Publisher']['publisher_website']) { ?>
-				<br/><br/>
-				<a href="<?php echo $publisher['Publisher']['publisher_website']; ?>" target="_blank"><?php echo $publisher['Publisher']['publisher_website']; ?></a>
-			<?php } ?>
 		</div>
+		
+		<?php if ($publisher['Publisher']['publisher_website']) { ?>
+		<div class="element_sideblock">
+			<h4>Website:</h4>
+			<a href="<?php echo $publisher['Publisher']['publisher_website']; ?>" target="_blank"><?php echo $publisher['Publisher']['publisher_website']; ?></a>
+		</div>
+		<?php } ?>
 	</div>
 	
 	<div class="span9 item_detail">
