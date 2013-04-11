@@ -23,5 +23,5 @@
 
 <div class="row-fluid">
 	<div class="span7" id="map-canvas" style="height: 400px;"></div>
-	<div class="span5" id="storeList"></div>
+	<div class="span5" id="storeList"><div class="loading">Loading store list based on your location...</div></div>
 </div>
