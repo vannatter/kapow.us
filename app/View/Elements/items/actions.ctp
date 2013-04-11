@@ -1,3 +1,9 @@
+<?php
+/**
+ *@var $this View
+ */
+?>
+<?php $this->Html->script('page/items.js', array('inline' => false)); ?>
 <div class="item_actions">
 
 	<button class="btn btn-custom pull_list_btn" type="button"><i class="icon-shopping-cart icon-white"></i> Pull List</button>
@@ -5,15 +11,70 @@
     <div class="btn-group">
         <button class="btn btn-custom dropdown-toggle" data-toggle="dropdown"><i class="icon-heart icon-white"></i> Favorite <span class="caret white-caret"></span></button>
         <ul class="dropdown-menu fav_menu" role="menu">
-        
-        	<?php foreach ($unique_creators as $k=>$v) { ?>
-	            <li><a href="javascript:;" class="toggle_favorite" data-type="creator" data-id="<?php echo $k; ?>">Creator: <?php echo $v; ?></a></li>
-        	<?php } ?>
-        
-            <li><a href="javascript:;" class="toggle_favorite" data-type="series" data-id="<?php echo $item['Item']['series_id']; ?>">Series: <?php echo $item['Series']['series_name']; ?></a></li>
-            <li><a href="javascript:;" class="toggle_favorite" data-type="publisher" data-id="<?php echo $item['Item']['publisher_id']; ?>">Publisher: <?php echo ucwords(strtolower($item['Publisher']['publisher_name'])); ?></a></li>
-            <li class="divider"></li>
-            <li><a href="javascript:;">Add All to Favorites</a></li>
+
+					<?php foreach ($unique_creators as $k=>$v) { ?>
+						<li>
+							<?php
+							echo $this->Html->link(
+								sprintf('Creator: %s', $v['name']),
+								sprintf('/favorites/add/%s/creator', $k),
+								array(
+									'style' => ($v['is_fav']) ? 'font-weight: bold;' : '',
+									'class' => 'toggle_favorite',
+									'data-type' => 'creator',
+									'data-id' => $k
+								)
+							);
+							?>
+						</li>
+						<!-- <li><a href="/favorites/add/" class="toggle_favorite" data-type="creator" data-id="<?php echo $k; ?>">Creator: <?php echo $v; ?></a></li> -->
+					<?php } ?>
+					<li>
+						<?php
+						echo $this->Html->link(
+							sprintf('Series: %s', $item['Series']['series_name']),
+							sprintf('/favorites/add/%s/series', $item['Item']['series_id']),
+							array(
+								'style' => (isset($item['Series']['UserFavorite']['id'])) ? 'font-weight: bold;' : '',
+								'class' => 'toggle_favorite',
+								'data-type' => 'series',
+								'data-id' => $item['Item']['series_id']
+							)
+						);
+						?>
+					</li>
+					<!-- <li><a href="javascript:;" class="toggle_favorite" data-type="series" data-id="<?php echo $item['Item']['series_id']; ?>">Series: <?php echo $item['Series']['series_name']; ?></a></li> -->
+					<li>
+						<?php
+						echo $this->Html->link(
+							sprintf('Publisher: %s', ucwords(strtolower($item['Publisher']['publisher_name']))),
+							sprintf('/favorites/add/%s/publisher', $item['Item']['publisher_id']),
+							array(
+								'style' => (isset($item['Publisher']['UserFavorite']['id'])) ? 'font-weight: bold;' : '',
+								'class' => 'toggle_favorite',
+								'data-type' => 'publisher',
+								'data-id' => $item['Item']['publisher_id']
+							)
+						);
+						?>
+					</li>
+					<!-- <li><a href="javascript:;" class="toggle_favorite" data-type="publisher" data-id="<?php echo $item['Item']['publisher_id']; ?>">Publisher: <?php echo ucwords(strtolower($item['Publisher']['publisher_name'])); ?></a></li> -->
+					<li class="divider"></li>
+					<li>
+						<?php
+						echo $this->Html->link(
+							__('Add All to Favorites'),
+							sprintf('/favorites/add/%s/all', $item['Item']['id']),
+							array(
+								'class' => 'toggle_favorite',
+								'data-type' => 'all',
+								'data-id' => $item['Item']['id']
+							)
+						);
+						?>
+					</li>
+					<!-- <li><a href="javascript:;" class="toggle_favorite_all" data-id="<?php echo $item['Item']['id']; ?>" data-type="all">Add All to Favorites</a></li> -->
+
         </ul>             
     </div>
 
