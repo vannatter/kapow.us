@@ -45,15 +45,17 @@ class UserFavorite extends AppModel {
 		),
 	);
 
-	public function toggle($userId, $id, $type) {
+	public function toggle($userId, $id, $type, $forceAdd=0) {
 		$returnType = 1;   ## ADD
 
 		## if the fav already exists, remove it
 		if($fav = $this->find('first', array('conditions' => array('UserFavorite.user_id' => $userId, 'UserFavorite.favorite_item_id' => $id, 'UserFavorite.item_type' => $type), 'recursive' => -1))) {
-			## remove
-			$this->delete($fav['UserFavorite']['id']);
+			if(!$forceAdd) {   ## special logic for when forcing a type
+				## remove
+				$this->delete($fav['UserFavorite']['id']);
 
-			$returnType = 2;   ## REMOVE
+				$returnType = 2;   ## REMOVE
+			}
 		} else {
 			## add
 			$toAdd = array(

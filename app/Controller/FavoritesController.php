@@ -7,17 +7,13 @@ App::uses('AppController', 'Controller');
  */
 class FavoritesController extends AppController {
 	public $name = 'Favorites';
-	public $uses = array('UserFavorite');
+	public $uses = array('Item', 'UserFavorite');
 
 	public function index() {
-		$favs = $this->UserFavorite->find('all');
-		debug($favs);
-		exit;
-
 		$this->redirect('/', 301);
 	}
 
-	public function add($id=null, $type=null) {
+	public function toggle($id=null, $type=null) {
 		if($this->request->is('ajax')) {
 			$result = array('error' => true, 'message' => __('Invalid'), 'type' => 1);
 
@@ -41,6 +37,38 @@ class FavoritesController extends AppController {
 						$result['error'] = false;
 						break;
 					case 'ALL':
+						## id in this instance is the item id
+						## get all the information for the item, so we can favorite everything
+						$item = $this->Item->find('first', array(
+							'conditions' => array(
+								'Item.id' => $id
+							),
+							'contain' => array(
+								'ItemCreator' => array(
+									'fields' => array('id', 'creator_id')
+								),
+								'Publisher' => array(
+									'fields' => array('id')
+								),
+								'Series' => array(
+									'fields' => array('id')
+								)
+							)
+						));
+
+						if($item) {
+							## toggle favorite on for each type
+							$this->UserFavorite->toggle($this->Auth->user('id'), $item['Series']['id'], 2, 1);
+							$this->UserFavorite->toggle($this->Auth->user('id'), $item['Publisher']['id'], 4, 1);
+
+							## walk each creator
+							foreach($item['ItemCreator'] as $c) {
+								$this->UserFavorite->toggle($this->Auth->user('id'), $c['creator_id'], 3, 1);
+							}
+
+							$result['error'] = false;
+							$result['type'] = 1;
+						}
 						break;
 					default:
 						$result['message'] = __('Invalid Type: %s', $type);
