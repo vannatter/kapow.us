@@ -81,6 +81,9 @@ class CreatorsController extends AppController {
 			$this->redirect("/");
 			exit;
 		}
+
+		// waiting on jon
+		$this->set('userFav', false);
 		
 		$this->set('creator', $creator);
 		$this->set('title_for_layout', $creator['Creator']['creator_name']);

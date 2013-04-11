@@ -27,7 +27,6 @@
 							);
 							?>
 						</li>
-						<!-- <li><a href="/favorites/add/" class="toggle_favorite" data-type="creator" data-id="<?php echo $k; ?>">Creator: <?php echo $v; ?></a></li> -->
 					<?php } ?>
 					<li>
 						<?php
@@ -43,7 +42,6 @@
 						);
 						?>
 					</li>
-					<!-- <li><a href="javascript:;" class="toggle_favorite" data-type="series" data-id="<?php echo $item['Item']['series_id']; ?>">Series: <?php echo $item['Series']['series_name']; ?></a></li> -->
 					<li>
 						<?php
 						echo $this->Html->link(
@@ -58,7 +56,6 @@
 						);
 						?>
 					</li>
-					<!-- <li><a href="javascript:;" class="toggle_favorite" data-type="publisher" data-id="<?php echo $item['Item']['publisher_id']; ?>">Publisher: <?php echo ucwords(strtolower($item['Publisher']['publisher_name'])); ?></a></li> -->
 					<li class="divider"></li>
 					<li>
 						<?php
@@ -73,15 +70,12 @@
 						);
 						?>
 					</li>
-					<!-- <li><a href="javascript:;" class="toggle_favorite_all" data-id="<?php echo $item['Item']['id']; ?>" data-type="all">Add All to Favorites</a></li> -->
-
         </ul>             
     </div>
 
     <div class="btn-group">
         <button class="btn btn-custom dropdown-toggle" data-toggle="dropdown"><i class="icon-cog icon-white"></i> Tools <span class="caret white-caret"></span></button>
         <ul class="dropdown-menu fav_menu" role="menu">
-        
             <li><a href="/improve/i/<?php echo $item['Item']['id']; ?>">Improve this content</a></li>
             <li><a href="/report/i/<?php echo $item['Item']['id']; ?>">Report an issue</a></li>
             <li><a href="/flag/i/<?php echo $item['Item']['id']; ?>">Flag as inappropriate</a></li>
@@ -90,7 +84,6 @@
 	            <li class="divider"></li>
 	            <li><a href="/admin/items/edit/<?php echo $item['Item']['id']; ?>">Edit this item</a></li>
             <?php } ?>
-            
         </ul>             
     </div>
  

@@ -16,9 +16,6 @@
 	
 	<div class="span9 item_detail">
 		<?php echo $this->Element('publishers/actions'); ?>
-
-		<!-- add scroll list here -->
 		<?php echo $this->Element('publishers/items'); ?>
-		
 	</div>
 </div>
