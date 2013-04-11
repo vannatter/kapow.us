@@ -108,7 +108,8 @@ class CreatorsController extends AppController {
 					'limit' => 16,
 					'order' => array(
 						'ItemCreator.created' => 'DESC'
-					)
+					),
+					'fields' => array('DISTINCT ItemCreator.item_id', 'Item.*')
 				)
 			);
 
