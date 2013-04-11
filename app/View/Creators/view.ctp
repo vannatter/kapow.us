@@ -33,10 +33,6 @@
 	
 	<div class="span9 item_detail">
 		<?php echo $this->Element('creators/actions'); ?>
-
-		<pre>
-		<?php print_r($creator); ?>
-		</pre>
-				
+		<?php echo $this->Element('creators/items'); ?>
 	</div>
 </div>

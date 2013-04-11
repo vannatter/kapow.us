@@ -98,5 +98,24 @@ class CreatorsController extends AppController {
 			$this->redirect(sprintf('/creators/%s', parent::seoize($id, $creator['Creator']['creator_name'])), 301);
 		}
 	}
+
+	public function items($id) {
+		if($this->request->is('ajax')) {
+			$this->layout = 'blank';
+
+			$this->paginate = array(
+				'ItemCreator' => array(
+					'limit' => 16,
+					'order' => array(
+						'ItemCreator.created' => 'DESC'
+					)
+				)
+			);
+
+			$this->ItemCreator->recursive = 0;
+			$items = $this->paginate('ItemCreator', array('ItemCreator.creator_id' => $id));
+
+			$this->set('items', $items);
+		}
+	}
 }
-?>
