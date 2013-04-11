@@ -67,6 +67,16 @@ class ItemsController extends AppController {
 			)
 		));
 
+		$this->Item->bindModel(array(
+			'hasOne' => array(
+				'Pull' => array(
+					'conditions' => array(
+						'Pull.user_id' => $this->Auth->user('id')
+					)
+				)
+			)
+		));
+
 		$item = $this->Item->find('first', array(
 			'conditions' => array(
 				'Item.id' => $item_id
@@ -90,7 +100,8 @@ class ItemsController extends AppController {
 				),
 				'ItemTag' => array(
 					'Tag'
-				)
+				),
+				'Pull'
 			)
 		));
 
@@ -149,6 +160,16 @@ class ItemsController extends AppController {
 		#$this->Tag->unbindModel(array('hasMany' => array('ItemTag')), false);
 		#$this->ItemTag->unbindModel(array('belongsTo' => array('Item')), false);
 
+		$this->Item->bindModel(array(
+			'hasOne' => array(
+				'Pull' => array(
+					'conditions' => array(
+						'Pull.user_id' => $this->Auth->user('id')
+					)
+				)
+			)
+		));
+
 		$this->paginate = array(
 			'conditions' => array(
 				'Item.item_date' => $release_date,
@@ -163,7 +184,8 @@ class ItemsController extends AppController {
 					'Creator',
 					'CreatorType'
 				),
-				'ItemTag'
+				'ItemTag',
+				'Pull'
 			)
 		);
 

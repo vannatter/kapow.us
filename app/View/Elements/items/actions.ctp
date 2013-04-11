@@ -7,7 +7,7 @@
 	<?php $this->Html->script('page/items.js', array('inline' => false)); ?>
 	<div class="item_actions">
 
-		<button class="btn btn-custom pull_list_btn" type="button"><i class="icon-shopping-cart icon-white"></i> Pull List</button>
+		<button class="btn btn-custom pull_list_btn" type="button" data-id="<?php echo $item['Item']['id']; ?>"><i class="icon-shopping-cart icon-white"></i> <span><?php echo (isset($item['Pull']['id'])) ? __('Remove Pull') : __('Pull List'); ?></span></button>
 
 			<div class="btn-group">
 					<button class="btn btn-custom dropdown-toggle" data-toggle="dropdown"><i class="icon-heart icon-white"></i> Favorite <span class="caret white-caret"></span></button>
