@@ -4,10 +4,12 @@ App::uses('AppController', 'Controller');
 
 /**
  * @property Publisher $Publisher
+ * @property Item $Item
+ * @property UserFavorite $UserFavorite
  */
 class PublishersController extends AppController {
 	public $name = 'Publishers';
-	public $uses = array('Publisher', 'Item');
+	public $uses = array('Publisher', 'Item', 'UserFavorite');
 	public $paginate = array(
 		'Publisher' => array(
 			'order' => array('Publisher.publisher_name' => 'ASC'),
@@ -58,6 +60,14 @@ class PublishersController extends AppController {
 		if ($publisher = $this->Publisher->findById($id)) {
 			$this->set('publisher', $publisher);
 			$this->set('title_for_layout', ucwords(strtolower($publisher['Publisher']['publisher_name'])));
+
+			## see if the current user (if there is one), fav'd this publisher
+			if($userFav = $this->UserFavorite->findByFavoriteItemIdAndUserIdAndItemType($id, $this->Auth->user('id'), 4)) {
+				$this->set('userFav', true);
+			} else {
+				$this->set('userFav', false);
+			}
+
 		} else {
 			$this->Session->setFlash('Publisher not found!', 'flash_neg');
 			$this->redirect("/");

@@ -56,9 +56,11 @@
 		<?php } ?>
 	<?php } ?>
 </div>
-<div id="item-scroll-nav">
-	<div class="pagination">
-		<?php echo $this->Paginator->next('next'); ?>
-	</div>
-</div>
+	<?php if($this->Paginator->hasNext()) { ?>
+		<div id="item-scroll-nav">
+			<div class="pagination">
+				<?php echo $this->Paginator->next('next'); ?>
+			</div>
+		</div>
+	<?php } ?>
 <?php } ?>

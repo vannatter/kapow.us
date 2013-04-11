@@ -79,11 +79,11 @@
 			<?php } ?>
 		<?php } ?>
 	</div>
-	<div id="item-scroll-nav">
-		<div class="pagination">
-			<?php if(isset($this->request->params['paging']['Creator']['count']) && $this->request->params['paging']['Creator']['count'] > 1) { ?>
+	<?php if($this->Paginator->hasNext()) { ?>
+		<div id="item-scroll-nav">
+			<div class="pagination">
 				<?php echo $this->Paginator->next('next'); ?>
-			<?php } ?>
+			</div>
 		</div>
-	</div>
+	<?php } ?>
 <?php } ?>
