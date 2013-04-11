@@ -12,6 +12,7 @@ body {
 	background: -ms-radial-gradient(center, ellipse cover,  rgba(44,83,158,1) 0%,rgba(44,83,158,1) 100%);
 	background: radial-gradient(ellipse at center,  rgba(44,83,158,1) 0%,rgba(44,83,158,1) 100%);
 	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#2c539e', endColorstr='#2c539e',GradientType=1 );
+	margin-top: 0;
 }
 
 .preview_img {
@@ -32,7 +33,13 @@ body {
 }
 
 #header {
-	margin-top: 10px;
+	margin-top: 0px;
+	background-image: url(/img/bg.png);
+	background-repeat: no-repeat;
+}
+
+#main-container {
+	margin-top: 0;
 }
 
 .navbar {
@@ -314,7 +321,6 @@ h2 {
 }
 
 .login_block {
-	
 	background-color: darken(@kapow_blue, 15%);
 	padding: 12px;	
 	margin-bottom: 10px;
@@ -369,6 +375,10 @@ h2 {
 	font-size: 16px;
 }
 
+.navbar-inner {
+	padding-right: 0;
+}
+
 .navbar .btn-navbar {
   background-color: hsl(215, 69%, 27%) !important;
   background-repeat: repeat-x;
@@ -384,6 +394,8 @@ h2 {
   color: #fff !important;
   text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.29);
   -webkit-font-smoothing: antialiased;
+  margin-top: 35px;
+  margin-right: 20px;
 }
 
 .btn-hgh {
