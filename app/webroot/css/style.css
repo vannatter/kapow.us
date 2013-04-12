@@ -74,9 +74,8 @@ h2{color:#000 !important;}
 .flash_neg{background:rgba(227, 12, 12, 0.9);color:#000;}
 .flash_pos,.flash_msg{background:rgba(31, 61, 122, 0.9);color:#fff;}
 .loading{font-size:18px;color:#fff;}
-.fav_on a{color:red !important;}
+.fav_on a{color:red !important;background-color:blue;}
 .control-group.error .control-label,.control-group.error .help-block,.control-group.error .help-inline{color:yellow;}
 .control-group.error input,.control-group.error select,.control-group.error textarea{border-color:yellow;}
 .control-group.error .checkbox,.control-group.error .radio,.control-group.error input,.control-group.error select,.control-group.error textarea{color:#000;}
-.creator_collabs{text-align:left;font-size:16px;color:#fff;}
 @media (min-width:768px) and (max-width:979px){}@media (max-width:979px){body{background-color:lime !important;} .preview_img{min-height:160px;max-height:160px;} .preview_img img{width:94%;max-height:160px;} .preview_block{min-height:300px;max-height:410px;} .nav li a:hover{background:none !important;} .bread{float:left;text-align:left;line-height:16px;} .bread h3{line-height:22px;margin:10px 0 10px 0;} .navbar-inner{padding-left:0;} .navbar .brand{margin-left:-10px;} .nav-collapse{background-color:#24478f;}}@media (max-width:767px){.preview_img{float:left;clear:right;width:150px;min-height:inherit;max-height:inherit;padding-right:10px;} .preview_img img{max-height:inherit;} .preview_block{min-height:inherit;max-height:inherit;} .store_search_btn{float:left;} .item_actions{margin-top:10px;} .navbar-inner{padding-right:5px;} .btn-hgh{margin-top:4px;margin-left:0px;} .bread{float:left;text-align:left;}}@media (max-width:480px){.btn-hgh{margin-left:0px;}}@media (min-width:980px){.preview_img{min-height:210px;max-height:210px;} .preview_img img{max-height:200px;} .nav{padding-top:30px;text-align:right !important;float:right !important;} .nav li{text-align:right !important;padding-right:0px !important;} .nav li a{padding-right:0px !important;padding-left:30px !important;} .navbar-inner{padding-right:0px !important;}}@media (min-width:1200px){.preview_img{min-height:230px;max-height:230px;} .preview_img img{max-height:220px;}}
