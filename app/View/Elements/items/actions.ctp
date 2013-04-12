@@ -20,8 +20,8 @@
 									sprintf('Creator: %s', $v['name']),
 									sprintf('/favorites/add/%s/creator', $k),
 									array(
-										'style' => ($v['is_fav']) ? 'font-weight: bold;' : '',
-										'class' => 'toggle_favorite',
+										'style' => (isset($item['Publisher']['UserFavorite']['id'])) ? '' : '',
+										'class' => (isset($item['Publisher']['UserFavorite']['id'])) ? 'toggle_favorite fav_on' : 'toggle_favorite',
 										'data-type' => 'creator',
 										'data-id' => $k
 									)
@@ -35,8 +35,8 @@
 								sprintf('Series: %s', $item['Series']['series_name']),
 								sprintf('/favorites/add/%s/series', $item['Item']['series_id']),
 								array(
-									'style' => (isset($item['Series']['UserFavorite']['id'])) ? 'font-weight: bold;' : '',
-									'class' => 'toggle_favorite',
+									'style' => (isset($item['Publisher']['UserFavorite']['id'])) ? '' : '',
+									'class' => (isset($item['Publisher']['UserFavorite']['id'])) ? 'toggle_favorite fav_on' : 'toggle_favorite',
 									'data-type' => 'series',
 									'data-id' => $item['Item']['series_id']
 								)
@@ -49,8 +49,8 @@
 								sprintf('Publisher: %s', ucwords(strtolower($item['Publisher']['publisher_name']))),
 								sprintf('/favorites/add/%s/publisher', $item['Item']['publisher_id']),
 								array(
-									'style' => (isset($item['Publisher']['UserFavorite']['id'])) ? 'font-weight: bold;' : '',
-									'class' => 'toggle_favorite',
+									'style' => (isset($item['Publisher']['UserFavorite']['id'])) ? '' : '',
+									'class' => (isset($item['Publisher']['UserFavorite']['id'])) ? 'toggle_favorite fav_on' : 'toggle_favorite',
 									'data-type' => 'publisher',
 									'data-id' => $item['Item']['publisher_id']
 								)
