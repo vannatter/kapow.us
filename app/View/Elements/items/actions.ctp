@@ -14,14 +14,13 @@
 					<ul class="dropdown-menu fav_menu" role="menu">
 
 						<?php foreach ($unique_creators as $k=>$v) { ?>
-							<li>
+							<li class="<?php echo ($v['is_fav']) ? 'fav_on' : ''; ?>">
 								<?php
 								echo $this->Html->link(
 									sprintf('Creator: %s', $v['name']),
 									sprintf('/favorites/add/%s/creator', $k),
 									array(
-										'style' => (isset($item['Publisher']['UserFavorite']['id'])) ? '' : '',
-										'class' => (isset($item['Publisher']['UserFavorite']['id'])) ? 'toggle_favorite fav_on' : 'toggle_favorite',
+										'class' => 'toggle_favorite',
 										'data-type' => 'creator',
 										'data-id' => $k
 									)
@@ -29,28 +28,26 @@
 								?>
 							</li>
 						<?php } ?>
-						<li>
+						<li class="<?php echo (isset($item['Series']['UserFavorite']['id'])) ? 'fav_on' : '';?>">
 							<?php
 							echo $this->Html->link(
 								sprintf('Series: %s', $item['Series']['series_name']),
 								sprintf('/favorites/add/%s/series', $item['Item']['series_id']),
 								array(
-									'style' => (isset($item['Publisher']['UserFavorite']['id'])) ? '' : '',
-									'class' => (isset($item['Publisher']['UserFavorite']['id'])) ? 'toggle_favorite fav_on' : 'toggle_favorite',
+									'class' => 'toggle_favorite',
 									'data-type' => 'series',
 									'data-id' => $item['Item']['series_id']
 								)
 							);
 							?>
 						</li>
-						<li>
+						<li class="<?php echo (isset($item['Publisher']['UserFavorite']['id'])) ? 'fav_on' : ''; ?>">
 							<?php
 							echo $this->Html->link(
 								sprintf('Publisher: %s', ucwords(strtolower($item['Publisher']['publisher_name']))),
 								sprintf('/favorites/add/%s/publisher', $item['Item']['publisher_id']),
 								array(
-									'style' => (isset($item['Publisher']['UserFavorite']['id'])) ? '' : '',
-									'class' => (isset($item['Publisher']['UserFavorite']['id'])) ? 'toggle_favorite fav_on' : 'toggle_favorite',
+									'class' => 'toggle_favorite',
 									'data-type' => 'publisher',
 									'data-id' => $item['Item']['publisher_id']
 								)

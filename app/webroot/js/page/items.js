@@ -10,12 +10,12 @@ $(document).ready(function() {
 			if(!data.error) {
 				if(data.type == 1) {
 					if(type == 'all') {
-						$('.toggle_favorite').not('[data-type="all"]') .css('fontWeight', 'bold');
+						$('.toggle_favorite').not('[data-type="all"]').parent().addClass('fav_on');
 					} else {
-						obj.css('fontWeight', 'bold');
+						obj.parent().addClass('fav_on');
 					}
 				} else {
-					obj.css('fontWeight', 'normal');
+					obj.parent().removeClass('fav_on');
 				}
 			}
 		});
