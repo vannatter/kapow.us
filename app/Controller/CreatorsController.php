@@ -153,8 +153,6 @@ class CreatorsController extends AppController {
 			$this->ItemCreator->recursive = 0;
 			$items = $this->paginate('ItemCreator', array('ItemCreator.creator_id' => $id));
 
-			debug($items);
-
 			$this->set('items', $items);
 		}
 	}
