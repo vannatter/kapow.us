@@ -3,6 +3,7 @@
  *@var $this View
  */
 ?>
+<?php $this->Html->script('page/publishers.js', array('inline' => false)); ?>
 <div id="publisher-items"></div>
 <script>
 	var items = $('div#publisher-items');

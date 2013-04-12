@@ -70,7 +70,7 @@ $(document).ready(function() {
 
 		$.getJSON('/pulls/toggle', { 'id': id }, function(data) {
 			if(data.error) {
-				flash(data.message, 10000);
+				flash(data.message, 3000);
 			} else {
 				if(data.type == 1) {
 					// added

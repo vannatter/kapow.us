@@ -131,12 +131,29 @@ class CreatorsController extends AppController {
 					'order' => array(
 						'ItemCreator.created' => 'DESC'
 					),
-					'fields' => array('DISTINCT ItemCreator.item_id', 'Item.*')
+					'fields' => array('DISTINCT ItemCreator.item_id', 'Item.*'),
+					'contain' => array(
+						'Item' => array(
+							'Pull'
+						)
+					)
 				)
 			);
 
+			$this->ItemCreator->Item->bindModel(array(
+				'hasOne' => array(
+					'Pull' => array(
+						'conditions' => array(
+							'Pull.user_id' => $this->Auth->user('id')
+						)
+					)
+				)
+			));
+
 			$this->ItemCreator->recursive = 0;
 			$items = $this->paginate('ItemCreator', array('ItemCreator.creator_id' => $id));
+
+			debug($items);
 
 			$this->set('items', $items);
 		}

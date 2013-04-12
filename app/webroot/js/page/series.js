@@ -30,13 +30,17 @@ $(document).ready(function() {
 		var id = obj.attr('data-id');
 
 		$.getJSON('/pulls/toggle', { 'id': id }, function(data) {
-			if(!data.error) {
+			if(data.error) {
+				flash(data.message, 3000);
+			} else {
 				if(data.type == 1) {
 					// added
 					obj.find('span').text('Remove Pull');
+					flash('Added to your pull list', 3000);
 				} else {
 					// removed
 					obj.find('span').text('Pull List');
+					flash('Removed from your pull list', 3000);
 				}
 			}
 		});

@@ -38,11 +38,30 @@ class ItemsController extends AppController {
 				)
 			);
 
+			$this->Item->bindModel(array(
+				'hasOne' => array(
+					'Pull' => array(
+						'conditions' => array(
+							'Pull.user_id' => $this->Auth->user('id')
+						)
+					)
+				)
+			));
+
 			$items = $this->paginate('Item', $con);
 		} else {
+			$this->Item->bindModel(array(
+				'hasOne' => array(
+					'Pull' => array(
+						'conditions' => array(
+							'Pull.user_id' => $this->Auth->user('id')
+						)
+					)
+				)
+			));
+
 			$items = $this->paginate('Item');
 		}
-
 
 		$this->set('items', $items);
 	}

@@ -94,6 +94,16 @@ class PublishersController extends AppController {
 				)
 			);
 
+			$this->Item->bindModel(array(
+				'hasOne' => array(
+					'Pull' => array(
+						'conditions' => array(
+							'Pull.user_id' => $this->Auth->user('id')
+						)
+					)
+				)
+			));
+
 			$this->Item->recursive = 0;
 			$items = $this->paginate('Item', array('Item.publisher_id' => $id));
 

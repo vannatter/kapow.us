@@ -163,4 +163,14 @@ class CommonHelper extends Helper {
 
 		return $this->Form->button($caption, array('type' => 'button', 'class' => 'btn btn-custom toggle_favorite', 'data-id' => $id, 'data-type' => $type));
 	}
+
+	public function pullButton($id, $hasPull) {
+		$caption = __('Pull List');
+		if($hasPull) {
+			$caption = __('Remove Pull');
+		}
+		$caption = sprintf('<i class="icon-shopping-cart icon-white"></i> <span>%s</span>', $caption);
+
+		return $this->Form->button($caption, array('type' => 'button', 'class' => 'btn btn-mini btn-primary disabled pull_list_btn', 'data-id' => $id));
+	}
 }
