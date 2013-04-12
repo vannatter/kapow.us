@@ -12,16 +12,27 @@
 			<div class="row thisweek scroll-list-item">
 		<?php } ?>
 		<?php $row++; ?>
+		<?php
+		$description = $item['Item']['description'];
+		$name = $item['Item']['item_name'];
+		if(isset($this->request->query['terms']) && !empty($this->request->query['terms'])) {
+			$searchFor = "/" . $this->request->query['terms'] . "/i";
+			$replaceWith = "<i><b>$0</b></i>";
+
+			$description = preg_replace($searchFor, $replaceWith, $description);
+			$name = preg_replace($searchFor, $replaceWith, $name);
+		}
+		?>
 		<div class="span2 preview_block">
 			<div class="preview_img"><a href="/items/<?php echo $this->Common->seoize($item['Item']['id'], $item['Item']['item_name']); ?>"><?php if ($item['Item']['img_fullpath'] == "/img/covers") { ?><img border="0" alt="<?php echo $item['Item']['item_name']; ?>" src="/img/nocover.png" width="210" height="140" /><?php } else { ?><img border="0" alt="<?php echo $item['Item']['item_name']; ?>" src="<?php echo $this->Common->thumb($item['Item']['img_fullpath']); ?>" /><?php } ?></a></div>
 
 			<button class="btn btn-mini btn-primary disabled pull_list_btn" type="button" data-id="<?php echo $item['Item']['id']; ?>"><i class="icon-shopping-cart icon-white"></i> <span><?php echo (isset($item['Pull']['id'])) ? __('Remove Pull') : __('Pull List'); ?></span></button>
 
-			<h4><a href="/items/<?php echo $this->Common->seoize($item['Item']['id'], $item['Item']['item_name']); ?>"><?php echo $item['Item']['item_name']; ?></a></h4>
+			<h4><a href="/items/<?php echo $this->Common->seoize($item['Item']['id'], $item['Item']['item_name']); ?>"><?php echo $name; ?></a></h4>
 
 			<div class="item_desc">
 				<?php echo $this->Common->printing($item['Item']['printing']); ?>
-				<p><?php echo $item['Item']['description']; ?></p>
+				<p><?php echo $description; ?></p>
 			</div>
 		</div>
 		<?php if($row == 6) { ?>

@@ -75,7 +75,6 @@ class AppController extends Controller {
 
 	## this is a callback for the Facebook plugin
 	public function afterFacebookLogin() {
-		$this->redirect('/');
 	}
 
 	## this is a callback for the Facebook plugin

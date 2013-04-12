@@ -2,6 +2,9 @@
 
 App::uses('AppController', 'Controller');
 
+/**
+ * @property Creator $Creator
+ */
 class CreatorsController extends AppController {
 
 	public $name = 'Creators';
@@ -53,9 +56,6 @@ class CreatorsController extends AppController {
 	}
 
 	public function view($creator_id, $creator_name) {
-		##$creator_parts = @explode("--", $creator_string);
-		##$creator_id = $creator_parts[0];
-
 		if (!$creator_id) {
 			$this->Session->setFlash('Creator ID not found.', 'flash_neg');
 			$this->redirect("/");
@@ -91,6 +91,28 @@ class CreatorsController extends AppController {
 		} else {
 			$this->set('userFav', false);
 		}
+
+		## TODO: make this prettier
+		$collabs = $this->Creator->query("
+		SELECT COUNT(*) as collab_count, creator_id, creators.creator_name
+			FROM (
+				SELECT item_creators.item_id, item_creators.creator_id
+					FROM item_creators
+					WHERE item_creators.item_id IN (
+						SELECT DISTINCT item_creators.item_id
+							FROM item_creators
+							WHERE item_creators.creator_id = $creator_id
+						)
+					AND item_creators.creator_id != $creator_id
+					GROUP BY creator_id, item_id
+				) AS collabs
+			LEFT JOIN creators ON (creators.id = collabs.creator_id)
+			GROUP BY creator_id
+			ORDER BY collab_count DESC
+			LIMIT 10
+		");
+
+		$this->set('collabs', $collabs);
 	}
 
 	public function viewById($id) {

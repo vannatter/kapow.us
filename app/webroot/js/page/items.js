@@ -50,6 +50,12 @@ $(document).ready(function() {
 				if(pubid) {
 					path += '?pubid=' + pubid;
 				}
+
+				var terms = $content.find('#ItemTerms').val();
+
+				if(terms) {
+					path += '?terms=' + terms;
+				}
 			}
 
 			return path;
@@ -63,7 +69,9 @@ $(document).ready(function() {
 		var id = obj.attr('data-id');
 
 		$.getJSON('/pulls/toggle', { 'id': id }, function(data) {
-			if(!data.error) {
+			if(data.error) {
+				flash(data.message, 10000);
+			} else {
 				if(data.type == 1) {
 					// added
 					obj.find('span').text('Remove Pull');

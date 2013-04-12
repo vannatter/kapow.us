@@ -7,7 +7,7 @@ App::uses('AppController', 'Controller');
  */
 class ShopsController extends AppController {
 	public $name = 'Shops';
-	public $uses = array('Store', 'StorePhoto');
+	public $uses = array('Store', 'StorePhoto', 'UserFavorite');
 	public $components = array('Upload');
 
 	public function index() {
@@ -27,6 +27,13 @@ class ShopsController extends AppController {
 		$shop = $this->Store->read();
 		$this->set('shop', $shop);
 		$this->set('title_for_layout', $shop['Store']['name']);
+
+		## see if the current user (if there is one), fav'd this shop
+		if($userFav = $this->UserFavorite->findByFavoriteItemIdAndUserIdAndItemType($id, $this->Auth->user('id'), 5)) {
+			$this->set('userFav', true);
+		} else {
+			$this->set('userFav', false);
+		}
 	}
 
 	public function viewById($id) {

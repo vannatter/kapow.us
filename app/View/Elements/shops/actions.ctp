@@ -1,6 +1,6 @@
 <?php if($this->Session->read('Auth.User')) { ?>
 <div class="item_actions">
-
+	<?php echo $this->Common->addFavButton($shop['Store']['id'], 'shop', $userFav); ?>
 	<div class="btn-group">
 		<button class="btn btn-custom dropdown-toggle" data-toggle="dropdown"><i class="icon-cog icon-white"></i> <?php echo __('Tools'); ?> <span class="caret white-caret"></span></button>
 		<ul class="dropdown-menu fav_menu" role="menu">
