@@ -13,11 +13,38 @@ class ItemsController extends AppController {
 	);
 
 	public function index() {
-		#$this->redirect("/items/this_week");
-		#exit;
+		if($this->request->is('post') || $this->request->is('put')) {
+			$data = Sanitize::clean($this->request->data);
+
+			if(isset($data['Item']['terms'])) {
+				if(empty($data['Item']['terms'])) {
+					$this->redirect('/items');
+				}
+
+				$this->set('terms', $data['Item']['terms']);
+				$this->redirect(sprintf('/items?terms=%s', $data['Item']['terms']));
+			}
+		}
 
 		$this->Item->recursive = 0;
-		$this->set('items', $this->paginate('Item'));
+
+		if(isset($this->request->query['terms'])) {
+			$terms = $this->request->query['terms'];
+
+			$con = array(
+				'OR' => array(
+					'Item.item_name LIKE' => '%' . $terms . '%',
+					'Item.description LIKE' => '%' . $terms . '%'
+				)
+			);
+
+			$items = $this->paginate('Item', $con);
+		} else {
+			$items = $this->paginate('Item');
+		}
+
+
+		$this->set('items', $items);
 	}
 	
 	public function detail($item_id, $item_name) {

@@ -29,7 +29,7 @@ class PullsController extends AppController {
 					$result['message'] = __('Item Not Found');
 				}
 			} else {
-				$result['message'] = __('Not Logged In');
+				$result['message'] = __('Not logged in; %s or %s', '<a href="/users/login">login</a>', '<a href="/users/register">create an account</a>');
 			}
 
 			return new CakeResponse(array('body' => json_encode($result)));
