@@ -103,6 +103,7 @@ class CreatorsController extends AppController {
 							FROM item_creators
 							WHERE item_creators.creator_id = $creator_id
 						)
+					AND item_creators.creator_id != $creator_id
 					GROUP BY creator_id, item_id
 				) AS collabs
 			LEFT JOIN creators ON (creators.id = collabs.creator_id)
