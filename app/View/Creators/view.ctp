@@ -28,7 +28,16 @@
 			<a href="<?php echo $creator['Creator']['creator_twitter']; ?>" target="_blank"><?php echo $creator['Creator']['creator_twitter']; ?></a>
 		</div>
 		<?php } ?>
-				
+
+		<?php if(isset($collabs) && count($collabs) > 0) { ?>
+			<div class="creator_collabs">
+				<ul class="unstyled">
+					<?php foreach($collabs as $collab) { ?>
+						<li><?php echo $this->Html->link($collab['creators']['creator_name'], '/creators/' . $this->Common->seoize($collab['collabs']['creator_id'], $collab['creators']['creator_name'])); ?> (<?php echo $collab[0]['collab_count']; ?>)</li>
+					<?php } ?>
+				</ul>
+			</div>
+		<?php } ?>
 	</div>
 	
 	<div class="span9 item_detail">
