@@ -497,9 +497,14 @@ class FacebookHelper extends AppHelper {
 			'perms' => 'email'
 		), (array)$options);
 		if ($appId = FacebookInfo::getConfig('appId')) {
+			$isAuth = 0;
+			if($this->Session->read('Auth.User')) {
+				$isAuth = 1;
+			}
 			$init = '<div id="fb-root"></div>';
 			$init .= $this->Html->scriptBlock("
 	window.fbAsyncInit = function() {
+		var isAuth = $isAuth
 		FB.init({
 			appId      : '$appId', // App ID
 			channelURL : '../../Vendor/channel.php', // Channel File
@@ -514,6 +519,9 @@ class FacebookHelper extends AppHelper {
 		FB.getLoginStatus(function(response) {
 			if (response.authResponse) {
 				// logged in and connected user, someone you know
+				if(isAuth == 0) {
+					window.location.reload();
+				}
 				// alert('You are connected');
 			} else {
 				// no user session available, someone you dont know
