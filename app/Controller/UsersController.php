@@ -22,13 +22,11 @@ class UsersController extends AppController {
 			$data = Sanitize::clean($this->request->data);
 
 			if ($this->User->save($data)) {
-				$this->Session->setFlash(__('Registered'), 'alert', array(
-					'plugin' => 'TwitterBootstrap',
-					'class' => 'alert-success'
-				));
+				$this->Session->setFlash('User registration successful!', 'flash_pos');
+				$this->redirect('/users/login');
+				exit;
 			}
 		}
-
 		$this->set('title_for_layout','User Registration');
 	}
 

@@ -414,7 +414,7 @@ h2 {
 	margin: 10px 0 0 0;
 }
 
-.flash_pos, .flash_neg {
+.flash_pos, .flash_neg, .flash_msg {
 	position: fixed;
 	left: 0;
 	bottom: 0;
@@ -436,7 +436,7 @@ h2 {
 	color:#000;
 }
    	
-.flash_pos {
+.flash_pos, .flash_msg {
 	background: fade(darken(@kapow_blue, 20%), 90%);
 	color: #fff;
 }
@@ -450,6 +450,18 @@ h2 {
 .fav_on {
 	color: red;
 }
+
+.control-group.error .control-label, .control-group.error .help-block, .control-group.error .help-inline {
+	color: yellow;
+}
+
+.control-group.error input, .control-group.error select, .control-group.error textarea {
+	border-color: yellow;
+}
+.control-group.error .checkbox, .control-group.error .radio, .control-group.error input, .control-group.error select, .control-group.error textarea {
+	color: #000;
+}
+
    	
 @import "media_min768max979.less";
 @import "media_max979.less";

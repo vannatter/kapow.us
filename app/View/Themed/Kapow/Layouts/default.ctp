@@ -50,7 +50,7 @@
 			</div>
 			
 			
-			<div id="flash_msg" class="flash_pos" style="display:none;"></div>
+			<div id="flash_msg" class="flash_msg" style="display:none;"></div>
 			
 		</div>
 

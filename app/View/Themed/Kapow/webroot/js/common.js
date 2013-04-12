@@ -22,6 +22,15 @@ $(document).ready(function() {
 		// possibly change this later
 		return false;
 	});
+	
+	$('.flash_pos, .flash_neg').click(function() {
+		$(this).fadeOut();
+	});
+
+	if ($('.flash_pos').length > 0) {
+		$('.flash_pos').click(function () { $(this).hide(); });
+		$('.flash_pos').animate({ delay : 1 }, 5000, function() { $(this).fadeOut(); });
+	}
 
 });
 
@@ -34,3 +43,6 @@ function flash(msg, delay) {
 	$('#flash_msg').fadeIn();
 	msg_timeout = setTimeout( function() { $("#flash_msg").fadeOut(); }, delay );
 }
+
+
+	
