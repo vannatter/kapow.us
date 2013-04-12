@@ -12,10 +12,11 @@ App::uses('AppController', 'Controller');
  * @property User $User
  * @property Category $Category
  * @property Section $Section
+ * @property Report $Report
  */
 class AdminController extends AppController {
 	public $name = 'Admin';
-	public $uses = array('Item', 'Creator', 'Publisher', 'Series', 'Store', 'User', 'Category', 'CreatorType', 'Section');
+	public $uses = array('Item', 'Creator', 'Publisher', 'Series', 'Store', 'User', 'Category', 'CreatorType', 'Section', 'Report');
 	public $helpers = array('States');
 	public $components = array('Upload');
 	public $paginate = array(
@@ -50,6 +51,10 @@ class AdminController extends AppController {
 		'Section' => array(
 			'limit' => 25,
 			'order' => array('Section.id' => 'asc')
+		),
+		'Report' => array(
+			'limit' => 25,
+			'order' => array('Report.id' => 'asc')
 		)
 	);
 
@@ -473,5 +478,45 @@ class AdminController extends AppController {
 		}
 
 		$this->set('categories', $this->Category->find('list', array('fields' => array('id', 'category_name'))));
+	}
+
+	public function reports() {
+		$this->Report->recursive = 0;
+		$this->set('reports', $this->paginate('Report'));
+	}
+
+	public function reportsView($id) {
+		$this->Report->id = $id;
+		if(!$this->Report->exists()) {
+			$this->Session->setFlash(__('Report Not Found'), 'alert', array(
+				'plugin' => 'TwitterBootstrap',
+				'class' => 'alert-error'
+			));
+
+			$this->redirect('/admin/reports');
+		}
+
+		$report = $this->Report->read();
+
+		## 1=item, 2=series, 3=creator, 4=publisher, 5=store
+		switch($report['Report']['item_type']) {
+			case 1:
+				$this->Report->bindModel(array('belongsTo' => array('Item' => array('foreignKey' => 'report_item_id'))));
+				break;
+			case 2:
+				$this->Report->bindModel(array('belongsTo' => array('Series' => array('foreignKey' => 'report_item_id'))));
+				break;
+			case 3:
+				$this->Report->bindModel(array('belongsTo' => array('Creator' => array('foreignKey' => 'report_item_id'))));
+				break;
+			case 4:
+				$this->Report->bindModel(array('belongsTo' => array('Publisher' => array('foreignKey' => 'report_item_id'))));
+				break;
+			case 5:
+				$this->Report->bindModel(array('belongsTo' => array('Store' => array('foreignKey' => 'report_item_id'))));
+				break;
+		}
+		$this->Report->recursive = 0;
+		$this->request->data = $this->Report->read();
 	}
 }

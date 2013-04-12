@@ -116,6 +116,52 @@ Router::connect(
 	array('controller' => 'users', 'action' => 'profile')
 );
 
+##### REPORT/REPORTS
+Router::connect(
+	'/report/item/:id',
+	array('controller' => 'reports', 'action' => 'item'),
+	array(
+		'pass' => array('id'),
+		'id' => '[0-9]+'
+	)
+);
+
+Router::connect(
+	'/report/creator/:id',
+	array('controller' => 'reports', 'action' => 'creator'),
+	array(
+		'pass' => array('id'),
+		'id' => '[0-9]+'
+	)
+);
+
+Router::connect(
+	'/report/series/:id',
+	array('controller' => 'reports', 'action' => 'series'),
+	array(
+		'pass' => array('id'),
+		'id' => '[0-9]+'
+	)
+);
+
+Router::connect(
+	'/report/publisher/:id',
+	array('controller' => 'reports', 'action' => 'publisher'),
+	array(
+		'pass' => array('id'),
+		'id' => '[0-9]+'
+	)
+);
+
+Router::connect(
+	'/report/store/:id',
+	array('controller' => 'reports', 'action' => 'shop'),
+	array(
+		'pass' => array('id'),
+		'id' => '[0-9]+'
+	)
+);
+
 ##### ADMIN
 Router::connect(
 	'/admin/items/edit/:id',
@@ -216,6 +262,14 @@ Router::connect(
 	)
 );
 
+Router::connect(
+	'/admin/reports/view/:id',
+	array('controller' => 'admin', 'action' => 'reportsView'),
+	array(
+		'pass' => array('id'),
+		'id' => '[0-9]+'
+	)
+);
 	CakePlugin::routes();
 
 	require CAKE . 'Config' . DS . 'routes.php';
