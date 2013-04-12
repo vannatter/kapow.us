@@ -9,21 +9,21 @@
 			<a class="brand" href="/"><img src="/img/logo.png" /></a>
 			<div class="nav-collapse">
 				<ul class="nav">
-					<li><a href="/items/this_week">New This Week</a></li>
-					<li><a href="/items/next_week">New Next Week</a></li>
-					<li><a href="/shops">Shops</a></li>
-					<li><a href="/search">Search</a></li>
+					<li><?php echo $this->Html->link(__('New This Week'), array('controller' => 'items', 'action' => 'this_week')); ?></li>
+					<li><?php echo $this->Html->link(__('New Next Week'), array('controller' => 'items', 'action' => 'next_week')); ?></li>
+					<li><?php echo $this->Html->link(__('Shops'), array('controller' => 'shops')); ?></li>
+					<li><?php echo $this->Html->link(__('Search'), array('controller' => 'search')); ?></li>
 
 					<?php 
 					if ($this->Session->read('Auth.User')) {
-						echo '<li><a href="/my">My Account</a></li>';
+						echo sprintf('<li>%s</li>', $this->Html->link(__('My Account'), array('controller' => 'my')));
 						if ($this->Session->read('Auth.User.facebook_id')) {
-							echo '<li>' . $this->Facebook->logout(array('redirect' => array('controller' => 'users', 'action' => 'logout'), 'label' => __('Logout'))) . '</li>';
+							echo sprintf('<li>%s</li>', $this->Facebook->logout(array('redirect' => array('controller' => 'users', 'action' => 'logout'), 'label' => __('Logout'))));
 						} else {
-							echo '<li>' . $this->Html->link(__('Logout'), '/users/logout') . '</li>';
+							echo sprintf('<li>%s</li>', $this->Html->link(__('Logout'), array('controller' => 'users', 'action' => 'logout')));
 						}
 					} else {
-						echo '<li>' . $this->Html->link(__('Login / Register'), '/users/login') . '</li>';
+						echo sprintf('<li>%s</li>', $this->Html->link(__('Login / Register'), array('controller' => 'users', 'action' => 'login')));
 					}
 					?>
 
