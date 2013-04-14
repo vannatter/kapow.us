@@ -7,7 +7,7 @@
 <div id="publisher-items"></div>
 <script>
 	var items = $('div#publisher-items');
-	items.append('<img src="/img/ajax-loader.gif" />');
+	items.append('<img src="/img/ajax-loader2.gif" />');
 
 	$.get('/publishers/items/<?php echo $publisher['Publisher']['id']; ?>', function(data) {
 		items.empty().append(data);
