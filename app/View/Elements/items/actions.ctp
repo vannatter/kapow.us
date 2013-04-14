@@ -10,7 +10,7 @@
 		<button class="btn btn-custom pull_list_btn" type="button" data-id="<?php echo $item['Item']['id']; ?>"><i class="icon-shopping-cart icon-white"></i> <span><?php echo (isset($item['Pull']['id'])) ? __('Remove Pull') : __('Pull List'); ?></span></button>
 
 			<div class="btn-group">
-					<button class="btn btn-custom dropdown-toggle" data-toggle="dropdown"><i class="icon-heart icon-white"></i> Favorite <span class="caret white-caret"></span></button>
+					<button class="btn btn-custom dropdown-toggle" data-toggle="dropdown"><i class="icon-heart icon-white"></i> <?php echo __('Favorite'); ?> <span class="caret white-caret"></span></button>
 					<ul class="dropdown-menu fav_menu" role="menu">
 
 						<?php foreach ($unique_creators as $k=>$v) { ?>
@@ -72,7 +72,7 @@
 			</div>
 
 			<div class="btn-group">
-					<button class="btn btn-custom dropdown-toggle" data-toggle="dropdown"><i class="icon-cog icon-white"></i> Tools <span class="caret white-caret"></span></button>
+					<button class="btn btn-custom dropdown-toggle" data-toggle="dropdown"><i class="icon-cog icon-white"></i> <?php echo __('Tools'); ?> <span class="caret white-caret"></span></button>
 					<ul class="dropdown-menu fav_menu" role="menu">
 							<li><a href="/improve/item/<?php echo $item['Item']['id']; ?>"><?php echo __('Improve this content'); ?></a></li>
 							<li><a href="/report/item/<?php echo $item['Item']['id']; ?>"><?php echo __('Report an issue'); ?></a></li>

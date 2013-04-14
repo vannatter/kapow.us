@@ -58,6 +58,13 @@ class UsersController extends AppController {
 
 		$user = $this->User->read();
 
+		$email = $user['User']['email'];
+		$default = "http://kapow.us/img/noprofile.png";
+		$size = 300;
+		$grav_url = "http://www.gravatar.com/avatar/" . md5( strtolower( trim( $email ) ) ) . "?d=" . urlencode( $default ) . "&s=" . $size;
+
+		$this->set('gravatar', $grav_url);
+		
 		$this->User->UserFavorite->bindModel(array('belongsTo' => array('Publisher' => array('foreignKey' => 'favorite_item_id'))));
 		$user['favorites']['publishers'] = $this->User->UserFavorite->find('all', array('conditions' => array('UserFavorite.item_type' => 4)));
 
