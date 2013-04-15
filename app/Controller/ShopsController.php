@@ -15,13 +15,10 @@ class ShopsController extends AppController {
 
 	public function view($id, $name) {
 		$this->Store->id = $id;
-		if(!$this->Store->exists()) {
-			$this->Session->setFlash(__('Store Not Found!'), 'alert', array(
-				'plugin' => 'TwitterBootstrap',
-				'class' => 'alert-error'
-			));
-
+		if (!$this->Store->exists()) {
+			$this->Session->setFlash('Shop not found!', 'flash_neg');
 			$this->redirect($this->referer());
+			exit;
 		}
 
 		$shop = $this->Store->read();
@@ -29,7 +26,7 @@ class ShopsController extends AppController {
 		$this->set('title_for_layout', $shop['Store']['name']);
 
 		## see if the current user (if there is one), fav'd this shop
-		if($userFav = $this->UserFavorite->findByFavoriteItemIdAndUserIdAndItemType($id, $this->Auth->user('id'), 5)) {
+		if ($userFav = $this->UserFavorite->findByFavoriteItemIdAndUserIdAndItemType($id, $this->Auth->user('id'), 5)) {
 			$this->set('userFav', true);
 		} else {
 			$this->set('userFav', false);
@@ -164,35 +161,31 @@ class ShopsController extends AppController {
 	}
 
 	public function addImage($id=null) {
-		if(!$id) {
-			$this->Session->setFlash(__('Invalid Shop'), 'alert', array(
-				'plugin' => 'TwitterBootstrap',
-				'class' => 'alert-error'
-			));
+		if (!$id) {
+			$this->Session->setFlash('Shop not found!', 'flash_neg');
 			$this->redirect('/shops');
+			exit;
 		}
 
-		if(!$this->Session->read('Auth.User')) {
-			$this->Session->setFlash(__('Not Logged In'), 'alert', array(
-				'plugin' => 'TwitterBootstrap',
-				'class' => 'alert-error'
-			));
+		if (!$this->Session->read('Auth.User')) {
+			$this->Session->setFlash('You are not logged in!', 'flash_neg');
 			$this->redirect('/shops');
+			exit;
 		}
 
 		$this->Store->id = $id;
-		if(!$this->Store->exists()) {
-			$this->Session->setFlash(__('Invalid Shop'), 'alert', array(
-				'plugin' => 'TwitterBootstrap',
-				'class' => 'alert-error'
-			));
+		if (!$this->Store->exists()) {
+			$this->Session->setFlash('Shop not found!', 'flash_neg');
 			$this->redirect('/shops');
+			exit;
 		}
+		
+		$shopshop = $this->Store->read(array('id', 'name'));
 
-		if($this->request->is('post') || $this->request->is('put')) {
+		if ($this->request->is('post') || $this->request->is('put')) {
 			$data = Sanitize::clean($this->request->data);
 
-			if(isset($data['StorePhoto']['photo_upload']['name']) && !empty($data['StorePhoto']['photo_upload']['name'])) {
+			if (isset($data['StorePhoto']['photo_upload']['name']) && !empty($data['StorePhoto']['photo_upload']['name'])) {
 				$uploadPath = Configure::read('Settings.store_img_path');
 				$uploadPath .= '/' . $id . '/';
 
@@ -200,19 +193,19 @@ class ShopsController extends AppController {
 				$upload = $data['StorePhoto']['photo_upload'];
 				$name = uniqid() . '-' . $upload['name'];
 
-				if($msg = $this->Upload->image($upload, $uploadPath, $name)) {
+				if ($msg = $this->Upload->image($upload, $uploadPath, $name)) {
 					$this->StorePhoto->validationErrors['photo_upload'] = $msg;
 				} else {
 					$data['StorePhoto']['photo_path'] = Configure::read('Settings.store_img_web_path') . '/' . $id . '/' . $name;
 					$data['StorePhoto']['uploader_user_id'] = $this->Auth->user('id');
 					$data['StorePhoto']['store_id'] = $id;
+					$data['StorePhoto']['active'] = 0;
 
 					$this->StorePhoto->create($data);
-					if($this->StorePhoto->save($data)) {
-						$this->Session->setFlash(__('Photo Added'), 'alert', array(
-							'plugin' => 'TwitterBootstrap',
-							'class' => 'alert-success'
-						));
+					if ($this->StorePhoto->save($data)) {
+						$this->Session->setFlash('Photo added for review!', 'flash_pos');
+						$this->redirect('/shops/' . $this->seoize($id, $shopshop['Store']['name']));
+						exit;
 					}
 				}
 			} else {
@@ -221,6 +214,7 @@ class ShopsController extends AppController {
 		}
 
 		$this->Store->recursive = 0;
-		$this->set('shop', $this->Store->read(array('id', 'name')));
+		$this->set('shop', $shopshop);
+		$this->set('title_for_layout', 'Add Shop Photo');
 	}
 }

@@ -11,7 +11,7 @@
 				<ul class="nav">
 					<li><?php echo $this->Html->link(__('New This Week'), array('controller' => 'items', 'action' => 'this_week')); ?></li>
 					<li><?php echo $this->Html->link(__('New Next Week'), array('controller' => 'items', 'action' => 'next_week')); ?></li>
-					<li><?php echo $this->Html->link(__('Shops'), array('controller' => 'shops')); ?></li>
+					<li><?php echo $this->Html->link(__('Shops'), array('controller' => 'shops', 'action' => '/')); ?></li>
 					<li><?php echo $this->Html->link(__('Search'), array('controller' => 'search')); ?></li>
 
 					<?php 
