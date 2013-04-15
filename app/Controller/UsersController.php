@@ -82,6 +82,6 @@ class UsersController extends AppController {
 		$pulls = $this->Pull->find('all', array('conditions' => array('Pull.user_id' => $this->Auth->user('id')), 'order' => array('Pull.id DESC'), 'limit' => 4, 'recursive' => 1));
 		$this->set('pulls', $pulls);
 		
-				
+		$this->set('title_for_layout','My Profile');
 	}
 }
