@@ -7,7 +7,7 @@ App::uses('AppController', 'Controller');
  */
 class UsersController extends AppController {
 	public $name = 'Users';
-	public $uses = array('User');
+	public $uses = array('User','Pull');
 
 	public function index() {
 	}
@@ -78,5 +78,10 @@ class UsersController extends AppController {
 		$user['favorites']['shops'] = $this->User->UserFavorite->find('all', array('conditions' => array('UserFavorite.item_type' => 5)));
 
 		$this->set('user', $user);
+		
+		$pulls = $this->Pull->find('all', array('conditions' => array('Pull.user_id' => $this->Auth->user('id')), 'order' => array('Pull.id DESC'), 'limit' => 4, 'recursive' => 1));
+		$this->set('pulls', $pulls);
+		
+				
 	}
 }

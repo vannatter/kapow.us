@@ -33,12 +33,12 @@
 	<div class="span9 item_detail">
 		<?php echo $this->Element('users/my/actions'); ?>
 		<?php echo $this->Element('users/my/pull_list'); ?>
-		<?php echo $this->Element('users/my/owned_items'); ?>
+		<?php echo $this->Element('users/my/library'); ?>
 		<?php echo $this->Element('users/my/favorite_items'); ?>
 		<?php echo $this->Element('users/my/favorite_series'); ?>
 		<?php echo $this->Element('users/my/favorite_creators'); ?>
 		<?php echo $this->Element('users/my/favorite_publishers'); ?>
-		<?php echo $this->Element('users/my/favorite_stores'); ?>
+		<?php echo $this->Element('users/my/favorite_shops'); ?>
 	</div>
 </div>
 
