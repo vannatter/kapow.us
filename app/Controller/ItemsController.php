@@ -221,6 +221,10 @@ class ItemsController extends AppController {
 				'Item.item_date' => $release_date,
 				'Section.category_id' => $content_type
 			),
+			'order' => array(
+				'Pull.created' => 'DESC',
+				'Item.series_id' => 'DESC'
+			),
 			'limit' => 24,
 			'contain' => array(
 				'Section',
@@ -308,6 +312,10 @@ class ItemsController extends AppController {
 			'conditions' => array(
 				'Item.item_date' => $release_date,
 				'Section.category_id' => $content_type
+			),
+			'order' => array(
+				'Pull.created' => 'DESC',
+				'Item.series_id' => 'DESC'
 			),
 			'limit' => 24,
 			'contain' => array(
