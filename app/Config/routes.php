@@ -263,6 +263,29 @@ Router::connect(
 );
 
 Router::connect(
+	'/admin/stores/photoQueue',
+	array('controller' => 'admin', 'action' => 'storesPhotoQueue')
+);
+
+Router::connect(
+	'/admin/stores/photo/allow/:id',
+	array('controller' => 'admin', 'action' => 'storesPhotoAllow'),
+	array(
+		'pass' => array('id'),
+		'id' => '[0-9]+'
+	)
+);
+
+Router::connect(
+	'/admin/stores/photo/delete/:id',
+	array('controller' => 'admin', 'action' => 'storesPhotoDelete'),
+	array(
+		'pass' => array('id'),
+		'id' => '[0-9]+'
+	)
+);
+
+Router::connect(
 	'/admin/reports/view/:id',
 	array('controller' => 'admin', 'action' => 'reportsView'),
 	array(

@@ -9,6 +9,9 @@ class StorePhoto extends AppModel {
 			'conditions' => '',
 			'fields' => '',
 			'order' => ''
+		),
+		'User' => array(
+			'foreignKey' => 'uploader_user_id'
 		)
 	);		
 	

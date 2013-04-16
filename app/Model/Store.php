@@ -7,6 +7,7 @@ App::uses('AppModel', 'Model');
  * @property StorePhoto $StorePhoto
  */
 class Store extends AppModel {
+	public $actsAs = array('Containable');
 
 /**
  * Display field

@@ -28,11 +28,11 @@
 	<body>
 	<div id="content" class="container-fluid">
 		<div class="row-fluid">
-			<div class="span2">
+			<div class="span3">
 				<!-- SIDEBAR CONTENT -->
 				<?php echo $this->element('admin/sidebar'); ?>
 			</div>
-			<div class="span10">
+			<div class="span9">
 				<!-- BODY CONTENT -->
 				<?php echo $this->Session->flash(); ?>
 				<?php echo $this->fetch('content'); ?>

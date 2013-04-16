@@ -13,10 +13,11 @@ App::uses('AppController', 'Controller');
  * @property Category $Category
  * @property Section $Section
  * @property Report $Report
+ * @property StorePhoto $StorePhoto
  */
 class AdminController extends AppController {
 	public $name = 'Admin';
-	public $uses = array('Item', 'Creator', 'Publisher', 'Series', 'Store', 'User', 'Category', 'CreatorType', 'Section', 'Report');
+	public $uses = array('Item', 'Creator', 'Publisher', 'Series', 'Store', 'User', 'Category', 'CreatorType', 'Section', 'Report', 'StorePhoto');
 	public $helpers = array('States');
 	public $components = array('Upload');
 	public $paginate = array(
@@ -63,6 +64,9 @@ class AdminController extends AppController {
 		parent::hasAdminSession();
 
 		$this->layout = 'admin';
+
+		## some stat stuff
+		$this->set('photoQueueTotal', $this->Store->StorePhoto->find('count', array('conditions' => array('StorePhoto.active' => 0))));
 	}
 
 	public function index() {
@@ -377,6 +381,55 @@ class AdminController extends AppController {
 			}
 		}
 		return new CakeResponse(array('body' => json_encode($result)));
+	}
+
+	public function storesPhotoQueue() {
+		$this->paginate = array(
+			'StorePhoto' => array(
+				'limit' => 25
+			)
+		);
+
+		$this->StorePhoto->recursive = 0;
+		$photos = $this->paginate('StorePhoto', array('StorePhoto.active' => 0));
+
+		$this->set('photos', $photos);
+	}
+
+	public function storesPhotoAllow($id) {
+		$this->Store->StorePhoto->id = $id;
+		if(!$this->Store->StorePhoto->exists()) {
+			$this->Session->setFlash(__('Invalid Photo'), 'alert', array(
+				'plugin' => 'TwitterBootstrap',
+				'class' => 'alert-error'
+			));
+			$this->redirect('/admin/stores/photoQueue');
+		}
+
+		$this->Store->StorePhoto->saveField('active', 1);
+
+		$this->Session->setFlash(__('Photo Allowed'), 'alert', array(
+			'plugin' => 'TwitterBootstrap',
+			'class' => 'alert-success'
+		));
+
+		$this->redirect('/admin/stores/photoQueue');
+	}
+
+	public function storesPhotoDelete($id) {
+		if($this->Store->StorePhoto->remove($id)) {
+			$this->Session->setFlash(__('Photo Removed'), 'alert', array(
+				'plugin' => 'TwitterBootstrap',
+				'class' => 'alert-success'
+			));
+		} else {
+			$this->Session->setFlash(__('Error Deleting Photo'), 'alert', array(
+				'plugin' => 'TwitterBootstrap',
+				'class' => 'alert-error'
+			));
+		}
+
+		$this->redirect('/admin/stores/photoQueue');
 	}
 
 	public function users() {

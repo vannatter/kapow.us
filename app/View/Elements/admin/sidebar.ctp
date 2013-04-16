@@ -3,7 +3,7 @@
  *@var $this View
  */
 ?>
-<div class="span12 nav-list-frame">
+<div class="well">
 	<ul class="nav nav-list">
 		<li><?php echo $this->Html->link(__('Items'), array('controller' => 'admin', 'action' => 'items')); ?></li>
 		<li><?php echo $this->Html->link(__('Categories'), array('controller' => 'admin', 'action' => 'categories')); ?></li>
@@ -14,6 +14,7 @@
 		<li><?php echo $this->Html->link(__('Series'), array('controller' => 'admin', 'action' => 'series')); ?></li>
 		<li><?php echo $this->Html->link(__('Sections'), array('controller' => 'admin', 'action' => 'sections')); ?></li>
 		<li><?php echo $this->Html->link(__('Stores'), array('controller' => 'admin', 'action' => 'stores')); ?></li>
+		<li><?php echo $this->Html->link(__('Store Photo Queue <span class="badge %s">%s</span>', ($photoQueueTotal>0) ? 'badge-success' : '', $photoQueueTotal), '/admin/stores/photoQueue', array('escape' => false)); ?></li>
 		<li><?php echo $this->Html->link(__('Users'), array('controller' => 'admin', 'action' => 'users')); ?></li>
 		<li class="divider"></li>
 		<li><?php echo $this->Html->link(__('Index'), '/'); ?></li>

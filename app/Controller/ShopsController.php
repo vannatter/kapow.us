@@ -21,7 +21,22 @@ class ShopsController extends AppController {
 			exit;
 		}
 
-		$shop = $this->Store->read();
+		$shop = $this->Store->find(
+			'first',
+			array(
+				'conditions' => array(
+					'Store.id' => $id
+				),
+				'contain' => array(
+					'StorePhoto' => array(
+						'conditions' => array(
+							'StorePhoto.active' => 1
+						)
+					)
+				)
+			)
+		);
+
 		$this->set('shop', $shop);
 		$this->set('title_for_layout', $shop['Store']['name']);
 
