@@ -184,3 +184,4 @@ Configure::load('config', 'default');
 CakePlugin::load('TwitterBootstrap');
 CakePlugin::load('Facebook');
 CakePlugin::load('DebugKit');
+CakePlugin::load('Migrations');
