@@ -191,6 +191,15 @@ Router::connect(
 );
 
 Router::connect(
+	'/admin/creators/unlock/:id',
+	array('controller' => 'admin', 'action' => 'creatorsUnlock'),
+	array(
+		'pass' => array('id'),
+		'id' => '[0-9]+'
+	)
+);
+
+Router::connect(
 	'/admin/creatorTypes/edit/:id',
 	array('controller' => 'admin', 'action' => 'creatorTypesEdit'),
 	array(

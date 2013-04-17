@@ -7,7 +7,7 @@
 	<ul class="nav nav-list">
 		<li><?php echo $this->Html->link(__('Items'), array('controller' => 'admin', 'action' => 'items')); ?></li>
 		<li><?php echo $this->Html->link(__('Categories'), array('controller' => 'admin', 'action' => 'categories')); ?></li>
-		<li><?php echo $this->Html->link(__('Creators'), array('controller' => 'admin', 'action' => 'creators')); ?></li>
+		<li><?php echo $this->Html->link(__('Creators <span class="badge %s">%s</span>', ($creatorQueueTotal>0) ? 'badge-success' : '', $creatorQueueTotal), array('controller' => 'admin', 'action' => 'creators'), array('escape' => false)); ?></li>
 		<li><?php echo $this->Html->link(__('Creator Types'), array('controller' => 'admin', 'action' => 'creatorTypes')); ?></li>
 		<li><?php echo $this->Html->link(__('Publishers'), array('controller' => 'admin', 'action' => 'publishers')); ?></li>
 		<li><?php echo $this->Html->link(__('Reports'), array('controller' => 'admin', 'action' => 'reports')); ?></li>

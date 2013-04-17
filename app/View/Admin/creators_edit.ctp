@@ -15,5 +15,9 @@
 <?php echo $this->Form->input('creator_website', array('class' => 'span6')); ?>
 <?php echo $this->Form->input('creator_facebook', array('class' => 'span6')); ?>
 <?php echo $this->Form->input('creator_twitter', array('class' => 'span6')); ?>
-<?php echo $this->Form->submit(__('Save Creator')); ?>
+<?php echo $this->Form->input('status', array('options' => array('0' => __('Needs Data'), '1' => __('Clean')))); ?>
+<div class="form-actions">
+	<button type="submit" class="btn"><?php echo __('Save Creator'); ?></button>
+	<?php echo $this->Html->link(__('Cancel'), sprintf('/admin/creators/unlock/%s', $this->request->data['Creator']['id']), array('class' => 'btn')); ?>
+</div>
 <?php echo $this->Form->end(); ?>

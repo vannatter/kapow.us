@@ -67,6 +67,7 @@ class AdminController extends AppController {
 
 		## some stat stuff
 		$this->set('photoQueueTotal', $this->Store->StorePhoto->find('count', array('conditions' => array('StorePhoto.active' => 0))));
+		$this->set('creatorQueueTotal', $this->Creator->find('count', array('conditions' => array('Creator.status' => 0))));
 	}
 
 	public function index() {
@@ -112,6 +113,11 @@ class AdminController extends AppController {
 	}
 
 	public function creators() {
+		$this->paginate['Creator']['order'] = array('Creator.status' => 'ASC', 'Creator.creator_name' => 'ASC');
+
+		$this->Creator->bindModel(array('belongsTo' => array('LockUser' => array('className' => 'User', 'foreignKey' => 'locked_by_user_id'))));
+		$this->Creator->unbindModel(array('hasMany' => array('ItemCreator')));
+
 		$this->Creator->recursive = 0;
 		$this->set('creators', $this->paginate('Creator'));
 	}
@@ -138,6 +144,7 @@ class AdminController extends AppController {
 
 			if(!$skip) {
 				$data['Creator']['id'] = $id;
+				$data['Creator']['locked_by_user_id'] = 0;   ## unlock creator
 
 				if($this->Creator->save($data)) {
 					$this->Session->setFlash(__('Creator Saved!'), 'alert', array(
@@ -158,8 +165,49 @@ class AdminController extends AppController {
 			}
 
 			$creator = $this->Creator->read();
+
+			if($creator['Creator']['locked_by_user_id'] != 0 && $creator['Creator']['locked_by_user_id'] != $this->Auth->user('id')) {
+				$this->Session->setFlash(__('Creator locked other user'), 'alert', array(
+					'plugin' => 'TwitterBootstrap',
+					'class' => 'alert-error'
+				));
+				$this->redirect('/admin/creators');
+			}
 			$this->request->data = $creator;
+
+			## lock the creator
+			$this->Creator->saveField('locked_by_user_id', $this->Auth->user('id'));
 		}
+	}
+
+	public function creatorsUnlock($id) {
+		$this->Creator->id = $id;
+		if(!$this->Creator->exists()) {
+			$this->Session->setFlash(__('Invalid Creator'), 'alert', array(
+				'plugin' => 'TwitterBootstrap',
+				'class' => 'alert-error'
+			));
+			$this->redirect('/admin/creators');
+		}
+
+		$this->Creator->recursive = -1;
+		$creator = $this->Creator->read();
+
+		if($creator['Creator']['locked_by_user_id'] == $this->Auth->user('id')) {
+			$this->Creator->saveField('locked_by_user_id', 0);
+
+			$this->Session->setFlash(__('Creator Unlocked'), 'alert', array(
+				'plugin' => 'TwitterBootstrap',
+				'class' => 'alert-success'
+			));
+		} else {
+			$this->Session->setFlash(__('You don\'t have creator locked'), 'alert', array(
+				'plugin' => 'TwitterBootstrap',
+				'class' => 'alert-error'
+			));
+		}
+
+		$this->redirect('/admin/creators');
 	}
 
 	public function creatorTypes() {
