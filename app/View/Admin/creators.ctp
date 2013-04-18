@@ -22,6 +22,26 @@
 					<?php
 					if($creator['Creator']['status'] == 1) {
 						echo 'CLEAN';
+					} else {
+						$count = 0;
+						$total = 5;
+						if(!empty($creator['Creator']['creator_bio'])) {
+							$count++;
+						}
+						if(!empty($creator['Creator']['creator_photo'])) {
+							$count++;
+						}
+						if(!empty($creator['Creator']['creator_website'])) {
+							$count++;
+						}
+						if(!empty($creator['Creator']['creator_twitter'])) {
+							$count++;
+						}
+						if(!empty($creator['Creator']['creator_facebook'])) {
+							$count++;
+						}
+
+						echo sprintf('<span class="badge badge-important">%s of %s</span>', $count, $total);
 					}
 					?>
 				</td>
