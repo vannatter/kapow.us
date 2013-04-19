@@ -18,3 +18,4 @@
 /app/webroot/img/creators/*
 /app/Config/database.php
 /app/Config/config.php
+/app/Config/core.php
