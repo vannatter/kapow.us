@@ -116,6 +116,11 @@ Router::connect(
 	array('controller' => 'users', 'action' => 'profile')
 );
 
+Router::connect(
+	'/my/pull_list',
+	array('controller' => 'users', 'action' => 'pull_list')
+);
+
 ##### REPORT/REPORTS
 Router::connect(
 	'/report/item/:id',

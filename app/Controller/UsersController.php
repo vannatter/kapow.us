@@ -49,6 +49,10 @@ class UsersController extends AppController {
 		$this->redirect($this->Auth->logout());
 	}
 
+	public function pull_list() {
+		$this->set('title_for_layout','My Pull List');
+	}
+	
 	public function profile($user=null) {
 		if(!$user && !$this->Auth->user()) {
 			$this->redirect('/');
