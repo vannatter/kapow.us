@@ -1,7 +1,6 @@
 body{background-color:#3366cc;font-family:'Open Sans Condensed',sans-serif;background:#2c539e;background:-moz-radial-gradient(center, ellipse cover, #2c539e 0%, #2c539e 100%);background:-webkit-gradient(radial, center center, 0px, center center, 100%, color-stop(0%, #2c539e), color-stop(100%, #2c539e));background:-webkit-radial-gradient(center, ellipse cover, #2c539e 0%, #2c539e 100%);background:-o-radial-gradient(center, ellipse cover, #2c539e 0%, #2c539e 100%);background:-ms-radial-gradient(center, ellipse cover, #2c539e 0%, #2c539e 100%);background:radial-gradient(ellipse at center, #2c539e 0%, #2c539e 100%);filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#2c539e', endColorstr='#2c539e', GradientType=1);margin-top:0;}
 .preview_img{overflow:hidden;margin-bottom:5px;clear:both;}
 .preview_img img{width:96%;border:3px solid #000000;}
-.preview_block_on .preview_img img{width:96%;border:3px solid #e69900;}
 .thisweek h4,.thisweek h4 a{color:#000000;font-weight:bold;font-size:19px;}
 #header{margin-top:0px;background-image:url(/img/bg.png);background-repeat:no-repeat;}
 #main-container{margin-top:0;}
