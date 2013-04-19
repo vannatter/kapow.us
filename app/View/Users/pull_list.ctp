@@ -1,3 +1,3 @@
 <?php echo $this->Element('headers/users/pull_list'); ?>
 
-all pull list block
+<?php echo $this->Element('users/my/pull_list_scroll'); ?>

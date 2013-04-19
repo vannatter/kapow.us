@@ -51,6 +51,18 @@ class UsersController extends AppController {
 
 	public function pull_list() {
 		$this->set('title_for_layout','My Pull List');
+
+		$this->paginate = array(
+			'Pull' => array(
+				'order' => array(
+					'Pull.created' => 'ASC'
+				),
+				'limit' => 24
+			)
+		);
+
+		$list = $this->paginate('Pull', array('Pull.user_id' => $this->Auth->user('id')));
+		$this->set('pulls', $list);
 	}
 	
 	public function profile($user=null) {
