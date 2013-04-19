@@ -35,11 +35,11 @@ $(document).ready(function() {
 			} else {
 				if(data.type == 1) {
 					// added
-					obj.find('span').text('Remove Pull');
+					obj.find('span').text('Remove Pull').parent().removeClass('btn-off').addClass('btn-on').find('i').removeClass('icon-white').addClass('icon-black');
 					flash('Added to your pull list', 3000);
 				} else {
 					// removed
-					obj.find('span').text('Pull List');
+					obj.find('span').text('Pull List').parent().removeClass('btn-on').addClass('btn-off').find('i').removeClass('icon-black').addClass('icon-white');
 					flash('Removed from your pull list', 3000);
 				}
 			}
