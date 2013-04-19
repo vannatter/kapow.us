@@ -55,7 +55,7 @@ class UsersController extends AppController {
 		$this->paginate = array(
 			'Pull' => array(
 				'order' => array(
-					'Pull.created' => 'ASC'
+					'Pull.created' => 'DESC'
 				),
 				'limit' => 24
 			)
