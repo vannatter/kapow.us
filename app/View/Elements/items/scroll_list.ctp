@@ -8,31 +8,31 @@
 <div id="item-scroll-list">
 	<?php $row = 0; ?>
 	<?php foreach($items as $item) { ?>
-		<?php if($row == 0) { ?>
+		<?php if ($row == 0) { ?>
 			<div class="row thisweek scroll-list-item">
 		<?php } ?>
 		<?php $row++; ?>
 		<?php
-		$description = $item['Item']['description'];
-		$name = $item['Item']['item_name'];
-		if(isset($this->request->query['terms']) && !empty($this->request->query['terms'])) {
-			$searchFor = "/" . $this->request->query['terms'] . "/i";
-			$replaceWith = "<i><b>$0</b></i>";
-
-			$description = preg_replace($searchFor, $replaceWith, $description);
-			$name = preg_replace($searchFor, $replaceWith, $name);
-		}
+			$description = $item['Item']['description'];
+			$name = $item['Item']['item_name'];
+			if (isset($this->request->query['terms']) && !empty($this->request->query['terms'])) {
+				$searchFor = "/" . $this->request->query['terms'] . "/i";
+				$replaceWith = "<i><b>$0</b></i>";
+	
+				$description = preg_replace($searchFor, $replaceWith, $description);
+				$name = preg_replace($searchFor, $replaceWith, $name);
+			}
+	
+			if (isset($item['Pull']['id'])) {
+				$hasPull = true;
+			} else {
+				$hasPull = false;
+			}
 		?>
-		<div class="span2 preview_block">
+		<div class="span2 preview_block <?php if ($hasPull) { echo "preview_block_on"; } ?>">
 			<div class="preview_img"><a href="/items/<?php echo $this->Common->seoize($item['Item']['id'], $item['Item']['item_name']); ?>"><?php if ($item['Item']['img_fullpath'] == "/img/covers") { ?><img border="0" alt="<?php echo $item['Item']['item_name']; ?>" src="/img/nocover.png" width="210" height="140" /><?php } else { ?><img border="0" alt="<?php echo $item['Item']['item_name']; ?>" src="<?php echo $this->Common->thumb($item['Item']['img_fullpath']); ?>" /><?php } ?></a></div>
 
-			<?php
-			$hasPull = false;
-			if(isset($item['Pull']['id'])) {
-				$hasPull = true;
-			}
-			echo $this->Common->pullButton($item['Item']['id'], $hasPull)
-			?>
+			<?php echo $this->Common->pullButton($item['Item']['id'], $hasPull); ?>
 
 			<h4><a href="/items/<?php echo $this->Common->seoize($item['Item']['id'], $item['Item']['item_name']); ?>"><?php echo $name; ?></a></h4>
 

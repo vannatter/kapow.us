@@ -166,11 +166,17 @@ class CommonHelper extends Helper {
 
 	public function pullButton($id, $hasPull) {
 		$caption = __('Pull List');
+		$more_css = "";
 		if($hasPull) {
 			$caption = __('Remove Pull');
+			$more_css = "btn btn-mini pull_list_btn btn-on";
+			$icon_color = "black";
+		} else {
+			$more_css = "btn btn-mini pull_list_btn btn-off";
+			$icon_color = "white";
 		}
-		$caption = sprintf('<i class="icon-shopping-cart icon-white"></i> <span>%s</span>', $caption);
+		$caption = sprintf('<i class="icon-shopping-cart icon-' . $icon_color .'"></i> <span>%s</span>', $caption);
 
-		return $this->Form->button($caption, array('type' => 'button', 'class' => 'btn btn-mini btn-primary disabled pull_list_btn', 'data-id' => $id));
+		return $this->Form->button($caption, array('type' => 'button', 'class' => $more_css, 'data-id' => $id));
 	}
 }
