@@ -167,6 +167,25 @@ Router::connect(
 	)
 );
 
+##### BLOGS
+Router::connect(
+	'/blogs/:id--:name',
+	array('controller' => 'blogs', 'action' => 'view'),
+	array(
+		'pass' => array('id', 'name'),
+		'id' => '[0-9]+'
+	)
+);
+
+Router::connect(
+	'/blogs/:id',
+	array('controller' => 'blogs', 'action' => 'viewById'),
+	array(
+		'pass' => array('id'),
+		'id' => '[0-9]+'
+	)
+);
+
 ##### ADMIN
 Router::connect(
 	'/admin/items/edit/:id',
@@ -307,7 +326,31 @@ Router::connect(
 		'id' => '[0-9]+'
 	)
 );
-	CakePlugin::routes();
 
-	require CAKE . 'Config' . DS . 'routes.php';
+Router::connect(
+	'/admin/blogs/add',
+	array('controller' => 'admin', 'action' => 'blogsAdd')
+);
+
+Router::connect(
+	'/admin/blogs/edit/:id',
+	array('controller' => 'admin', 'action' => 'blogsEdit'),
+	array(
+		'pass' => array('id'),
+		'id' => '[0-9]+'
+	)
+);
+
+Router::connect(
+	'/admin/blogs/delete/:id',
+	array('controller' => 'admin', 'action' => 'blogsDelete'),
+	array(
+		'pass' => array('id'),
+		'id' => '[0-9]+'
+	)
+);
+
+CakePlugin::routes();
+
+require CAKE . 'Config' . DS . 'routes.php';
 ?>

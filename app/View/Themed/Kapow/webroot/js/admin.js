@@ -11,4 +11,53 @@ $(document).ready(function() {
 		//$('html, body').animate({ scrollTop: 0 }, 'fast');
 		window.scrollTo(0, 0);
 	});
+
+	$('textarea.wysihtml').wysihtml5({
+		"font-styles": true,
+		"emphasis": true,
+		"lists": true,
+		"html": true,
+		"link": true,
+		"image": true,
+		"useLineBreaks": false,
+		events: {},
+		parserRules: {
+			classes: {
+				"help_wrap": 1,
+				"help_block": 1,
+				"help_head": 1,
+				"help_content": 1
+			},
+			tags: {
+				"div": {},
+				"b":  {},
+				"i":  {},
+				"br": {},
+				"ol": {},
+				"ul": {},
+				"li": {},
+				"h1": {},
+				"h2": {},
+				"u": 1,
+				"p": {},
+				"img": {
+					"check_attributes": {
+						"width": "numbers",
+						"alt": "alt",
+						"src": "url",
+						"height": "numbers"
+					}
+				},
+				"a":  {
+					set_attributes: {
+						target: "_blank",
+						rel:    "nofollow"
+					},
+					check_attributes: {
+						href:   "url" // important to avoid XSS
+					}
+				}
+			}
+		}
+	});
 });

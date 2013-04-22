@@ -11,6 +11,8 @@
 		echo $this->Html->css('bootstrap.min');
 		echo $this->Html->css('bootstrap-responsive.min');
 		echo $this->Html->css('datepicker');
+		echo $this->Html->css('bootstrap-wysihtml5-0.0.2');
+
 		//echo $this->Html->css('core');
 		//echo $this->Html->css('style');
 
@@ -19,10 +21,16 @@
 		echo $this->Html->script('libs/jquery');
 		echo $this->Html->script('libs/bootstrap.min');
 		echo $this->Html->script('libs/bootstrap-datepicker');
+		echo $this->Html->script('libs/wysihtml5-0.4.0pre.min');
+		echo $this->Html->script('libs/bootstrap-wysihtml5-0.0.2');
+
 		echo $this->Html->script('admin');
 
 		echo $this->fetch('script');
 		?>
+		<style>
+			#content { margin-top: 50px; }
+		</style>
 	</head>
 
 	<body>

@@ -14,10 +14,11 @@ App::uses('AppController', 'Controller');
  * @property Section $Section
  * @property Report $Report
  * @property StorePhoto $StorePhoto
+ * @property Blog $Blog
  */
 class AdminController extends AppController {
 	public $name = 'Admin';
-	public $uses = array('Item', 'Creator', 'Publisher', 'Series', 'Store', 'User', 'Category', 'CreatorType', 'Section', 'Report', 'StorePhoto');
+	public $uses = array('Item', 'Creator', 'Publisher', 'Series', 'Store', 'User', 'Category', 'CreatorType', 'Section', 'Report', 'StorePhoto', 'Blog');
 	public $helpers = array('States');
 	public $components = array('Upload');
 	public $paginate = array(
@@ -56,6 +57,10 @@ class AdminController extends AppController {
 		'Report' => array(
 			'limit' => 25,
 			'order' => array('Report.id' => 'asc')
+		),
+		'Blog' => array(
+			'limit' => 25,
+			'order' => array('Blog.modified' => 'asc')
 		)
 	);
 
@@ -619,5 +624,81 @@ class AdminController extends AppController {
 		}
 		$this->Report->recursive = 0;
 		$this->request->data = $this->Report->read();
+	}
+
+	##### BLOGS
+	public function blogs() {
+		$this->Blog->recursive = 0;
+		$this->set('blogs', $this->paginate('Blog'));
+	}
+
+	public function blogsAdd() {
+		if($this->request->is('post') || $this->request->is('put')) {
+			$data = Sanitize::clean($this->request->data, array('escape' => false, 'encode' => false));
+
+			$data['Blog']['user_id'] = $this->Auth->user('id');
+			$data['Blog']['status'] = 1;   ## VISIBLE/PUBLIC
+
+			$this->Blog->create($data);
+			if($this->Blog->save($data)) {
+				$this->Session->setFlash(__('Blog Entry Saved'), 'alert', array(
+					'plugin' => 'TwitterBootstrap',
+					'class' => 'alert-success'
+				));
+
+				$this->redirect('/admin/blogs');
+			}
+		}
+	}
+
+	public function blogsEdit($id) {
+		$this->Blog->id = $id;
+		if(!$this->Blog->exists()) {
+			$this->Session->setFlash(__('Invalid Blog Entry'), 'alert', array(
+				'plugin' => 'TwitterBootstrap',
+				'class' => 'alert-error'
+			));
+			$this->redirect('/admin/blogs');
+		}
+
+		if($this->request->is('post') || $this->request->is('put')) {
+			$data = Sanitize::clean($this->request->data, array('escape' => false, 'encode' => false));
+
+			$data['Blog']['user_id'] = $this->Auth->user('id');
+			$data['Blog']['id'] = $id;
+
+			if($this->Blog->save($data)) {
+				$this->Session->setFlash(__('Blog Entry Saved'), 'alert', array(
+					'plugin' => 'TwitterBootstrap',
+					'class' => 'alert-success'
+				));
+
+				$this->redirect('/admin/blogs');
+			}
+		} else {
+			$this->request->data = $this->Blog->read();
+		}
+
+		$this->render('blogs_add');
+	}
+
+	public function blogsDelete($id) {
+		$this->Blog->id = $id;
+		if(!$this->Blog->exists()) {
+			$this->Session->setFlash(__('Invalid Blog Entry'), 'alert', array(
+				'plugin' => 'TwitterBootstrap',
+				'class' => 'alert-error'
+			));
+			$this->redirect('/admin/blogs');
+		}
+
+		$this->Blog->delete($id);
+
+		$this->Session->setFlash(__('Blog Deleted'), 'alert', array(
+			'plugin' => 'TwitterBootstrap',
+			'class' => 'alert-success'
+		));
+
+		$this->redirect('/admin/blogs');
 	}
 }
