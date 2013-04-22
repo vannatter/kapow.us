@@ -17,18 +17,20 @@
 <?php echo $this->Form->end(); ?>
 
 <?php
-switch($type) {
-	case 1:   ## ITEM
-		echo $this->element('search/results/item');
-		break;
-	case 2:   ## PUBLISHER
-		echo $this->element('search/results/publisher');
-		break;
-	case 3:   ## CREATOR
-		echo $this->element('search/results/creator');
-		break;
-	case 4:   ## SERIES
-		echo $this->element('search/results/series');
-		break;
+if(isset($type)) {
+	switch($type) {
+		case 1:   ## ITEM
+			echo $this->element('search/results/item');
+			break;
+		case 2:   ## PUBLISHER
+			echo $this->element('search/results/publisher');
+			break;
+		case 3:   ## CREATOR
+			echo $this->element('search/results/creator');
+			break;
+		case 4:   ## SERIES
+			echo $this->element('search/results/series');
+			break;
+	}
 }
 ?>
