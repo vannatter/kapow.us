@@ -60,7 +60,7 @@ class AdminController extends AppController {
 		),
 		'Blog' => array(
 			'limit' => 25,
-			'order' => array('Blog.modified' => 'asc')
+			'order' => array('Blog.modified' => 'DESC')
 		)
 	);
 

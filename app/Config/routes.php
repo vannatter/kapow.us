@@ -186,6 +186,11 @@ Router::connect(
 	)
 );
 
+Router::connect(
+	'/blog',
+	array('controller' => 'blogs')
+);
+
 ##### ADMIN
 Router::connect(
 	'/admin/items/edit/:id',

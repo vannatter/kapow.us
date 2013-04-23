@@ -8,8 +8,16 @@ App::uses('AppController', 'Controller');
 class BlogsController extends AppController {
 	public $name = 'Blogs';
 	public $uses = array('Blog');
+	public $paginate = array(
+		'Blog' => array(
+			'order' => array('Blog.created' => 'DESC'),
+			'limit' => 5
+		)
+	);
 
 	public function index() {
+		$this->Blog->recursive = 0;
+		$this->set('blogs', $this->paginate('Blog'));
 	}
 
 	public function view($id, $name) {
