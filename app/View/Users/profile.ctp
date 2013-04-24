@@ -41,5 +41,3 @@
 		<?php echo $this->Element('users/my/favorite_shops'); ?>
 	</div>
 </div>
-
-<?php debug($user); ?>

@@ -1,8 +1,8 @@
 <?php
 App::uses('AppModel', 'Model');
 class Series extends AppModel {
-
 	public $name = "Series";
+	public $actsAs = array('Containable');
 
 	public function getsetSeries($series_name) {
 
