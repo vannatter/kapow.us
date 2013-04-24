@@ -121,6 +121,21 @@ Router::connect(
 	array('controller' => 'users', 'action' => 'pull_list')
 );
 
+Router::connect(
+	'/my/pull_list_process/:answer/:id',
+	array('controller' => 'users', 'action' => 'pull_list_process'),
+	array(
+		'pass' => array('answer', 'id'),
+		'id' => '[0-9]+'
+	)
+);
+
+Router::connect(
+	'/my/library',
+	array('controller' => 'users', 'action' => 'library')
+);
+
+
 ##### REPORT/REPORTS
 Router::connect(
 	'/report/item/:id',

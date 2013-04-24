@@ -7,7 +7,7 @@ App::uses('AppController', 'Controller');
  */
 class UsersController extends AppController {
 	public $name = 'Users';
-	public $uses = array('User','Pull');
+	public $uses = array('User', 'Pull', 'UserItem');
 
 	public function index() {
 	}
@@ -35,7 +35,7 @@ class UsersController extends AppController {
 			if ($this->Auth->login()) {
 				$this->redirect($this->Auth->redirect());
 			} else {
-				$this->Session->setFlash(__('Invalid username or password, try again'));
+				$this->Session->setFlash(__('Invalid username or password, try again'), 'flash_neg');
 			}
 		} elseif($this->Auth->user()) {
 			$this->redirect('/');
@@ -48,7 +48,34 @@ class UsersController extends AppController {
 		$this->Session->destroy();
 		$this->redirect($this->Auth->logout());
 	}
+	
+	public function pull_list_process($answer, $id) {
+		if ($answer == "n") {
+			// remove from pull list if this item is on your pull list..
+			$this->Pull->toggle($id, $this->Auth->user('id'));
+			$this->Session->setFlash('Item removed from your Pull List!', 'flash_pos');
+			$this->redirect('/my/pull_list');
+		} elseif ($answer == "y") {
+			$user_item = array();
+			$user_item['user_id'] = $this->Auth->user('id');
+			$user_item['item_id'] = $id;
+			
+			$this->UserItem->create();
+			$this->UserItem->save($user_item);
 
+			$this->Pull->toggle($id, $this->Auth->user('id'));
+			$this->Session->setFlash('Item added to your library!', 'flash_pos');
+			$this->redirect('/my/pull_list');
+		}
+		
+		exit;
+	}
+	
+	public function library() {
+		$this->set('title_for_layout','My Library');
+		
+	}
+	
 	public function pull_list() {
 		$this->set('title_for_layout','My Pull List');
 
@@ -97,6 +124,9 @@ class UsersController extends AppController {
 		
 		$pulls = $this->Pull->find('all', array('conditions' => array('Pull.user_id' => $this->Auth->user('id')), 'order' => array('Pull.id DESC'), 'limit' => 4, 'recursive' => 1));
 		$this->set('pulls', $pulls);
+
+		$library = $this->UserItem->find('all', array('conditions' => array('UserItem.user_id' => $this->Auth->user('id')), 'order' => array('UserItem.id DESC'), 'limit' => 4, 'recursive' => 1));
+		$this->set('library', $library);
 		
 		$this->set('title_for_layout','My Profile');
 	}
