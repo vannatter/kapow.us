@@ -71,7 +71,7 @@ h2{color:#000 !important;}
 .navbar-inner{padding-right:0;}
 .navbar .btn-navbar{background-color:#153d74 !important;background-repeat:repeat-x;filter:progid:DXImageTransform.Microsoft.gradient(startColorstr="#2365c1", endColorstr="#153c74");background-image:-khtml-gradient(linear, left top, left bottom, from(#2365c1), to(#153c74));background-image:-moz-linear-gradient(top, #2365c1, #153c74);background-image:-ms-linear-gradient(top, #2365c1, #153c74);background-image:-webkit-gradient(linear, left top, left bottom, color-stop(0%, #2365c1), color-stop(100%, #153c74));background-image:-webkit-linear-gradient(top, #2365c1, #153c74);background-image:-o-linear-gradient(top, #2365c1, #153c74);background-image:linear-gradient(#2365c1, #153c74);border-color:#153c74 #153c74 #123361;color:#fff !important;text-shadow:0 -1px 0 rgba(0, 0, 0, 0.29);-webkit-font-smoothing:antialiased;margin-top:35px;margin-right:20px;}
 .btn-hgh{margin-left:4px;padding-top:5px !important;padding-bottom:5px !important;}
-.element_sideblock{font-size:16px;text-align:left;}
+.element_sideblock{font-size:16px;text-align:left;word-wrap:break-word;line-height:14px;}
 .element_sideblock h4{color:#fff;font-size:16px;margin:10px 0 0 0;}
 .flash_pos,.flash_neg,.flash_msg{position:fixed;left:0;bottom:0;z-index:50000;width:100%;height:25px;border:none;text-align:center;padding:5px 0 0 0;margin:0;font-weight:normal;font-size:17px;text-transform:capitalize;cursor:pointer;}
 .flash_neg{background:rgba(227, 12, 12, 0.9);color:#000;}
@@ -81,6 +81,7 @@ h2{color:#000 !important;}
 .control-group.error .control-label,.control-group.error .help-block,.control-group.error .help-inline{color:yellow;}
 .control-group.error input,.control-group.error select,.control-group.error textarea{border-color:yellow;}
 .control-group.error .checkbox,.control-group.error .radio,.control-group.error input,.control-group.error select,.control-group.error textarea{color:#000;}
+.creator_collabs{margin-top:20px;}
 .creator_collabs li{color:#5d85d3;}
 .my_block h5{color:#fff;border-bottom:2px solid #24478f;padding-bottom:6px;font-size:19px;}
 .my_block h5 button{float:right;margin-top:-4px;}
