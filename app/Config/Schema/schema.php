@@ -117,7 +117,7 @@ class AppSchema extends CakeSchema {
 		'status' => array('type' => 'integer', 'null' => false, 'default' => '1', 'length' => 4),
 		'section_id' => array('type' => 'integer', 'null' => false, 'default' => null),
 		'publisher_id' => array('type' => 'integer', 'null' => false, 'default' => null),
-		'series_id' => array('type' => 'integer', 'null' => false, 'default' => null),
+		'series_id' => array('type' => 'integer', 'null' => false, 'default' => null, 'key' => 'index'),
 		'item_id' => array('type' => 'string', 'null' => true, 'default' => null, 'length' => 50, 'collate' => 'utf8_general_ci', 'charset' => 'utf8'),
 		'stock_id' => array('type' => 'string', 'null' => false, 'default' => null, 'length' => 50, 'collate' => 'utf8_general_ci', 'charset' => 'utf8'),
 		'printing' => array('type' => 'integer', 'null' => false, 'default' => '1'),
@@ -131,7 +131,8 @@ class AppSchema extends CakeSchema {
 		'modified' => array('type' => 'datetime', 'null' => true, 'default' => null),
 		'indexes' => array(
 			'PRIMARY' => array('column' => 'id', 'unique' => 1),
-			'item_date' => array('column' => 'item_date', 'unique' => 0)
+			'item_date' => array('column' => 'item_date', 'unique' => 0),
+			'series_id' => array('column' => 'series_id', 'unique' => 0)
 		),
 		'tableParameters' => array('charset' => 'utf8', 'collate' => 'utf8_general_ci', 'engine' => 'InnoDB')
 	);

@@ -9,8 +9,54 @@ App::uses('AppController', 'Controller');
 class SeriesController extends AppController {
 	public $name = 'Series';
 	public $uses = array('Series', 'Item');
+	public $paginate = array(
+		'Series' => array(
+			'limit' => 24,
+			'order' => array(
+				'Series.created' => 'DESC'
+			)
+		)
+	);
 
 	public function index() {
+		if($this->request->is('post') || $this->request->is('put')) {
+			$data = Sanitize::clean($this->request->data);
+
+			if(isset($data['Series']['terms'])) {
+				if(empty($data['Series']['terms'])) {
+					$this->redirect('/series');
+				}
+
+				$this->set('terms', $data['Series']['terms']);
+				$this->redirect(sprintf('/series?terms=%s', $data['Series']['terms']));
+			}
+		}
+
+		$this->Series->bindModel(array('hasMany' => array('Item' => array('foreignKey' => 'series_id', 'order' => 'RAND()', 'limit' => 1))));
+
+		$this->paginate['Series']['contain'] = array(
+			'Item' => array(
+				'fields' => array(
+					'Item.img_fullpath'
+				)
+			)
+		);
+
+		if(isset($this->request->query['terms'])) {
+			$terms = $this->request->query['terms'];
+
+			$con = array(
+				'OR' => array(
+					'Series.series_name LIKE' => '%' . $terms . '%',
+				)
+			);
+
+			$series = $this->paginate('Series', $con);
+		} else {
+			$series = $this->paginate('Series');
+		}
+
+		$this->set('series', $series);
 	}
 
 	public function view($id, $name) {

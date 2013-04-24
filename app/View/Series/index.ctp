@@ -1,4 +1,8 @@
+<?php
+/**
+ * @var $this View
+ */
+?>
+<?php $this->Html->script('page/series.js', array('inline' => false)); ?>
 <?php echo $this->Element('headers/series/index'); ?>
-
-
-list all series'
+<?php echo $this->Element('series/scroll_list'); ?>
