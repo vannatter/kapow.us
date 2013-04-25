@@ -1,7 +1,7 @@
 <div class="my_block">
 	<h5>
 		<?php echo __('My Favorite Shops'); ?>
-		<a href="/my/favorites/shops"><button class="btn btn-custom edit_profile btn-small"><?php echo __('View All'); ?> <i class="icon-arrow-right icon-white"></i></button></a>
+		<a href="/my/favorite/shops"><button class="btn btn-custom edit_profile btn-small"><?php echo __('View All'); ?> <i class="icon-arrow-right icon-white"></i></button></a>
 	</h5>
 
 	<?php foreach ($user['favorites']['shops'] as $shop) { ?>

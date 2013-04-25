@@ -135,6 +135,30 @@ Router::connect(
 	array('controller' => 'users', 'action' => 'library')
 );
 
+Router::connect(
+	'/my/favorite/publishers',
+	array('controller' => 'users', 'action' => 'favoritePublishers')
+);
+
+Router::connect(
+	'/my/favorite/items',
+	array('controller' => 'users', 'action' => 'favoriteItems')
+);
+
+Router::connect(
+	'/my/favorite/creators',
+	array('controller' => 'users', 'action' => 'favoriteCreators')
+);
+
+Router::connect(
+	'/my/favorite/series',
+	array('controller' => 'users', 'action' => 'favoriteSeries')
+);
+
+Router::connect(
+	'/my/favorite/shops',
+	array('controller' => 'users', 'action' => 'favoriteShops')
+);
 
 ##### REPORT/REPORTS
 Router::connect(

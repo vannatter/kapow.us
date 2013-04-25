@@ -4,10 +4,13 @@ App::uses('AppController', 'Controller');
 
 /**
  * @property User $User
+ * @property Pull $Pull
+ * @property UserItem $UserItem
+ * @property UserFavorite $UserFavorite
  */
 class UsersController extends AppController {
 	public $name = 'Users';
-	public $uses = array('User', 'Pull', 'UserItem');
+	public $uses = array('User', 'Pull', 'UserItem', 'UserFavorite');
 
 	public function index() {
 	}
@@ -121,6 +124,9 @@ class UsersController extends AppController {
 		$this->User->UserFavorite->bindModel(array('belongsTo' => array('Store' => array('foreignKey' => 'favorite_item_id'))));
 		$user['favorites']['shops'] = $this->User->UserFavorite->find('all', array('conditions' => array('UserFavorite.item_type' => 5, 'UserFavorite.user_id' => $this->Auth->user('id')), 'order' => array('UserFavorite.id' => 'DESC'), 'limit' => 4, 'contain' => array('Store' => array('PrimaryPhoto', 'StorePhoto' => array('limit' => 1, 'order' => 'RAND()')))));
 
+		$this->User->UserFavorite->bindModel(array('belongsTo' => array('Item' => array('foreignKey' => 'favorite_item_id'))));
+		$user['favorites']['items'] = $this->User->UserFavorite->find('all', array('conditions' => array('UserFavorite.item_type' => 1, 'UserFavorite.user_id' => $this->Auth->user('id')), 'order' => array('UserFavorite.id' => 'DESC'), 'limit' => 4, 'contain' => array('Item')));
+
 		$this->set('user', $user);
 		
 		$pulls = $this->Pull->find('all', array('conditions' => array('Pull.user_id' => $this->Auth->user('id')), 'order' => array('Pull.id DESC'), 'limit' => 4, 'recursive' => 1));
@@ -130,5 +136,161 @@ class UsersController extends AppController {
 		$this->set('library', $library);
 		
 		$this->set('title_for_layout','My Profile');
+	}
+
+	public function favoritePublishers() {
+		$this->paginate = array(
+			'UserFavorite' => array(
+				'limit' => 24,
+				'order' => array(
+					'UserFavorite.created' => 'DESC'
+				),
+				'contain' => array(
+					'Publisher' => array(
+						'Item' => array(
+							'limit' => 1,
+							'fields' => array(
+								'Item.img_fullpath'
+							)
+						)
+					)
+				)
+			)
+		);
+
+		$this->UserFavorite->bindModel(array('belongsTo' => array('Publisher' => array('foreignKey' => 'favorite_item_id'))));
+		$publishers = $this->paginate(
+			'UserFavorite',
+			array(
+				'UserFavorite.item_type' => 4,
+				'UserFavorite.user_id' => $this->Auth->user('id')
+			)
+		);
+
+		$this->set('publishers', $publishers);
+	}
+
+	public function favoriteItems() {
+		$this->paginate = array(
+			'UserFavorite' => array(
+				'limit' => 24,
+				'order' => array(
+					'UserFavorite.created' => 'DESC'
+				)
+			)
+		);
+
+		$this->UserFavorite->bindModel(array('belongsTo' => array('Item' => array('foreignKey' => 'favorite_item_id'))));
+		$items = $this->paginate(
+			'UserFavorite',
+			array(
+				'UserFavorite.item_type' => 1,
+				'UserFavorite.user_id' => $this->Auth->user('id')
+			)
+		);
+
+		$this->set('items', $items);
+	}
+
+	public function favoriteCreators() {
+		$this->paginate = array(
+			'UserFavorite' => array(
+				'limit' => 24,
+				'order' => array(
+					'UserFavorite.created' => 'DESC'
+				),
+				'contain' => array(
+					'Creator' => array(
+						'ItemCreator' => array(
+							'Item' => array(
+								'fields' => array(
+									'Item.img_fullpath'
+								)
+							),
+							'limit' => 1
+						)
+					)
+				)
+			)
+		);
+
+		$this->UserFavorite->bindModel(array('belongsTo' => array('Creator' => array('foreignKey' => 'favorite_item_id'))));
+		$creators = $this->paginate(
+			'UserFavorite',
+			array(
+				'UserFavorite.item_type' => 3,
+				'UserFavorite.user_id' => $this->Auth->user('id')
+			)
+		);
+
+		$this->set('creators', $creators);
+	}
+
+	public function favoriteSeries() {
+		$this->paginate = array(
+			'UserFavorite' => array(
+				'limit' => 24,
+				'order' => array(
+					'UserFavorite.created' => 'DESC'
+				),
+				'contain' => array(
+					'Series' => array(
+						'Item' => array(
+							'fields' => array(
+								'Item.img_fullpath'
+							),
+							'limit' => 1
+						)
+					)
+				)
+			)
+		);
+
+		$this->UserFavorite->bindModel(array('belongsTo' => array('Series' => array('foreignKey' => 'favorite_item_id'))));
+		$this->UserFavorite->Series->bindModel(array('hasMany' => array('Item' => array('foreignKey' => 'series_id', 'order' => 'RAND()', 'limit' => 1))));
+		$series = $this->paginate(
+			'UserFavorite',
+			array(
+				'UserFavorite.item_type' => 2,
+				'UserFavorite.user_id' => $this->Auth->user('id')
+			)
+		);
+
+		$this->set('series', $series);
+	}
+
+	public function favoriteShops() {
+		$this->paginate = array(
+			'UserFavorite' => array(
+				'limit' => 24,
+				'order' => array(
+					'UserFavorite.created' => 'DESC'
+				),
+				'contain' => array(
+					'Store' => array(
+						'StorePhoto' => array(
+							'limit' => 1,
+							'order' => array(
+								'RAND()'
+							),
+							'fields' => array(
+								'StorePhoto.photo_path'
+							)
+						)
+					)
+				)
+			)
+		);
+
+		$this->UserFavorite->bindModel(array('belongsTo' => array('Store' => array('foreignKey' => 'favorite_item_id'))));
+		$shops = $this->paginate(
+			'UserFavorite',
+			array(
+				'UserFavorite.item_type' => 5,
+				'UserFavorite.user_id' => $this->Auth->user('id')
+			)
+		);
+
+		$this->set('shops', $shops);
 	}
 }
