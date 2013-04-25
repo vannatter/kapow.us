@@ -5,10 +5,11 @@ App::uses('AppController', 'Controller');
 /**
  * @property Series $Series
  * @property Item $Item
+ * @property UserFavorite $UserFavorite
  */
 class SeriesController extends AppController {
 	public $name = 'Series';
-	public $uses = array('Series', 'Item');
+	public $uses = array('Series', 'Item', 'UserFavorite');
 	public $paginate = array(
 		'Series' => array(
 			'limit' => 24,
@@ -63,9 +64,13 @@ class SeriesController extends AppController {
 		if($series = $this->Series->findById($id)) {
 			$this->set('series', $series);
 			$this->set('title_for_layout', ucwords(strtolower($series['Series']['series_name'])));
-			
-			// jon to override
-			$this->set('userFav', false);
+
+			## see if the current user (if there is one), fav'd this publisher
+			if($userFav = $this->UserFavorite->findByFavoriteItemIdAndUserIdAndItemType($id, $this->Auth->user('id'), 2)) {
+				$this->set('userFav', true);
+			} else {
+				$this->set('userFav', false);
+			}
 		} else {
 			$this->Session->setFlash('Series not found.', 'flash_neg');
 			$this->redirect("/");
