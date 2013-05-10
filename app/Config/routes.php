@@ -160,6 +160,16 @@ Router::connect(
 	array('controller' => 'users', 'action' => 'favoriteShops')
 );
 
+Router::connect(
+	'/my/profile/edit',
+	array('controller' => 'users', 'action' => 'profileEdit')
+);
+
+Router::connect(
+	'/my/profile/public',
+	array('controller' => 'users', 'action' => 'profilePublic')
+);
+
 ##### REPORT/REPORTS
 Router::connect(
 	'/report/item/:id',

@@ -295,17 +295,21 @@ class AppSchema extends CakeSchema {
 		'id' => array('type' => 'integer', 'null' => false, 'default' => null, 'key' => 'primary'),
 		'email' => array('type' => 'string', 'null' => false, 'length' => 100, 'collate' => 'latin1_swedish_ci', 'charset' => 'latin1'),
 		'password' => array('type' => 'string', 'null' => false, 'length' => 50, 'collate' => 'latin1_swedish_ci', 'charset' => 'latin1'),
-		'facebook_id' => array('type' => 'integer', 'null' => false, 'default' => null, 'length' => 20),
-		'access_level' => array('type' => 'integer', 'null' => false, 'default' => '1', 'comment' => '1=default,99=admin'),
+		'facebook_id' => array('type' => 'integer', 'null' => false, 'default' => null, 'length' => 20, 'key' => 'index'),
+		'access_level' => array('type' => 'integer', 'null' => false, 'default' => '1', 'key' => 'index', 'comment' => '1=default,99=admin'),
 		'user_bio' => array('type' => 'text', 'null' => false, 'default' => null, 'collate' => 'latin1_swedish_ci', 'charset' => 'latin1'),
 		'user_fullname' => array('type' => 'string', 'null' => false, 'default' => null, 'length' => 300, 'collate' => 'latin1_swedish_ci', 'charset' => 'latin1'),
 		'user_website' => array('type' => 'string', 'null' => false, 'default' => null, 'length' => 300, 'collate' => 'latin1_swedish_ci', 'charset' => 'latin1'),
 		'user_facebook' => array('type' => 'string', 'null' => false, 'default' => null, 'length' => 300, 'collate' => 'latin1_swedish_ci', 'charset' => 'latin1'),
 		'user_twitter' => array('type' => 'string', 'null' => false, 'default' => null, 'length' => 300, 'collate' => 'latin1_swedish_ci', 'charset' => 'latin1'),
+		'private_profile' => array('type' => 'boolean', 'null' => false, 'default' => '0', 'key' => 'index'),
 		'created' => array('type' => 'datetime', 'null' => false, 'default' => null),
 		'modified' => array('type' => 'datetime', 'null' => false, 'default' => null),
 		'indexes' => array(
-			'PRIMARY' => array('column' => 'id', 'unique' => 1)
+			'PRIMARY' => array('column' => 'id', 'unique' => 1),
+			'private_profile' => array('column' => 'private_profile', 'unique' => 0),
+			'facebook_id' => array('column' => 'facebook_id', 'unique' => 0),
+			'access_level' => array('column' => 'access_level', 'unique' => 0)
 		),
 		'tableParameters' => array('charset' => 'latin1', 'collate' => 'latin1_swedish_ci', 'engine' => 'MyISAM')
 	);
