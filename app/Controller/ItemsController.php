@@ -378,6 +378,39 @@ class ItemsController extends AppController {
 			$date = date('Y-m-d', strtotime('NOW'));
 		}
 
+		if($this->request->is('post') || $this->request->is('put')) {
+			$data = Sanitize::clean($this->request->data);
+
+			$pubid = "";
+			$terms = "";
+
+			if(isset($data['Item']['publisher_id'])) {
+				$pubid = $data['Item']['publisher_id'];
+			}
+
+			if(isset($data['Item']['terms'])) {
+				$terms = $data['Item']['terms'];
+			}
+
+			$query = "";
+			if(!empty($pubid)) {
+				$this->set('publisher_id', $data['Item']['publisher_id']);
+				$query = sprintf("?pubid=%s", $pubid);
+			}
+
+			if(!empty($terms)) {
+				$this->set('terms', $data['Item']['terms']);
+
+				if(empty($query)) {
+					$query = sprintf("?terms=%s", $terms);
+				} else {
+					$query .= sprintf('&terms=%s', $terms);
+				}
+			}
+
+			$this->redirect(sprintf('/items/date/%s%s', $date, $query));
+		}
+
 		if(strtoupper(date('l', strtotime($date))) == 'WEDNESDAY') {
 			## date passed is a wednesday, no need to do extra work
 		} else {
@@ -429,8 +462,22 @@ class ItemsController extends AppController {
 			)
 		));
 
+		if(isset($this->request->query['pubid']) && $this->request->query['pubid'] != 0) {
+			$con['AND']['Item.publisher_id'] = $this->request->query['pubid'];
+		}
+
 		$items = $this->paginate('Item', $con);
 
 		$this->set('items', $items);
+
+		if(!$this->request->is('ajax')) {
+			$list = $this->Item->find('all', array('conditions' => array('Item.item_date' => $date), 'fields' => array('Publisher.publisher_name'), 'group' => array('Publisher.publisher_name'), 'contain' => array('Publisher', 'Section'), 'order' => array('Publisher.publisher_name' => 'ASC')));
+
+			$publishers = array('0' => __('All'));
+			foreach($list as $pub) {
+				$publishers[$pub['Publisher']['id']] = $pub['Publisher']['publisher_name'];
+			}
+			$this->set('publishers', $publishers);
+		}
 	}
 }
