@@ -28,6 +28,16 @@ class ItemsController extends AppController {
 
 		$this->Item->recursive = 0;
 
+		$this->paginate = array(
+			'Item' => array(
+				'limit' => 24,
+				'order' => array(
+					'Pull.created' => 'DESC',
+					'Item.id' => 'DESC',
+				)
+			)
+		);
+
 		if(isset($this->request->query['terms'])) {
 			$terms = $this->request->query['terms'];
 
@@ -383,6 +393,16 @@ class ItemsController extends AppController {
 		$this->set('datePrevious', $previous);
 
 		$this->Item->recursive = 0;
+
+		$this->paginate = array(
+			'Item' => array(
+				'limit' => 24,
+				'order' => array(
+					'Pull.created' => 'DESC',
+					'Item.id' => 'DESC'
+				)
+			)
+		);
 
 		$con = array(
 			'AND' => array(
