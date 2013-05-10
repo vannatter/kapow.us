@@ -38,6 +38,11 @@ Router::connect(
 	)
 );
 
+Router::connect(
+	'/items/date/*',
+	array('controller' => 'items', 'action' => 'listByDate')
+);
+
 ##### CREATORS
 Router::connect(
 	'/creators/:id--:name',

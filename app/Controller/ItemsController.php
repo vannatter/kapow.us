@@ -362,5 +362,55 @@ class ItemsController extends AppController {
 			$this->redirect(sprintf('/items/%s', parent::seoize($id, $item['Item']['item_name'])), 301);
 		}
 	}
+
+	public function listByDate($date=null) {
+		if(!$date) {
+			$date = date('Y-m-d', strtotime('NOW'));
+		}
+
+		if(strtoupper(date('l', strtotime($date))) == 'WEDNESDAY') {
+			## date passed is a wednesday, no need to do extra work
+		} else {
+			## date passed wasn't a wednesday, get the next wednesday after date to start with
+			$date = date('Y-m-d', strtotime('next Wednesday'));
+		}
+
+		$previous = date('Y-m-d', strtotime('last Wednesday', strtotime($date)));
+		$next = date('Y-m-d', strtotime('next Wednesday', strtotime($date)));
+
+		$this->set('dateCurrent', $date);
+		$this->set('dateNext', $next);
+		$this->set('datePrevious', $previous);
+
+		$this->Item->recursive = 0;
+
+		$con = array(
+			'AND' => array(
+				'Item.item_date' => $date
+			)
+		);
+
+		if(isset($this->request->query['terms'])) {
+			$terms = $this->request->query['terms'];
+
+			$con['OR'] = array(
+				'Item.item_name LIKE' => '%' . $terms . '%',
+				'Item.description LIKE' => '%' . $terms . '%'
+			);
+		}
+
+		$this->Item->bindModel(array(
+			'hasOne' => array(
+				'Pull' => array(
+					'conditions' => array(
+						'Pull.user_id' => $this->Auth->user('id')
+					)
+				)
+			)
+		));
+
+		$items = $this->paginate('Item', $con);
+
+		$this->set('items', $items);
+	}
 }
-?>
