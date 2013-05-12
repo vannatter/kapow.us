@@ -2,7 +2,7 @@
 
 <div class="row">
 	<div class="span3 item_detail_img">	
-		<img src="<?php echo $gravatar; ?>" class="detail_img" />
+		<?php echo $this->Gravatar->image($user['User']['email'], array('s' => 300), array('class' => 'detail_img')); ?>
 	
 		<div class="creator_desc">
 			<?php echo $user['User']['user_bio']; ?>		
@@ -31,7 +31,9 @@
 	</div>
 	
 	<div class="span9 item_detail">
+		<?php if(!isset($public) || !$public) { ?>
 		<?php echo $this->Element('users/my/actions'); ?>
+		<?php } ?>
 		<?php echo $this->Element('users/my/pull_list'); ?>
 		<?php echo $this->Element('users/my/library'); ?>
 		<?php echo $this->Element('users/my/favorite_items'); ?>

@@ -38,6 +38,11 @@ Router::connect(
 	)
 );
 
+Router::connect(
+	'/items/date/*',
+	array('controller' => 'items', 'action' => 'listByDate')
+);
+
 ##### CREATORS
 Router::connect(
 	'/creators/:id--:name',
@@ -158,6 +163,16 @@ Router::connect(
 Router::connect(
 	'/my/favorite/shops',
 	array('controller' => 'users', 'action' => 'favoriteShops')
+);
+
+Router::connect(
+	'/my/profile/edit',
+	array('controller' => 'users', 'action' => 'profileEdit')
+);
+
+Router::connect(
+	'/my/profile/public',
+	array('controller' => 'users', 'action' => 'profilePublic')
 );
 
 ##### REPORT/REPORTS
