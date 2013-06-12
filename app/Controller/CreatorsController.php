@@ -75,6 +75,10 @@ class CreatorsController extends AppController {
 				),
 			)
 		);
+		
+		echo "<pre>";
+		print_r($creator);
+		echo "</pre>";
 
 		if (!$creator) {
 			$this->Session->setFlash('Creator not found.', 'flash_neg');
