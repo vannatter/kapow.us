@@ -249,13 +249,29 @@ class ToolsController extends AppController {
 			$part_1 = trim($part_1);
 			$part_2 = trim($part_2);
 			
+/*
+			echo "part_1=[" . $part_1 . "]<br/>";
+			echo "part_2=[" . $part_2 . "]<br/>";
+*/
+			
 			if (!$part_2) {
+/* 				echo "trying other way... <br/>"; */
 				## try getting it w/ tabs
 				$parts = explode("	", $a);
 				$part_1 = @$parts[0];
 				$part_2 = @$parts[1];
 				$part_1 = trim($part_1);
 				$part_2 = trim($part_2);
+/* 				echo "part_1=" . $part_1 . "<br/>"; */
+			} elseif ($part_2 == "PI") {
+/* 				echo "trying final way... <br/>"; */
+				## try getting it w/ tabs
+				$parts = explode(" ", $a);
+				$part_1 = @$parts[0];
+				$part_2 = @$parts[1];
+				$part_1 = trim($part_1);
+				$part_2 = trim($part_2);
+/* 				echo "part_1=" . $part_1 . "<br/>";				 */
 			}
 			
 			if ($check_next_for_section) {
