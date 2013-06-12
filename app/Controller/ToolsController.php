@@ -969,7 +969,7 @@ class ToolsController extends AppController {
 		$this->log(sprintf(' - found %s records', count($creators)));
 
 		$this->log(' - removing creator records');
-		#$this->Creator->query("DELETE FROM item_creators WHERE NOT item_id IN (SELECT id FROM items)");
+		$this->Creator->query("DELETE FROM item_creators WHERE NOT item_id IN (SELECT id FROM items)");
 
 		exit;
 	}
