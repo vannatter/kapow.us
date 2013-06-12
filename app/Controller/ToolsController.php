@@ -4,6 +4,7 @@ App::uses('AppController', 'Controller');
 
 /**
  * @property Store $Store
+ * @property Creator $Creator
  */
 class ToolsController extends AppController {
 
@@ -956,10 +957,20 @@ class ToolsController extends AppController {
 		}
 
 		exit;
-		
 	}
-	
-	
-}
 
-?>
+	public function removeMissingItemRefs() {
+		set_time_limit(0);   ## forever
+
+		$this->log('removeMissingItemRefs()');
+
+		$this->log(' - processing creators (item_creators)');
+		$creators = $this->Creator->query("SELECT * FROM item_creators WHERE NOT item_id IN (SELECT id FROM items)");
+		$this->log(sprintf(' - found %s records', count($creators)));
+
+		$this->log(' - removing creator records');
+		#$this->Creator->query("DELETE FROM item_creators WHERE NOT item_id IN (SELECT id FROM items)");
+
+		exit;
+	}
+}
