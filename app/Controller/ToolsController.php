@@ -236,6 +236,9 @@ class ToolsController extends AppController {
 			if (substr($a, 0, 22) == "Upcoming Releases For ") {
 				$date = trim(substr($a, 22));
 			}
+			if (substr($a, 0, 36) == "Sneak Peek At Upcoming Releases For ") {
+				$date = trim(substr($a, 36));
+			}
 			if (substr($a, 0, 9) == "Shipping ") {
 				$date = trim(substr($a, 9));
 			}
