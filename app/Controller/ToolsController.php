@@ -5,6 +5,7 @@ App::uses('AppController', 'Controller');
 /**
  * @property Store $Store
  * @property Creator $Creator
+ * @property Tag $Tag
  */
 class ToolsController extends AppController {
 
@@ -970,6 +971,13 @@ class ToolsController extends AppController {
 
 		$this->log(' - removing creator records');
 		$this->Creator->query("DELETE FROM item_creators WHERE NOT item_id IN (SELECT id FROM items)");
+
+		$this->log(' - processing item tags');
+		$tags = $this->Tag->query("SELECT * FROM item_tags WHERE NOT item_id IN (SELECT id FROM items)");
+		$this->log(sprintf(' - found %s records', count($tags)));
+
+		$this->log(' - removing item tag records');
+		$this->Tag->query("DELETE FROM item_tags WHERE NOT item_id IN (SELECT id FROM items)");
 
 		exit;
 	}
