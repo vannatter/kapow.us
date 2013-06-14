@@ -116,7 +116,7 @@ class CreatorsController extends AppController {
 	}
 
 	public function viewById($id) {
-		if($creator = $this->Creator->findById($id)) {
+		if ($creator = $this->Creator->findById($id)) {
 			$this->redirect(sprintf('/creators/%s', parent::seoize($id, $creator['Creator']['creator_name'])), 301);
 		}
 	}
