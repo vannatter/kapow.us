@@ -19,8 +19,8 @@
 	</div>
 	<div class="span7 login_intro">
 		Kapow! is creating a new platform for finding, tracking and interacting with your favorite comics, publishers, artists and local comic shops.
-		We're creating tools that make finding new stuff you want much easier (and keeping track of what you already love so you never miss something new).
+		We're creating tools that make finding stuff you want much easier (and keeping track of what you already love) so you'll never miss something new.
 		<br/><br/>
-		Use the form to the left to create your account, or you can also connect with Facebook and instantly create your account (and customize your profile later).
+		Use the form to create a Kapow! account or you can also connect with Facebook and instantly create your account (and customize your profile later).
 	</div>
 </div>
