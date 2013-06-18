@@ -1,5 +1,7 @@
 <div class="footnote">
-	Kapow! &copy; <?php echo date("Y"); ?> &nbsp;&nbsp; Vannatter Ventures LLC
+	<div class="footcopy">
+		Kapow! &copy; <?php echo date("Y"); ?> &nbsp;&nbsp; Vannatter Ventures LLC
+	</div>
 	
 	<div class="footlinks">
 		<?php if ($this->Session->read('Auth.User.access_level') == "99") { ?>

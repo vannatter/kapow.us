@@ -24,7 +24,7 @@ class HomeController extends AppController {
 		$this->set('blogs', $this->paginate('Blog'));
 
 		$item = $this->Item->getRandomItemByDate();
-		debug($item);
+	//	debug($item);
 	}
 }
 
