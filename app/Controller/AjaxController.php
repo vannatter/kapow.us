@@ -10,9 +10,21 @@ class AjaxController extends AppController {
 	public $helpers = array('Common');
 	
 	public function random_item() {
-		
 
+		$ticker = null;
+		$tapeTypes = array('item', 'creator');
+
+		switch($tapeTypes[array_rand($tapeTypes)]) {
+			case 'item':
+				$ticker = $this->Item->getRandom();
+				break;
+			case 'creator':
+				$ticker = $this->Creator->getRandom();
+				break;
+		}
 		
+		$output = json_encode($ticker);
+		echo $output;
 		exit;
 	}
 	
