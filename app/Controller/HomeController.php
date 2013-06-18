@@ -29,6 +29,14 @@ class HomeController extends AppController {
 				break;
 		}
 		$this->set('ticker', $ticker);
+		
+		$this->set('types', array(
+			'1' => __('Item'),
+			'2' => __('Publisher'),
+			'3' => __('Creator'),
+			'4' => __('Series')
+		));
+				
 	}
 }
 
