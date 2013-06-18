@@ -3,10 +3,11 @@ App::uses('AppController', 'Controller');
 
 /**
  * @property Blog $Blog
+ * @property Item $Item
  */
 class HomeController extends AppController {
 	public $name = 'Home';
-	public $uses = array('Blog');
+	public $uses = array('Blog', 'Item');
 
 	public function index() {
 		$this->layout = "plain";
@@ -21,6 +22,9 @@ class HomeController extends AppController {
 		);
 
 		$this->set('blogs', $this->paginate('Blog'));
+
+		$item = $this->Item->getRandomItemByDate();
+		debug($item);
 	}
 }
 

@@ -65,5 +65,25 @@ class Item extends AppModel {
 		return $this->id;
 		
 	}
-	
+
+	function getRandomItemByDate($date=null) {
+		if(!$date) {
+			$first_day = date("N", strtotime("today"));
+
+			if ($first_day < 3) {
+				$date = date("Y-m-d", strtotime("this wednesday"));
+			}
+			if ($first_day == 3) {
+				$date = date("Y-m-d", strtotime("today"));
+			}
+			if ($first_day == 4) {
+				$date = date("Y-m-d", strtotime("yesterday"));
+			}
+			if ($first_day > 4) {
+				$date = date("Y-m-d", strtotime("last wednesday") );
+			}
+		}
+
+		return $this->find('first', array('conditions' => array('Item.item_date' => $date), 'order' => array('RAND()')));
+	}
 }
