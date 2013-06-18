@@ -10,7 +10,6 @@ class HomeController extends AppController {
 	public $uses = array('Blog', 'Item');
 
 	public function index() {
-//		$this->layout = "plain";
 
 		$this->paginate = array(
 			'Blog' => array(
@@ -24,7 +23,8 @@ class HomeController extends AppController {
 		$this->set('blogs', $this->paginate('Blog'));
 
 		$item = $this->Item->getRandomItemByDate();
-	//	debug($item);
+		$this->set('random_item', $item);
+		
 	}
 }
 
