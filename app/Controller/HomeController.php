@@ -9,7 +9,7 @@ class HomeController extends AppController {
 	public $uses = array('Blog');
 
 	public function index() {
-		$this->layout = "plain";
+//		$this->layout = "plain";
 
 		$this->paginate = array(
 			'Blog' => array(
