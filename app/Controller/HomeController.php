@@ -7,24 +7,29 @@ App::uses('AppController', 'Controller');
  */
 class HomeController extends AppController {
 	public $name = 'Home';
-	public $uses = array('Blog', 'Item');
+	public $uses = array('Blog', 'Item', 'Creator');
 
 	public function index() {
-//		$this->layout = "plain";
+		//$this->layout = "plain";
 
-		$this->paginate = array(
-			'Blog' => array(
-				'limit' => '5',
-				'order' => array(
-					'Blog.created' => 'ASC'
-				)
-			)
-		);
-
-		$this->set('blogs', $this->paginate('Blog'));
+		$blog = $this->Blog->getLatestEntry();
+		$this->set('blog', $blog);
 
 		$item = $this->Item->getRandomItemByDate();
-	//	debug($item);
+		$this->set('item', $item);
+
+		$ticker = null;
+		$tapeTypes = array('item', 'creator');
+
+		switch($tapeTypes[array_rand($tapeTypes)]) {
+			case 'item':
+				$ticker = $this->Item->getRandom();
+				break;
+			case 'creator':
+				$ticker = $this->Creator->getRandom();
+				break;
+		}
+		$this->set('ticker', $ticker);
 	}
 }
 
