@@ -36,6 +36,9 @@ class HomeController extends AppController {
 			'3' => __('Creator'),
 			'4' => __('Series')
 		));
+		
+		// dynamically set this, or set it from a collection
+		$this->set('welcome', 'Welcome to Kapow!');
 				
 	}
 }
