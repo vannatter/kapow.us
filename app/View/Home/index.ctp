@@ -16,14 +16,49 @@
 
 	<div class="span9 home_main">	
 	
-		<pre>
-		<?php print_r($random_item); ?>
-		</pre>
+		<div class="home_hdr"><h4>Random Goodness</h4></div>
+		<div class="row">
+			<div class="span3 item_detail_img">	
+				<?php if ($random_item['Item']['img_fullpath'] == "/img/covers") { ?><img border="0" alt="<?php echo $random_item['Item']['item_name']; ?>" src="/img/nocover_large.png" class="detail_img" /><?php } else { ?><img border="0" alt="<?php echo $random_item['Item']['item_name']; ?>" class="detail_img" src="<?php echo $this->Common->thumb($random_item['Item']['img_fullpath'], "50p"); ?>" /><?php } ?>
+			</div>
+			
+			<div class="span6 item_detail">
+				<h2><?php echo $this->Html->link($random_item['Item']['item_name'], '/items/' . $this->Common->seoize($random_item['Item']['id'], $random_item['Item']['item_name'])); ?></h2>
+				
+				<div class="item_description">
+					<?php echo $random_item['Item']['description']; ?>
+				</div>
+				
+				<div class="item_tags">
+					<?php foreach ($random_item['ItemTag'] as $it) { ?>
+						<span class="label"><a href="/tags/<?php echo $this->Common->seoize($it['Tag']['id'], $it['Tag']['tag_name']); ?>"><?php echo $it['Tag']['tag_name']; ?></a></span>
+					<?php } ?>
+				</div>
+			</div>
+		</div>
 
+		<br/>
+
+		<div class="home_hdr"><h4>Bam! Blog!</h4></div>
+		<div class="row">
+			<div class="span6 blog_body">	
+				herp derp
+			</div>
+		</div>
+		
+		<div class="home_hdr"><h4>What is Kapow!?</h4></div>
+		<div class="row">
+			<div class="span6 generic_body">	
+				herp derp
+			</div>
+		</div>
+		
 	</div>
 	
 	<div class="span3 home_sidebar">
-		blog and stuff
+		
+		<div class="home_hdr"><h4>What's Hot</h4></div>
+		
 	</div>
 </div>
 
