@@ -36,7 +36,7 @@ class Creator extends AppModel {
 	}
 
 	public function getRandom($con=array('Creator.creator_bio !=' => '', 'Creator.creator_photo !=' => '')) {
-		return $this->find('first', array('conditions' => $con, 'order' => 'RAND()'));
+		return $this->find('first', array('conditions' => $con, 'order' => 'RAND()', 'recursive' => -1));
 	}
 
 }
