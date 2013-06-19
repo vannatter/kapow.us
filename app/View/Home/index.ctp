@@ -2,7 +2,7 @@
 <?php $this->Html->script('page/search', array('inline' => false)); ?>
 <?php echo $this->Element('headers/home/index'); ?>
 
-<?php echo $this->Form->create('search', array('url' => '/search', 'class' => 'form-inline')); ?>
+<?php echo $this->Form->create('Search', array('url' => '/search', 'class' => 'form-inline')); ?>
 <div class="store_search_bar">
 	<div class="pagination-centered">
 		<?php echo $this->Form->input('type', array('class' => 'span3', 'value' => @$type)); ?>
