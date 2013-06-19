@@ -84,7 +84,7 @@ class Item extends AppModel {
 			}
 		}
 
-		return $this->find('first', array('conditions' => array('Item.item_date' => $date), 'order' => array('RAND()')));
+		return $this->find('first', array('conditions' => array('Item.item_date' => $date, 'Section.category_id' => 1), 'order' => array('RAND()')));
 	}
 
 	function getRandom() {
