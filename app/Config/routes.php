@@ -240,6 +240,12 @@ Router::connect(
 	)
 );
 
+## static maps
+Router::connect('/tos', array('controller' => 'home', 'action' => 'tos'));
+Router::connect('/privacy-policy', array('controller' => 'home', 'action' => 'privacy'));
+Router::connect('/contact-us', array('controller' => 'home', 'action' => 'contact'));
+Router::connect('/about-us', array('controller' => 'home', 'action' => 'about'));
+
 Router::connect(
 	'/blog',
 	array('controller' => 'blogs')

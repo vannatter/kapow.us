@@ -71,6 +71,7 @@
 	<div class="span3 home_sidebar">
 		
 		<div class="home_hdr"><h4>What's Hot</h4></div>
+		<div class="hot_sect">
 		
 		<?php if (@$ticker['Creator']['id']) { ?>
 
@@ -113,13 +114,19 @@
 			</div>
 		
 		<?php } ?>
+		</div>
 		
 		<br/>
 		
 		<div class="home_hdr"><h4>Connect With Us</h4></div>
 				
-
-		<a href="https://plus.google.com/112418984867940299271">Google Plus</a>				
+		<div class="row">
+			<div class="span3">
+				<a href="https://twitter.com/kapowus"><img src="/img/twitter.png" border="0" alt="Twitter" /></a>
+				<a href="https://facebook.com/kapow.us"><img src="/img/facebook.png" border="0" alt="Facebook" /></a>
+				<a href="https://plus.google.com/112418984867940299271"><img src="/img/googleplus.png" border="0" alt="Google+" /></a>
+			</div>
+		</div>
 				
 	</div>
 </div>

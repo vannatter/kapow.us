@@ -69,5 +69,8 @@ function flash(msg, delay) {
 	msg_timeout = setTimeout( function() { $("#flash_msg").fadeOut(); }, delay );
 }
 
+function load_hot() {
 
+	// http://kapow.local/ajax/random_item	
+}
 	

@@ -41,6 +41,23 @@ class HomeController extends AppController {
 		$this->set('welcome', 'Welcome to Kapow!');
 				
 	}
+	
+	public function about() {
+		
+	}
+	
+	public function contact() {
+		
+	}
+	
+	public function tos() {
+		
+	}
+	
+	public function privacy() {
+		
+	}
+	
 }
 
 ?>

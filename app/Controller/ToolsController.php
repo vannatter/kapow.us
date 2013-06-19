@@ -467,7 +467,7 @@ class ToolsController extends AppController {
 			$description = $xpath->query('//div[@class="PreviewsHtml"]');
 			foreach ($description as $tag) {
 				$item['description'] = trim($tag->nodeValue);
-				$item['description'] = trim(preg_replace('/[^a-zA-Z0-9_ %\;\:\@\*\$\?\,\"\'\!\[\]\.\(\)%&-]/s', '', $item['description']));
+				$item['description'] = trim(preg_replace('/[^a-zA-Z0-9_ %\;\:\@\*\$\?\,\"\'\!\[\]\.\(\)%&-]/s', ' ', $item['description']));
 			}
 			
 			$img = $xpath->query('//div[@class="StockCodeImage"]/a');

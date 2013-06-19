@@ -25,8 +25,7 @@
 			echo $this->Html->script('libs/image-load');
 			echo $this->Html->script('libs/bootstrap-image-gallery.min');
 
-			echo $this->Html->script('common');
-
+			echo $this->Html->script('common.min');
 			echo $this->fetch('script');
 		?>
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
