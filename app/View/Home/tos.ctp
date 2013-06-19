@@ -1,3 +1,5 @@
+<?php echo $this->Element('headers/home/tos'); ?>
+
 <div class="pad">
 
 Welcome to Kapow!.  In order to use our Site, you must agree to our Terms and Conditions.  The following terms and conditions (the "Agreement") form a binding agreement between you and the Kapow company, 
@@ -39,7 +41,7 @@ Kapow relies on User IDs to know whether users accessing the Site and using our 
 <h3>Non-Confidentiality, Security And Privacy</h3>
 You understand that much of the information that you submit to us (such as postings and invitations) is submitted precisely for the purpose of disclosure in a variety of ways by Kapow, and therefore such information is not subject to any confidentiality obligation. Other information, such as credit card information provided in connection with the purchase of a Deal, is maintained with appropriate privacy and security protections. You agree that information provided to us in connection with the purchase of a Deal, other than your credit card information, may be disclosed by us to the Kapow Merchant for their commercial purposes including to provision the Deal.
 <br/><br/>
-Our Privacy Policy explains how we collect, use and disclose information that pertains to your privacy. The Privacy Policy forms part of our agreement with you and is incorporated in this Agreement by reference. For full details, please refer to our Privacy Policy at <a href="http://www.Kapow.com/privacy_policy">http://www.Kapow.com/privacy_policy</a>.
+Our Privacy Policy explains how we collect, use and disclose information that pertains to your privacy. The Privacy Policy forms part of our agreement with you and is incorporated in this Agreement by reference. For full details, please refer to our Privacy Policy at <a href="http://kapow.us/privacy-policy">http://kapow.us/privacy-policy</a>.
 Any communications between you and Kapow, such as email or other correspondence, in which you offer suggestions or comments for improving or modifying our Services will be deemed by us to be non-confidential and non-proprietary, and you agree that such information may be used by us without any limitation whatsoever.
 <br/><br/>
 
@@ -75,15 +77,15 @@ We don't have control over websites that Kapow may link to. Kapow may contain li
 <br/><br/>
 
 <h3>Products Available For Sale</h3>
-The Site can be accessed from countries around the world. You understand that some or all products or services provided on the Site may not be available for purchase to persons residing in certain jurisdictions or geographic areas. Kapow reserves the right, in its sole discretion, to exclude or otherwise limit the provision of a Voucher for any product or service to a person residing in any jurisdiction or geographical area. Kapow does not represent or warrant that any product or service promoted on the Site will be available for purchase by any particular person.
+The Site can be accessed from countries around the world. You understand that some or all products or services provided on the Site may not be available for purchase to persons residing in certain jurisdictions or geographic areas. Kapow does not represent or warrant that any product or service promoted on the Site will be available for purchase by any particular person.
 <br/><br/>
 
 <h3>Refunds</h3>
-Kapow will provide a refund of the purchase price paid by you for any Deal within five days after the purchase of a Voucher, provided that the Voucher has not yet been redeemed. After five days, we do not provide refunds except that we will provide a refund if you are unable to redeem a Voucher before the applicable expiration of the Voucher because the relevant Merchant has gone out of business.
+Kapow operates and executes purchasing exclusively with third-party sellers and as such, all refunds must be coordinated with the party your purchase was completed with. Kapow is not responsible for brokering any returns or refunds for the End User.
 <br/><br/>
 
 <h3>Termination</h3>
-We may change or discontinue the Site or any of the Services at any time without prior notice. We reserve the right to terminate this Agreement at our election and for any reason, without prior notice, and this Agreement will automatically terminate in the event that you violate any of the terms and conditions set forth below. In the event of any termination, you will immediately cease access to the Site and Services. Any Voucher issued prior to termination will be honored according to its terms and the terms of this Agreement specifically applicable to such Voucher.
+We may change or discontinue the Site or any of the Services at any time without prior notice. We reserve the right to terminate this Agreement at our election and for any reason, without prior notice, and this Agreement will automatically terminate in the event that you violate any of the terms and conditions set forth below. In the event of any termination, you will immediately cease access to the Site and Services. 
 <br/><br/>
 
 <h3>Disclaimers of Warranty</h3>
@@ -147,7 +149,7 @@ The communications between you and Kapow use electronic means, whether you visit
 <br/><br/>
 
 <h3>Entire Agreement, Changes to this Agreement and Waivers</h3>
-These Terms of Service, together with the Privacy Policy at <a href="http://kapow.us/privacy-policy">http://kapow.us/privacy-policy</a> and any other legal notices published by Kapow on the Site or any Deal Voucher, shall constitute the entire agreement between you and Kapow concerning Kapow. We may change the terms of this Agreement from time to time on a going-forward basis, and any such modifications become effective immediately upon being posted to the Site. It is your sole responsibility to check the Site from time to time to view any such changes in the Agreement. If you do not agree to any changes, if and when such changes may be made to the Agreement, you must cease use of the Site and Services. Your use of the Site and Services after any modifications to the Agreement indicates that you agree to such modified Agreement. Any changes to this Agreement (other than as set forth in this paragraph) or waiver of Kapow's rights hereunder shall not be valid or effective except in a written agreement bearing the physical signature of an officer of Kapow. No purported waiver or modification of this Agreement by Kapow via telephonic or email communications shall be valid.
+These Terms of Service, together with the Privacy Policy at <a href="http://kapow.us/privacy-policy">http://kapow.us/privacy-policy</a> and any other legal notices published by Kapow on the Site, shall constitute the entire agreement between you and Kapow concerning Kapow. We may change the terms of this Agreement from time to time on a going-forward basis, and any such modifications become effective immediately upon being posted to the Site. It is your sole responsibility to check the Site from time to time to view any such changes in the Agreement. If you do not agree to any changes, if and when such changes may be made to the Agreement, you must cease use of the Site and Services. Your use of the Site and Services after any modifications to the Agreement indicates that you agree to such modified Agreement. Any changes to this Agreement (other than as set forth in this paragraph) or waiver of Kapow's rights hereunder shall not be valid or effective except in a written agreement bearing the physical signature of an officer of Kapow. No purported waiver or modification of this Agreement by Kapow via telephonic or email communications shall be valid.
 <br/><br/>
 
 <h3>Choice of Law</h3>
