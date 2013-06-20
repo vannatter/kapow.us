@@ -4,6 +4,8 @@
  */
 ?>
 <?php $this->Html->script('page/blog', array('inline' => false)); ?>
+<?php echo $this->Element('headers/blog/index'); ?>
+
 <div id="blog-scroll-list">
 	<?php foreach($blogs as $blog) { ?>
 		<div class="blog-item">
