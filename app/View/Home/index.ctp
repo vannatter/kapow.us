@@ -21,7 +21,19 @@
 			<div class="span3 item_detail_img">	
 				<?php if ($random_item['Item']['img_fullpath'] == "/img/covers") { ?><img border="0" alt="<?php echo $random_item['Item']['item_name']; ?>" src="/img/nocover_large.png" class="detail_img" /><?php } else { ?><img border="0" alt="<?php echo $random_item['Item']['item_name']; ?>" class="detail_img" src="<?php echo $this->Common->thumb($random_item['Item']['img_fullpath'], "50p"); ?>" /><?php } ?>
 			</div>
-			
+
+			<div class="span4">
+				<?php
+				if (isset($item['Pull']['id'])) {
+					$hasPull = true;
+				} else {
+					$hasPull = false;
+				}
+
+				echo $this->Common->pullButton($random_item['Item']['id'], $hasPull);
+				?>
+			</div>
+
 			<div class="span6 item_detail">
 				<h2><?php echo $this->Html->link($random_item['Item']['item_name'], '/items/' . $this->Common->seoize($random_item['Item']['id'], $random_item['Item']['item_name'])); ?></h2>
 				
