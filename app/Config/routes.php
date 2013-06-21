@@ -461,6 +461,15 @@ Router::connect(
 	)
 );
 
+Router::connect(
+	'/admin/flags/view/:id',
+	array('controller' => 'admin', 'action' => 'flagsView'),
+	array(
+		'pass' => array('id'),
+		'id' => '[0-9]+'
+	)
+);
+
 CakePlugin::routes();
 
 require CAKE . 'Config' . DS . 'routes.php';
