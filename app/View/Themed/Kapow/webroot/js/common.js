@@ -71,7 +71,7 @@ function flash(msg, delay) {
 }
 
 
-var load_hot = setInterval(function() { if ($('.hot_sect').length > 0) { $('.hot_hold').load('/random_item?ts=' + (new Date).getTime(), flash_hot_sect); } }, 10000); 
+var load_hot = setInterval(function() { if ($('.hot_sect').length > 0) { $('.hot_hold').load('/random_item?ts=' + (new Date).getTime(), flash_hot_sect); } }, 20000); 
 
 function flash_hot_sect() {
 	$('.hot_sect').fadeOut('slow', function() {
