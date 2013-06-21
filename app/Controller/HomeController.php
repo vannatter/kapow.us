@@ -57,7 +57,26 @@ class HomeController extends AppController {
 	public function privacy() {
 		
 	}
-	
+
+
+	public function random_item() {
+
+		$this->layout = 'blank';
+		$ticker = null;
+		$tapeTypes = array('item', 'creator');
+
+		switch($tapeTypes[array_rand($tapeTypes)]) {
+			case 'item':
+				$ticker = $this->Item->getRandom();
+				break;
+			case 'creator':
+				$ticker = $this->Creator->getRandom();
+				break;
+		}
+
+		$this->set('ticker', $ticker);
+	}
+		
 }
 
 ?>

@@ -1,4 +1,5 @@
 var msg_timeout;
+var load_hot_timeout;
 
 $(document).ready(function() {
 	$('button.toggle_favorite').on('click', function(e) {
@@ -69,8 +70,12 @@ function flash(msg, delay) {
 	msg_timeout = setTimeout( function() { $("#flash_msg").fadeOut(); }, delay );
 }
 
-function load_hot() {
 
-	// http://kapow.local/ajax/random_item	
+var load_hot = setInterval(function() { if ($('.hot_sect').length > 0) { $('.hot_hold').load('/random_item?ts=' + (new Date).getTime(), flash_hot_sect); } }, 10000); 
+
+function flash_hot_sect() {
+	$('.hot_sect').fadeOut('slow', function() {
+		$('.hot_sect').html($('.hot_hold').html());
+		$('.hot_sect').fadeIn('slow');
+	});
 }
-	

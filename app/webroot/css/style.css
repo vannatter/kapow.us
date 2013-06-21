@@ -103,7 +103,7 @@ h2{color:#000 !important;}
 .home_blog p{font-size:20px;}
 .home_blog,.home_what{padding-left:10px;}
 .hot_img{max-height:275px;max-width:400px;}
-.hot_sect{max-height:420px;overflow:hidden;min-height:420px;}
+.hot_grid{max-height:410px;overflow:hidden;min-height:410px;}
 .hot_desc{color:#78b0e9;line-height:16px;}
 .pad{color:#78b0e9;font-size:18px;}
 .pad h3{font-size:20px;color:#fff;}

@@ -241,6 +241,7 @@ Router::connect(
 );
 
 ## static maps
+Router::connect('/random_item', array('controller' => 'home', 'action' => 'random_item'));
 Router::connect('/tos', array('controller' => 'home', 'action' => 'tos'));
 Router::connect('/privacy-policy', array('controller' => 'home', 'action' => 'privacy'));
 Router::connect('/contact-us', array('controller' => 'home', 'action' => 'contact'));
