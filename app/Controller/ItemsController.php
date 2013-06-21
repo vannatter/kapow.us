@@ -281,7 +281,7 @@ class ItemsController extends AppController {
 
 			if(isset($data['Item']['publisher_id'])) {
 				if(empty($data['Item']['publisher_id'])) {
-					$this->redirect('/items/next_week');
+					$this->redirect('/items/this_week');
 				}
 
 				$this->set('publisher_id', $data['Item']['publisher_id']);
