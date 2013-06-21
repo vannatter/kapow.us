@@ -98,6 +98,8 @@ h2{color:#000 !important;}
 .home_hdr h4{padding:0;margin:0;color:#fff;}
 .home_main{padding-bottom:50px;}
 .home_main h2 a{color:#000;}
+.well{background-color:#24478f;border:1px solid #214183;margin-left:0;}
+.well input,.well select,.well textarea{border:1px solid #214183;}
 .random_item{margin-bottom:20px;}
 .random_item .item_description{color:#fff;line-height:24px;}
 .home_blog p{font-size:20px;}

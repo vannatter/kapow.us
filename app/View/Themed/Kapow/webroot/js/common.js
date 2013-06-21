@@ -2,6 +2,29 @@ var msg_timeout;
 var load_hot_timeout;
 
 $(document).ready(function() {
+
+	$('.contact_btn').on('click', function(e) {
+		var first_name 	= $('#first_name').val();
+		var last_name 	= $('#last_name').val();
+		var email 		= $('#email').val();
+		var subject		= $('#subject').val();
+		var message		= $('#message').val();
+
+		if (!first_name) {
+			alert('First Name is required');
+		} else if (!last_name) {
+			alert('Last Name is required');
+		} else if (!email) {
+			alert('Email is required');
+		} else if (!subject) {
+			alert('Subject is required');
+		} else if (!message) {
+			alert('Message is required');
+		} else {
+			$('#contact_frm').submit();			
+		}
+	});
+	
 	$('button.toggle_favorite').on('click', function(e) {
 		e.preventDefault();
 

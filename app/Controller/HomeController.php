@@ -1,5 +1,6 @@
 <?php
 App::uses('AppController', 'Controller');
+App::uses('CakeEmail', 'Network/Email');
 
 /**
  * @property Blog $Blog
@@ -54,23 +55,38 @@ class HomeController extends AppController {
 		
 		// dynamically set this, or set it from a collection
 		$this->set('welcome', 'Welcome to Kapow!');
-				
+		$this->set('title_for_layout', '');
 	}
 	
 	public function about() {
-		
+		$this->set('title_for_layout', 'About Us');
 	}
 	
 	public function contact() {
-		
+		$this->set('title_for_layout', 'Contact Us');
+	}
+	
+	public function contact_submit() {
+		$email = new CakeEmail('default');
+		$email->template('contact');
+		$email->emailFormat('html');
+		$email->from('info@kapow.us');
+		$email->to('info@kapow.us');
+		$email->subject('Kapow! Contact');
+		$email->viewVars(array('email'=>$_POST['email'], 'emailVars'=>$_POST));
+		$email->send();
+
+		$this->Session->setFlash('Email sent, we\'ll be in touch!', 'flash_pos');
+		$this->redirect("/");
+		exit;
 	}
 	
 	public function tos() {
-		
+		$this->set('title_for_layout', 'Terms of Service');
 	}
 	
 	public function privacy() {
-		
+		$this->set('title_for_layout', 'Privacy Policy');
 	}
 
 
