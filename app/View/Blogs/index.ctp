@@ -9,15 +9,15 @@
 <div id="blog-scroll-list">
 	<?php foreach($blogs as $blog) { ?>
 		<div class="blog-item">
-			<h2><?php echo $blog['Blog']['title']; ?></h2>
-			<div class="well">
+			<div class="well blog_list_well">
+				<h4><?php echo $this->Html->link($blog['Blog']['title'], sprintf('/blogs/%s', $this->Common->seoize($blog['Blog']['id'], $blog['Blog']['title']))); ?></h4>
 				<p><?php echo $blog['Blog']['body']; ?></p>
-				<p><?php echo __('<b>by</b> %s', $blog['User']['email']); ?> <?php echo __('<b>on</b> %s', $blog['Blog']['created']); ?></p>
-				<p><?php echo $this->Html->link(__('perma-link'), sprintf('/blogs/%s', $this->Common->seoize($blog['Blog']['id'], $blog['Blog']['title']))); ?></p>
+				<p><?php echo date("F jS, Y", strtotime($blog['Blog']['created'])); ?></p>
 			</div>
 		</div>
 	<?php } ?>
 </div>
+
 <?php if($this->Paginator->hasNext()) { ?>
 	<div id="blog-scroll-nav">
 		<div class="pagination">
