@@ -14,6 +14,16 @@ class HomeController extends AppController {
 		$blog = $this->Blog->getLatestEntry();
 		$this->set('blog', $blog);
 
+		$this->Item->bindModel(array(
+			'hasOne' => array(
+				'Pull' => array(
+					'conditions' => array(
+						'Pull.user_id' => $this->Auth->user('id')
+					)
+				)
+			)
+		));
+
 		$item = $this->Item->getRandomItemByDate();
 		$this->set('random_item', $item);
 		

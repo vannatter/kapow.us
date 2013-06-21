@@ -221,6 +221,52 @@ Router::connect(
 	)
 );
 
+##### FLAGS
+Router::connect(
+	'/flag/item/:id',
+	array('controller' => 'flags', 'action' => 'item'),
+	array(
+		'pass' => array('id'),
+		'id' => '[0-9]+'
+	)
+);
+
+Router::connect(
+	'/flag/creator/:id',
+	array('controller' => 'flags', 'action' => 'creator'),
+	array(
+		'pass' => array('id'),
+		'id' => '[0-9]+'
+	)
+);
+
+Router::connect(
+	'/flag/series/:id',
+	array('controller' => 'flags', 'action' => 'series'),
+	array(
+		'pass' => array('id'),
+		'id' => '[0-9]+'
+	)
+);
+
+Router::connect(
+	'/flag/publisher/:id',
+	array('controller' => 'flags', 'action' => 'publisher'),
+	array(
+		'pass' => array('id'),
+		'id' => '[0-9]+'
+	)
+);
+
+Router::connect(
+	'/flag/store/:id',
+	array('controller' => 'flags', 'action' => 'shop'),
+	array(
+		'pass' => array('id'),
+		'id' => '[0-9]+'
+	)
+);
+
 ##### BLOGS
 Router::connect(
 	'/blogs/:id--:name',
@@ -410,6 +456,15 @@ Router::connect(
 Router::connect(
 	'/admin/blogs/delete/:id',
 	array('controller' => 'admin', 'action' => 'blogsDelete'),
+	array(
+		'pass' => array('id'),
+		'id' => '[0-9]+'
+	)
+);
+
+Router::connect(
+	'/admin/flags/view/:id',
+	array('controller' => 'admin', 'action' => 'flagsView'),
 	array(
 		'pass' => array('id'),
 		'id' => '[0-9]+'

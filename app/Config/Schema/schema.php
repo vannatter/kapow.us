@@ -63,6 +63,21 @@ class AppSchema extends CakeSchema {
 		),
 		'tableParameters' => array('charset' => 'utf8', 'collate' => 'utf8_general_ci', 'engine' => 'InnoDB')
 	);
+	public $flags = array(
+		'id' => array('type' => 'integer', 'null' => false, 'default' => null, 'key' => 'primary'),
+		'user_id' => array('type' => 'integer', 'null' => false, 'default' => null),
+		'status' => array('type' => 'integer', 'null' => false, 'default' => '0', 'comment' => '0=unread,1=open,99=closed'),
+		'item_type' => array('type' => 'integer', 'null' => false, 'default' => null, 'comment' => '1=item,2=series,3=creator,4=publisher,5=store'),
+		'flag_item_id' => array('type' => 'integer', 'null' => false, 'default' => null),
+		'description' => array('type' => 'text', 'null' => false, 'default' => null, 'collate' => 'latin1_swedish_ci', 'charset' => 'latin1'),
+		'admin_user_id' => array('type' => 'integer', 'null' => false, 'default' => null),
+		'created' => array('type' => 'datetime', 'null' => false, 'default' => null),
+		'modified' => array('type' => 'datetime', 'null' => false, 'default' => null),
+		'indexes' => array(
+			'PRIMARY' => array('column' => 'id', 'unique' => 1)
+		),
+		'tableParameters' => array('charset' => 'latin1', 'collate' => 'latin1_swedish_ci', 'engine' => 'MyISAM')
+	);
 	public $hours = array(
 		'id' => array('type' => 'integer', 'null' => false, 'default' => null, 'key' => 'primary'),
 		'store_id' => array('type' => 'integer', 'null' => false, 'default' => null),

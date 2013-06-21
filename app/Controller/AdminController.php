@@ -15,10 +15,11 @@ App::uses('AppController', 'Controller');
  * @property Report $Report
  * @property StorePhoto $StorePhoto
  * @property Blog $Blog
+ * @property Flag $Flag
  */
 class AdminController extends AppController {
 	public $name = 'Admin';
-	public $uses = array('Item', 'Creator', 'Publisher', 'Series', 'Store', 'User', 'Category', 'CreatorType', 'Section', 'Report', 'StorePhoto', 'Blog');
+	public $uses = array('Item', 'Creator', 'Publisher', 'Series', 'Store', 'User', 'Category', 'CreatorType', 'Section', 'Report', 'StorePhoto', 'Blog', 'Flag');
 	public $helpers = array('States');
 	public $components = array('Upload');
 	public $paginate = array(
@@ -61,6 +62,10 @@ class AdminController extends AppController {
 		'Blog' => array(
 			'limit' => 25,
 			'order' => array('Blog.modified' => 'DESC')
+		),
+		'Flag' => array(
+			'limit' => 25,
+			'order' => array('Flag.id' => 'asc')
 		)
 	);
 
@@ -624,6 +629,47 @@ class AdminController extends AppController {
 		}
 		$this->Report->recursive = 0;
 		$this->request->data = $this->Report->read();
+	}
+
+	##### FLAGS
+	public function flags() {
+		$this->Flag->recursive = 0;
+		$this->set('flags', $this->paginate('Flag'));
+	}
+
+	public function flagsView($id) {
+		$this->Flag->id = $id;
+		if(!$this->Flag->exists()) {
+			$this->Session->setFlash(__('Flag Not Found'), 'alert', array(
+				'plugin' => 'TwitterBootstrap',
+				'class' => 'alert-error'
+			));
+
+			$this->redirect('/admin/flags');
+		}
+
+		$flag = $this->Flag->read();
+
+		## 1=item, 2=series, 3=creator, 4=publisher, 5=store
+		switch($flag['Flag']['item_type']) {
+			case 1:
+				$this->Flag->bindModel(array('belongsTo' => array('Item' => array('foreignKey' => 'flag_item_id'))));
+				break;
+			case 2:
+				$this->Flag->bindModel(array('belongsTo' => array('Series' => array('foreignKey' => 'flag_item_id'))));
+				break;
+			case 3:
+				$this->Flag->bindModel(array('belongsTo' => array('Creator' => array('foreignKey' => 'flag_item_id'))));
+				break;
+			case 4:
+				$this->Flag->bindModel(array('belongsTo' => array('Publisher' => array('foreignKey' => 'flag_item_id'))));
+				break;
+			case 5:
+				$this->Flag->bindModel(array('belongsTo' => array('Store' => array('foreignKey' => 'flag_item_id'))));
+				break;
+		}
+		$this->Flag->recursive = 0;
+		$this->request->data = $this->Flag->read();
 	}
 
 	##### BLOGS
