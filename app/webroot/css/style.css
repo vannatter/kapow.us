@@ -101,8 +101,8 @@ h2{color:#000 !important;}
 .random_item{margin-bottom:20px;}
 .random_item .item_description{color:#fff;line-height:24px;}
 .home_blog p{font-size:20px;}
-.home_blog,.home_what{padding-left:10px;}
-.hot_img{max-height:275px;max-width:400px;}
+.home_blog,.home_what,.home_thisweek{padding-left:10px;}
+.hot_img{max-height:280px;max-width:400px;overflow:hidden;padding-right:10px;}
 .hot_grid{max-height:410px;overflow:hidden;min-height:410px;}
 .hot_desc{color:#78b0e9;line-height:16px;}
 .pad{color:#78b0e9;font-size:18px;}

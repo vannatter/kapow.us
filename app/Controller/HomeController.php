@@ -24,10 +24,12 @@ class HomeController extends AppController {
 			)
 		));
 
+/*
 		$item = $this->Item->getRandomItemByDate();
 		$this->set('random_item', $item);
+*/
 		
-		$items = $this->Item->getRandomItems(10);
+		$items = $this->Item->getRandomItems(5);
 		$this->set('random_items', $items);
 		
 		$ticker = null;

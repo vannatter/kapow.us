@@ -19,46 +19,78 @@
 		<div class="home_hdr"><h4>Random Goodness</h4></div>
 		<div class="row random_item">
 			<div class="span3 item_detail_img">	
-				<?php if ($random_item['Item']['img_fullpath'] == "/img/covers") { ?><img border="0" alt="<?php echo $random_item['Item']['item_name']; ?>" src="/img/nocover_large.png" class="detail_img" /><?php } else { ?><img border="0" alt="<?php echo $random_item['Item']['item_name']; ?>" class="detail_img" src="<?php echo $this->Common->thumb($random_item['Item']['img_fullpath'], "50p"); ?>" /><?php } ?>
+				<a title="<?php echo $random_items[0]['Item']['item_name']; ?>" href="/items/<?php echo $this->Common->seoize($random_items[0]['Item']['id'], $random_items[0]['Item']['item_name']); ?>"><?php if ($random_items[0]['Item']['img_fullpath'] == "/img/covers") { ?><img border="0" alt="<?php echo $random_items[0]['Item']['item_name']; ?>" src="/img/nocover_large.png" class="detail_img" /><?php } else { ?><img border="0" alt="<?php echo $random_items[0]['Item']['item_name']; ?>" class="detail_img" src="<?php echo $this->Common->thumb($random_items[0]['Item']['img_fullpath'], "50p"); ?>" /><?php } ?></a>
 			</div>
 
-			<div class="span4">
+			<div class="span6 item_detail">
+				<h2><?php echo $this->Html->link($random_items[0]['Item']['item_name'], '/items/' . $this->Common->seoize($random_items[0]['Item']['id'], $random_items[0]['Item']['item_name'])); ?></h2>
+
 				<?php
-				if (isset($item['Pull']['id'])) {
+				if (isset($random_items[0]['Pull']['id'])) {
 					$hasPull = true;
 				} else {
 					$hasPull = false;
 				}
 
-				echo $this->Common->pullButton($random_item['Item']['id'], $hasPull);
+				echo $this->Common->pullButton($random_items[0]['Item']['id'], $hasPull);
 				?>
-			</div>
-
-			<div class="span6 item_detail">
-				<h2><?php echo $this->Html->link($random_item['Item']['item_name'], '/items/' . $this->Common->seoize($random_item['Item']['id'], $random_item['Item']['item_name'])); ?></h2>
-				
+							
 				<div class="item_description">
-					<?php echo $random_item['Item']['description']; ?>
+					<?php echo $random_items[0]['Item']['description']; ?>
 				</div>
 
 				<div class="row item_grid">
 					<div class="span2 item_grid_lbl">Series:&nbsp;</div>
-					<div class="span4 item_grid_row"><?php echo $this->Common->series($random_item['Item']['series_num'], $random_item['Series']); ?></div>
+					<div class="span4 item_grid_row"><?php echo $this->Common->series($random_items[0]['Item']['series_num'], $random_items[0]['Series']); ?></div>
 
 					<div class="span2 item_grid_lbl">Publisher:&nbsp;</div>
-					<div class="span4 item_grid_row"><a href="/publishers/<?php echo $this->Common->seoize($random_item['Item']['publisher_id'], $random_item['Publisher']['publisher_name']); ?>"><?php echo ucwords(strtolower($random_item['Publisher']['publisher_name'])); ?></a></div>
+					<div class="span4 item_grid_row"><a href="/publishers/<?php echo $this->Common->seoize($random_items[0]['Item']['publisher_id'], $random_items[0]['Publisher']['publisher_name']); ?>"><?php echo ucwords(strtolower($random_items[0]['Publisher']['publisher_name'])); ?></a></div>
 
 					<div class="span2 item_grid_lbl">Released:&nbsp;</div>
-					<div class="span4 item_grid_row"><?php echo date("m/d/Y", strtotime($random_item['Item']['item_date'])); ?></div>
+					<div class="span4 item_grid_row"><?php echo date("m/d/Y", strtotime($random_items[0]['Item']['item_date'])); ?></div>
 				</div>
 				
 				<div class="item_tags">
-					<?php foreach ($random_item['ItemTag'] as $it) { ?>
+					<?php foreach ($random_items[0]['ItemTag'] as $it) { ?>
 						<span class="label"><a href="/tags/<?php echo $this->Common->seoize($it['Tag']['id'], $it['Tag']['tag_name']); ?>"><?php echo $it['Tag']['tag_name']; ?></a></span>
 					<?php } ?>
 				</div>
 			</div>
 		</div>
+		
+		<div class="home_hdr"><h4>More Stuff This Week</h4></div>
+		<div class="row thisweek home_thisweek">
+			<?php $start = 0; ?>
+			<?php foreach ($random_items as $ri) { ?>
+				<?php if ($start > 0) { ?>
+					<?php
+						$description = $ri['Item']['description'];
+						$name = $ri['Item']['item_name'];
+						if (isset($ri['Pull']['id'])) {
+							$hasPull = true;
+						} else {
+							$hasPull = false;
+						}
+					?>				
+					<div class="span2 preview_block">
+						<div class="preview_img"><a href="/items/<?php echo $this->Common->seoize($ri['Item']['id'], $ri['Item']['item_name']); ?>"><?php if ($ri['Item']['img_fullpath'] == "/img/covers") { ?><img border="0" alt="<?php echo $ri['Item']['item_name']; ?>" src="/img/nocover.png" width="210" height="140" /><?php } else { ?><img border="0" alt="<?php echo $ri['Item']['item_name']; ?>" src="<?php echo $this->Common->thumb($ri['Item']['img_fullpath']); ?>" /><?php } ?></a></div>
+			
+						<?php echo $this->Common->pullButton($ri['Item']['id'], $hasPull); ?>
+			
+						<h4><a href="/items/<?php echo $this->Common->seoize($ri['Item']['id'], $ri['Item']['item_name']); ?>"><?php echo $name; ?></a></h4>
+			
+						<div class="item_desc">
+							<?php echo $this->Common->printing($ri['Item']['printing']); ?>
+							<p><?php echo $description; ?></p>
+						</div>
+					</div>
+				
+				<?php } ?>
+				<?php $start++; ?>
+			<?php } ?>
+		</div>
+		
+		<br/>
 
 		<div class="home_hdr"><h4>Bam! Blog! (<?php echo $blog['Blog']['title']; ?>)</h4></div>
 		<div class="row">
