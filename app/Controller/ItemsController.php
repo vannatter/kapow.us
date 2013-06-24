@@ -479,5 +479,9 @@ class ItemsController extends AppController {
 			}
 			$this->set('publishers', $publishers);
 		}
+		
+		$this->set('title_for_layout','Items by Date (' . date("m/d/Y", strtotime($date)) . ')');
+		$this->set('release', date("m/d/Y", strtotime($date)));
+		
 	}
 }

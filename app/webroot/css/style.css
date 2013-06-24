@@ -100,6 +100,7 @@ h2{color:#000 !important;}
 .home_main h2 a{color:#000;}
 .well{background-color:#24478f;border:1px solid #214183;margin-left:0;}
 .well input,.well select,.well textarea{border:1px solid #214183;}
+.store_search_bar input,.store_search_bar select,.store_search_bar textarea{border:1px solid #214183;}
 .random_item{margin-bottom:20px;}
 .random_item .item_description{color:#fff;line-height:24px;}
 .home_blog p,.home_what,.home_what p{font-size:18px;}
