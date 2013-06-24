@@ -71,7 +71,60 @@ $(document).ready(function() {
 
 		return false;
 	});
+
+	$(document).on('click', 'li a.pull_list_btn', function(e) {
+		e.preventDefault();
+
+		var obj = $(this);
+		var id = obj.attr('data-id');
+
+		$.getJSON('/pulls/toggle', { 'id': id }, function(data) {
+			if(data.error) {
+				flash(data.message, 3000);
+			} else {
+				if(data.type == 1) {
+					// added
+					obj.text('Remove from Pull List').parent().addClass('fav_on');
+					flash('Added to your pull list!', 3000);
+				} else {
+					// removed
+					obj.text('Add to Pull List').parent().removeClass('fav_on');
+					flash('Removed from your pull list!', 3000);
+				}
+			}
+		});
+
+		return false;
+	});
+
+	$(document).on('click', 'li a.library_btn', function(e) {
+		e.preventDefault();
+
+		var obj = $(this);
+		var id = obj.attr('data-id');
+
+		$.getJSON('/ajax/toggle_library', { 'id': id }, function(data) {
+			if(data.error) {
+				flash(data.message, 3000);
+			} else {
+				if(data.type == 1) {
+					// added
+					obj.text('Remove from Library').parent().addClass('fav_on');
+					$('li a.pull_list_btn').text('Add to Pull List').parent().removeClass('fav_on');
+					flash('Added to your library!', 3000);
+				} else {
+					// removed
+					obj.text('Add to Library').parent().removeClass('fav_on');
+					flash('Removed from your library!', 3000);
+				}
+			}
+		});
+
+		return false;
+	});	
 	
+	
+		
 	$('.flash_pos, .flash_neg').click(function() {
 		$(this).fadeOut();
 	});

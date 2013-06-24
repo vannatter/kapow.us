@@ -129,6 +129,11 @@ class ItemsController extends AppController {
 					'conditions' => array(
 						'Pull.user_id' => $this->Auth->user('id')
 					)
+				),
+				'UserItem' => array(
+					'conditions' => array(
+						'UserItem.user_id' => $this->Auth->user('id')
+					)
 				)
 			)
 		));
@@ -157,7 +162,9 @@ class ItemsController extends AppController {
 				'ItemTag' => array(
 					'Tag'
 				),
-				'Pull'
+				'Pull',
+				'UserItem'
+				
 			)
 		));
 

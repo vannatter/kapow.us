@@ -332,6 +332,9 @@ h2 {
 .pull_list_btn {
 	margin-right: 5px;	
 }
+li a.pull_list_btn {
+	margin-right: 0 !important;
+}
 
 #infscr-loading {
 	border: 1px solid #152a53;
@@ -487,8 +490,11 @@ h2 {
 }
 
 .fav_on a {
-	color: red !important;
-	background-color: blue;
+	color: #fff !important;
+	background-color: darken(@kapow_blue, 3%);
+}
+.fav_on a:hover {
+	color: #000 !important;
 }
 
 .control-group.error .control-label, .control-group.error .help-block, .control-group.error .help-inline {
