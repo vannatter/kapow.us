@@ -3,10 +3,18 @@
 <div class="row">
 	<div class="span3 item_detail_img">	
 		<?php echo $this->Gravatar->image($user['User']['email'], array('s' => 300), array('class' => 'detail_img')); ?>
+
+		<?php if ($user['User']['user_fullname']) { ?>
+		<div class="creator_name">
+			<?php echo $user['User']['user_fullname']; ?>		
+		</div>
+		<?php } ?>
 	
+		<?php if ($user['User']['user_bio']) { ?>
 		<div class="creator_desc">
 			<?php echo $user['User']['user_bio']; ?>		
 		</div>
+		<?php } ?>
 		
 		<?php if ($user['User']['user_website']) { ?>
 		<div class="element_sideblock">
@@ -36,7 +44,6 @@
 		<?php } ?>
 		<?php echo $this->Element('users/my/pull_list'); ?>
 		<?php echo $this->Element('users/my/library'); ?>
-		<?php echo $this->Element('users/my/favorite_items'); ?>
 		<?php echo $this->Element('users/my/favorite_series'); ?>
 		<?php echo $this->Element('users/my/favorite_creators'); ?>
 		<?php echo $this->Element('users/my/favorite_publishers'); ?>
