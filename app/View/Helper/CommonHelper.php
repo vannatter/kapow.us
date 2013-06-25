@@ -179,4 +179,11 @@ class CommonHelper extends Helper {
 
 		return $this->Form->button($caption, array('type' => 'button', 'class' => $more_css, 'data-id' => $id));
 	}
+
+	public function favRemoveButton($favId) {
+		$caption = sprintf('<i class="icon-heart icon-white"></i> <span>%s</span>', __('Remove'));
+
+		##return $this->Form->button($caption, array('type' => 'button', 'class' => 'btn btn-custom', 'data-id' => $favId));
+		return $this->Html->link($caption, '/favorites/remove/' . $favId, array('class' => 'btn btn-custom my-favorite-remove', 'escape' => false, 'data-id' => $favId));
+	}
 }

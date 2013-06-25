@@ -38,5 +38,37 @@ class PullsController extends AppController {
 			exit;
 		}
 	}
-		
+
+	public function myRemove($pullId=null) {
+		if($this->request->is('ajax')) {
+			$result = array('error' => true, 'message' => __('Invalid'), 'type' => 1);
+
+			$pullId = $this->request->query['id'];
+
+			if($this->Auth->user()) {
+				## make sure the this item belongs to the user
+				if($pull = $this->Pull->find('first', array('conditions' => array('Pull.id' => $pullId), 'recursive' => -1))) {
+					if($pull['Pull']['user_id'] == $this->Auth->user('id')) {
+						$this->Pull->delete($pullId);
+
+						$result['error'] = false;
+						$result['message'] = '';
+					} else {
+						$result['message'] = __('Invalid User');
+					}
+				} else {
+					$result['message'] = __('Invalid');
+				}
+			} else {
+				$result['message'] = __('Not Logged In!');
+			}
+
+			return new CakeResponse(array('body' => json_encode($result)));
+		} else {
+			parent::hasSession();
+
+			debug($pullId);
+			exit;
+		}
+	}
 }

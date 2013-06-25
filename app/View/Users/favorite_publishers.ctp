@@ -3,6 +3,7 @@
  * @var $this View
  */
 ?>
+<?php $this->Html->script('page/users.favorites', array('inline' => false)); ?>
 <?php echo $this->Element('headers/users/favorite_publishers'); ?>
 
 <?php if(isset($publishers) && is_array($publishers) && count($publishers) > 0) { ?>
@@ -53,6 +54,8 @@
 						)
 					); ?>
 				</div>
+
+				<?php echo $this->Common->favRemoveButton($publisher['UserFavorite']['id']); ?>
 
 				<h4><?php echo $this->Html->link($name, sprintf('/publishers/%s', $seoString)); ?></h4>
 

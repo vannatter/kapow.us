@@ -3,7 +3,7 @@
  *@var $this View
  */
 ?>
-
+<?php $this->Html->script('page/users.favorites', array('inline' => false)); ?>
 <?php echo $this->Element('headers/users/favorite_shops'); ?>
 
 <?php if(isset($shops) && is_array($shops) && count($shops) > 0) { ?>
@@ -53,6 +53,8 @@
 						)
 					); ?>
 				</div>
+
+				<?php echo $this->Common->favRemoveButton($shop['UserFavorite']['id']); ?>
 
 				<h4><?php echo $this->Html->link($name, sprintf('/shops/%s', $seoString)); ?></h4>
 

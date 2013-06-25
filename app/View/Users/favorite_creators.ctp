@@ -4,6 +4,7 @@
  */
 ?>
 
+<?php $this->Html->script('page/users.favorites', array('inline' => false)); ?>
 <?php echo $this->Element('headers/users/favorite_creators'); ?>
 
 <?php if(isset($creators) && is_array($creators) && count($creators) > 0) { ?>
@@ -35,6 +36,8 @@
 						<?php } ?>
 					</a>
 				</div>
+
+				<?php echo $this->Common->favRemoveButton($creator['UserFavorite']['id']); ?>
 
 				<h4><a href="/creators/<?php echo $seoString; ?>"><?php echo $name; ?></a></h4>
 
