@@ -185,3 +185,4 @@ CakePlugin::load('TwitterBootstrap');
 CakePlugin::load('Facebook');
 CakePlugin::load('DebugKit');
 CakePlugin::load('Migrations');
+CakePlugin::load('TinyMCE');

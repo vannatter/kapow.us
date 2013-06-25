@@ -21,7 +21,7 @@ class UploadComponent extends Component {
 					//copy(Configure::read('Settings.Paths.Raw.media') . 'index.php', $uploadPath . 'index.php');
 				}
 
-				move_uploaded_file($upload['tmp_name'], $uploadPath . $name);
+				$success = move_uploaded_file($upload['tmp_name'], $uploadPath . $name);
 
 				return null;
 			}

@@ -20,7 +20,7 @@ App::uses('AppController', 'Controller');
 class AdminController extends AppController {
 	public $name = 'Admin';
 	public $uses = array('Item', 'Creator', 'Publisher', 'Series', 'Store', 'User', 'Category', 'CreatorType', 'Section', 'Report', 'StorePhoto', 'Blog', 'Flag');
-	public $helpers = array('States');
+	public $helpers = array('States', 'TinyMCE.TinyMCE');
 	public $components = array('Upload');
 	public $paginate = array(
 		'Item' => array(
@@ -746,5 +746,23 @@ class AdminController extends AppController {
 		));
 
 		$this->redirect('/admin/blogs');
+	}
+
+	public function blogsImageUpload() {
+		$upload = Sanitize::clean($this->params['form']['userfile']);
+
+		$uploadPath = APP . 'webroot' . DS . 'img' . DS . 'admin' . DS;
+
+		$result = array('resultCode' => 'failed');
+		if($msg = $this->Upload->image($upload, $uploadPath)) {
+			$result['msg'] = $msg;
+		} else {
+			$result['resultCode'] = '';
+			$result['filename'] = '/img/admin/' . $upload['name'];
+		}
+
+		Configure::write('debug', 0);
+		$this->layout = 'blank';
+		$this->set('result', $result);
 	}
 }

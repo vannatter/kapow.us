@@ -472,6 +472,11 @@ Router::connect(
 	)
 );
 
+Router::connect(
+	'/admin/blog/imageUpload',
+	array('controller' => 'admin', 'action' => 'blogsImageUpload')
+);
+
 CakePlugin::routes();
 
 require CAKE . 'Config' . DS . 'routes.php';
