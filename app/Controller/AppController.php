@@ -43,6 +43,15 @@ class AppController extends Controller {
 
 	public function beforeFilter() {
 		$this->Auth->allow('*');
+
+		if($this->Auth->user()) {
+			if(!in_array(strtolower($this->request->action), array('setusername', 'logout', 'login'))) {
+				$username = $this->Auth->user('username');
+				if(empty($username)) {
+					$this->redirect('/users/setUsername');
+				}
+			}
+		}
 	}
 
 	public function hasAdminSession() {

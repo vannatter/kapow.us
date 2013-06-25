@@ -309,6 +309,7 @@ class AppSchema extends CakeSchema {
 	public $users = array(
 		'id' => array('type' => 'integer', 'null' => false, 'default' => null, 'key' => 'primary'),
 		'email' => array('type' => 'string', 'null' => false, 'length' => 100, 'collate' => 'latin1_swedish_ci', 'charset' => 'latin1'),
+		'username' => array('type' => 'string', 'null' => false, 'length' => 50, 'key' => 'index', 'collate' => 'latin1_swedish_ci', 'charset' => 'latin1'),
 		'password' => array('type' => 'string', 'null' => false, 'length' => 50, 'collate' => 'latin1_swedish_ci', 'charset' => 'latin1'),
 		'facebook_id' => array('type' => 'integer', 'null' => false, 'default' => null, 'length' => 20, 'key' => 'index'),
 		'access_level' => array('type' => 'integer', 'null' => false, 'default' => '1', 'key' => 'index', 'comment' => '1=default,99=admin'),
@@ -324,7 +325,8 @@ class AppSchema extends CakeSchema {
 			'PRIMARY' => array('column' => 'id', 'unique' => 1),
 			'private_profile' => array('column' => 'private_profile', 'unique' => 0),
 			'facebook_id' => array('column' => 'facebook_id', 'unique' => 0),
-			'access_level' => array('column' => 'access_level', 'unique' => 0)
+			'access_level' => array('column' => 'access_level', 'unique' => 0),
+			'username' => array('column' => 'username', 'unique' => 0)
 		),
 		'tableParameters' => array('charset' => 'latin1', 'collate' => 'latin1_swedish_ci', 'engine' => 'MyISAM')
 	);

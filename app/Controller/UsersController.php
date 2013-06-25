@@ -37,7 +37,12 @@ class UsersController extends AppController {
 	public function login() {
 		if ($this->request->is('post')) {
 			if ($this->Auth->login()) {
-				$this->redirect($this->Auth->redirect());
+				$username = $this->Auth->user('username');
+				if(empty($username)) {
+					$this->redirect('/users/setUsername');
+				} else {
+					$this->redirect($this->Auth->redirect());
+				}
 			} else {
 				$this->Session->setFlash(__('Invalid username or password, try again'), 'flash_neg');
 			}
@@ -341,5 +346,22 @@ class UsersController extends AppController {
 
 		$library = $this->UserItem->find('all', array('conditions' => array('UserItem.user_id' => $this->Auth->user('id')), 'order' => array('UserItem.id DESC'), 'limit' => 4, 'recursive' => 1));
 		$this->set('library', $library);
+	}
+
+	public function setUsername() {
+		parent::hasSession();
+
+		if($this->request->is('post') || $this->request->is('put')) {
+			$data = Sanitize::clean($this->request->data);
+
+			$data['User']['id'] = $this->Auth->user('id');
+
+			if($this->User->save($data)) {
+				$this->Session->write('Auth', $this->User->read(null, $this->Auth->User('id')));
+
+				$this->Session->setFlash(__('Username saved!'));
+				$this->redirect('/my');
+			}
+		}
 	}
 }
