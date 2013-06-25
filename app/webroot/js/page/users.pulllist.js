@@ -23,4 +23,19 @@ $(document).ready(function() {
 			return path;
 		}
 	});
+
+	$('a.library-remove').on('click', function(e) {
+		e.preventDefault();
+
+		var id = $(this).attr('data-id');
+		var block = $(this).parent();
+
+		$.getJSON('/users/libraryRemove', { id: id }, function(result) {
+			if(result.error) {
+				alert(result.message);
+			} else {
+				block.remove();
+			}
+		});
+	});
 });

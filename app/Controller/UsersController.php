@@ -375,4 +375,37 @@ class UsersController extends AppController {
 			}
 		}
 	}
+
+	public function libraryRemove($itemId=null) {
+		if($this->request->is('ajax')) {
+			$result = array('error' => true, 'message' => __('Invalid'), 'type' => 1);
+
+			$itemId = $this->request->query['id'];
+
+			if($this->Auth->user()) {
+				## make sure the this favorite belongs to the user
+				if($item = $this->UserItem->find('first', array('conditions' => array('UserItem.id' => $itemId), 'recursive' => -1))) {
+					if($item['UserItem']['user_id'] == $this->Auth->user('id')) {
+						$this->UserItem->delete($itemId);
+
+						$result['error'] = false;
+						$result['message'] = '';
+					} else {
+						$result['message'] = __('Invalid User');
+					}
+				} else {
+					$result['message'] = __('Invalid');
+				}
+			} else {
+				$result['message'] = __('Not Logged In!');
+			}
+
+			return new CakeResponse(array('body' => json_encode($result)));
+		} else {
+			parent::hasSession();
+
+			debug($itemId);
+			exit;
+		}
+	}
 }

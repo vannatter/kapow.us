@@ -186,4 +186,10 @@ class CommonHelper extends Helper {
 		##return $this->Form->button($caption, array('type' => 'button', 'class' => 'btn btn-custom', 'data-id' => $favId));
 		return $this->Html->link($caption, '/favorites/remove/' . $favId, array('class' => 'btn btn-custom my-favorite-remove', 'escape' => false, 'data-id' => $favId));
 	}
+
+	public function libraryRemoveButton($itemId) {
+		$caption = sprintf('<i class="icon-shopping-cart icon-white"></i> <span>%s</span>', __('Remove'));
+
+		return $this->Html->link($caption, '/users/libraryRemove/' . $itemId, array('class' => 'btn btn-custom library-remove', 'escape' => false, 'data-id' => $itemId));
+	}
 }
