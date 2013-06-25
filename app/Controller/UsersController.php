@@ -82,7 +82,18 @@ class UsersController extends AppController {
 	
 	public function library() {
 		$this->set('title_for_layout','My Library');
-		
+
+		$this->paginate = array(
+			'UserItem' => array(
+				'order' => array(
+					'UserItem.created' => 'DESC'
+				),
+				'limit' => 24
+			)
+		);
+
+		$list = $this->paginate('UserItem', array('UserItem.user_id' => $this->Auth->user('id')));
+		$this->set('items', $list);
 	}
 	
 	public function pull_list() {
