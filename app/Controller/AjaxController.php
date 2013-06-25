@@ -5,7 +5,7 @@ App::uses('AppController', 'Controller');
 class AjaxController extends AppController {
 
 	public $name = 'Ajax';
-	public $uses = array('Item','Section','Publisher','Series','Creator','CreatorType','ItemCreator', 'Store','Tag','ItemTag','StorePhoto');
+	public $uses = array('Item','Section','Publisher','Series','Creator','CreatorType','ItemCreator', 'Store','Tag','ItemTag','StorePhoto', 'UserItem', 'Pull');
 	public $components = array('Curl');
 	public $helpers = array('Common');
 	
@@ -25,6 +25,33 @@ class AjaxController extends AppController {
 		
 		$output = json_encode($ticker);
 		echo $output;
+		exit;
+	}
+	
+	public function toggle_library($id=null) {
+		$result = array('error' => true, 'message' => __('Invalid'));
+		$id = @$this->request->query['id'];
+
+		## make sure user id logged in
+		if ($this->Auth->user()) {
+			## make sure item is valid
+			if ($item = $this->Item->findById($id)) {
+				$result['type'] = $this->UserItem->toggle($id, $this->Auth->user('id'));
+				$result['error'] = false;
+				
+				if ($result['type'] == 1) {
+					if ($pull = $this->Pull->findByItemIdAndUserId($id, $this->Auth->user('id'))) {
+						$this->Pull->delete($pull['Pull']['id']);
+					}
+				}
+			} else {
+				$result['message'] = __('Item Not Found');
+			}
+		} else {
+			$result['message'] = __('Not logged in; %s or %s', '<a href="/users/login">login</a>', '<a href="/users/register">create an account</a>');
+		}
+
+		return new CakeResponse(array('body' => json_encode($result)));
 		exit;
 	}
 	

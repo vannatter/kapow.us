@@ -6,9 +6,15 @@
 <?php if($this->Session->read('Auth.User')) { ?>
 	<?php $this->Html->script('page/items.js', array('inline' => false)); ?>
 	<div class="item_actions">
-
-		<button class="btn btn-custom pull_list_btn" type="button" data-id="<?php echo $item['Item']['id']; ?>"><i class="icon-shopping-cart icon-white"></i> <span><?php echo (isset($item['Pull']['id'])) ? __('Remove Pull') : __('Pull List'); ?></span></button>
-
+	
+			<div class="btn-group">
+				<button class="btn btn-custom dropdown-toggle" data-toggle="dropdown"><i class="icon-shopping-cart icon-white"></i> <?php echo __('Pull/Own'); ?> <span class="caret white-caret"></span></button>
+				<ul class="dropdown-menu fav_menu" role="menu">
+					<li class="<?php echo (isset($item['Pull']['id'])) ? " fav_on" : ""; ?>"><a class="pull_list_btn" data-id="<?php echo $item['Item']['id']; ?>" href="javascript:;"><?php echo (isset($item['Pull']['id'])) ? __('Remove from Pull List') : __('Add to Pull List'); ?></a></li>
+					<li class="<?php echo (isset($item['UserItem']['id'])) ? " fav_on" : ""; ?>"><a class="library_btn" data-id="<?php echo $item['Item']['id']; ?>" href="javascript:;"><?php echo (isset($item['UserItem']['id'])) ? __('Remove from Library') : __('Add to Library'); ?></a></li>
+				</ul>
+			</div>
+			
 			<div class="btn-group">
 					<button class="btn btn-custom dropdown-toggle" data-toggle="dropdown"><i class="icon-heart icon-white"></i> <?php echo __('Favorite'); ?> <span class="caret white-caret"></span></button>
 					<ul class="dropdown-menu fav_menu" role="menu">

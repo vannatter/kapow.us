@@ -332,6 +332,9 @@ h2 {
 .pull_list_btn {
 	margin-right: 5px;	
 }
+li a.pull_list_btn {
+	margin-right: 0 !important;
+}
 
 #infscr-loading {
 	border: 1px solid #152a53;
@@ -412,6 +415,16 @@ h2 {
 	margin-top: 20px;	
 	font-size: 16px;
 }
+.creator_desc {
+	margin-top: 10px;	
+}
+.creator_name {
+	color: #fff;
+	text-align: left;
+	clear: both;
+	margin-top: 20px;	
+	font-size: 20px;
+}
 
 .navbar-inner {
 	padding-right: 0;
@@ -487,8 +500,11 @@ h2 {
 }
 
 .fav_on a {
-	color: red !important;
-	background-color: blue;
+	color: #fff !important;
+	background-color: darken(@kapow_blue, 3%);
+}
+.fav_on a:hover {
+	color: #000 !important;
 }
 
 .control-group.error .control-label, .control-group.error .help-block, .control-group.error .help-inline {
@@ -591,9 +607,10 @@ h2 {
 
 .well {
 	background-color: darken(@kapow_blue, 15%);
-	border: 1px solid darken(@kapow_blue, 18%);
 	margin-left: 0;
 }
+
+
 
 .well input, .well select, .well textarea {
 	border: 1px solid darken(@kapow_blue, 18%);
@@ -657,6 +674,27 @@ h2 {
 }
 .blog_list_well h4 a {
 	color: #fff !important;
+}
+
+.profile_edit_block {
+/*
+	background-color: darken(@kapow_blue, 15%);
+	border: 1px solid darken(@kapow_blue, 18%);
+	margin-left: 20px;
+*/
+}
+
+.profile_edit_block .form-actions {
+	background-color: transparent;	
+	border-top: none;
+	margin-top: 5px;
+	padding-top: 0;
+}
+
+.profile_edit_block h3 {
+	color: #fff;
+	margin-left: 20px;
+	border-bottom: 1px solid #fff;
 }
 
 @import "media_min768max979.less";

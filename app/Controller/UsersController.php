@@ -301,6 +301,8 @@ class UsersController extends AppController {
 		} else {
 			$this->request->data = $user;
 		}
+		
+		$this->set('title_for_layout','Edit My Profile');
 	}
 
 	public function profilePublic() {
