@@ -69,6 +69,15 @@ class User extends AppModel {
 			'unique' => array(
 				'rule' => array('isUnique'),
 				'message' => 'Already Used'
+			),
+			'alphaNumeric' => array(
+				'rule' => 'alphaNumeric',
+				'required' => true,
+				'message' => 'Letters and Numbers only'
+			),
+			'between' => array(
+				'rule' => array('between', 3, 20),
+				'message' => 'Between 3 to 20 characters'
 			)
 		)
 	);
