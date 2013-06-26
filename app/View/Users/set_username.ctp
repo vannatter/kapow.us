@@ -11,8 +11,8 @@
 	<br/><br/>
 	Your username must be alphanumeric and must be at least 3 characters long.
 	<br/><br/>
-	
-	<form id="setusername_frm" class="well span11" method="post" action="/users/setUsername">
+
+	<?php echo $this->Form->create('User', array('class' => 'well span11', 'id' => 'setusername_frm')); ?>
 	  <div class="row">
 	
 		<div class="span1">
@@ -26,6 +26,6 @@
 		</div>
 		
 	  </div>
-	</form>
+	<?php echo $this->Form->end(); ?>
 
 </div>
