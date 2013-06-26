@@ -4,6 +4,7 @@
 	<div class="span5">
 		<?php echo $this->Form->create('User', array('class' => 'form-vertical')); ?>
 		<div class="login_block">
+			<?php echo $this->Form->input('username', array('class' => 'login_ipt')); ?>
 			<?php echo $this->Form->input('email', array('class' => 'login_ipt')); ?>
 			<?php echo $this->Form->input('clear_password', array('class' => 'login_ipt')); ?>
 			<?php echo $this->Form->input('confirm_password', array('class' => 'login_ipt')); ?>
