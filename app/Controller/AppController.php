@@ -44,6 +44,8 @@ class AppController extends Controller {
 	public function beforeFilter() {
 		$this->Auth->allow('*');
 
+		$this->recordActivity();
+
 		if($this->Auth->user()) {
 			if(!in_array(strtolower($this->request->action), array('setusername', 'logout', 'login'))) {
 				$username = $this->Auth->user('username');
@@ -94,6 +96,30 @@ class AppController extends Controller {
 
 	## this is a callback for the Facebook plugin
 	public function afterFacebookSave($memberId=null) {
+	}
+
+	function recordActivity() {
+		if($this->Auth->user('id')) {
+			$skip = array();
+			$check = sprintf('%s/%s', strtolower($this->name), strtolower($this->action));
+
+			if(!in_array($check, $skip) && strtolower($this->name) != 'admin') {
+				$data = array(
+					'UserActivity' => array(
+						'user_id' => $this->Auth->user('id'),
+						'ip_address' => $_SERVER['REMOTE_ADDR'],
+						'browser' => $_SERVER['HTTP_USER_AGENT'],
+						'controller' => $this->name,
+						'action' => $this->action,
+						'request' => serialize($this->request)
+					)
+				);
+
+				$this->UserActivity = ClassRegistry::init('UserActivity');
+				$this->UserActivity->save($data);
+				unset($data);
+			}
+		}
 	}
 }
 

@@ -16,10 +16,11 @@ App::uses('AppController', 'Controller');
  * @property StorePhoto $StorePhoto
  * @property Blog $Blog
  * @property Flag $Flag
+ * @property UserActivity $UserActivity
  */
 class AdminController extends AppController {
 	public $name = 'Admin';
-	public $uses = array('Item', 'Creator', 'Publisher', 'Series', 'Store', 'User', 'Category', 'CreatorType', 'Section', 'Report', 'StorePhoto', 'Blog', 'Flag');
+	public $uses = array('Item', 'Creator', 'Publisher', 'Series', 'Store', 'User', 'Category', 'CreatorType', 'Section', 'Report', 'StorePhoto', 'Blog', 'Flag', 'UserActivity');
 	public $helpers = array('States', 'TinyMCE.TinyMCE');
 	public $components = array('Upload');
 	public $paginate = array(
@@ -764,5 +765,56 @@ class AdminController extends AppController {
 		Configure::write('debug', 0);
 		$this->layout = 'blank';
 		$this->set('result', $result);
+	}
+
+	public function userActivity() {
+		parent::hasAdminSession();
+
+		$this->User->bindModel(array('hasMany' => array('UserActivity')));
+		$users = $this->User->UserActivity->query("
+		SELECT UserActivity.*, User.*
+			FROM user_activities AS UserActivity
+			JOIN (
+				SELECT MAX(t.created) AS created, t.user_id
+				FROM user_activities AS t
+				GROUP BY t.user_id
+			) AS x USING (created,user_id)
+			JOIN users AS User ON User.id = UserActivity.user_id
+			WHERE UserActivity.created >= NOW() - INTERVAL 6 MONTH
+			GROUP BY UserActivity.user_id
+			ORDER BY UserActivity.created DESC
+		");
+
+		$this->set('users', $users);
+	}
+
+	public function userActivityDetails($userId=null) {
+		parent::hasAdminSession();
+
+		$this->paginate = array(
+			'UserActivity' => array(
+				'limit' => 25,
+				'order' => array(
+					'UserActivity.created' => 'DESC'
+				)
+			)
+		);
+
+		$this->set('details', $this->paginate('UserActivity', array('user_id' => $userId)));
+	}
+
+	public function userActivityRowDetail($userId, $detailId) {
+		parent::hasAdminSession();
+
+		$this->UserActivity->id = $detailId;
+		if(!$this->UserActivity->exists()) {
+			$this->Session->setFlash(__('Not Found'), 'alert', array(
+				'plugin' => 'TwitterBootstrap',
+				'class' => 'alert-error'
+			));
+			$this->redirect($this->referer());
+		}
+
+		$this->set('details', $this->UserActivity->read());
 	}
 }

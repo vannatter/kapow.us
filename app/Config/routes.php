@@ -477,6 +477,28 @@ Router::connect(
 	array('controller' => 'admin', 'action' => 'blogsImageUpload')
 );
 
+Router::connect(
+	'/admin/userActivity/details/:id',
+	array('controller' => 'admin', 'action' => 'userActivityDetails'),
+	array(
+		'pass' => array('id'),
+		'id' => '[0-9]+'
+	)
+);
+
+Router::connect(
+	'/admin/userActivity/details/:uid/:id',
+	array(
+		'controller' => 'admin',
+		'action' => 'userActivityRowDetail'
+	),
+	array(
+		'pass' => array('uid', 'id'),
+		'uid' => '[0-9]+',
+		'id' => '[0-9]+'
+	)
+);
+
 CakePlugin::routes();
 
 require CAKE . 'Config' . DS . 'routes.php';
