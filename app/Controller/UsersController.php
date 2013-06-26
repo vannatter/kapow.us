@@ -370,7 +370,7 @@ class UsersController extends AppController {
 			if($this->User->save($data)) {
 				$this->Session->write('Auth', $this->User->read(null, $this->Auth->User('id')));
 
-				$this->Session->setFlash(__('Username saved!'));
+				$this->Session->setFlash(__('Username saved!'), 'flash_pos');
 				$this->redirect('/my');
 			}
 		}
