@@ -374,6 +374,7 @@ class UsersController extends AppController {
 				$this->redirect('/my');
 			}
 		}
+		$this->set('title_for_layout','Select Your Username');
 	}
 
 	public function libraryRemove($itemId=null) {
