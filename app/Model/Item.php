@@ -1,5 +1,15 @@
 <?php
 App::uses('AppModel', 'Model');
+
+/**
+ * Item Model
+ *
+ * @property Section $Section
+ * @property Publisher $Publisher
+ * @property Series $Series
+ * @property ItemCreator $ItemCreator
+ * @property ItemTag $ItemTag
+ */
 class Item extends AppModel {
 
 	public $actsAs = array('Containable');

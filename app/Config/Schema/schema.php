@@ -102,6 +102,45 @@ class AppSchema extends CakeSchema {
 		),
 		'tableParameters' => array('charset' => 'latin1', 'collate' => 'latin1_swedish_ci', 'engine' => 'MyISAM')
 	);
+	public $improve_items = array(
+		'id' => array('type' => 'integer', 'null' => false, 'default' => null, 'key' => 'primary'),
+		'item_id' => array('type' => 'integer', 'null' => false, 'default' => null, 'key' => 'index'),
+		'section_id' => array('type' => 'integer', 'null' => true, 'default' => null),
+		'section_id_new' => array('type' => 'integer', 'null' => true, 'default' => null),
+		'publisher_id' => array('type' => 'integer', 'null' => true, 'default' => null),
+		'publisher_id_new' => array('type' => 'integer', 'null' => true, 'default' => null),
+		'series_id' => array('type' => 'integer', 'null' => true, 'default' => null),
+		'series_id_new' => array('type' => 'integer', 'null' => true, 'default' => null),
+		'stock_id' => array('type' => 'string', 'null' => true, 'default' => null, 'length' => 50, 'collate' => 'latin1_swedish_ci', 'charset' => 'latin1'),
+		'stock_id_new' => array('type' => 'string', 'null' => true, 'default' => null, 'length' => 50, 'collate' => 'latin1_swedish_ci', 'charset' => 'latin1'),
+		'printing' => array('type' => 'integer', 'null' => true, 'default' => null),
+		'printing_new' => array('type' => 'integer', 'null' => true, 'default' => null),
+		'item_date' => array('type' => 'date', 'null' => true, 'default' => null),
+		'item_date_new' => array('type' => 'date', 'null' => true, 'default' => null),
+		'item_name' => array('type' => 'string', 'null' => true, 'default' => null, 'length' => 200, 'collate' => 'latin1_swedish_ci', 'charset' => 'latin1'),
+		'item_name_new' => array('type' => 'string', 'null' => true, 'default' => null, 'length' => 200, 'collate' => 'latin1_swedish_ci', 'charset' => 'latin1'),
+		'series_num' => array('type' => 'integer', 'null' => true, 'default' => null),
+		'series_num_new' => array('type' => 'integer', 'null' => true, 'default' => null),
+		'img_fullpath' => array('type' => 'string', 'null' => true, 'default' => null, 'length' => 300, 'collate' => 'latin1_swedish_ci', 'charset' => 'latin1'),
+		'img_fullpath_new' => array('type' => 'string', 'null' => true, 'default' => null, 'length' => 300, 'collate' => 'latin1_swedish_ci', 'charset' => 'latin1'),
+		'srp' => array('type' => 'string', 'null' => true, 'default' => null, 'length' => 50, 'collate' => 'latin1_swedish_ci', 'charset' => 'latin1'),
+		'srp_new' => array('type' => 'string', 'null' => true, 'default' => null, 'length' => 50, 'collate' => 'latin1_swedish_ci', 'charset' => 'latin1'),
+		'description' => array('type' => 'text', 'null' => true, 'default' => null, 'collate' => 'latin1_swedish_ci', 'charset' => 'latin1'),
+		'description_new' => array('type' => 'text', 'null' => true, 'default' => null, 'collate' => 'latin1_swedish_ci', 'charset' => 'latin1'),
+		'user_id' => array('type' => 'integer', 'null' => false, 'default' => null, 'key' => 'index'),
+		'admin_user_id' => array('type' => 'integer', 'null' => false, 'default' => null, 'key' => 'index'),
+		'created' => array('type' => 'datetime', 'null' => false, 'default' => null, 'key' => 'index'),
+		'modified' => array('type' => 'datetime', 'null' => false, 'default' => null, 'key' => 'index'),
+		'indexes' => array(
+			'PRIMARY' => array('column' => 'id', 'unique' => 1),
+			'item_id' => array('column' => 'item_id', 'unique' => 0),
+			'user_id' => array('column' => 'user_id', 'unique' => 0),
+			'admin_user_id' => array('column' => 'admin_user_id', 'unique' => 0),
+			'created' => array('column' => 'created', 'unique' => 0),
+			'modified' => array('column' => 'modified', 'unique' => 0)
+		),
+		'tableParameters' => array('charset' => 'latin1', 'collate' => 'latin1_swedish_ci', 'engine' => 'MyISAM')
+	);
 	public $item_creators = array(
 		'id' => array('type' => 'integer', 'null' => false, 'default' => null, 'key' => 'primary'),
 		'item_id' => array('type' => 'integer', 'null' => false, 'default' => null, 'key' => 'index'),
@@ -133,7 +172,7 @@ class AppSchema extends CakeSchema {
 		'section_id' => array('type' => 'integer', 'null' => false, 'default' => null),
 		'publisher_id' => array('type' => 'integer', 'null' => false, 'default' => null),
 		'series_id' => array('type' => 'integer', 'null' => false, 'default' => null, 'key' => 'index'),
-		'item_id' => array('type' => 'string', 'null' => true, 'default' => null, 'length' => 50, 'collate' => 'utf8_general_ci', 'charset' => 'utf8'),
+		'item_id' => array('type' => 'string', 'null' => true, 'default' => null, 'length' => 50, 'key' => 'index', 'collate' => 'utf8_general_ci', 'charset' => 'utf8'),
 		'stock_id' => array('type' => 'string', 'null' => false, 'default' => null, 'length' => 50, 'collate' => 'utf8_general_ci', 'charset' => 'utf8'),
 		'printing' => array('type' => 'integer', 'null' => false, 'default' => '1'),
 		'item_date' => array('type' => 'date', 'null' => true, 'default' => null, 'key' => 'index'),
@@ -147,7 +186,8 @@ class AppSchema extends CakeSchema {
 		'indexes' => array(
 			'PRIMARY' => array('column' => 'id', 'unique' => 1),
 			'item_date' => array('column' => 'item_date', 'unique' => 0),
-			'series_id' => array('column' => 'series_id', 'unique' => 0)
+			'series_id' => array('column' => 'series_id', 'unique' => 0),
+			'item_id' => array('column' => 'item_id', 'unique' => 0)
 		),
 		'tableParameters' => array('charset' => 'utf8', 'collate' => 'utf8_general_ci', 'engine' => 'InnoDB')
 	);
