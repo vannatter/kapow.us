@@ -164,6 +164,7 @@ Configure::write('Dispatcher.filters', array(
 	'AssetDispatcher',
 	'CacheDispatcher'
 ));
+CakePlugin::load('AssetCompress', array('bootstrap' => true));
 
 /**
  * Configures default file logging options

@@ -38,7 +38,8 @@ class AppController extends Controller {
 		'Html' => array('className' => 'TwitterBootstrap.BootstrapHtml'),
 		'Form' => array('className' => 'TwitterBootstrap.BootstrapForm'),
 		'Paginator' => array('className' => 'TwitterBootstrap.BootstrapPaginator'),
-		'Facebook.Facebook'
+		'Facebook.Facebook',
+		'AssetCompress.AssetCompress'
 	);
 
 	public function beforeFilter() {

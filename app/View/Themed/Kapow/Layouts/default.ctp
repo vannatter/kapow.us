@@ -15,17 +15,22 @@
 			echo $this->Html->css('color');
 			echo $this->Html->css('style');
 			echo $this->Html->css('bootstrap-image-gallery.min');
+
 			echo $this->fetch('css');
 
-			echo $this->Html->script('libs/jquery');
-			echo $this->Html->script('libs/bootstrap.min');
-			echo $this->Html->script('libs/jquery-ui-map');
-			echo $this->Html->script('libs/jquery.infinitescroll');
+			#echo $this->Html->script('libs/jquery');
+			#echo $this->Html->script('libs/bootstrap.min');
+			#echo $this->Html->script('libs/jquery-ui-map');
+			#echo $this->Html->script('libs/jquery.infinitescroll');
 
-			echo $this->Html->script('libs/image-load');
-			echo $this->Html->script('libs/bootstrap-image-gallery.min');
+			#echo $this->Html->script('libs/image-load');
+			#echo $this->Html->script('libs/bootstrap-image-gallery.min');
 
-			echo $this->Html->script('common.min');
+			#echo $this->Html->script('common.min');
+
+			echo $this->AssetCompress->script('js-libs');
+			echo $this->AssetCompress->script('js-combined');
+
 			echo $this->fetch('script');
 		?>
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
