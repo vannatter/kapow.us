@@ -441,6 +441,24 @@ Router::connect(
 );
 
 Router::connect(
+	'/admin/reports/cancel/:id',
+	array('controller' => 'admin', 'action' => 'reportsCancel'),
+	array(
+		'pass' => array('id'),
+		'id' => '[0-9]+'
+	)
+);
+
+Router::connect(
+	'/admin/reports/close/:id',
+	array('controller' => 'admin', 'action' => 'reportsClose'),
+	array(
+		'pass' => array('id'),
+		'id' => '[0-9]+'
+	)
+);
+
+Router::connect(
 	'/admin/blogs/add',
 	array('controller' => 'admin', 'action' => 'blogsAdd')
 );

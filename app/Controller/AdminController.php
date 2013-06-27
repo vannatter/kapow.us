@@ -21,7 +21,7 @@ App::uses('AppController', 'Controller');
 class AdminController extends AppController {
 	public $name = 'Admin';
 	public $uses = array('Item', 'Creator', 'Publisher', 'Series', 'Store', 'User', 'Category', 'CreatorType', 'Section', 'Report', 'StorePhoto', 'Blog', 'Flag', 'UserActivity');
-	public $helpers = array('States', 'TinyMCE.TinyMCE');
+	public $helpers = array('States', 'TinyMCE.TinyMCE', 'Admin');
 	public $components = array('Upload');
 	public $paginate = array(
 		'Item' => array(
@@ -594,6 +594,15 @@ class AdminController extends AppController {
 
 	public function reports() {
 		$this->Report->recursive = 0;
+
+		$this->Report->bindModel(array('belongsTo' => array(
+			'Item' => array('foreignKey' => 'report_item_id', 'conditions' => array('item_type' => 1)),
+			'Series' => array('foreignKey' => 'report_item_id', 'conditions' => array('item_type' => '2')),
+			'Creator' => array('foreignKey' => 'report_item_id', 'conditions' => array('item_type' => '3')),
+			'Publisher' => array('foreignKey' => 'report_item_id', 'conditions' => array('item_type' => '4')),
+			'Store' => array('foreignKey' => 'report_item_id', 'conditions' => array('item_type' => '5'))
+		)));
+
 		$this->set('reports', $this->paginate('Report'));
 	}
 
@@ -609,6 +618,15 @@ class AdminController extends AppController {
 		}
 
 		$report = $this->Report->read();
+
+		if($report['Report']['status'] == 1 && $report['Report']['admin_user_id'] != $this->Auth->user('id')) {
+			$this->Session->setFlash(__('Report open by another user'), 'alert', array(
+				'plugin' => 'TwitterBootstrap',
+				'class' => 'alert-error'
+			));
+
+			$this->redirect('/admin/reports');
+		}
 
 		## 1=item, 2=series, 3=creator, 4=publisher, 5=store
 		switch($report['Report']['item_type']) {
@@ -629,7 +647,85 @@ class AdminController extends AppController {
 				break;
 		}
 		$this->Report->recursive = 0;
-		$this->request->data = $this->Report->read();
+		$this->set('report', $this->Report->read());
+
+		$this->Report->updateAll(array(
+			'Report.admin_user_id' => $this->Auth->user('id'),
+			'Report.status' => 1
+		), array(
+			'Report.id' => $report['Report']['id']
+		));
+	}
+
+	public function reportsCancel($reportId=null) {
+		$this->Report->id = $reportId;
+		if(!$this->Report->exists()) {
+			$this->Session->setFlash(__('Report Not Found'), 'alert', array(
+				'plugin' => 'TwitterBootstrap',
+				'class' => 'alert-error'
+			));
+
+			$this->redirect('/admin/reports');
+		}
+
+		$report = $this->Report->read();
+
+		## make sure report is opened by user
+		if($report['Report']['admin_user_id'] != $this->Auth->user('id')) {
+			$this->Session->setFlash(__('Report open by another user'), 'alert', array(
+				'plugin' => 'TwitterBootstrap',
+				'class' => 'alert-error'
+			));
+
+			$this->redirect('/admin/reports');
+		}
+
+		$this->Report->updateAll(array(
+			'Report.admin_user_id' => 0,
+			'Report.status' => 0
+		), array(
+			'Report.id' => $report['Report']['id']
+		));
+
+		$this->redirect('/admin/reports');
+	}
+
+	public function reportsClose($reportId=null) {
+		$this->Report->id = $reportId;
+		if(!$this->Report->exists()) {
+			$this->Session->setFlash(__('Report Not Found'), 'alert', array(
+				'plugin' => 'TwitterBootstrap',
+				'class' => 'alert-error'
+			));
+
+			$this->redirect('/admin/reports');
+		}
+
+		$report = $this->Report->read();
+
+		## make sure report is opened by user
+		if($report['Report']['admin_user_id'] != $this->Auth->user('id')) {
+			$this->Session->setFlash(__('Report open by another user'), 'alert', array(
+				'plugin' => 'TwitterBootstrap',
+				'class' => 'alert-error'
+			));
+
+			$this->redirect('/admin/reports');
+		}
+
+		$this->Report->updateAll(array(
+			'Report.admin_user_id' => $this->Auth->user('id'),
+			'Report.status' => 99
+		), array(
+			'Report.id' => $report['Report']['id']
+		));
+
+		$this->Session->setFlash(__('Report Closed'), 'alert', array(
+			'plugin' => 'TwitterBootstrap',
+			'class' => 'alert-success'
+		));
+
+		$this->redirect('/admin/reports');
 	}
 
 	##### FLAGS
