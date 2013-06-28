@@ -491,6 +491,24 @@ Router::connect(
 );
 
 Router::connect(
+	'/admin/flags/cancel/:id',
+	array('controller' => 'admin', 'action' => 'flagsCancel'),
+	array(
+		'pass' => array('id'),
+		'id' => '[0-9]+'
+	)
+);
+
+Router::connect(
+	'/admin/flags/close/:id',
+	array('controller' => 'admin', 'action' => 'flagsClose'),
+	array(
+		'pass' => array('id'),
+		'id' => '[0-9]+'
+	)
+);
+
+Router::connect(
 	'/admin/blog/imageUpload',
 	array('controller' => 'admin', 'action' => 'blogsImageUpload')
 );

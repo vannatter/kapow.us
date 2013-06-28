@@ -731,13 +731,22 @@ class AdminController extends AppController {
 	##### FLAGS
 	public function flags() {
 		$this->Flag->recursive = 0;
+
+		$this->Flag->bindModel(array('belongsTo' => array(
+			'Item' => array('foreignKey' => 'flag_item_id', 'conditions' => array('item_type' => 1)),
+			'Series' => array('foreignKey' => 'flag_item_id', 'conditions' => array('item_type' => '2')),
+			'Creator' => array('foreignKey' => 'flag_item_id', 'conditions' => array('item_type' => '3')),
+			'Publisher' => array('foreignKey' => 'flag_item_id', 'conditions' => array('item_type' => '4')),
+			'Store' => array('foreignKey' => 'flag_item_id', 'conditions' => array('item_type' => '5'))
+		)));
+
 		$this->set('flags', $this->paginate('Flag'));
 	}
 
 	public function flagsView($id) {
 		$this->Flag->id = $id;
 		if(!$this->Flag->exists()) {
-			$this->Session->setFlash(__('Flag Not Found'), 'alert', array(
+			$this->Session->setFlash(__('Flagged Item Not Found'), 'alert', array(
 				'plugin' => 'TwitterBootstrap',
 				'class' => 'alert-error'
 			));
@@ -746,6 +755,15 @@ class AdminController extends AppController {
 		}
 
 		$flag = $this->Flag->read();
+
+		if($flag['Flag']['status'] == 1 && $flag['Flag']['admin_user_id'] != $this->Auth->user('id')) {
+			$this->Session->setFlash(__('Flag open by another user'), 'alert', array(
+				'plugin' => 'TwitterBootstrap',
+				'class' => 'alert-error'
+			));
+
+			$this->redirect('/admin/flags');
+		}
 
 		## 1=item, 2=series, 3=creator, 4=publisher, 5=store
 		switch($flag['Flag']['item_type']) {
@@ -766,7 +784,85 @@ class AdminController extends AppController {
 				break;
 		}
 		$this->Flag->recursive = 0;
-		$this->request->data = $this->Flag->read();
+		$this->set('flag', $this->Flag->read());
+
+		$this->Flag->updateAll(array(
+			'Flag.admin_user_id' => $this->Auth->user('id'),
+			'Flag.status' => 1
+		), array(
+			'Flag.id' => $flag['Flag']['id']
+		));
+	}
+
+	public function flagsCancel($reportId=null) {
+		$this->Flag->id = $reportId;
+		if(!$this->Flag->exists()) {
+			$this->Session->setFlash(__('Flag Not Found'), 'alert', array(
+				'plugin' => 'TwitterBootstrap',
+				'class' => 'alert-error'
+			));
+
+			$this->redirect('/admin/flags');
+		}
+
+		$flag = $this->Flag->read();
+
+		## make sure flag is opened by user
+		if($flag['Flag']['admin_user_id'] != $this->Auth->user('id')) {
+			$this->Session->setFlash(__('Flag open by another user'), 'alert', array(
+				'plugin' => 'TwitterBootstrap',
+				'class' => 'alert-error'
+			));
+
+			$this->redirect('/admin/flags');
+		}
+
+		$this->Flag->updateAll(array(
+			'Flag.admin_user_id' => 0,
+			'Flag.status' => 0
+		), array(
+			'Flag.id' => $flag['Flag']['id']
+		));
+
+		$this->redirect('/admin/flags');
+	}
+
+	public function flagsClose($reportId=null) {
+		$this->Flag->id = $reportId;
+		if(!$this->Flag->exists()) {
+			$this->Session->setFlash(__('Flag Not Found'), 'alert', array(
+				'plugin' => 'TwitterBootstrap',
+				'class' => 'alert-error'
+			));
+
+			$this->redirect('/admin/flags');
+		}
+
+		$flag = $this->Flag->read();
+
+		## make sure flag is opened by user
+		if($flag['Flag']['admin_user_id'] != $this->Auth->user('id')) {
+			$this->Session->setFlash(__('Flag open by another user'), 'alert', array(
+				'plugin' => 'TwitterBootstrap',
+				'class' => 'alert-error'
+			));
+
+			$this->redirect('/admin/flags');
+		}
+
+		$this->Flag->updateAll(array(
+			'Flag.admin_user_id' => $this->Auth->user('id'),
+			'Flag.status' => 99
+		), array(
+			'Flag.id' => $flag['Flag']['id']
+		));
+
+		$this->Session->setFlash(__('Flag Closed'), 'alert', array(
+			'plugin' => 'TwitterBootstrap',
+			'class' => 'alert-success'
+		));
+
+		$this->redirect('/admin/flags');
 	}
 
 	##### BLOGS
