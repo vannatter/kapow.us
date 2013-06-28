@@ -288,6 +288,8 @@ class AppSchema extends CakeSchema {
 		'facebook_url' => array('type' => 'string', 'null' => false, 'length' => 400, 'collate' => 'latin1_swedish_ci', 'charset' => 'latin1'),
 		'twitter_url' => array('type' => 'string', 'null' => false, 'default' => null, 'length' => 200, 'collate' => 'latin1_swedish_ci', 'charset' => 'latin1'),
 		'ebay_url' => array('type' => 'string', 'null' => false, 'default' => null, 'length' => 400, 'collate' => 'latin1_swedish_ci', 'charset' => 'latin1'),
+		'user_id' => array('type' => 'integer', 'null' => true, 'default' => null),
+		'admin_user_id' => array('type' => 'integer', 'null' => true, 'default' => null),
 		'created' => array('type' => 'datetime', 'null' => false, 'default' => null),
 		'modified' => array('type' => 'datetime', 'null' => false, 'default' => null),
 		'indexes' => array(

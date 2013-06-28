@@ -79,6 +79,7 @@ class AdminController extends AppController {
 		## some stat stuff
 		$this->set('photoQueueTotal', $this->Store->StorePhoto->find('count', array('conditions' => array('StorePhoto.active' => 0))));
 		$this->set('creatorQueueTotal', $this->Creator->find('count', array('conditions' => array('Creator.status' => 0))));
+		$this->set('newStoreTotal', $this->Store->find('count', array('conditions' => array('Store.status_id' => 2))));
 	}
 
 	public function index() {
@@ -489,6 +490,44 @@ class AdminController extends AppController {
 		}
 
 		$this->redirect('/admin/stores/photoQueue');
+	}
+
+	public function storesNew() {
+		$this->Store->bindModel(array('belongsTo' => array('User')));
+		$this->Store->recursive = 0;
+		$this->set('stores', $this->paginate('Store', array('Store.status_id' => 2)));
+	}
+
+	public function storesNewView($storeId=null) {
+		$this->Store->id = $storeId;
+		if(!$this->Store->exists()) {
+			$this->Session->setFlash(__('Invalid Store'), 'alert', array(
+				'plugin' => 'TwitterBootstrap',
+				'class' => 'alert-error'
+			));
+			$this->redirect('/admin/stores/new');
+		}
+
+		if($this->request->is('post') || $this->request->is('put')) {
+			$data = Sanitize::clean($this->request->data, array('escape' => false, 'encode' => false));
+
+			$data['Store']['admin_user_id'] = $this->Auth->user('id');
+			$data['Store']['id'] = $storeId;
+
+			if($this->Store->save($data)) {
+				$this->Session->setFlash(__('Store Saved'), 'alert', array(
+					'plugin' => 'TwitterBootstrap',
+					'class' => 'alert-success'
+				));
+
+				$this->redirect('/admin/stores/new');
+			}
+		} else {
+			$this->request->data = $this->Store->read();
+		}
+	}
+
+	public function storesNewSet($statusId=null) {
 	}
 
 	public function users() {

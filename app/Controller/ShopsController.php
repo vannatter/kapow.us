@@ -232,4 +232,39 @@ class ShopsController extends AppController {
 		$this->set('shop', $shopshop);
 		$this->set('title_for_layout', 'Add Shop Photo');
 	}
+
+	public function add() {
+		parent::hasSession();
+
+		if($this->request->is('post') || $this->request->is('put')) {
+			$data = Sanitize::clean($this->request->data, array('encode' => false, 'escape' => false));
+
+			$data['Store']['user_id'] = $this->Auth->user('id');
+			$data['Store']['status_id'] = 2;   ### needs approval
+
+			$address = '';
+			if(!empty($data['Store']['address']) && !empty($data['Store']['city']) && !empty($data['Store']['state'])) {
+				$address = $data['Store']['address'] . ' ';
+				$address .= $data['Store']['address_2'] .  ' ';
+				$address .= $data['Store']['city'] . ' ';
+				$address .= $data['Store']['state'];
+
+				## get lat/long from location
+				$locUrl = sprintf('http://maps.googleapis.com/maps/api/geocode/json?address=%s&sensor=false', str_replace(' ', '+', $address));
+				$loc = json_decode(file_get_contents($locUrl));
+
+				if($loc->status == 'OK') {
+					$loc = $loc->results;
+					$loc = $loc[0];
+
+					$data['Store']['latitude'] = $loc->geometry->location->lat;
+					$data['Store']['longitude'] = $loc->geometry->location->lng;
+				}
+			}
+
+			if($this->Store->save($data)) {
+				$this->Session->setFlash(__('Shop submitted for approval'), 'flash_pos');
+			}
+		}
+	}
 }

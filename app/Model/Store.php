@@ -17,6 +17,43 @@ class Store extends AppModel {
 	public $displayField = 'name';
 
 
+	public $validate = array(
+		'name' => array(
+			'notempty' => array(
+				'rule' => array('notempty'),
+				'message' => 'Required',
+			),
+			'isUnique' => array(
+				'rule' => array('isUnique'),
+				'message' => 'Already Used'
+			)
+		),
+		'address' => array(
+			'notempty' => array(
+				'rule' => array('notempty'),
+				'message' => 'Required',
+			),
+		),
+		'city' => array(
+			'notempty' => array(
+				'rule' => array('notempty'),
+				'message' => 'Required',
+			),
+		),
+		'state' => array(
+			'notempty' => array(
+				'rule' => array('notempty'),
+				'message' => 'Required',
+			),
+		),
+		'zip' => array(
+			'notempty' => array(
+				'rule' => array('notempty'),
+				'message' => 'Required',
+			),
+		),
+	);
+
 	//The Associations below have been created with all possible keys, those that are not needed can be removed
 
 /**
@@ -86,6 +123,7 @@ class Store extends AppModel {
 			SELECT Store.*, Hour.*, ' . $distanceQuery . ' AS distance
 				FROM stores AS Store
 				LEFT JOIN hours AS Hour ON Hour.store_id = Store.id
+				WHERE Store.status_id = 0
 				HAVING distance < ' . $rad . '
 				ORDER BY distance
 		';

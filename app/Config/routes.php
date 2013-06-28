@@ -432,6 +432,29 @@ Router::connect(
 );
 
 Router::connect(
+	'/admin/stores/new',
+	array('controller' => 'admin', 'action' => 'storesNew')
+);
+
+Router::connect(
+	'/admin/stores/new/view/:id',
+	array('controller' => 'admin', 'action' => 'storesNewView'),
+	array(
+		'pass' => array('id'),
+		'id' => '[0-9]+'
+	)
+);
+
+Router::connect(
+	'/admin/stores/new/set/:id',
+	array('controller' => 'admin', 'action' => 'storesNewSet'),
+	array(
+		'pass' => array('id'),
+		'id' => '[0-9]+'
+	)
+);
+
+Router::connect(
 	'/admin/reports/view/:id',
 	array('controller' => 'admin', 'action' => 'reportsView'),
 	array(

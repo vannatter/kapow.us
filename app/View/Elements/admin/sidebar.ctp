@@ -16,6 +16,7 @@
 		<li><?php echo $this->Html->link(__('Sections'), array('controller' => 'admin', 'action' => 'sections')); ?></li>
 		<li><?php echo $this->Html->link(__('Stores'), array('controller' => 'admin', 'action' => 'stores')); ?></li>
 		<li><?php echo $this->Html->link(__('Store Photo Queue <span class="badge %s">%s</span>', ($photoQueueTotal>0) ? 'badge-success' : '', $photoQueueTotal), '/admin/stores/photoQueue', array('escape' => false)); ?></li>
+		<li><?php echo $this->Html->link(__('New Stores <span class="badge %s">%s</span>', ($newStoreTotal>0) ? 'badge-success' : '', $newStoreTotal), '/admin/stores/new', array('escape' => false)); ?></li>
 		<li><?php echo $this->Html->link(__('Users'), array('controller' => 'admin', 'action' => 'users')); ?></li>
 		<li><?php echo $this->Html->link(__('User Activity'), array('controller' => 'admin', 'action' => 'userActivity')); ?></li>
 		<li><?php echo $this->Html->link(__('Blogs'), array('controller' => 'admin', 'action' => 'blogs')); ?></li>
