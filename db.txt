@@ -6,3 +6,8 @@ app/Console/cake Migrations.migration generate
 get changes:
 
 app/Console/cake Migrations.migration run all
+
+
+run asset compression:
+
+app/Console/cake AssetCompress.AssetCompress build_ini
