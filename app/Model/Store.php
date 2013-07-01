@@ -80,7 +80,7 @@ class Store extends AppModel {
 			'className' => 'StorePhoto',
 			'foreignKey' => 'store_id',
 			'dependent' => false,
-			'conditions' => '',
+			'conditions' => array('StorePhoto.status' => 1),
 			'fields' => '',
 			'order' => '',
 			'limit' => '',
