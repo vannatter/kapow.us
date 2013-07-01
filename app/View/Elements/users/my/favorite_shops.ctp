@@ -31,7 +31,7 @@
 						)
 					),
 					sprintf(
-						'/publishers/%s',
+						'/shops/%s',
 						$this->Common->seoize($id, $name)
 					),
 					array(
