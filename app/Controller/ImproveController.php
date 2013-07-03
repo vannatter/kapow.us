@@ -31,5 +31,6 @@ class ImproveController extends AppController {
 		$this->set('sections', $this->Item->Section->find('list', array('fields' => array('id', 'section_name'))));
 		$this->set('publishers', $this->Item->Publisher->find('list', array('fields' => array('id', 'publisher_name'))));
 		$this->set('series', $this->Item->Series->find('list', array('fields' => array('id', 'series_name'))));
+		$this->set('title_for_layout', 'Improve This Item Content');
 	}
 }
