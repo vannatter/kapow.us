@@ -59,12 +59,8 @@ class AppController extends Controller {
 	}
 
 	public function hasAdminSession() {
-		if(!$this->Auth->user() || (int)$this->Auth->user('access_level') !== 99) {
-			$this->Session->setFlash(__('Invalid Access'), 'alert', array(
-				'plugin' => 'TwitterBootstrap',
-				'class' => 'alert-error'
-			));
-
+		if (!$this->Auth->user() || (int)$this->Auth->user('access_level') !== 99) {
+			$this->Session->setFlash(__('Invalid Access!'), 'flash_neg');
 			$this->redirect('/');
 			exit;
 		}
@@ -72,11 +68,7 @@ class AppController extends Controller {
 
 	public function hasSession() {
 		if(!$this->Auth->user()) {
-			$this->Session->setFlash(__('Invalid Access'), 'alert', array(
-				'plugin' => 'TwitterBootstrap',
-				'class' => 'alert-error'
-			));
-
+			$this->Session->setFlash(__('You are not logged in!'), 'flash_neg');
 			$this->redirect('/');
 			exit;
 		}
