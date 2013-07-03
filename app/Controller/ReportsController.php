@@ -44,8 +44,10 @@ class ReportsController extends AppController {
 		}
 
 		$item = $this->Item->read('item_name');
+		$item_id = $this->Item->read('id');
+		
 		$this->set('item', $item['Item']['item_name']);
-		$this->set('link', "/items/".$this->seoize($item['Item']['id'], $item['Item']['item_name']));
+		$this->set('link', "/items/".$this->seoize($item_id['Item']['id'], $item['Item']['item_name']));
 		$this->set('title_for_layout', 'Report an Issue');
 
 		$this->render('issue');
@@ -73,8 +75,10 @@ class ReportsController extends AppController {
 		}
 
 		$item = $this->Creator->read('creator_name');
+		$item_id = $this->Creator->read('id');
+
 		$this->set('item', $item['Creator']['creator_name']);
-		$this->set('link', "/creators/".$this->seoize($item['Creator']['id'], $item['Creator']['creator_name']));
+		$this->set('link', "/creators/".$this->seoize($item_id['Creator']['id'], $item['Creator']['creator_name']));
 		$this->set('title_for_layout', 'Report an Issue');
 
 		$this->render('issue');
@@ -102,8 +106,10 @@ class ReportsController extends AppController {
 		}
 
 		$item = $this->Series->read('series_name');
+		$item_id = $this->Series->read('id');
+		
 		$this->set('item', $item['Series']['series_name']);
-		$this->set('link', "/series/".$this->seoize($item['Series']['id'], $item['Series']['series_name']));
+		$this->set('link', "/series/".$this->seoize($item_id['Series']['id'], $item['Series']['series_name']));
 		$this->set('title_for_layout', 'Report an Issue');
 
 		$this->render('issue');
@@ -131,8 +137,10 @@ class ReportsController extends AppController {
 		}
 
 		$item = $this->Store->read('name');
+		$item_id = $this->Store->read('id');
+
 		$this->set('item', $item['Store']['name']);
-		$this->set('link', "/shops/".$this->seoize($item['Store']['id'], $item['Store']['name']));
+		$this->set('link', "/shops/".$this->seoize($item_id['Store']['id'], $item['Store']['name']));
 		$this->set('title_for_layout', 'Report an Issue');
 
 		$this->render('issue');
@@ -160,8 +168,10 @@ class ReportsController extends AppController {
 		}
 
 		$item = $this->Publisher->read('publisher_name');
+		$item_id = $this->Publisher->read('id');
+		
 		$this->set('item', $item['Publisher']['publisher_name']);
-		$this->set('link', "/publishers/".$this->seoize($item['Publisher']['id'], $item['Publisher']['publisher_name']));
+		$this->set('link', "/publishers/".$this->seoize($item_id['Publisher']['id'], $item['Publisher']['publisher_name']));
 		$this->set('title_for_layout', 'Report an Issue');
 
 		$this->render('issue');
