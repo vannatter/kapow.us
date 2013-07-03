@@ -24,6 +24,7 @@ a{color:#adc2eb !important;}
 .item_detail,.shop_detail,.generic_body{font-size:20px;color:#78b0e9;}
 h2{color:#000 !important;}
 .detail_img{border:3px solid #000;}
+.usr_img{border:1px solid #000;margin:5px 2px 0 0;}
 .creator_type h4,.store_hours h4{color:#fff !important;padding-bottom:2px;margin:5px 0px 0px 0px;}
 .store_hours{margin-top:20px;}
 .item_description{margin-top:20px;}
