@@ -24,7 +24,7 @@ class ReportsController extends AppController {
 
 	public function item($id) {
 		$this->Item->id = $id;
-		if(!$this->Item->exists()) {
+		if (!$this->Item->exists()) {
 			$this->Session->setFlash(__('Invalid Item'), 'alert', array(
 				'plugin' => 'TwitterBootstrap',
 				'class' => 'alert-error'
@@ -32,7 +32,7 @@ class ReportsController extends AppController {
 			$this->redirect($this->referer());
 		}
 
-		if($this->request->is('post') || $this->request->is('put')) {
+		if ($this->request->is('post') || $this->request->is('put')) {
 			$data = Sanitize::clean($this->request->data);
 
 			$data['Report']['user_id'] = $this->Auth->user('id');
@@ -40,7 +40,7 @@ class ReportsController extends AppController {
 			$data['Report']['report_item_id'] = $id;
 
 			$this->Report->create($data);
-			if($this->Report->save($data)) {
+			if ($this->Report->save($data)) {
 				$this->Session->setFlash(__('Report Submitted'), 'alert', array(
 					'plugin' => 'TwitterBootstrap',
 					'class' => 'alert-success'
@@ -52,6 +52,8 @@ class ReportsController extends AppController {
 
 		$item = $this->Item->read('item_name');
 		$this->set('item', $item['Item']['item_name']);
+		$this->set('link', "/items/".$this->seoize($item['Item']['id'], $item['Item']['item_name']));
+		$this->set('title_for_layout', 'Report an Issue');
 
 		$this->render('issue');
 	}
@@ -86,6 +88,8 @@ class ReportsController extends AppController {
 
 		$item = $this->Creator->read('creator_name');
 		$this->set('item', $item['Creator']['creator_name']);
+		$this->set('link', "/creators/".$this->seoize($item['Creator']['id'], $item['Creator']['creator_name']));
+		$this->set('title_for_layout', 'Report an Issue');
 
 		$this->render('issue');
 	}
@@ -120,6 +124,8 @@ class ReportsController extends AppController {
 
 		$item = $this->Series->read('series_name');
 		$this->set('item', $item['Series']['series_name']);
+		$this->set('link', "/series/".$this->seoize($item['Series']['id'], $item['Series']['series_name']));
+		$this->set('title_for_layout', 'Report an Issue');
 
 		$this->render('issue');
 	}
@@ -154,6 +160,8 @@ class ReportsController extends AppController {
 
 		$item = $this->Store->read('name');
 		$this->set('item', $item['Store']['name']);
+		$this->set('link', "/shops/".$this->seoize($item['Store']['id'], $item['Store']['name']));
+		$this->set('title_for_layout', 'Report an Issue');
 
 		$this->render('issue');
 	}
@@ -188,6 +196,8 @@ class ReportsController extends AppController {
 
 		$item = $this->Publisher->read('publisher_name');
 		$this->set('item', $item['Publisher']['publisher_name']);
+		$this->set('link', "/publishers/".$this->seoize($item['Publisher']['id'], $item['Publisher']['publisher_name']));
+		$this->set('title_for_layout', 'Report an Issue');
 
 		$this->render('issue');
 	}
