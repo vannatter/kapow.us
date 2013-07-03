@@ -1,5 +1,6 @@
-<div class="well">
-	<h2><?php echo $blog['Blog']['title']; ?></h2>
+<?php echo $this->Element('headers/blog/view'); ?>
+
+<div class="pad">
 	<p><?php echo $blog['Blog']['body']; ?></p>
-	<p><?php echo __('<b>by</b> %s', $blog['User']['email']); ?> <?php echo __('<b>on</b> %s', $blog['Blog']['created']); ?></p>
+	<p><?php echo date("F jS, Y", strtotime($blog['Blog']['created'])); ?></p>
 </div>
