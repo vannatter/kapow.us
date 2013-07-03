@@ -113,12 +113,11 @@ class UsersController extends AppController {
 	}
 	
 	public function profile($user=null) {
-		if(!$user && !$this->Auth->user()) {
+		if (!$user && !$this->Auth->user()) {
 			$this->redirect('/');
 		}
 
 		$this->User->id = $this->Auth->user('id');
-
 		$user = $this->User->read();
 
 		$email = $user['User']['email'];
@@ -127,11 +126,10 @@ class UsersController extends AppController {
 		$grav_url = "http://www.gravatar.com/avatar/" . md5( strtolower( trim( $email ) ) ) . "?d=" . urlencode( $default ) . "&s=" . $size;
 
 		$this->set('gravatar', $grav_url);
-		
 		$this->_getProfileData($user);
 
 		$this->set('user', $user);
-		
+		$this->set('username', $user['User']['username']);
 		$this->set('title_for_layout','My Profile');
 	}
 
