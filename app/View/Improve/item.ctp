@@ -22,7 +22,7 @@
 			<?php echo $this->Form->input('srp', array('class' => 'span3', 'label' => 'Suggested Retail Price')); ?>
 			<?php echo $this->Form->input('stock_id', array('type' => 'text', 'class' => 'span3', 'label' => 'Stock ID')); ?>
 			<?php echo $this->Form->input('printing', array('class' => 'span3')); ?>
-			<?php echo $this->Form->input('item_date', array('class' => 'span1')); ?>
+			<?php echo $this->Form->input('item_date', array('type' => 'text', 'class' => 'span2')); ?>
 		</div>
 		<div class="span8">
 			<?php echo $this->Form->input('description', array('class' => 'input-xlarge span8', 'rows' => 30, 'label' => 'Item Description')); ?>
@@ -32,3 +32,14 @@
 	<?php echo $this->Form->end(); ?>
 
 </div>
+<script>
+	$(document).ready(function() {
+		$('#ItemItemDate').datepicker({
+			dateFormat: 'yy-mm-dd',
+			beforeShowDay: function(date) {
+				return [date.getDay() === 3, ''];
+			}
+		}).attr('readonly', true)
+			.css('cursor', 'pointer');
+	});
+</script>

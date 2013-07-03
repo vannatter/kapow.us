@@ -22,11 +22,15 @@ class ImproveController extends AppController {
 			$this->redirect("/");
 		}
 
+		$item = $this->Item->read();
+
 		if($this->request->is('post') || $this->request->is('put')) {
 			$data = Sanitize::clean($this->request->data);
 		} else {
-			$this->request->data = $this->Item->read();
+			$this->request->data = $item;
 		}
+
+		$this->set('item', $item);
 
 		$this->set('sections', $this->Item->Section->find('list', array('fields' => array('id', 'section_name'))));
 		$this->set('publishers', $this->Item->Publisher->find('list', array('fields' => array('id', 'publisher_name'))));
