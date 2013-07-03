@@ -558,6 +558,25 @@ Router::connect(
 	)
 );
 
+Router::connect(
+	'/admin/improvements/view/:id',
+	array('controller' => 'admin', 'action' => 'improvementsView'),
+	array(
+		'pass' => array('id'),
+		'id' => '[0-9]+'
+	)
+);
+
+Router::connect(
+	'/admin/improvements/accept',
+	array('controller' => 'admin', 'action' => 'improvementsAccept')
+);
+
+Router::connect(
+	'/admin/improvements/decline',
+	array('controller' => 'admin', 'action' => 'improvementsDecline')
+);
+
 CakePlugin::routes();
 
 require CAKE . 'Config' . DS . 'routes.php';

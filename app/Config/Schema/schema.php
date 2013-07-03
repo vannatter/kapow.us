@@ -141,6 +141,19 @@ class AppSchema extends CakeSchema {
 		),
 		'tableParameters' => array('charset' => 'latin1', 'collate' => 'latin1_swedish_ci', 'engine' => 'MyISAM')
 	);
+	public $improvements = array(
+		'id' => array('type' => 'integer', 'null' => false, 'default' => null, 'key' => 'primary'),
+		'improve_id' => array('type' => 'integer', 'null' => false, 'default' => null),
+		'improve_type' => array('type' => 'integer', 'null' => false, 'default' => null),
+		'user_id' => array('type' => 'integer', 'null' => false, 'default' => null),
+		'admin_user_id' => array('type' => 'integer', 'null' => false, 'default' => null),
+		'created' => array('type' => 'datetime', 'null' => false, 'default' => null),
+		'modified' => array('type' => 'datetime', 'null' => false, 'default' => null),
+		'indexes' => array(
+			'PRIMARY' => array('column' => 'id', 'unique' => 1)
+		),
+		'tableParameters' => array('charset' => 'latin1', 'collate' => 'latin1_swedish_ci', 'engine' => 'MyISAM')
+	);
 	public $item_creators = array(
 		'id' => array('type' => 'integer', 'null' => false, 'default' => null, 'key' => 'primary'),
 		'item_id' => array('type' => 'integer', 'null' => false, 'default' => null, 'key' => 'index'),

@@ -20,6 +20,7 @@
 		<li><?php echo $this->Html->link(__('Users'), array('controller' => 'admin', 'action' => 'users')); ?></li>
 		<li><?php echo $this->Html->link(__('User Activity'), array('controller' => 'admin', 'action' => 'userActivity')); ?></li>
 		<li><?php echo $this->Html->link(__('Blogs'), array('controller' => 'admin', 'action' => 'blogs')); ?></li>
+		<li><?php echo $this->Html->link(__('Improvements'), array('controller' => 'admin', 'action' => 'improvements')); ?></li>
 		<li class="divider"></li>
 		<li><?php echo $this->Html->link(__('Index'), '/'); ?></li>
 		<li class="divider"></li>

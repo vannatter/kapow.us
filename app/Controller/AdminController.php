@@ -17,10 +17,11 @@ App::uses('AppController', 'Controller');
  * @property Blog $Blog
  * @property Flag $Flag
  * @property UserActivity $UserActivity
+ * @property Improvement $Improvement
  */
 class AdminController extends AppController {
 	public $name = 'Admin';
-	public $uses = array('Item', 'Creator', 'Publisher', 'Series', 'Store', 'User', 'Category', 'CreatorType', 'Section', 'Report', 'StorePhoto', 'Blog', 'Flag', 'UserActivity');
+	public $uses = array('Item', 'Creator', 'Publisher', 'Series', 'Store', 'User', 'Category', 'CreatorType', 'Section', 'Report', 'StorePhoto', 'Blog', 'Flag', 'UserActivity', 'Improvement');
 	public $helpers = array('States', 'TinyMCE.TinyMCE', 'Admin');
 	public $components = array('Upload');
 	public $paginate = array(
@@ -67,6 +68,10 @@ class AdminController extends AppController {
 		'Flag' => array(
 			'limit' => 25,
 			'order' => array('Flag.id' => 'asc')
+		),
+		'Improvement' => array(
+			'limit' => 25,
+			'order' => array('Improvement.id' => 'ASC')
 		)
 	);
 
@@ -1047,5 +1052,74 @@ class AdminController extends AppController {
 		}
 
 		$this->set('details', $this->UserActivity->read());
+	}
+
+	public function improvements() {
+		$this->Improvement->recursive = 0;
+		$this->set('improvements', $this->paginate('Improvement'));
+	}
+
+	public function improvementsView($id=null) {
+		$this->Improvement->id = $id;
+		if(!$this->Improvement->exists()) {
+			$this->Session->setFlash(__('Not Found'), 'alert', array(
+				'plugin' => 'TwitterBootstrap',
+				'class' => 'alert-error'
+			));
+			$this->redirect('/admin/improvements');
+		}
+
+		$this->set('improve', $this->Improvement->read());
+		$this->set('sections', $this->Item->Section->find('list', array('fields' => array('id', 'section_name'))));
+		$this->set('publishers', $this->Item->Publisher->find('list', array('fields' => array('id', 'publisher_name'))));
+		$this->set('series', $this->Item->Series->find('list', array('fields' => array('id', 'series_name'))));
+	}
+
+	public function improvementsAccept() {
+		if($this->request->is('ajax')) {
+			$result = array('error' => true, 'message' => '');
+
+			if(isset($this->params->query)) {
+				$data = $this->params->query;
+
+				if(isset($data['itemId']) && isset($data['type']) && isset($data['field'])) {
+					switch($data['type']) {
+						case 1:   ### ITEM
+							$id = $data['itemId'];
+							$field = $data['field'];
+
+							$this->Improvement->ImproveItem->id = $id;
+							if(!$this->Improvement->ImproveItem->exists()) {
+								$result['message'] = __('Invalid Item');
+							} else {
+								$item = $this->Improvement->ImproveItem->read();
+
+								$this->Item->id = $item['ImproveItem']['item_id'];
+								$this->Item->saveField($field, $item['ImproveItem'][$field . '_new']);
+
+								$this->log(sprintf('%s accepted change for item %s on field %s new value %s', $this->Auth->user('username'), $item['ImproveItem']['item_id'], $field, $item['ImproveItem'][$field . '_new']), 'admin');
+
+								$this->Improvement->ImproveItem->updateall(array(
+									'ImproveItem.' . $field => '""',
+									'ImproveItem.' . $field . '_new' => '""'
+								), array(
+									'ImproveItem.id' => $id
+								));
+
+								$result['error'] = false;
+							}
+							break;
+					}
+				} else {
+					$result['message'] = __('Invalid Request');
+				}
+			} else {
+				$result['message'] = __('Invalid Request');
+			}
+			return new CakeResponse(array('body' => json_encode($result)));
+		} else {
+			echo 'javascript disabled';
+			exit;
+		}
 	}
 }
