@@ -22,7 +22,7 @@
 				<p><?php echo $item['Item']['description']; ?></p>
 			</div>
 		</div>
-		<?php if($row == 6) { ?>
+		<?php if($row == 4) { ?>
 			</div>
 			<?php $row = 0; ?>
 		<?php } ?>

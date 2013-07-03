@@ -67,11 +67,7 @@ class PublishersController extends AppController {
 			'hasMany' => array(
 				'UserFavorite' => array(
 					'foreignKey' => 'favorite_item_id',
-					'conditions' => array(
-						'item_type' => 4
-					),
-					'limit' => 25,
-					'order' => 'RAND()'
+					'finderQuery' => 'SELECT UserFavorite.* FROM user_favorites AS UserFavorite LEFT JOIN users AS User ON User.id = UserFavorite.user_id WHERE UserFavorite.favorite_item_id = {$__cakeID__$} AND UserFavorite.item_type = 4 AND User.private_profile = 0 ORDER BY RAND() LIMIT 25'
 				)
 			)
 		));

@@ -61,20 +61,57 @@ class SeriesController extends AppController {
 	}
 
 	public function view($id, $name) {
-		if($series = $this->Series->findById($id)) {
-			$this->set('series', $series);
-			$this->set('title_for_layout', ucwords(strtolower($series['Series']['series_name'])));
-
-			## see if the current user (if there is one), fav'd this publisher
-			if($userFav = $this->UserFavorite->findByFavoriteItemIdAndUserIdAndItemType($id, $this->Auth->user('id'), 2)) {
-				$this->set('userFav', true);
-			} else {
-				$this->set('userFav', false);
-			}
-		} else {
+		if (!$id) {
 			$this->Session->setFlash('Series not found.', 'flash_neg');
 			$this->redirect("/");
 			exit;
+		}
+
+		$this->Series->bindModel(array(
+			'hasMany' => array(
+				'UserFavorite' => array(
+					'foreignKey' => 'favorite_item_id',
+					'finderQuery' => 'SELECT UserFavorite.* FROM user_favorites AS UserFavorite LEFT JOIN users AS User ON User.id = UserFavorite.user_id WHERE UserFavorite.favorite_item_id = {$__cakeID__$} AND UserFavorite.item_type = 2 AND User.private_profile = 0 ORDER BY RAND() LIMIT 25'
+				),
+			)
+		));
+		$this->Series->UserFavorite->bindModel(array(
+			'belongsTo' => array(
+				'User' => array(
+					'conditions' => array('User.private_profile' => false),
+					'fields' => array('id', 'email', 'username', 'private_profile')
+				)
+			)
+		));
+
+		$series = $this->Series->find(
+			'first',
+			array(
+				'conditions' => array(
+					'Series.id' => $id
+				),
+				'contain' => array(
+					'UserFavorite' => array(
+						'User'
+					)
+				)
+			)
+		);
+
+		if(!$series) {
+			$this->Session->setFlash('Series not found.', 'flash_neg');
+			$this->redirect("/");
+			exit;
+		}
+
+		$this->set('series', $series);
+		$this->set('title_for_layout', ucwords(strtolower($series['Series']['series_name'])));
+
+		## see if the current user (if there is one), fav'd this publisher
+		if($userFav = $this->UserFavorite->findByFavoriteItemIdAndUserIdAndItemType($id, $this->Auth->user('id'), 2)) {
+			$this->set('userFav', true);
+		} else {
+			$this->set('userFav', false);
 		}
 	}
 
