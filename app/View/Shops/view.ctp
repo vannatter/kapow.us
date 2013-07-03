@@ -70,6 +70,10 @@
 				<div class="span6 item_grid_row"><a href="<?php echo $shop['Store']['twitter_url']; ?>"><?php echo $shop['Store']['twitter_url']; ?></a></div>		
 			<?php } ?>
 		</div>
+
+		<?php if(isset($shop['UserFavorite']) && count($shop['UserFavorite']) > 0) { ?>
+			<?php echo $this->Element('favorites/list', array('users' => $shop['UserFavorite'])); ?>
+		<?php } ?>
 	</div>
 
 </div>

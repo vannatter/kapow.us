@@ -57,21 +57,61 @@ class PublishersController extends AppController {
 	}
 
 	public function view($id, $name) {
-		if ($publisher = $this->Publisher->findById($id)) {
-			$this->set('publisher', $publisher);
-			$this->set('title_for_layout', ucwords(strtolower($publisher['Publisher']['publisher_name'])));
-
-			## see if the current user (if there is one), fav'd this publisher
-			if($userFav = $this->UserFavorite->findByFavoriteItemIdAndUserIdAndItemType($id, $this->Auth->user('id'), 4)) {
-				$this->set('userFav', true);
-			} else {
-				$this->set('userFav', false);
-			}
-
-		} else {
-			$this->Session->setFlash('Publisher not found!', 'flash_neg');
+		if (!$id) {
+			$this->Session->setFlash('Publisher ID not found.', 'flash_neg');
 			$this->redirect("/");
 			exit;
+		}
+
+		$this->Publisher->bindModel(array(
+			'hasMany' => array(
+				'UserFavorite' => array(
+					'foreignKey' => 'favorite_item_id',
+					'conditions' => array(
+						'item_type' => 4
+					),
+					'limit' => 25,
+					'order' => 'RAND()'
+				)
+			)
+		));
+		$this->Publisher->UserFavorite->bindModel(array(
+			'belongsTo' => array(
+				'User' => array(
+					'fields' => array('id', 'email', 'username')
+				)
+			)
+		));
+
+		$publisher = $this->Publisher->find(
+			'first',
+			array(
+				'conditions' => array(
+					'Publisher.id' => $id
+				),
+				'contain' => array(
+					'Item',
+					'UserFavorite' => array(
+						'User'
+					)
+				),
+			)
+		);
+
+		if(!$publisher) {
+			$this->Session->setFlash('Publisher not found.', 'flash_neg');
+			$this->redirect("/");
+			exit;
+		}
+
+		$this->set('publisher', $publisher);
+		$this->set('title_for_layout', ucwords(strtolower($publisher['Publisher']['publisher_name'])));
+
+		## see if the current user (if there is one), fav'd this publisher
+		if($userFav = $this->UserFavorite->findByFavoriteItemIdAndUserIdAndItemType($id, $this->Auth->user('id'), 4)) {
+			$this->set('userFav', true);
+		} else {
+			$this->set('userFav', false);
 		}
 	}
 

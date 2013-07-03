@@ -14,6 +14,10 @@
 			<a href="<?php echo $publisher['Publisher']['publisher_website']; ?>" target="_blank"><?php echo $publisher['Publisher']['publisher_website']; ?></a>
 		</div>
 		<?php } ?>
+
+		<?php if(isset($publisher['UserFavorite']) && count($publisher['UserFavorite']) > 0) { ?>
+			<?php echo $this->Element('favorites/list', array('users' => $publisher['UserFavorite'])); ?>
+		<?php } ?>
 	</div>
 	
 	<div class="span9 item_detail">

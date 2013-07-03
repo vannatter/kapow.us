@@ -124,6 +124,26 @@ class ItemsController extends AppController {
 		));
 
 		$this->Item->bindModel(array(
+			'hasMany' => array(
+				'UserFavorite' => array(
+					'foreignKey' => 'favorite_item_id',
+					'conditions' => array(
+						'item_type' => 1
+					),
+					'limit' => 25,
+					'order' => 'RAND()'
+				)
+			)
+		));
+		$this->Item->UserFavorite->bindModel(array(
+			'belongsTo' => array(
+				'User' => array(
+					'fields' => array('id', 'email', 'username')
+				)
+			)
+		));
+
+		$this->Item->bindModel(array(
 			'hasOne' => array(
 				'Pull' => array(
 					'conditions' => array(
@@ -163,8 +183,10 @@ class ItemsController extends AppController {
 					'Tag'
 				),
 				'Pull',
-				'UserItem'
-				
+				'UserItem',
+				'UserFavorite' => array(
+					'User'
+				)
 			)
 		));
 

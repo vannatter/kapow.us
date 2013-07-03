@@ -62,6 +62,26 @@ class CreatorsController extends AppController {
 			exit;
 		}
 
+		$this->Creator->bindModel(array(
+			'hasMany' => array(
+				'UserFavorite' => array(
+					'foreignKey' => 'favorite_item_id',
+					'conditions' => array(
+						'item_type' => 3
+					),
+					'limit' => 25,
+					'order' => 'RAND()'
+				)
+			)
+		));
+		$this->Creator->UserFavorite->bindModel(array(
+			'belongsTo' => array(
+				'User' => array(
+					'fields' => array('id', 'email', 'username')
+				)
+			)
+		));
+
 		$creator = $this->Creator->find(
 			'first',
 			array(
@@ -70,12 +90,15 @@ class CreatorsController extends AppController {
 				),
 				'contain' => array(
 					'ItemCreator' => array(
-						'Item'
+						'Item',
+					),
+					'UserFavorite' => array(
+						'User'
 					)
 				),
 			)
 		);
-		
+
 		if (!$creator) {
 			$this->Session->setFlash('Creator not found.', 'flash_neg');
 			$this->redirect("/");

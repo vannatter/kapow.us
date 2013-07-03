@@ -21,6 +21,26 @@ class ShopsController extends AppController {
 			exit;
 		}
 
+		$this->Store->bindModel(array(
+			'hasMany' => array(
+				'UserFavorite' => array(
+					'foreignKey' => 'favorite_item_id',
+					'conditions' => array(
+						'item_type' => 5
+					),
+					'limit' => 25,
+					'order' => 'RAND()'
+				)
+			)
+		));
+		$this->Store->UserFavorite->bindModel(array(
+			'belongsTo' => array(
+				'User' => array(
+					'fields' => array('id', 'email', 'username')
+				)
+			)
+		));
+
 		$shop = $this->Store->find(
 			'first',
 			array(
@@ -32,6 +52,9 @@ class ShopsController extends AppController {
 						'conditions' => array(
 							'StorePhoto.active' => 1
 						)
+					),
+					'UserFavorite' => array(
+						'User'
 					)
 				)
 			)
