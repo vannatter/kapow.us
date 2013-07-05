@@ -40,6 +40,10 @@ class FavoritesController extends AppController {
 						$result['type'] = $this->UserFavorite->toggle($this->Auth->user('id'), $id, 5);
 						$result['error'] = false;
 						break;
+					case 'USER':
+						$result['type'] = $this->UserFavorite->toggle($this->Auth->user('id'), $id, 6);
+						$result['error'] = false;
+						break;
 					case 'ALL':
 						## id in this instance is the item id
 						## get all the information for the item, so we can favorite everything
