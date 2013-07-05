@@ -8,6 +8,13 @@
 
 <div class="row">
 	<div class="span3 item_detail_img">
+
+		<img alt="<?php echo $series['Series']['series_name']; ?>" src="<?php echo $series['Item'][0]['img_fullpath']; ?>" class="detail_img" />	
+
+		<div class="publisher_desc">
+			<?php echo nl2br($series['Series']['description']); ?>		
+		</div>
+	
 		<?php if(isset($series['UserFavorite']) && count($series['UserFavorite']) > 0) { ?>
 			<?php echo $this->Element('favorites/list', array('users' => $series['UserFavorite'])); ?>
 		<?php } ?>
