@@ -1,6 +1,9 @@
 <?php
 
-	Router::connect('/', array('controller' => 'home', 'action' => 'index'));
+Router::mapResources(array('User'));
+Router::parseExtensions();
+
+Router::connect('/', array('controller' => 'home', 'action' => 'index'));
 
 ##### SERIES
 Router::connect(

@@ -35,7 +35,27 @@ class UsersController extends AppController {
 	}
 
 	public function login() {
-		if ($this->request->is('post')) {
+		if($this->request->ext == 'json') {
+			$result = array('error' => true, 'message' => '', 'user' => array());
+
+			if(@$this->params['form']['user'] && @$this->params['form']['pass']) {
+				$data = array('User' => array('email' => $this->params['form']['email'], 'password' => $this->params['form']['pass']));
+
+				$data = $this->Auth->hashPasswords($data);
+
+				if($this->Auth->login($data)) {
+					$result['error'] = false;
+
+					$result['user'] = array('id' => $this->Auth->user('id'), 'username' => $this->Auth->user('username'), 'email' => $this->Auth->user('email'));
+				} else {
+					$result['message'] = __('Invalid email or password, try again');
+				}
+			} else {
+				$result['message'] = __('Invalid username or password, try again');
+			}
+
+			return new CakeResponse(array('body' => json_encode($result)));
+		} elseif ($this->request->is('post')) {
 			if ($this->Auth->login()) {
 				$username = $this->Auth->user('username');
 				if(empty($username)) {
