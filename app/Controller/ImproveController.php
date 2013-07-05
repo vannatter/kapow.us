@@ -119,7 +119,7 @@ class ImproveController extends AppController {
 		if($this->request->is('post') || $this->request->is('put')) {
 			$data = Sanitize::clean($this->request->data, array('encode' => false, 'escape' => false));
 
-			$fields = array('series_name');
+			$fields = array('series_name', 'description');
 
 			$toSave = array();
 
