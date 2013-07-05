@@ -63,7 +63,6 @@ class User extends AppModel {
 		'username' => array(
 			'empty' => array(
 				'rule' => 'notEmpty',
-				'allowEmpty' => false,
 				'message' => 'Required'
 			),
 			'unique' => array(
@@ -72,7 +71,6 @@ class User extends AppModel {
 			),
 			'alphaNumeric' => array(
 				'rule' => 'alphaNumeric',
-				'required' => true,
 				'message' => 'Letters and Numbers only'
 			),
 			'between' => array(
