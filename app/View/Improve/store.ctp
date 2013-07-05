@@ -20,13 +20,13 @@
 			<?php echo $this->Form->input('city', array('class' => 'span5')); ?>
 			<?php echo $this->Form->input('state', array('empty' => true, 'options' => $this->States->getArray(), 'class' => 'span5')); ?>
 			<?php echo $this->Form->input('zip', array('class' => 'span5')); ?>
-			<?php echo $this->Form->input('phone_no', array('class' => 'span5')); ?>
 		</div>
 		<div class="span6">
-			<?php echo $this->Form->input('website', array('class' => 'span6')); ?>
-			<?php echo $this->Form->input('facebook_url', array('class' => 'span6')); ?>
-			<?php echo $this->Form->input('twitter_url', array('class' => 'span6')); ?>
-			<?php echo $this->Form->input('ebay_url', array('class' => 'span6')); ?>
+			<?php echo $this->Form->input('phone_no', array('class' => 'span6', 'label' => 'Phone Number')); ?>
+			<?php echo $this->Form->input('website', array('class' => 'span6', 'label' => 'Website URL')); ?>
+			<?php echo $this->Form->input('facebook_url', array('class' => 'span6', 'label' => 'Facebook URL')); ?>
+			<?php echo $this->Form->input('twitter_url', array('class' => 'span6', 'label' => 'Twitter URL')); ?>
+			<?php echo $this->Form->input('ebay_url', array('class' => 'span6', 'label' => 'Ebay URL')); ?>
 		</div>
 		<?php echo $this->Form->submit(__('Submit Changes'), array('class' => 'btn btn-custom pull-right')); ?>
 	</div>
