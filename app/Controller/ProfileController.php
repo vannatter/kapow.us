@@ -35,11 +35,16 @@ class ProfileController extends AppController {
 		$this->set('gravatar', $grav_url);
 		$this->_getProfileData($user);
 
+		## see if the current user (if there is one), fav'd this publisher
+		if($userFav = $this->UserFavorite->findByFavoriteItemIdAndUserIdAndItemType($user['User']['id'], $this->Auth->user('id'), 6)) {
+			$this->set('userFav', true);
+		} else {
+			$this->set('userFav', false);
+		}
+
 		$this->set('user', $user);
 		$this->set('username', $user['User']['username']);
 		$this->set('title_for_layout','Profile - ' . $user['User']['username']);
-		
-
 	}
 
 	private function _getProfileData(&$user) {
