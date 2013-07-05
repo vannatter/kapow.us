@@ -84,6 +84,16 @@ class SeriesController extends AppController {
 			)
 		));
 
+		$this->Series->bindModel(array(
+			'hasMany' => array(
+				'Item' => array(
+					'foreignKey' => 'series_id',
+					'order' => 'RAND()',
+					'limit' => 1
+				)
+			)
+		));
+
 		$series = $this->Series->find(
 			'first',
 			array(
@@ -93,7 +103,8 @@ class SeriesController extends AppController {
 				'contain' => array(
 					'UserFavorite' => array(
 						'User'
-					)
+					),
+					'Item'
 				)
 			)
 		);
