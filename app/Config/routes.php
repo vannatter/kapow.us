@@ -568,6 +568,15 @@ Router::connect(
 );
 
 Router::connect(
+	'/admin/improvements/cancel/:id',
+	array('controller' => 'admin', 'action' => 'improvementsCancel'),
+	array(
+		'pass' => array('id'),
+		'id' => '[0-9]+'
+	)
+);
+
+Router::connect(
 	'/admin/improvements/accept',
 	array('controller' => 'admin', 'action' => 'improvementsAccept')
 );

@@ -1,11 +1,11 @@
 <?php
-App::uses('Improvement', 'Model');
+App::uses('ImprovementField', 'Model');
 
 /**
- * Improvement Test Case
+ * ImprovementField Test Case
  *
  */
-class ImprovementTest extends CakeTestCase {
+class ImprovementFieldTest extends CakeTestCase {
 
 /**
  * Fixtures
@@ -13,10 +13,10 @@ class ImprovementTest extends CakeTestCase {
  * @var array
  */
 	public $fixtures = array(
+		'app.improvement_field',
 		'app.improvement',
 		'app.user',
-		'app.user_favorite',
-		'app.improvement_field'
+		'app.user_favorite'
 	);
 
 /**
@@ -26,7 +26,7 @@ class ImprovementTest extends CakeTestCase {
  */
 	public function setUp() {
 		parent::setUp();
-		$this->Improvement = ClassRegistry::init('Improvement');
+		$this->ImprovementField = ClassRegistry::init('ImprovementField');
 	}
 
 /**
@@ -35,7 +35,7 @@ class ImprovementTest extends CakeTestCase {
  * @return void
  */
 	public function tearDown() {
-		unset($this->Improvement);
+		unset($this->ImprovementField);
 
 		parent::tearDown();
 	}

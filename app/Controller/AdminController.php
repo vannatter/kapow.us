@@ -71,7 +71,7 @@ class AdminController extends AppController {
 		),
 		'Improvement' => array(
 			'limit' => 25,
-			'order' => array('Improvement.id' => 'ASC')
+			'order' => array('Improvement.status' => 'ASC')
 		)
 	);
 
@@ -85,6 +85,7 @@ class AdminController extends AppController {
 		$this->set('photoQueueTotal', $this->Store->StorePhoto->find('count', array('conditions' => array('StorePhoto.active' => 0))));
 		$this->set('creatorQueueTotal', $this->Creator->find('count', array('conditions' => array('Creator.status' => 0))));
 		$this->set('newStoreTotal', $this->Store->find('count', array('conditions' => array('Store.status_id' => 2))));
+		$this->set('newImprovementsTotal', $this->Improvement->find('count', array('conditions' => array('Improvement.status' => array(0, 1)))));
 	}
 
 	public function index() {
@@ -1055,6 +1056,7 @@ class AdminController extends AppController {
 	}
 
 	public function improvements() {
+		$this->Improvement->bindModel(array('belongsTo' => array('Admin' => array('className' => 'User', 'foreignKey' => 'admin_user_id'))));
 		$this->Improvement->recursive = 0;
 		$this->set('improvements', $this->paginate('Improvement'));
 	}
@@ -1069,6 +1071,12 @@ class AdminController extends AppController {
 			$this->redirect('/admin/improvements');
 		}
 
+		$this->Improvement->saveField('status', 1);
+		$this->Improvement->saveField('admin_user_id', $this->Auth->user('id'));
+
+		## we only want to see fields that haven't been accepted/declined
+		$this->Improvement->unbindModel(array('hasMany' => array('ImprovementField')));
+		$this->Improvement->bindModel(array('hasMany' => array('ImprovementField' => array('conditions' => array('ImprovementField.status' => 0)))));
 		$this->set('improve', $this->Improvement->read());
 		$this->set('sections', $this->Item->Section->find('list', array('fields' => array('id', 'section_name'))));
 		$this->set('publishers', $this->Item->Publisher->find('list', array('fields' => array('id', 'publisher_name'))));
@@ -1077,49 +1085,162 @@ class AdminController extends AppController {
 
 	public function improvementsAccept() {
 		if($this->request->is('ajax')) {
-			$result = array('error' => true, 'message' => '');
+			$result = array('error' => true, 'message' => '', 'redirect' => '');
 
 			if(isset($this->params->query)) {
 				$data = $this->params->query;
 
-				if(isset($data['itemId']) && isset($data['type']) && isset($data['field'])) {
-					switch($data['type']) {
-						case 1:   ### ITEM
-							$id = $data['itemId'];
-							$field = $data['field'];
+				if(isset($data['id']) && isset($data['fieldId'])) {
+					## make sure we have a valid improvement record
+					$this->Improvement->id = $data['id'];
+					if(!$this->Improvement->exists()) {
+						$result['message'] = __('Invalid');
+						return new CakeResponse(array('body' => json_encode($result)));
+					}
+					$imp = $this->Improvement->read();
 
-							$this->Improvement->ImproveItem->id = $id;
-							if(!$this->Improvement->ImproveItem->exists()) {
-								$result['message'] = __('Invalid Item');
-							} else {
-								$item = $this->Improvement->ImproveItem->read();
+					## make sure we have a valid improvement field
+					$this->Improvement->ImprovementField->id = $data['fieldId'];
+					if(!$this->Improvement->ImprovementField->exists()) {
+						$result['message'] = __('Invalid Field');
+						return new CakeResponse(array('body' => json_encode($result)));
+					}
+					$field = $this->Improvement->ImprovementField->read();
 
-								$this->Item->id = $item['ImproveItem']['item_id'];
-								$this->Item->saveField($field, $item['ImproveItem'][$field . '_new']);
 
-								$this->log(sprintf('%s accepted change for item %s on field %s new value %s', $this->Auth->user('username'), $item['ImproveItem']['item_id'], $field, $item['ImproveItem'][$field . '_new']), 'admin');
+					switch($imp['Improvement']['type']) {
+						case 1:   ## ITEM
+							$this->Item->id = $imp['Improvement']['type_item_id'];
+							$this->Item->saveField($field['ImprovementField']['field_name'], $field['ImprovementField']['data']);
 
-								$this->Improvement->ImproveItem->updateall(array(
-									'ImproveItem.' . $field => '""',
-									'ImproveItem.' . $field . '_new' => '""'
-								), array(
-									'ImproveItem.id' => $id
-								));
+							$this->log(sprintf('%s accepted change for item %s on field %s new value %s', $this->Auth->user('username'), $imp['Improvement']['type_item_id'], $field['ImprovementField']['field_name'], $field['ImprovementField']['data']), 'admin');
+							break;
+						case 2:   ## SERIES
+							$this->Series->id = $imp['Improvement']['type_item_id'];
+							$this->Series->saveField($field['ImprovementField']['field_name'], $field['ImprovementField']['data']);
 
-								$result['error'] = false;
-							}
+							$this->log(sprintf('%s accepted change for series %s on field %s new value %s', $this->Auth->user('username'), $imp['Improvement']['type_item_id'], $field['ImprovementField']['field_name'], $field['ImprovementField']['data']), 'admin');
+							break;
+						case 3:   ## CREATOR
+							$this->Creator->id = $imp['Improvement']['type_item_id'];
+							$this->Creator->saveField($field['ImprovementField']['field_name'], $field['ImprovementField']['data']);
+
+							$this->log(sprintf('%s accepted change for creator %s on field %s new value %s', $this->Auth->user('username'), $imp['Improvement']['type_item_id'], $field['ImprovementField']['field_name'], $field['ImprovementField']['data']), 'admin');
+							break;
+						case 4:   ## PUBLISHER
+							$this->Publisher->id = $imp['Improvement']['type_item_id'];
+							$this->Publisher->saveField($field['ImprovementField']['field_name'], $field['ImprovementField']['data']);
+
+							$this->log(sprintf('%s accepted change for publisher %s on field %s new value %s', $this->Auth->user('username'), $imp['Improvement']['type_item_id'], $field['ImprovementField']['field_name'], $field['ImprovementField']['data']), 'admin');
+							break;
+						case 5:   ## STORE
+							$this->Store->id = $imp['Improvement']['type_item_id'];
+							$this->Store->saveField($field['ImprovementField']['field_name'], $field['ImprovementField']['data']);
+
+							$this->log(sprintf('%s accepted change for store %s on field %s new value %s', $this->Auth->user('username'), $imp['Improvement']['type_item_id'], $field['ImprovementField']['field_name'], $field['ImprovementField']['data']), 'admin');
 							break;
 					}
+
+					$this->Improvement->ImprovementField->id = $data['fieldId'];
+					$this->Improvement->ImprovementField->saveField('status', 1);
+					$this->Improvement->ImprovementField->saveField('admin_user_id', $this->Auth->user('id'));
+
+					if($this->Improvement->ImprovementField->find('count', array('conditions' => array('ImprovementField.improvement_id' => $data['id'], 'ImprovementField.status' => 0))) == 0) {
+						$this->Improvement->id = $data['id'];
+						$this->Improvement->saveField('status', 99);   ## CLOSED
+						$this->Improvement->saveField('admin_user_id', 0);
+
+						$this->Session->setFlash(__('Closed'), 'alert', array(
+							'plugin' => 'TwitterBootstrap',
+							'class' => 'alert-success'
+						));
+						$result['redirect'] = '/admin/improvements';
+					}
+
+					$result['error'] = false;
 				} else {
-					$result['message'] = __('Invalid Request');
+					$result['message'] = __('Invalid Request; 1');
 				}
 			} else {
-				$result['message'] = __('Invalid Request');
+				$result['message'] = __('Invalid Request; 2');
 			}
 			return new CakeResponse(array('body' => json_encode($result)));
 		} else {
 			echo 'javascript disabled';
 			exit;
 		}
+	}
+
+	public function improvementsDecline() {
+		if($this->request->is('ajax')) {
+			$result = array('error' => true, 'message' => '', 'redirect' => '');
+
+			if(isset($this->params->query)) {
+				$data = $this->params->query;
+
+				if(isset($data['id']) && isset($data['fieldId'])) {
+					## make sure we have a valid improvement record
+					$this->Improvement->id = $data['id'];
+					if(!$this->Improvement->exists()) {
+						$result['message'] = __('Invalid');
+						return new CakeResponse(array('body' => json_encode($result)));
+					}
+					$imp = $this->Improvement->read();
+
+					## make sure we have a valid improvement field
+					$this->Improvement->ImprovementField->id = $data['fieldId'];
+					if(!$this->Improvement->ImprovementField->exists()) {
+						$result['message'] = __('Invalid Field');
+						return new CakeResponse(array('body' => json_encode($result)));
+					}
+					$field = $this->Improvement->ImprovementField->read();
+
+					$this->Improvement->ImprovementField->saveField('status', 99);   ## DECLINED
+					$this->Improvement->ImprovementField->saveField('admin_user_id', $this->Auth->user('id'));
+
+					if($this->Improvement->ImprovementField->find('count', array('conditions' => array('ImprovementField.improvement_id' => $data['id'], 'ImprovementField.status' => 0))) == 0) {
+						$this->Improvement->id = $data['id'];
+						$this->Improvement->saveField('status', 99);   ## CLOSED
+						$this->Improvement->saveField('admin_user_id', 0);
+
+						$this->Session->setFlash(__('Closed'), 'alert', array(
+							'plugin' => 'TwitterBootstrap',
+							'class' => 'alert-success'
+						));
+						$result['redirect'] = '/admin/improvements';
+					}
+
+					$result['error'] = false;
+				} else {
+					$result['message'] = __('Invalid Request; 1');
+				}
+			} else {
+				$result['message'] = __('Invalid Request; 2');
+			}
+			return new CakeResponse(array('body' => json_encode($result)));
+		} else {
+			echo 'javascript disabled';
+			exit;
+		}
+	}
+
+	public function improvementsCancel($id=null) {
+		$this->Improvement->id = $id;
+		if(!$this->Improvement->exists()) {
+			$this->Session->setFlash(__('Not Found'), 'alert', array(
+				'plugin' => 'TwitterBootstrap',
+				'class' => 'alert-error'
+			));
+			$this->redirect('/admin/improvements');
+		}
+
+		$this->Improvement->saveField('status', 0);
+		$this->Improvement->saveField('admin_user_id', 0);
+
+		$this->Session->setFlash(__('Canceled'), 'alert', array(
+			'plugin' => 'TwitterBootstrap',
+			'class' => 'alert-success'
+		));
+		$this->redirect('/admin/improvements');
 	}
 }

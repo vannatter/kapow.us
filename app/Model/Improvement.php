@@ -4,7 +4,7 @@ App::uses('AppModel', 'Model');
  * Improvement Model
  *
  * @property User $User
- * @property ImproveItem $ImproveItem
+ * @property ImprovementField $ImprovementField
  */
 class Improvement extends AppModel {
 
@@ -24,16 +24,75 @@ class Improvement extends AppModel {
 			'fields' => '',
 			'order' => ''
 		),
-		'ImproveItem' => array(
-			'className' => 'ImproveItem',
-			'foreignKey' => 'improve_id',
+		'Item' => array(
+			'foreignKey' => 'type_item_id',
 			'conditions' => array(
-				'Improvement.improve_type' => 1
+				'Improvement.type' => 1
+			)
+		),
+		'Creator' => array(
+			'foreignKey' => 'type_item_id',
+			'conditions' => array(
+				'Improvement.type' => 3
+			)
+		),
+		'Series' => array(
+			'foreignKey' => 'type_item_id',
+			'conditions' => array(
+				'Improvement.type' => 2
+			)
+		),
+		'Publisher' => array(
+			'foreignKey' => 'type_item_id',
+			'conditions' => array(
+				'Improvement.type' => 4
+			)
+		),
+		'Store' => array(
+			'foreignKey' => 'type_item_id',
+			'conditions' => array(
+				'Improvement.type' => 5
 			)
 		)
 	);
 
-	public function add($improveId, $improveType, $userId) {
-		$this->save(array('Improvement' => array('improve_id' => $improveId, 'improve_type' => $improveType, 'user_id' => $userId)));
+/**
+ * hasMany associations
+ *
+ * @var array
+ */
+	public $hasMany = array(
+		'ImprovementField' => array(
+			'className' => 'ImprovementField',
+			'foreignKey' => 'improvement_id',
+			'dependent' => false,
+			'conditions' => '',
+			'fields' => '',
+			'order' => '',
+			'limit' => '',
+			'offset' => '',
+			'exclusive' => '',
+			'finderQuery' => '',
+			'counterQuery' => ''
+		)
+	);
+
+	public function add($type, $itemId, $data, $userId) {
+		$add = array(
+			'Improvement' => array(
+				'type' => $type,
+				'type_item_id' => $itemId,
+				'status' => 0,
+				'user_id' => $userId
+			)
+		);
+
+		if($this->save($add)) {
+			$id = $this->id;
+
+			foreach($data as $field) {
+				$this->ImprovementField->add($id, $field['field_name'], $field['data']);
+			}
+		}
 	}
 }
