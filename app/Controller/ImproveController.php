@@ -59,7 +59,7 @@ class ImproveController extends AppController {
 		$this->set('sections', $this->Improvement->Item->Section->find('list', array('fields' => array('id', 'section_name'))));
 		$this->set('publishers', $this->Improvement->Item->Publisher->find('list', array('fields' => array('id', 'publisher_name'))));
 		$this->set('series', $this->Improvement->Item->Series->find('list', array('fields' => array('id', 'series_name'))));
-		$this->set('title_for_layout', 'Improve This Item Content');
+		$this->set('title_for_layout', 'Improve This Content');
 	}
 
 	public function creator($creatorId=null) {
@@ -103,6 +103,7 @@ class ImproveController extends AppController {
 		}
 
 		$this->set('creator', $creator);
+		$this->set('title_for_layout', 'Improve This Content');
 	}
 
 	public function series($seriesId=null) {
@@ -146,6 +147,7 @@ class ImproveController extends AppController {
 		}
 
 		$this->set('series', $series);
+		$this->set('title_for_layout', 'Improve This Content');
 	}
 
 	public function publisher($publisherId=null) {
@@ -189,6 +191,7 @@ class ImproveController extends AppController {
 		}
 
 		$this->set('publisher', $publisher);
+		$this->set('title_for_layout', 'Improve This Content');
 	}
 
 	public function store($storeId=null) {
@@ -232,5 +235,6 @@ class ImproveController extends AppController {
 		}
 
 		$this->set('store', $store);
+		$this->set('title_for_layout', 'Improve This Content');
 	}
 }
