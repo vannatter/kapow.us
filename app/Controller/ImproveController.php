@@ -205,11 +205,10 @@ class ImproveController extends AppController {
 
 		$store = $this->Improvement->Store->read();
 
-		if($this->request->is('post') || $this->request->is('put')) {
+		if ($this->request->is('post') || $this->request->is('put')) {
 			$data = Sanitize::clean($this->request->data, array('encode' => false, 'escape' => false));
 
 			$fields = array('name', 'address', 'address_2', 'city', 'state', 'zip', 'phone_no', 'website', 'facebook_url', 'twitter_url', 'ebay_url');
-
 			$toSave = array();
 
 			foreach($fields as $field) {
