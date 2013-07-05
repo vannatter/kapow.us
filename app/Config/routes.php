@@ -286,6 +286,8 @@ Router::connect(
 	)
 );
 
+Router::connect('/profile/*', array('controller' => 'profile', 'action' => 'index'));
+
 ## static maps
 Router::connect('/random_item', array('controller' => 'home', 'action' => 'random_item'));
 Router::connect('/tos', array('controller' => 'home', 'action' => 'tos'));
