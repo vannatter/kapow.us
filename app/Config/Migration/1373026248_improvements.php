@@ -17,11 +17,6 @@ class Improvements extends CakeMigration {
  */
 	public $migration = array(
 		'up' => array(
-			'drop_table' => array(
-				'improve_items', 'improvements'
-			),
-		),
-		'down' => array(
 			'create_table' => array(
 				'improve_items' => array(
 					'id' => array('type' => 'integer', 'null' => false, 'default' => NULL, 'key' => 'primary'),
@@ -75,6 +70,11 @@ class Improvements extends CakeMigration {
 					),
 					'tableParameters' => array('charset' => 'latin1', 'collate' => 'latin1_swedish_ci', 'engine' => 'MyISAM'),
 				),
+			),
+		),
+		'down' => array(
+			'drop_table' => array(
+				'improve_items', 'improvements'
 			),
 		),
 	);
