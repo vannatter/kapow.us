@@ -86,6 +86,7 @@ class AdminController extends AppController {
 		$this->set('creatorQueueTotal', $this->Creator->find('count', array('conditions' => array('Creator.status' => 0))));
 		$this->set('newStoreTotal', $this->Store->find('count', array('conditions' => array('Store.status_id' => 2))));
 		$this->set('newImprovementsTotal', $this->Improvement->find('count', array('conditions' => array('Improvement.status' => array(0, 1)))));
+		$this->set('publisherQueueTotal', $this->Publisher->find('count', array('conditions' => array('Publisher.status' => 0))));
 	}
 
 	public function index() {
@@ -262,6 +263,11 @@ class AdminController extends AppController {
 	}
 
 	public function publishers() {
+		$this->paginate['Publisher']['order'] = array('Publisher.status' => 'ASC', 'Publisher.publisher_name' => 'ASC');
+
+		$this->Publisher->bindModel(array('belongsTo' => array('LockUser' => array('className' => 'User', 'foreignKey' => 'locked_by_user_id'))));
+		$this->Publisher->unbindModel(array('hasMany' => array('Item')));
+
 		$this->Publisher->recursive = 0;
 		$this->set('publishers', $this->paginate('Publisher'));
 	}
@@ -303,6 +309,7 @@ class AdminController extends AppController {
 
 			if(!$skip) {
 				$data['Publisher']['id'] = $id;
+				$data['Publisher']['locked_by_user_id'] = 0;   ## unlock publisher
 
 				if ($this->Publisher->save($data)) {
 					$this->Session->setFlash(__('Publisher Saved!'), 'alert', array(
@@ -323,8 +330,49 @@ class AdminController extends AppController {
 			}
 
 			$publisher = $this->Publisher->read();
+
+			if($publisher['Publisher']['locked_by_user_id'] != 0 && $publisher['Publisher']['locked_by_user_id'] != $this->Auth->user('id')) {
+				$this->Session->setFlash(__('Publisher locked other user'), 'alert', array(
+					'plugin' => 'TwitterBootstrap',
+					'class' => 'alert-error'
+				));
+				$this->redirect('/admin/publishers');
+			}
 			$this->request->data = $publisher;
+
+			## lock the publisher
+			$this->Publisher->saveField('locked_by_user_id', $this->Auth->user('id'));
 		}
+	}
+
+	public function publishersUnlock($id) {
+		$this->Publisher->id = $id;
+		if(!$this->Publisher->exists()) {
+			$this->Session->setFlash(__('Invalid Publisher'), 'alert', array(
+				'plugin' => 'TwitterBootstrap',
+				'class' => 'alert-error'
+			));
+			$this->redirect('/admin/publishers');
+		}
+
+		$this->Publisher->recursive = -1;
+		$publisher = $this->Publisher->read();
+
+		if($publisher['Publisher']['locked_by_user_id'] == $this->Auth->user('id')) {
+			$this->Publisher->saveField('locked_by_user_id', 0);
+
+			$this->Session->setFlash(__('Publisher Unlocked'), 'alert', array(
+				'plugin' => 'TwitterBootstrap',
+				'class' => 'alert-success'
+			));
+		} else {
+			$this->Session->setFlash(__('You don\'t have publisher locked'), 'alert', array(
+				'plugin' => 'TwitterBootstrap',
+				'class' => 'alert-error'
+			));
+		}
+
+		$this->redirect('/admin/publishers');
 	}
 
 	public function series() {

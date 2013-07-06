@@ -591,6 +591,15 @@ Router::connect(
 	array('controller' => 'admin', 'action' => 'improvementsDecline')
 );
 
+Router::connect(
+	'/admin/publishers/unlock/:id',
+	array('controller' => 'admin', 'action' => 'publishersUnlock'),
+	array(
+		'pass' => array('id'),
+		'id' => '[0-9]+'
+	)
+);
+
 CakePlugin::routes();
 
 require CAKE . 'Config' . DS . 'routes.php';
