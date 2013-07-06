@@ -82,14 +82,66 @@ class AdminController extends AppController {
 		$this->layout = 'admin';
 
 		## some stat stuff
-		$this->set('photoQueueTotal', $this->Store->StorePhoto->find('count', array('conditions' => array('StorePhoto.active' => 0))));
-		$this->set('creatorQueueTotal', $this->Creator->find('count', array('conditions' => array('Creator.status' => 0))));
-		$this->set('newStoreTotal', $this->Store->find('count', array('conditions' => array('Store.status_id' => 2))));
-		$this->set('newImprovementsTotal', $this->Improvement->find('count', array('conditions' => array('Improvement.status' => array(0, 1)))));
-		$this->set('publisherQueueTotal', $this->Publisher->find('count', array('conditions' => array('Publisher.status' => 0))));
+		$this->set('photoQueueTotal', $this->Store->StorePhoto->find('count', array(
+			'conditions' => array(
+				'StorePhoto.active' => 0
+			)
+		)));
+
+		$this->set('creatorQueueTotal', $this->Creator->find('count', array(
+			'conditions' => array(
+				'Creator.status' => 0
+			)
+		)));
+
+		$this->set('newStoreTotal', $this->Store->find('count', array(
+			'conditions' => array(
+				'Store.status_id' => 2
+			)
+		)));
+
+		$this->set('newImprovementsTotal', $this->Improvement->find('count', array(
+			'conditions' => array(
+				'Improvement.status' => array(0, 1)
+			)
+		)));
+
+		$this->set('publisherQueueTotal', $this->Publisher->find('count', array(
+			'conditions' => array(
+				'Publisher.status' => 0
+			)
+		)));
+
+		$this->set('openReportTotal', $this->Report->find('count', array(
+			'conditions' => array(
+				'Report.status !=' => 99
+			)
+		)));
+
+		$this->set('openFlagTotal', $this->Flag->find('count', array(
+			'conditions' => array(
+				'Flag.status !=' => 99
+			)
+		)));
 	}
 
 	public function index() {
+		$this->set('itemTotal', $this->Item->find('count', array(
+			'conditions' => array(
+				'Item.status' => 1
+			)
+		)));
+
+		$this->set('seriesTotal', $this->Series->find('count'));
+
+		$this->set('creatorTotal', $this->Creator->find('count'));
+
+		$this->set('publisherTotal', $this->Publisher->find('count'));
+
+		$this->Store->recursive = -1;
+		$this->set('shopTotal', $this->Store->find('count'));
+
+		$this->set('userTotal', $this->User->find('count'));
 	}
 
 	##### ITEMS
