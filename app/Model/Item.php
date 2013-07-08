@@ -113,7 +113,20 @@ class Item extends AppModel {
 			$date = date("Y-m-d", strtotime("last wednesday") );
 		}
 
-		return $this->find('all', array('conditions' => array('Item.item_date' => $date, 'Section.category_id' => 1), 'limit'=> $limit, 'order' => array('RAND()')));
+		$contain = array(
+			'Section',
+			'Publisher',
+			'Series',
+			'Pull',
+			'ItemCreator' => array(
+				'Creator'
+			),
+			'ItemTag' => array(
+				'Tag'
+			)
+		);
+
+		return $this->find('all', array('conditions' => array('Item.item_date' => $date, 'Section.category_id' => 1), 'limit'=> $limit, 'order' => array('RAND()'), 'contain' => $contain));
 	}
 
 	function getRandom() {
