@@ -428,8 +428,28 @@ class AdminController extends AppController {
 	}
 
 	public function series() {
+		if($this->request->is('post') || $this->request->is('put')) {
+			$data = Sanitize::clean($this->request->data);
+
+			if(isset($data['Series']['series_name']) && !empty($data['Series']['series_name'])) {
+				$name = $data['Series']['series_name'];
+				$this->redirect('/admin/series?name=' . $name);
+			}
+		}
+
+		$name = null;
+		if(isset($this->request->query['name'])) {
+			$name = Sanitize::clean($this->request->query['name']);
+		}
+
+		if($name) {
+			$series = $this->paginate('Series', array('Series.series_name LIKE' => '%' . $name . '%'));
+		} else {
+			$series = $this->paginate('Series');
+		}
+
 		$this->Series->recursive = 0;
-		$this->set('series', $this->paginate('Series'));
+		$this->set('series', $series);
 	}
 
 	public function seriesEdit($id) {
