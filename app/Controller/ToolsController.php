@@ -1005,25 +1005,31 @@ class ToolsController extends AppController {
 
 			foreach($items as $item) {
 				$img = $item['Item']['img_fullpath'];
+				$img_fullPath = WWW_ROOT . $img;
 
-				if(is_file(WWW_ROOT . $img)) {
+				## REMOVE THIS AFTER TESTING LOCALLY
+				$img_fullPath = str_replace('\\\\', '\\', str_replace('/', '\\', $img_fullPath));
+
+				if(is_file($img_fullPath)) {
 					$ext = pathinfo($img, PATHINFO_EXTENSION);
 
 					foreach($thumbs as $thumb) {
-						if (!is_file(WWW_ROOT . $img . $thumb['ext'])) {
-							list($width, $height) = getimagesize(WWW_ROOT . $img);
+						if (!is_file($img_fullPath . $thumb['ext'])) {
+							list($width, $height) = getimagesize($img_fullPath);
 							$new_width = $width * $thumb['percent'];
 							$new_height = $height * $thumb['percent'];
 
 							$image_p = imagecreatetruecolor($new_width, $new_height);
-							$image = imagecreatefromjpeg(WWW_ROOT . $img);
+							$image = imagecreatefromjpeg($img_fullPath);
 							imagecopyresampled($image_p, $image, 0, 0, 0, 0, $new_width, $new_height, $width, $height);
 
-							imagejpeg($image_p, WWW_ROOT . $img . $thumb['ext'], 100);
+							imagejpeg($image_p, $img_fullPath . $thumb['ext'], 100);
 
-							$this->log(sprintf('generated thumb for %s - %s', $img, WWW_ROOT . $img . $thumb['ext']));
+							$this->log(sprintf('generated thumb for %s - %s', $img, $img_fullPath . $thumb['ext']));
 						}
 					}
+				} else {
+					$this->log(sprintf('file not found - %s', $img_fullPath));
 				}
 			}
 		} else {
