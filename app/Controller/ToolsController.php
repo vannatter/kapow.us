@@ -1007,8 +1007,7 @@ class ToolsController extends AppController {
 				$img = $item['Item']['img_fullpath'];
 				$img_fullPath = WWW_ROOT . $img;
 
-				## REMOVE THIS AFTER TESTING LOCALLY
-				$img_fullPath = str_replace('\\\\', '\\', str_replace('/', '\\', $img_fullPath));
+				$img_fullPath = str_replace('//', '/', $img_fullPath);
 
 				if(is_file($img_fullPath)) {
 					$ext = pathinfo($img, PATHINFO_EXTENSION);
