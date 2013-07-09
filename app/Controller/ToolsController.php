@@ -6,6 +6,7 @@ App::uses('AppController', 'Controller');
  * @property Store $Store
  * @property Creator $Creator
  * @property Tag $Tag
+ * @property Item $Item
  */
 class ToolsController extends AppController {
 
@@ -978,6 +979,56 @@ class ToolsController extends AppController {
 
 		$this->log(' - removing item tag records');
 		$this->Tag->query("DELETE FROM item_tags WHERE NOT item_id IN (SELECT id FROM items)");
+
+		exit;
+	}
+
+	public function generateThumbs() {
+		set_time_limit(0);   ## FOREVER
+
+		$this->log('generateThumbs() - STARTED');
+
+		$thumbs = array(
+			'50' => array(
+				'percent' => 0.5,
+				'ext' => '_50p.jpg'
+			),
+			'25' => array(
+				'percent' => 0.25,
+				'ext' => '_25p.jpg'
+			)
+		);
+
+		## get a list of items
+		if($items = $this->Item->find('all', array('conditions' => array('Item.img_fullpath != ""'), 'fields' => array('Item.img_fullpath'), 'recursive' => -1))) {
+			$this->log(sprintf('%s items to process', count($items)));
+
+			foreach($items as $item) {
+				$img = $item['Item']['img_fullpath'];
+
+				$ext = pathinfo($img, PATHINFO_EXTENSION);
+
+				foreach($thumbs as $thumb) {
+					if (!is_file(WWW_ROOT . $img . $thumb['ext'])) {
+						list($width, $height) = getimagesize(WWW_ROOT . $img);
+						$new_width = $width * $thumb['percent'];
+						$new_height = $height * $thumb['percent'];
+
+						$image_p = imagecreatetruecolor($new_width, $new_height);
+						$image = imagecreatefromjpeg(WWW_ROOT . $img);
+						imagecopyresampled($image_p, $image, 0, 0, 0, 0, $new_width, $new_height, $width, $height);
+
+						imagejpeg($image_p, WWW_ROOT . $img . $thumb['ext'], 100);
+
+						$this->log(sprintf('generated thumb for %s - %s', $img, WWW_ROOT . $img . $thumb['ext']));
+					}
+				}
+			}
+		} else {
+			$this->log('no items found with images');
+		}
+
+		$this->log('generateThumbs() - FINISHED');
 
 		exit;
 	}
