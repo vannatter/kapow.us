@@ -1000,7 +1000,18 @@ class ToolsController extends AppController {
 		);
 
 		## get a list of items
-		if($items = $this->Item->find('all', array('conditions' => array('Item.img_fullpath != ""'), 'fields' => array('Item.img_fullpath'), 'recursive' => -1))) {
+		$items = $this->Item->find('all', array(
+			'conditions' => array(
+				'Item.img_fullpath != ""'
+			),
+			'fields' => array(
+				'Item.img_fullpath'
+			),
+			'recursive' => -1,
+			'limit' => 50
+		));
+
+		if($items) {
 			$this->log(sprintf('%s items to process', count($items)));
 
 			foreach($items as $item) {
