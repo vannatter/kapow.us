@@ -1007,8 +1007,7 @@ class ToolsController extends AppController {
 			'fields' => array(
 				'Item.img_fullpath'
 			),
-			'recursive' => -1,
-			'limit' => 250
+			'recursive' => -1
 		));
 
 		if($items) {
