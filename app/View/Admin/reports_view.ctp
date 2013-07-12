@@ -32,4 +32,4 @@ switch($report['Report']['item_type']) {
 <h2><?php echo $link; ?></h2>
 <h4><?php echo __('Description'); ?></h4>
 <div class="well"><?php echo $report['Report']['description']; ?></div>
-<?php echo $this->Html->link(__('Cancel'), '/admin/reports/cancel/' . $report['Report']['id'], array('class' => 'btn')); ?> <?php echo $this->Html->link(__('Close'), '/admin/reports/close/' . $report['Report']['id'], array('class' => 'btn')); ?>
+<?php echo $this->Html->link(__('Cancel'), '/admin/reports/cancel/' . $report['Report']['id'], array('class' => 'btn')); ?> <?php echo $this->Html->link(__('Close Report'), '/admin/reports/close/' . $report['Report']['id'], array('class' => 'btn')); ?>
