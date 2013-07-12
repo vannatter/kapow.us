@@ -1,6 +1,11 @@
 <?php
 App::uses('AppController', 'Controller');
 
+/**
+ * Class ItemsController
+ *
+ * @property Item $Item
+ */
 class ItemsController extends AppController {
 
 	public $name = 'Items';
@@ -214,6 +219,82 @@ class ItemsController extends AppController {
 	}
 
 	public function next_week($content_type="1") {
+		if($this->request->ext == 'json') {
+			$result = array('error' => false);
+
+			$release_date = $this->_getReleaseDate('next_week');
+
+			$this->Item->bindModel(array(
+				'hasOne' => array(
+					'Pull' => array(
+						'conditions' => array(
+							'Pull.user_id' => $this->Auth->user('id')
+						)
+					)
+				)
+			));
+
+			$items = $this->Item->find('all', array(
+				'conditions' => array(
+					'Item.item_date' => $release_date,
+					'Section.category_id' => $content_type
+				),
+				'order' => array(
+					'Pull.created' => 'DESC',
+					'Item.series_id' => 'DESC'
+				),
+				'fields' => array(
+					'id', 'item_name', 'description', 'img_fullpath'
+				),
+				'contain' => array(
+					'Section' => array(
+						'fields' => array(
+							'section_name'
+						)
+					),
+					'Publisher' => array(
+						'fields' => array(
+							'publisher_name'
+						)
+					),
+					'Series' => array(
+						'fields' => array(
+							'series_name'
+						)
+					),
+					'ItemCreator' => array(
+						'Creator' => array(
+							'fields' => array(
+								'creator_name'
+							)
+						),
+						'CreatorType' => array(
+							'fields' => array(
+								'creator_short_name',
+								'creator_type_name'
+							)
+						),
+						'fields' => array(
+							'id'
+						)
+					),
+					'ItemTag',
+					'Pull'
+				)
+			));
+
+			if($items) {
+				$result['items'] = $items;
+				$result['count'] = count($items);
+				$result['thumbs'] = array('large' => '_50p.jpg', 'small' => '_25p.jpg');
+			} else {
+				$result['error'] = true;
+				$result['message'] = __('No Items Found');
+			}
+
+			return new CakeResponse(array('body' => json_encode($result)));
+		}
+
 		if($this->request->is('post') || $this->request->is('put')) {
 			$data = Sanitize::clean($this->request->data);
 
@@ -227,23 +308,7 @@ class ItemsController extends AppController {
 			}
 		}
 
-		$first_day = date("N", strtotime("today"));
-		if ($first_day < 3) {
-			$release_date = date("Y-m-d", strtotime("+2 wednesdays"));
-		}
-		if ($first_day == 3) {
-			$release_date = date("Y-m-d", strtotime("+1 week"));
-		}
-		if ($first_day == 4) {
-			$release_date = date("Y-m-d", strtotime("+6 days"));
-		}
-		if ($first_day > 4) {
-			$release_date = date("Y-m-d", strtotime("this wednesday"));
-		}
-
-		#$this->Publisher->unbindModel(array('hasMany' => array('Item')), false);
-		#$this->Tag->unbindModel(array('hasMany' => array('ItemTag')), false);
-		#$this->ItemTag->unbindModel(array('belongsTo' => array('Item')), false);
+		$release_date = $this->_getReleaseDate('next_week');
 
 		$this->Item->bindModel(array(
 			'hasOne' => array(
@@ -305,6 +370,82 @@ class ItemsController extends AppController {
 	}
 
 	public function this_week($content_type="1") {
+		if($this->request->ext == 'json') {
+			$result = array('error' => false);
+
+			$release_date = $this->_getReleaseDate('this_week');
+
+			$this->Item->bindModel(array(
+				'hasOne' => array(
+					'Pull' => array(
+						'conditions' => array(
+							'Pull.user_id' => $this->Auth->user('id')
+						)
+					)
+				)
+			));
+
+			$items = $this->Item->find('all', array(
+				'conditions' => array(
+					'Item.item_date' => $release_date,
+					'Section.category_id' => $content_type
+				),
+				'order' => array(
+					'Pull.created' => 'DESC',
+					'Item.series_id' => 'DESC'
+				),
+				'fields' => array(
+					'id', 'item_name', 'description', 'img_fullpath'
+				),
+				'contain' => array(
+					'Section' => array(
+						'fields' => array(
+							'section_name'
+						)
+					),
+					'Publisher' => array(
+						'fields' => array(
+							'publisher_name'
+						)
+					),
+					'Series' => array(
+						'fields' => array(
+							'series_name'
+						)
+					),
+					'ItemCreator' => array(
+						'Creator' => array(
+							'fields' => array(
+								'creator_name'
+							)
+						),
+						'CreatorType' => array(
+							'fields' => array(
+								'creator_short_name',
+								'creator_type_name'
+							)
+						),
+						'fields' => array(
+							'id'
+						)
+					),
+					'ItemTag',
+					'Pull'
+				)
+			));
+
+			if($items) {
+				$result['items'] = $items;
+				$result['count'] = count($items);
+				$result['thumbs'] = array('large' => '_50p.jpg', 'small' => '_25p.jpg');
+			} else {
+				$result['error'] = true;
+				$result['message'] = __('No Items Found');
+			}
+
+			return new CakeResponse(array('body' => json_encode($result)));
+		}
+
 		if($this->request->is('post') || $this->request->is('put')) {
 			$data = Sanitize::clean($this->request->data);
 
@@ -318,24 +459,7 @@ class ItemsController extends AppController {
 			}
 		}
 
-		$first_day = date("N", strtotime("today"));
-		
-		if ($first_day < 3) {
-			$release_date = date("Y-m-d", strtotime("this wednesday"));
-		}
-		if ($first_day == 3) {
-			$release_date = date("Y-m-d", strtotime("today"));
-		}
-		if ($first_day == 4) {
-			$release_date = date("Y-m-d", strtotime("yesterday"));
-		}
-		if ($first_day > 4) {
-			$release_date = date("Y-m-d", strtotime("last wednesday") );
-		}
-
-		#$this->Publisher->unbindModel(array('hasMany' => array('Item')), false);
-		#$this->Tag->unbindModel(array('hasMany' => array('ItemTag')), false);
-		#$this->ItemTag->unbindModel(array('belongsTo' => array('Item')), false);
+		$release_date = $this->_getReleaseDate();
 
 		$this->Item->bindModel(array(
 			'hasOne' => array(
@@ -512,5 +636,45 @@ class ItemsController extends AppController {
 		$this->set('title_for_layout','Items by Date (' . date("m/d/Y", strtotime($date)) . ')');
 		$this->set('release', date("m/d/Y", strtotime($date)));
 		
+	}
+
+	private function _getReleaseDate($type='this_week') {
+		$first_day = date("N", strtotime("today"));
+		$release_date = date("Y-m-d", strtotime("today"));
+
+		switch(strtolower($type)) {
+			case 'this_week':
+				if ($first_day < 3) {
+					$release_date = date("Y-m-d", strtotime("this wednesday"));
+				}
+				if ($first_day == 3) {
+					$release_date = date("Y-m-d", strtotime("today"));
+				}
+				if ($first_day == 4) {
+					$release_date = date("Y-m-d", strtotime("yesterday"));
+				}
+				if ($first_day > 4) {
+					$release_date = date("Y-m-d", strtotime("last wednesday") );
+				}
+				break;
+			case 'next_week':
+				$release_date = date("Y-m-d", strtotime("+1 week"));
+
+				if ($first_day < 3) {
+					$release_date = date("Y-m-d", strtotime("+2 wednesdays"));
+				}
+				if ($first_day == 3) {
+					$release_date = date("Y-m-d", strtotime("+1 week"));
+				}
+				if ($first_day == 4) {
+					$release_date = date("Y-m-d", strtotime("+6 days"));
+				}
+				if ($first_day > 4) {
+					$release_date = date("Y-m-d", strtotime("this wednesday"));
+				}
+				break;
+		}
+
+		return $release_date;
 	}
 }
