@@ -765,7 +765,8 @@ class AdminController extends AppController {
 			'Series' => array('foreignKey' => 'report_item_id', 'conditions' => array('item_type' => '2')),
 			'Creator' => array('foreignKey' => 'report_item_id', 'conditions' => array('item_type' => '3')),
 			'Publisher' => array('foreignKey' => 'report_item_id', 'conditions' => array('item_type' => '4')),
-			'Store' => array('foreignKey' => 'report_item_id', 'conditions' => array('item_type' => '5'))
+			'Store' => array('foreignKey' => 'report_item_id', 'conditions' => array('item_type' => '5')),
+			'LockUser' => array('className' => 'User', 'foreignKey' => 'admin_user_id')
 		)));
 
 		$this->set('reports', $this->paginate('Report'));
@@ -902,7 +903,8 @@ class AdminController extends AppController {
 			'Series' => array('foreignKey' => 'flag_item_id', 'conditions' => array('item_type' => '2')),
 			'Creator' => array('foreignKey' => 'flag_item_id', 'conditions' => array('item_type' => '3')),
 			'Publisher' => array('foreignKey' => 'flag_item_id', 'conditions' => array('item_type' => '4')),
-			'Store' => array('foreignKey' => 'flag_item_id', 'conditions' => array('item_type' => '5'))
+			'Store' => array('foreignKey' => 'flag_item_id', 'conditions' => array('item_type' => '5')),
+			'LockUser' => array('className' => 'User', 'foreignKey' => 'admin_user_id')
 		)));
 
 		$this->set('flags', $this->paginate('Flag'));

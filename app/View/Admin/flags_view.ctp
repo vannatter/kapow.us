@@ -32,4 +32,4 @@ switch($flag['Flag']['item_type']) {
 	<h2><?php echo $link; ?></h2>
 	<h4><?php echo __('Description'); ?></h4>
 	<div class="well"><?php echo $flag['Flag']['description']; ?></div>
-<?php echo $this->Html->link(__('Cancel'), '/admin/flags/cancel/' . $flag['Flag']['id'], array('class' => 'btn')); ?> <?php echo $this->Html->link(__('Close'), '/admin/flags/close/' . $flag['Flag']['id'], array('class' => 'btn')); ?>
+<?php echo $this->Html->link(__('Cancel'), '/admin/flags/cancel/' . $flag['Flag']['id'], array('class' => 'btn')); ?> <?php echo $this->Html->link(__('Close Flag'), '/admin/flags/close/' . $flag['Flag']['id'], array('class' => 'btn')); ?>

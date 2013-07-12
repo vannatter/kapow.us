@@ -51,7 +51,7 @@
 					echo $this->Html->link(__('Open'), sprintf('/admin/reports/view/%s', $report['Report']['id']), array(
 						'class' => 'btn btn-small btn-inverse'));
 				} elseif($report['Report']['status'] == 1) {
-					echo 'OPEN';
+					echo $report['LockUser']['username'];
 				}
 				?>
 			</td>

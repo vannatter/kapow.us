@@ -51,7 +51,7 @@
 						echo $this->Html->link(__('Open'), sprintf('/admin/flags/view/%s', $flag['Flag']['id']), array(
 							'class' => 'btn btn-small btn-inverse'));
 					} elseif($flag['Flag']['status'] == 1) {
-						echo 'OPEN';
+						echo $flag['LockUser']['username'];
 					}
 					?>
 				</td>
