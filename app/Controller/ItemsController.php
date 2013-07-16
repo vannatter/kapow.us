@@ -224,69 +224,105 @@ class ItemsController extends AppController {
 
 			$release_date = $this->_getReleaseDate('next_week');
 
-			$this->Item->bindModel(array(
-				'hasOne' => array(
-					'Pull' => array(
-						'conditions' => array(
-							'Pull.user_id' => $this->Auth->user('id')
-						)
-					)
-				)
-			));
-
-			$items = $this->Item->find('all', array(
+			## get a list of publishers for the given date
+			$publishers = $this->Item->find('all', array(
 				'conditions' => array(
 					'Item.item_date' => $release_date,
-					'Section.category_id' => $content_type
-				),
-				'order' => array(
-					'Pull.created' => 'DESC',
-					'Item.series_id' => 'DESC'
+					'Section.category_id' => $content_type,
 				),
 				'fields' => array(
-					'id', 'item_name', 'description', 'img_fullpath'
+					'Item.publisher_id'
+				),
+				'group' => array(
+					'publisher_id'
 				),
 				'contain' => array(
-					'Section' => array(
-						'fields' => array(
-							'section_name'
-						)
-					),
 					'Publisher' => array(
 						'fields' => array(
 							'publisher_name'
 						)
 					),
-					'Series' => array(
-						'fields' => array(
-							'series_name'
-						)
-					),
-					'ItemCreator' => array(
-						'Creator' => array(
-							'fields' => array(
-								'creator_name'
-							)
-						),
-						'CreatorType' => array(
-							'fields' => array(
-								'creator_short_name',
-								'creator_type_name'
-							)
-						),
-						'fields' => array(
-							'id'
-						)
-					),
-					'ItemTag',
-					'Pull'
+					'Section'
 				)
 			));
 
-			if($items) {
-				$result['items'] = $items;
-				$result['count'] = count($items);
-				$result['thumbs'] = array('large' => '_50p.jpg', 'small' => '_25p.jpg');
+			$data = array('thumbs' => array('large' => '_50p.jpg', 'small' => '_25p.jpg'));
+
+			foreach($publishers as $pub) {
+				$pubId = $pub['Publisher']['id'];
+
+				$this->Item->bindModel(array(
+					'hasOne' => array(
+						'Pull' => array(
+							'conditions' => array(
+								'Pull.user_id' => $this->Auth->user('id')
+							)
+						)
+					)
+				));
+
+				$items = $this->Item->find('all', array(
+					'conditions' => array(
+						'Item.item_date' => $release_date,
+						'Section.category_id' => $content_type,
+						'Item.publisher_id' => $pubId
+					),
+					'order' => array(
+						'Pull.created' => 'DESC',
+						'Item.series_id' => 'DESC'
+					),
+					'fields' => array(
+						'id', 'item_name', 'description', 'img_fullpath'
+					),
+					'contain' => array(
+						'Section' => array(
+							'fields' => array(
+								'section_name'
+							)
+						),
+						'Publisher' => array(
+							'fields' => array(
+								'publisher_name'
+							)
+						),
+						'Series' => array(
+							'fields' => array(
+								'series_name'
+							)
+						),
+						'ItemCreator' => array(
+							'Creator' => array(
+								'fields' => array(
+									'creator_name'
+								)
+							),
+							'CreatorType' => array(
+								'fields' => array(
+									'creator_short_name',
+									'creator_type_name'
+								)
+							),
+							'fields' => array(
+								'id'
+							)
+						),
+						'ItemTag',
+						'Pull'
+					)
+				));
+
+				if($items) {
+					$data['publishers'][] = array(
+						'publisher_id' => $pubId,
+						'publisher_name' => $pub['Publisher']['publisher_name'],
+						'items' => $items,
+						'item_count' => count($items)
+					);
+				}
+			}
+
+			if(@$data['publishers']) {
+				$result['data'] = $data;
 			} else {
 				$result['error'] = true;
 				$result['message'] = __('No Items Found');
@@ -375,69 +411,105 @@ class ItemsController extends AppController {
 
 			$release_date = $this->_getReleaseDate('this_week');
 
-			$this->Item->bindModel(array(
-				'hasOne' => array(
-					'Pull' => array(
-						'conditions' => array(
-							'Pull.user_id' => $this->Auth->user('id')
-						)
-					)
-				)
-			));
-
-			$items = $this->Item->find('all', array(
+			## get a list of publishers for the given date
+			$publishers = $this->Item->find('all', array(
 				'conditions' => array(
 					'Item.item_date' => $release_date,
-					'Section.category_id' => $content_type
-				),
-				'order' => array(
-					'Pull.created' => 'DESC',
-					'Item.series_id' => 'DESC'
+					'Section.category_id' => $content_type,
 				),
 				'fields' => array(
-					'id', 'item_name', 'description', 'img_fullpath'
+					'Item.publisher_id'
+				),
+				'group' => array(
+					'publisher_id'
 				),
 				'contain' => array(
-					'Section' => array(
-						'fields' => array(
-							'section_name'
-						)
-					),
 					'Publisher' => array(
 						'fields' => array(
 							'publisher_name'
 						)
 					),
-					'Series' => array(
-						'fields' => array(
-							'series_name'
-						)
-					),
-					'ItemCreator' => array(
-						'Creator' => array(
-							'fields' => array(
-								'creator_name'
-							)
-						),
-						'CreatorType' => array(
-							'fields' => array(
-								'creator_short_name',
-								'creator_type_name'
-							)
-						),
-						'fields' => array(
-							'id'
-						)
-					),
-					'ItemTag',
-					'Pull'
+					'Section'
 				)
 			));
 
-			if($items) {
-				$result['items'] = $items;
-				$result['count'] = count($items);
-				$result['thumbs'] = array('large' => '_50p.jpg', 'small' => '_25p.jpg');
+			$data = array('thumbs' => array('large' => '_50p.jpg', 'small' => '_25p.jpg'));
+
+			foreach($publishers as $pub) {
+				$pubId = $pub['Publisher']['id'];
+
+				$this->Item->bindModel(array(
+					'hasOne' => array(
+						'Pull' => array(
+							'conditions' => array(
+								'Pull.user_id' => $this->Auth->user('id')
+							)
+						)
+					)
+				));
+
+				$items = $this->Item->find('all', array(
+					'conditions' => array(
+						'Item.item_date' => $release_date,
+						'Section.category_id' => $content_type,
+						'Item.publisher_id' => $pubId
+					),
+					'order' => array(
+						'Pull.created' => 'DESC',
+						'Item.series_id' => 'DESC'
+					),
+					'fields' => array(
+						'id', 'item_name', 'description', 'img_fullpath'
+					),
+					'contain' => array(
+						'Section' => array(
+							'fields' => array(
+								'section_name'
+							)
+						),
+						'Publisher' => array(
+							'fields' => array(
+								'publisher_name'
+							)
+						),
+						'Series' => array(
+							'fields' => array(
+								'series_name'
+							)
+						),
+						'ItemCreator' => array(
+							'Creator' => array(
+								'fields' => array(
+									'creator_name'
+								)
+							),
+							'CreatorType' => array(
+								'fields' => array(
+									'creator_short_name',
+									'creator_type_name'
+								)
+							),
+							'fields' => array(
+								'id'
+							)
+						),
+						'ItemTag',
+						'Pull'
+					)
+				));
+
+				if($items) {
+					$data['publishers'][] = array(
+						'publisher_id' => $pubId,
+						'publisher_name' => $pub['Publisher']['publisher_name'],
+						'items' => $items,
+						'item_count' => count($items)
+					);
+				}
+			}
+
+			if(@$data['publishers']) {
+				$result['data'] = $data;
 			} else {
 				$result['error'] = true;
 				$result['message'] = __('No Items Found');
