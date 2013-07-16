@@ -323,9 +323,15 @@ class ItemsController extends AppController {
 
 			if(@$data['publishers']) {
 				$result['data'] = $data;
+				$result['status'] = array(
+					'status_code' => 200,
+					'status_message' => ''
+				);
 			} else {
-				$result['error'] = true;
-				$result['message'] = __('No Items Found');
+				$result['status'] = array(
+					'status_code' => 204,
+					'status_message' => ''
+				);
 			}
 
 			return new CakeResponse(array('body' => json_encode($result)));
@@ -510,9 +516,15 @@ class ItemsController extends AppController {
 
 			if(@$data['publishers']) {
 				$result['data'] = $data;
+				$result['status'] = array(
+					'status_code' => 200,
+					'status_message' => ''
+				);
 			} else {
-				$result['error'] = true;
-				$result['message'] = __('No Items Found');
+				$result['status'] = array(
+					'status_code' => 204,
+					'status_message' => ''
+				);
 			}
 
 			return new CakeResponse(array('body' => json_encode($result)));
