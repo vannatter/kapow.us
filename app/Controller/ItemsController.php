@@ -5,11 +5,12 @@ App::uses('AppController', 'Controller');
  * Class ItemsController
  *
  * @property Item $Item
+ * @property UserFavorite $UserFavorite
  */
 class ItemsController extends AppController {
 
 	public $name = 'Items';
-	public $uses = array('Item','Section','Publisher','Series','Creator','CreatorType','ItemCreator','Category','Tag','ItemTag');
+	public $uses = array('Item','Section','Publisher','Series','Creator','CreatorType','ItemCreator','Category','Tag','ItemTag', 'UserFavorite');
 	public $paginate = array(
 		'Item' => array(
 			'limit' => 24,
@@ -246,6 +247,23 @@ class ItemsController extends AppController {
 				)
 			));
 
+			## get a list of the current users favorite creators, if logged in
+			if($this->Auth->user()) {
+				$userFavCreators = $this->UserFavorite->find('list', array(
+					'conditions' => array(
+						'UserFavorite.user_id' => $this->Auth->user('id'),
+						'UserFavorite.item_type' => 3
+					),
+					'fields' => array(
+						'favorite_item_id'
+					)
+				));
+
+				$userFavCreators = array_shift($userFavCreators);
+			} else {
+				$userFavCreators = array();
+			}
+
 			$data = array('thumbs' => array('large' => '_50p.jpg', 'small' => '_25p.jpg'));
 
 			foreach($publishers as $pub) {
@@ -318,6 +336,30 @@ class ItemsController extends AppController {
 						'items' => $items,
 						'item_count' => count($items)
 					);
+
+					$favItems = $this->Item->ItemCreator->find('all', array(
+						'conditions' => array(
+							'Item.item_date' => $release_date,
+							'Item.publisher_id' => $pubId,
+							'ItemCreator.creator_id' => $userFavCreators
+						),
+						'group' => array(
+							'Item.id'
+						)
+					));
+
+					if($favItems) {
+						foreach($favItems as $fav) {
+							$data['favorites'][$fav['ItemCreator']['id']][] = array(
+								'fav_name' => $fav['Creator']['creator_name'],
+								'item' => array(
+									'name' => $fav['Item']['item_name'],
+									'id' => $fav['Item']['id'],
+									'img_fullpath' => $fav['Item']['img_fullpath']
+								)
+							);
+						}
+					}
 				}
 			}
 
@@ -439,7 +481,24 @@ class ItemsController extends AppController {
 				)
 			));
 
-			$data = array('thumbs' => array('large' => '_50p.jpg', 'small' => '_25p.jpg'));
+			## get a list of the current users favorite creators, if logged in
+			if($this->Auth->user()) {
+				$userFavCreators = $this->UserFavorite->find('list', array(
+					'conditions' => array(
+						'UserFavorite.user_id' => $this->Auth->user('id'),
+						'UserFavorite.item_type' => 3
+					),
+					'fields' => array(
+						'favorite_item_id'
+					)
+				));
+
+				$userFavCreators = array_shift($userFavCreators);
+			} else {
+				$userFavCreators = array();
+			}
+
+			$data = array('thumbs' => array('large' => '_50p.jpg', 'small' => '_25p.jpg'), 'favorites' => array());
 
 			foreach($publishers as $pub) {
 				$pubId = $pub['Publisher']['id'];
@@ -511,6 +570,30 @@ class ItemsController extends AppController {
 						'items' => $items,
 						'item_count' => count($items)
 					);
+
+					$favItems = $this->Item->ItemCreator->find('all', array(
+						'conditions' => array(
+							'Item.item_date' => $release_date,
+							'Item.publisher_id' => $pubId,
+							'ItemCreator.creator_id' => $userFavCreators
+						),
+						'group' => array(
+							'Item.id'
+						)
+					));
+
+					if($favItems) {
+						foreach($favItems as $fav) {
+							$data['favorites'][$fav['ItemCreator']['id']][] = array(
+								'fav_name' => $fav['Creator']['creator_name'],
+								'item' => array(
+									'name' => $fav['Item']['item_name'],
+									'id' => $fav['Item']['id'],
+									'img_fullpath' => $fav['Item']['img_fullpath']
+								)
+							);
+						}
+					}
 				}
 			}
 
