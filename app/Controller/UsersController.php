@@ -39,7 +39,7 @@ class UsersController extends AppController {
 			$result = array('error' => true, 'message' => '', 'user' => array());
 
 			if(@$this->params['form']['user'] && @$this->params['form']['pass']) {
-				$data = array('User' => array('email' => $this->params['form']['email'], 'password' => $this->params['form']['pass']));
+				$data = array('User' => array('email' => $this->params['form']['user'], 'password' => $this->params['form']['pass']));
 
 				$data = $this->Auth->hashPasswords($data);
 
