@@ -9,7 +9,7 @@ body{background-color:#36c;font-family:'Open Sans Condensed',sans-serif;backgrou
 .navbar .brand{padding:0}
 .item_desc,.item_desc p{color:#78b0e9;overflow:hidden;font-size:14px}
 .btn.disabled{color:#fff;cursor:pointer}
-.preview_block{min-height:400px;max-height:500px;margin-bottom:20px;overflow-x:hidden}
+.preview_block{min-height:400px;max-height:500px;margin-bottom:20px;overflow:hidden}
 .publisher_block{min-height:300px;max-height:400px;margin-bottom:20px;overflow:hidden}
 .my_block{min-height:300px;max-height:400px;margin-bottom:20px;overflow:hidden}
 .filter_box{padding:0 10px 0 0;text-align:right;border-bottom:2px solid #24478f;margin-bottom:15px;overflow:hidden;clear:both}
