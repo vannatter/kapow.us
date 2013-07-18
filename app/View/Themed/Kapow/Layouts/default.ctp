@@ -5,6 +5,37 @@
 	<head>
 		<?php echo $this->Html->charset(); ?>
 		<title>Kapow! <?php echo $title_for_layout; ?></title>
+	    <? if(isset($meta_description_for_layout)){ ?>
+		<meta name="description" content="<?=$meta_description_for_layout;?>" />
+		<? } else { ?>
+		<meta name="description" content="Kapow! is creating a new platform for finding, tracking and interacting with your favorite comics, publishers, artists and local comic shops." />
+	    <? } ?>
+
+	    <? if(isset($meta_keywords_for_layout)){ ?>
+		<meta name="keywords" content="<?=$meta_keywords_for_layout;?>" />
+		<? } else { ?>
+		<meta name="keywords" content="Kapow, Kapow.us, Comics, Comic database, Current comics, New comics, Comic app" />
+	    <? } ?>
+
+		<meta property="og:type" content="company" /> 
+		<meta property="og:site_name" content="kapow.us"/> 
+
+	    <? if(isset($og_title)){ ?>
+		<meta property="og:title" content="<?= $og_title; ?>" /> 
+		<? } else { ?>
+		<meta property="og:title" content="Kapow! Comics" /> 
+	    <? } ?>
+
+	    <? if(isset($og_image)){ ?>
+		<meta property="og:image" content="<?= $og_image; ?>" /> 
+	    <? } ?>
+
+	    <? if(isset($og_description)){ ?>
+		<meta property="og:description" content="<?=$og_description;?>" />
+		<? } else { ?>
+		<meta property="og:description" content="Kapow! is creating a new platform for finding, tracking and interacting with your favorite comics, publishers, artists and local comic shops." /> 
+	    <? } ?>
+	    
 		<?php
 			echo $this->Html->meta('icon');
 			echo $this->fetch('meta');

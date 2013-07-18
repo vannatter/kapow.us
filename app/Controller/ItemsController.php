@@ -217,6 +217,14 @@ class ItemsController extends AppController {
 		$this->set('unique_creators', $unique_creators);
 		$this->set('item', $item);
 		$this->set('title_for_layout', $item['Item']['item_name']);
+
+/*
+		$this->set('og_image', 'http://kapow.us/img/kapow_fb.png');
+		$this->set('meta_description_for_layout','My page description');
+		$this->set('meta_keywords_for_layout','Keyword1,Keyword2,Keyword3'); 
+*/
+
+
 	}
 
 	public function next_week($content_type="1") {

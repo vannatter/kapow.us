@@ -25,11 +25,6 @@ class HomeController extends AppController {
 			)
 		));
 
-/*
-		$item = $this->Item->getRandomItemByDate();
-		$this->set('random_item', $item);
-*/
-		
 		$items = $this->Item->getRandomItems(5);
 		$this->set('random_items', $items);
 		
@@ -56,6 +51,8 @@ class HomeController extends AppController {
 		// dynamically set this, or set it from a collection
 		$this->set('welcome', 'Welcome to Kapow!');
 		$this->set('title_for_layout', '');
+
+		$this->set('og_image', 'http://kapow.us/img/kapow_fb.png');
 	}
 	
 	public function about() {
