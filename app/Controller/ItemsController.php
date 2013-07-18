@@ -263,8 +263,6 @@ class ItemsController extends AppController {
 						'favorite_item_id'
 					)
 				));
-
-				$userFavCreators = array_shift($userFavCreators);
 			} else {
 				$userFavCreators = array();
 			}
@@ -500,8 +498,6 @@ class ItemsController extends AppController {
 			} else {
 				$userFavCreators = array();
 			}
-
-			debug($userFavCreators);
 
 			$data = array('thumbs' => array('large' => '_50p.jpg', 'small' => '_25p.jpg'), 'favorites' => array());
 
