@@ -497,8 +497,6 @@ class ItemsController extends AppController {
 						'favorite_item_id'
 					)
 				));
-
-				$userFavCreators = array_shift($userFavCreators);
 			} else {
 				$userFavCreators = array();
 			}
