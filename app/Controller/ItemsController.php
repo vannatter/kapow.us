@@ -503,6 +503,8 @@ class ItemsController extends AppController {
 				$userFavCreators = array();
 			}
 
+			debug($userFavCreators);
+
 			$data = array('thumbs' => array('large' => '_50p.jpg', 'small' => '_25p.jpg'), 'favorites' => array());
 
 			foreach($publishers as $pub) {
