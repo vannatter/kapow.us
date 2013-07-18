@@ -104,6 +104,11 @@ class CreatorsController extends AppController {
 		$this->set('creator', $creator);
 		$this->set('title_for_layout', $creator['Creator']['creator_name']);
 
+		$this->set('meta_description_for_layout','Kapow! ' . $creator['Creator']['creator_name'] . (($creator['Creator']['creator_bio']) ? " - " . substr(str_replace('"', '', $creator['Creator']['creator_bio']),0,200) : "") );
+		$this->set('meta_keywords_for_layout','Kapow, Kapow.us, Comics, Comic database, Current comics, New comics, Comic app, ' . $creator['Creator']['creator_name']); 
+		$this->set('og_description','Kapow! ' . $creator['Creator']['creator_name'] . (($creator['Creator']['creator_bio']) ? " - " . substr(str_replace('"', '', $creator['Creator']['creator_bio']),0,200) : "") );
+
+
 		## see if the current user (if there is one), fav'd this publisher
 		if($userFav = $this->UserFavorite->findByFavoriteItemIdAndUserIdAndItemType($creator_id, $this->Auth->user('id'), 3)) {
 			$this->set('userFav', true);
