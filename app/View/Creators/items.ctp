@@ -42,7 +42,7 @@
 
 			<?php
 			$hasPull = false;
-			if(isset($item['Item']['Pull']['id'])) {
+			if(isset($item['Pull']['id'])) {
 				$hasPull = true;
 			}
 			echo $this->Common->pullButton($item['Item']['id'], $hasPull)

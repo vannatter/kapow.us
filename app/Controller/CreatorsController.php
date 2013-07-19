@@ -4,6 +4,7 @@ App::uses('AppController', 'Controller');
 
 /**
  * @property Creator $Creator
+ * @property Item $Item
  */
 class CreatorsController extends AppController {
 
@@ -149,22 +150,21 @@ class CreatorsController extends AppController {
 		if($this->request->is('ajax')) {
 			$this->layout = 'blank';
 
-			$this->paginate = array(
-				'ItemCreator' => array(
-					'limit' => 16,
-					'order' => array(
-						'ItemCreator.created' => 'DESC'
-					),
-					'fields' => array('DISTINCT ItemCreator.item_id', 'Item.*'),
-					'contain' => array(
-						'Item' => array(
-							'Pull'
-						)
-					)
+			## get a list of items for the creator
+			$itemList = $this->ItemCreator->find('list', array(
+				'conditions' => array(
+					'ItemCreator.creator_id' => $id
+				),
+				'fields' => array(
+					'ItemCreator.item_id'
+				),
+				'group' => array(
+					'ItemCreator.item_id'
 				)
-			);
+			));
 
-			$this->ItemCreator->Item->bindModel(array(
+			## bind the pulls table so we can place user pull items first
+			$this->Item->bindModel(array(
 				'hasOne' => array(
 					'Pull' => array(
 						'conditions' => array(
@@ -174,8 +174,20 @@ class CreatorsController extends AppController {
 				)
 			));
 
-			$this->ItemCreator->recursive = 0;
-			$items = $this->paginate('ItemCreator', array('ItemCreator.creator_id' => $id));
+			$this->paginate = array(
+				'Item' => array(
+					'order' => array(
+						'Pull.created' => 'DESC',
+						'Item.created' => 'DESC'
+					),
+					'contain' => array(
+						'Pull'
+					),
+					'limit' => 24
+				)
+			);
+
+			$items = $this->paginate('Item');
 
 			$this->set('items', $items);
 		}
