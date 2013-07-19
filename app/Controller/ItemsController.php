@@ -379,6 +379,8 @@ class ItemsController extends AppController {
 				);
 			}
 
+			$result['release_date'] = date('m/d/Y', strtotime($release_date));
+
 			if($message = $this->AppMessage->getLatestMessage()) {
 				$result['status']['app_message_title'] = $message['AppMessage']['title'];
 				$result['status']['app_message_body'] = $message['AppMessage']['body'];
@@ -618,6 +620,8 @@ class ItemsController extends AppController {
 					'status_message' => ''
 				);
 			}
+
+			$result['release_date'] = date('m/d/Y', strtotime($release_date));
 
 			if($message = $this->AppMessage->getLatestMessage()) {
 				$result['status']['app_message_title'] = $message['AppMessage']['title'];
