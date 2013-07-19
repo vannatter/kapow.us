@@ -18,10 +18,11 @@ App::uses('AppController', 'Controller');
  * @property Flag $Flag
  * @property UserActivity $UserActivity
  * @property Improvement $Improvement
+ * @property AppMessage $AppMessage
  */
 class AdminController extends AppController {
 	public $name = 'Admin';
-	public $uses = array('Item', 'Creator', 'Publisher', 'Series', 'Store', 'User', 'Category', 'CreatorType', 'Section', 'Report', 'StorePhoto', 'Blog', 'Flag', 'UserActivity', 'Improvement');
+	public $uses = array('Item', 'Creator', 'Publisher', 'Series', 'Store', 'User', 'Category', 'CreatorType', 'Section', 'Report', 'StorePhoto', 'Blog', 'Flag', 'UserActivity', 'Improvement', 'AppMessage');
 	public $helpers = array('States', 'TinyMCE.TinyMCE', 'Admin');
 	public $components = array('Upload');
 	public $paginate = array(
@@ -72,6 +73,10 @@ class AdminController extends AppController {
 		'Improvement' => array(
 			'limit' => 25,
 			'order' => array('Improvement.status' => 'ASC')
+		),
+		'AppMessage' => array(
+			'limit' => 25,
+			'order' => array('AppMessage.created' => 'DESC')
 		)
 	);
 
@@ -1364,5 +1369,27 @@ class AdminController extends AppController {
 			'class' => 'alert-success'
 		));
 		$this->redirect('/admin/improvements');
+	}
+
+	public function appMessages() {
+		$this->AppMessage->recursive = 0;
+		$this->set('messages', $this->paginate('AppMessage'));
+	}
+
+	public function appMessagesNew() {
+		if($this->request->is('post') || $this->request->is('put')) {
+			$data = Sanitize::clean($this->request->data);
+
+			$data['AppMessage']['user_id'] = $this->Auth->user('id');
+
+			if($this->AppMessage->save($data)) {
+				$this->Session->setFlash(__('Message Saved'), 'alert', array(
+					'plugin' => 'TwitterBootstrap',
+					'class' => 'alert-success'
+				));
+
+				$this->redirect('/admin/appMessages');
+			}
+		}
 	}
 }

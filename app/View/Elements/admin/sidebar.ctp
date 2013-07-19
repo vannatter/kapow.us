@@ -103,6 +103,11 @@
 			echo $this->Html->link(__('Improvements <span class="badge %s">%s</span>', ($newImprovementsTotal>0) ? 'badge-success' : '', $newImprovementsTotal), array('controller' => 'admin', 'action' => 'improvements'), array('escape' => false));
 			?>
 		</li>
+		<li>
+			<?php
+			echo $this->Html->link(__('App Messages'), array('controller' => 'admin', 'action' => 'appMessages'));
+			?>
+		</li>
 		<li class="divider"></li>
 		<li><?php echo $this->Html->link(__('Index'), '/'); ?></li>
 		<li class="divider"></li>

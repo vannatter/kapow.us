@@ -600,6 +600,11 @@ Router::connect(
 	)
 );
 
+Router::connect(
+	'/admin/appMessages/new',
+	array('controller' => 'admin', 'action' => 'appMessagesNew')
+);
+
 CakePlugin::routes();
 
 require CAKE . 'Config' . DS . 'routes.php';

@@ -10,7 +10,7 @@ App::uses('AppController', 'Controller');
 class ItemsController extends AppController {
 
 	public $name = 'Items';
-	public $uses = array('Item','Section','Publisher','Series','Creator','CreatorType','ItemCreator','Category','Tag','ItemTag', 'UserFavorite');
+	public $uses = array('Item','Section','Publisher','Series','Creator','CreatorType','ItemCreator','Category','Tag','ItemTag', 'UserFavorite', 'AppMessage');
 	public $paginate = array(
 		'Item' => array(
 			'limit' => 24,
@@ -379,6 +379,14 @@ class ItemsController extends AppController {
 				);
 			}
 
+			if($message = $this->AppMessage->getLatestMessage()) {
+				$result['status']['app_message_title'] = $message['AppMessage']['title'];
+				$result['status']['app_message_body'] = $message['AppMessage']['body'];
+			} else {
+				$result['status']['app_message_title'] = '';
+				$result['status']['app_message_body'] = '';
+			}
+
 			return new CakeResponse(array('body' => json_encode($result)));
 		}
 
@@ -609,6 +617,14 @@ class ItemsController extends AppController {
 					'status_code' => 204,
 					'status_message' => ''
 				);
+			}
+
+			if($message = $this->AppMessage->getLatestMessage()) {
+				$result['status']['app_message_title'] = $message['AppMessage']['title'];
+				$result['status']['app_message_body'] = $message['AppMessage']['body'];
+			} else {
+				$result['status']['app_message_title'] = '';
+				$result['status']['app_message_body'] = '';
 			}
 
 			return new CakeResponse(array('body' => json_encode($result)));
