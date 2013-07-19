@@ -82,119 +82,35 @@ class ItemsController extends AppController {
 		$this->set('items', $items);
 	}
 	
-	public function detail($item_id, $item_name) {
+	public function detail($item_id=null, $item_name=null) {
+		if($this->request->ext == 'json') {
+			$itemId = $this->request->query['itemId'];
+			$item = $this->Item->getItemForDisplay($itemId);
+
+			$result = array('status' => array('status_code' => 204, 'status_message' => ''));
+			if($item) {
+				$result['status']['status_code'] = 200;
+				$result['data'] = $item;
+			}
+
+			if($message = $this->AppMessage->getLatestMessage()) {
+				$result['status']['app_message_title'] = $message['AppMessage']['title'];
+				$result['status']['app_message_body'] = $message['AppMessage']['body'];
+			} else {
+				$result['status']['app_message_title'] = '';
+				$result['status']['app_message_body'] = '';
+			}
+
+			return new CakeResponse(array('body' => json_encode($result)));
+		}
+
 		if (!$item_id) {
 			$this->Session->setFlash('Item ID not found.', 'flash_neg');
 			$this->redirect("/");
 			exit;
 		}
 
-		#$this->Publisher->unbindModel(array('hasMany' => array('Item')), false);
-		#$this->Tag->unbindModel(array('hasMany' => array('ItemTag')), false);
-		#$this->ItemTag->unbindModel(array('belongsTo' => array('Item')), false);
-
-		$this->Item->ItemCreator->Creator->bindModel(array(
-			'hasOne' => array(
-				'UserFavorite' => array(
-					'foreignKey' => 'favorite_item_id',
-					'conditions' => array(
-						'UserFavorite.user_id' => $this->Auth->user('id'),
-						'UserFavorite.item_type' => 3
-					)
-				)
-			)
-		));
-
-		$this->Item->Publisher->bindModel(array(
-			'hasOne' => array(
-				'UserFavorite' => array(
-					'foreignKey' => 'favorite_item_id',
-					'conditions' => array(
-						'UserFavorite.user_id' => $this->Auth->user('id'),
-						'UserFavorite.item_type' => 4
-					)
-				)
-			)
-		));
-
-		$this->Item->Series->bindModel(array(
-			'hasOne' => array(
-				'UserFavorite' => array(
-					'foreignKey' => 'favorite_item_id',
-					'conditions' => array(
-						'UserFavorite.user_id' => $this->Auth->user('id'),
-						'UserFavorite.item_type' => 2
-					)
-				)
-			)
-		));
-
-		$this->Item->bindModel(array(
-			'hasMany' => array(
-				'UserFavorite' => array(
-					'foreignKey' => 'favorite_item_id',
-					'conditions' => array(
-						'item_type' => 1
-					),
-					'limit' => 25,
-					'order' => 'RAND()'
-				)
-			)
-		));
-		$this->Item->UserFavorite->bindModel(array(
-			'belongsTo' => array(
-				'User' => array(
-					'fields' => array('id', 'email', 'username')
-				)
-			)
-		));
-
-		$this->Item->bindModel(array(
-			'hasOne' => array(
-				'Pull' => array(
-					'conditions' => array(
-						'Pull.user_id' => $this->Auth->user('id')
-					)
-				),
-				'UserItem' => array(
-					'conditions' => array(
-						'UserItem.user_id' => $this->Auth->user('id')
-					)
-				)
-			)
-		));
-
-		$item = $this->Item->find('first', array(
-			'conditions' => array(
-				'Item.id' => $item_id
-			),
-			'limit' => 1,
-			'contain' => array(
-				'Section' => array(
-					'Category'
-				),
-				'Publisher' => array(
-					'UserFavorite'
-				),
-				'Series' => array(
-					'UserFavorite'
-				),
-				'ItemCreator' => array(
-					'Creator' => array(
-						'UserFavorite'
-					),
-					'CreatorType'
-				),
-				'ItemTag' => array(
-					'Tag'
-				),
-				'Pull',
-				'UserItem',
-				'UserFavorite' => array(
-					'User'
-				)
-			)
-		));
+		$item = $this->Item->getItemForDisplay($item_id);
 
 		if (!$item) {
 			$this->Session->setFlash('Item not found.', 'flash_neg');

@@ -1,5 +1,6 @@
 <?php
 App::uses('AppModel', 'Model');
+App::uses('CakeSession', 'Model/Datasource');
 
 /**
  * Item Model
@@ -131,5 +132,132 @@ class Item extends AppModel {
 
 	function getRandom() {
 		return $this->find('first', array('order' => array('RAND()')));
+	}
+
+	function getItemForDisplay($itemId=null) {
+		if($itemId) {
+			$this->ItemCreator->Creator->bindModel(array(
+				'hasOne' => array(
+					'UserFavorite' => array(
+						'foreignKey' => 'favorite_item_id',
+						'conditions' => array(
+							'UserFavorite.user_id' => CakeSession::read('Auth.User.id'),
+							'UserFavorite.item_type' => 3
+						)
+					)
+				)
+			));
+
+			$this->Publisher->bindModel(array(
+				'hasOne' => array(
+					'UserFavorite' => array(
+						'foreignKey' => 'favorite_item_id',
+						'conditions' => array(
+							'UserFavorite.user_id' => CakeSession::read('Auth.User.id'),
+							'UserFavorite.item_type' => 4
+						)
+					)
+				)
+			));
+
+			$this->Series->bindModel(array(
+				'hasOne' => array(
+					'UserFavorite' => array(
+						'foreignKey' => 'favorite_item_id',
+						'conditions' => array(
+							'UserFavorite.user_id' => CakeSession::read('Auth.User.id'),
+							'UserFavorite.item_type' => 2
+						)
+					)
+				)
+			));
+
+			$this->bindModel(array(
+				'hasMany' => array(
+					'UserFavorite' => array(
+						'foreignKey' => 'favorite_item_id',
+						'conditions' => array(
+							'item_type' => 1
+						),
+						'limit' => 25,
+						'order' => 'RAND()'
+					)
+				)
+			));
+			$this->UserFavorite->bindModel(array(
+				'belongsTo' => array(
+					'User' => array(
+						'fields' => array('id', 'email', 'username')
+					)
+				)
+			));
+
+			$this->bindModel(array(
+				'hasOne' => array(
+					'Pull' => array(
+						'conditions' => array(
+							'Pull.user_id' => CakeSession::read('Auth.User.id')
+						)
+					),
+					'UserItem' => array(
+						'conditions' => array(
+							'UserItem.user_id' => CakeSession::read('Auth.User.id')
+						)
+					)
+				)
+			));
+
+			$item = $this->find('first', array(
+				'conditions' => array(
+					'Item.id' => $itemId
+				),
+				'limit' => 1,
+				'contain' => array(
+					'Section' => array(
+						'Category'
+					),
+					'Publisher' => array(
+						'UserFavorite'
+					),
+					'Series' => array(
+						'UserFavorite'
+					),
+					'ItemCreator' => array(
+						'Creator' => array(
+							'UserFavorite'
+						),
+						'CreatorType'
+					),
+					'ItemTag' => array(
+						'Tag'
+					),
+					'Pull',
+					'UserItem',
+					'UserFavorite' => array(
+						'User'
+					)
+				)
+			));
+
+			if($item) {
+				## get a distinct set of creators for the 'favorites' logic..
+				$unique_creators = array();
+				foreach ($item['ItemCreator'] as $c) {
+					$fav = false;
+
+					if(isset($c['Creator']['UserFavorite']['id'])) {
+						$fav = true;
+					}
+
+					$unique_creators[$c['Creator']['id']] = array('name' => $c['Creator']['creator_name'], 'is_fav' => $fav);
+				}
+
+				$item['UniqueCreators'] = $unique_creators;
+			}
+
+			return $item;
+		}
+
+		return null;
 	}
 }
