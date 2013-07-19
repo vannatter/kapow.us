@@ -125,6 +125,7 @@ class PublishersController extends AppController {
 				'Item' => array(
 					'limit' => 16,
 					'order' => array(
+						'Pull.created' => 'DESC',
 						'Item.created' => 'DESC'
 					)
 				)

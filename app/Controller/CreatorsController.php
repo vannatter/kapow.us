@@ -176,6 +176,9 @@ class CreatorsController extends AppController {
 
 			$this->paginate = array(
 				'Item' => array(
+					'conditions' => array(
+						'Item.id' => $itemList
+					),
 					'order' => array(
 						'Pull.created' => 'DESC',
 						'Item.created' => 'DESC'
