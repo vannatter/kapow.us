@@ -9,7 +9,14 @@
 <div class="row">
 	<div class="span3 item_detail_img">
 
-		<img alt="<?php echo $series['Series']['series_name']; ?>" src="<?php echo $series['Item'][0]['img_fullpath']; ?>" class="detail_img" />	
+		<?php
+		if($series['Item'][0]['img_fullpath'] == "/img/covers") {
+			$img = "/img/nocover_large.png";
+		} else {
+			$img = $series['Item'][0]['img_fullpath'];
+		}
+		?>
+		<img alt="<?php echo $series['Series']['series_name']; ?>" src="<?php echo $img; ?>" class="detail_img" />
 
 		<div class="publisher_desc">
 			<?php echo nl2br($series['Series']['description']); ?>		
