@@ -61,14 +61,14 @@
 
 	<body>
 		<div id="main-container">
-			<div id="header" class="container">
+			<div id="header" class="container blugrid">
 				<?php echo $this->element('menu/top_menu'); ?>
 			</div>
-			<div id="content" class="container">
+			<div id="content" class="container blu">
 				<?php echo $this->Session->flash(); ?>
 				<?php echo $this->fetch('content'); ?>
 			</div>
-			<div id="footer" class="container">
+			<div id="footer" class="container blu">
 				<?php echo $this->element('menu/footer'); ?>
 			</div>
 			<div id="flash_msg" class="flash_msg" style="display:none;"></div>
