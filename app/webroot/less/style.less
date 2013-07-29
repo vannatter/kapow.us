@@ -1,6 +1,7 @@
 @import "variables.less";
 @import "mixins.less";
 
+html, body {height: 100%;}
 
 body {
 	background-color: @kapow_blue;
@@ -16,8 +17,13 @@ body {
 	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#00040c', endColorstr='#2c539e',GradientType=0 ); 
 
 	margin-top: 0;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
 }
 
+#content {
+	min-height: 70%;
+}
 
 .container {
 	padding-left: 10px;
@@ -61,6 +67,7 @@ body {
 
 #main-container {
 	margin-top: 0;
+	height: 100%;
 }
 
 /*
