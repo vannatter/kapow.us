@@ -1,12 +1,16 @@
-body{background-color:#36c;font-family:'Open Sans Condensed',sans-serif;background:#2c539e;background:-moz-radial-gradient(center, ellipse cover, #2c539e 0, #2c539e 100%);background:-webkit-gradient(radial, center center, 0, center center, 100%, color-stop(0, #2c539e), color-stop(100%, #2c539e));background:-webkit-radial-gradient(center, ellipse cover, #2c539e 0, #2c539e 100%);background:-o-radial-gradient(center, ellipse cover, #2c539e 0, #2c539e 100%);background:-ms-radial-gradient(center, ellipse cover, #2c539e 0, #2c539e 100%);background:radial-gradient(ellipse at center, #2c539e 0, #2c539e 100%);filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#2c539e', endColorstr='#2c539e', GradientType=1);margin-top:0}
+html,body{height:100%}
+body{background-color:#36c;font-family:'Open Sans Condensed',sans-serif;background:#00040c;background:-moz-linear-gradient(top, #00040c 0, #2c539e 100%);background:-webkit-gradient(linear, left top, left bottom, color-stop(0, #00040c), color-stop(100%, #2c539e));background:-webkit-linear-gradient(top, #00040c 0, #2c539e 100%);background:-o-linear-gradient(top, #00040c 0, #2c539e 100%);background:-ms-linear-gradient(top, #00040c 0, #2c539e 100%);background:linear-gradient(to bottom, #00040c 0, #2c539e 100%);filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#00040c', endColorstr='#2c539e', GradientType=0);margin-top:0;background-repeat:no-repeat;background-attachment:fixed}
+.container{padding-left:10px;padding-right:10px}
+.blu{background-color:#2c539e;background:-moz-radial-gradient(center, ellipse cover, #2c539e 0, #2c539e 100%);background:-webkit-gradient(radial, center center, 0, center center, 100%, color-stop(0, #2c539e), color-stop(100%, #2c539e));background:-webkit-radial-gradient(center, ellipse cover, #2c539e 0, #2c539e 100%);background:-o-radial-gradient(center, ellipse cover, #2c539e 0, #2c539e 100%);background:-ms-radial-gradient(center, ellipse cover, #2c539e 0, #2c539e 100%);background:radial-gradient(ellipse at center, #2c539e 0, #2c539e 100%);filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#2c539e', endColorstr='#2c539e', GradientType=1)}
 .preview_img{overflow:hidden;margin-bottom:5px;clear:both}
 .preview_img img{width:96%;border:3px solid #000}
 .thisweek h4,.thisweek h4 a{color:#000;font-weight:bold;font-size:19px}
-#header{margin-top:0;background-image:url(/img/bg.png);background-repeat:no-repeat}
-#main-container{margin-top:0}
+#header{margin-top:0;background-color:#2c539e;background-image:url(/img/bg.png) !important;background-repeat:no-repeat !important}
+#main-container{margin-top:0;height:100%}
+#header{padding-left:0 !important;padding-right:0 !important}
 .navbar{margin-bottom:0}
-.navbar-inner{background:transparent;border:none;padding-left:10px;border-radius:0;box-shadow:none}
-.navbar .brand{padding:0}
+.navbar-inner{background:transparent;border:none;padding-left:0;border-radius:0;box-shadow:none}
+.navbar .brand{padding:0 0 0 10px}
 .item_desc,.item_desc p{color:#78b0e9;overflow:hidden;font-size:14px}
 .btn.disabled{color:#fff;cursor:pointer}
 .preview_block{min-height:400px;max-height:500px;margin-bottom:20px;overflow:hidden}
@@ -31,7 +35,7 @@ h2{color:#000 !important}
 .shop_photo img{max-width:60px;overflow:hidden;max-height:60px;border:3px solid #000;margin:4px 3px 1px 0}
 .store_main_photo{border:3px solid #000}
 #gallery{margin-top:10px}
-#footer{margin-bottom:50px}
+#footer{padding-bottom:50px}
 .item_grid{margin-top:30px}
 .item_grid_row{margin-bottom:5px}
 .item_grid_lbl{color:#fff}
@@ -101,11 +105,14 @@ li a.pull_list_btn{margin-right:0 !important}
 .item-by-date{overflow:hidden;padding-top:5px;padding-bottom:5px;font-size:1.5em !important;color:#fff}
 .home_hdr{color:#fff;padding:4px 0 6px 8px;margin-bottom:8px;background-image:url(/img/bg.png);background-position:-100px 0;background-repeat:no-repeat;border-bottom:2px solid #24478f;border-left:2px solid #24478f}
 .home_hdr h4{padding:0;margin:0;color:#fff}
+.random_block .home_hdr{border-bottom:3px solid #203f7e;border-left:none}
 .home_main{padding-bottom:50px}
 .home_main h2 a{color:#000}
 .well{background-color:#24478f;border:1px solid #214183;margin-left:0}
 .well input,.well select,.well textarea{border:1px solid #214183}
 .store_search_bar input,.store_search_bar select,.store_search_bar textarea{border:1px solid #214183}
+.random_block{background-color:#224387;outline:2px solid #203f7e}
+.pad_it{padding:10px}
 .random_item{margin-bottom:20px}
 .random_item .item_description{color:#fff;line-height:24px}
 .home_blog p,.home_what,.home_what p{font-size:18px}
@@ -125,4 +132,5 @@ li a.pull_list_btn{margin-right:0 !important}
 .btn-lrgr{font-size:14px}
 .btn-lrgr i{margin-top:3px}
 .private_profile{font-size:16px;color:#fff}
-@media (min-width:768px) and (max-width:979px){}@media (max-width:979px){.preview_img{min-height:160px;max-height:160px} .preview_img img{width:94%;max-height:160px} .preview_block{min-height:300px;max-height:410px} .nav li a:hover{background:none !important} .bread{float:left;text-align:left;line-height:16px} .bread h3{line-height:22px;margin:10px 0 10px 0} .navbar-inner{padding-left:0} .navbar .brand{margin-left:-10px} .nav-collapse{background-color:#24478f}}@media (max-width:767px){.preview_img{float:left;clear:right;width:150px;min-height:inherit;max-height:inherit;padding-right:10px} .preview_img img{max-height:inherit} .preview_block{min-height:inherit;max-height:inherit} .store_search_btn{float:left} .item_actions{margin-top:10px} .navbar-inner{padding-right:5px} .btn-hgh{margin-top:4px;margin-left:0} .bread{float:left;text-align:left} .footnote{clear:both} .footlinks{clear:both;float:left} .footlinks a:first-child{margin-left:0} .hot_img{text-align:center} .profile_edit_block h3{margin-left:0}}@media (max-width:480px){.btn-hgh{margin-left:0} .footnote{clear:both} .footlinks{clear:both;float:left} .footlinks a:first-child{margin-left:0}}@media (min-width:980px){.preview_img{min-height:210px;max-height:210px} .preview_img img{max-height:200px} .nav{padding-top:30px;text-align:right !important;float:right !important} .nav li{text-align:right !important;padding-right:0 !important} .nav li a{padding-right:0 !important;padding-left:30px !important} .navbar-inner{padding-right:0 !important}}@media (min-width:1200px){.preview_img{min-height:230px;max-height:230px} .preview_img img{max-height:220px}}
+#storeList{display:block}
+@media (min-width:768px) and (max-width:979px){}@media (max-width:979px){#header{width:744px} .preview_img{min-height:160px;max-height:160px} .preview_img img{width:94%;max-height:160px} .preview_block{min-height:300px;max-height:410px} .nav li a:hover{background:none !important} .bread{float:left;text-align:left;line-height:16px} .bread h3{line-height:22px;margin:10px 0 10px 0} .navbar-inner{padding-left:0} .navbar .brand{margin-left:-10px} .nav-collapse{background-color:#24478f}}@media (max-width:767px){#header{width:auto} .navbar-inner{padding-right:0 !important} .preview_img{float:left;clear:right;width:150px;min-height:inherit;max-height:inherit;padding-right:10px} .preview_img img{max-height:inherit} .preview_block{min-height:inherit;max-height:inherit} .store_search_btn{float:left} .item_actions{margin-top:10px} .navbar-inner{padding-right:5px} .btn-hgh{margin-top:4px;margin-left:0} .bread{float:left;text-align:left} .footnote{clear:both} .footlinks{clear:both;float:left} .footlinks a:first-child{margin-left:0} .hot_img{text-align:center} .profile_edit_block h3{margin-left:0}}@media (max-width:480px){.navbar-inner{padding-right:0 !important} #header{width:auto} .btn-hgh{margin-left:0} .footnote{clear:both} .footlinks{clear:both;float:left} .footlinks a:first-child{margin-left:0}}@media (min-width:980px){#header{width:960px} .preview_img{min-height:210px;max-height:210px} .preview_img img{max-height:200px} .nav{padding-top:30px;text-align:right !important;float:right !important} .nav li{text-align:right !important;padding-right:0 !important} .nav li a{padding-right:0 !important;padding-left:30px !important} .navbar-inner{padding-right:0 !important}}@media (min-width:1200px){#header{width:1190px} .preview_img{min-height:230px;max-height:230px} .preview_img img{max-height:220px}}

@@ -21,6 +21,7 @@
 </div>
 <?php echo $this->Form->end(); ?>
 
+
 <div class="row-fluid">
 	<div class="span7" id="map-canvas" style="height: 400px;"></div>
 	<div class="span5">
@@ -30,12 +31,9 @@
 		</div>
 	
 		<div id="storeList">
-			<div class="loading"><img src="/img/ajax-loader2.gif" /></div></div>
+			<div class="loading"><img src="/img/ajax-loader2.gif" /></div>
 		</div>
 
 	</div>
-
 </div>
 
-<div class="row-fluid" style="margin-top: 10px;">
-</div>
