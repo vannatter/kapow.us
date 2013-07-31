@@ -5,7 +5,7 @@ App::uses('AppModel', 'Model');
  *
  */
 class User extends AppModel {
-	public $hasMany = array('UserFavorite');
+	public $hasMany = array('UserFavorite','UserVendor');
 /**
  * Validation rules
  *
