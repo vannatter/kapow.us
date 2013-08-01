@@ -19,3 +19,4 @@
 /app/Config/database.php
 /app/Config/config.php
 /app/Config/core.php
+/app/webroot/cache_js/*
