@@ -68,6 +68,7 @@
 				<?php echo $this->Session->flash(); ?>
 				<?php echo $this->fetch('content'); ?>
 			</div>
+			
 			<div id="footer" class="container blu">
 				<?php echo $this->element('menu/footer'); ?>
 			</div>

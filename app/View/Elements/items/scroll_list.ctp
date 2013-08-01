@@ -5,16 +5,20 @@
 ?>
 <?php $this->Html->script('page/items.js', array('inline' => false)); ?>
 <?php if(isset($items) && is_array($items) && count($items) > 0) { ?>
+
 <div id="item-scroll-list">
 	<?php $row = 0; ?>
 	<?php foreach($items as $item) { ?>
+
 		<?php if ($row == 0) { ?>
 			<div class="row thisweek scroll-list-item">
 		<?php } ?>
+		
 		<?php $row++; ?>
 		<?php
 			$description = $item['Item']['description'];
 			$name = $item['Item']['item_name'];
+			
 			if (isset($this->request->query['terms']) && !empty($this->request->query['terms'])) {
 				$searchFor = "/" . $this->request->query['terms'] . "/i";
 				$replaceWith = "<i><b>$0</b></i>";
@@ -41,12 +45,19 @@
 				<p><?php echo $description; ?></p>
 			</div>
 		</div>
+		
 		<?php if($row == 6) { ?>
 			</div>
 			<?php $row = 0; ?>
 		<?php } ?>
+		
+		
+	<?php } ?>
+	<?php if($row != 0) { ?>
+		</div>
 	<?php } ?>
 </div>
+
 	<?php if($this->Paginator->hasNext()) { ?>
 		<div id="item-scroll-nav">
 			<div class="pagination">
@@ -54,4 +65,6 @@
 			</div>
 		</div>
 	<?php } ?>
+	
 <?php } ?>
+x
