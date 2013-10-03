@@ -117,9 +117,22 @@ class Store extends AppModel {
 		}
 	}
 
-	public function radius($lat, $long, $rad=25) {
+	public function radius($lat, $long, $rad=25, $userId=null) {
 		$distanceQuery = '(3959 * acos( cos( radians(' . $lat . ') ) * cos( radians( ' . $this->alias. '.latitude ) ) * cos( radians( ' . $this->alias . '.longitude ) - radians(' . $long . ') ) + sin( radians(' . $lat . ') ) * sin( radians( ' . $this->alias . '.latitude ) ) ) )';
-		$query = '
+
+		if($userId) {
+			$query = '
+			SELECT Store.*, Hour.*, ' . $distanceQuery . ' AS distance, UserFavorite.id AS is_fav
+				FROM stores AS Store
+				LEFT JOIN hours AS Hour ON Hour.store_id = Store.id
+				LEFT JOIN user_favorites AS UserFavorite ON UserFavorite.favorite_item_id = Store.id
+				 AND UserFavorite.item_type = 5
+				WHERE Store.status_id = 0
+				HAVING distance < ' . $rad . '
+				ORDER BY is_fav DESC, distance
+		';
+		} else {
+			$query = '
 			SELECT Store.*, Hour.*, ' . $distanceQuery . ' AS distance
 				FROM stores AS Store
 				LEFT JOIN hours AS Hour ON Hour.store_id = Store.id
@@ -127,6 +140,7 @@ class Store extends AppModel {
 				HAVING distance < ' . $rad . '
 				ORDER BY distance
 		';
+		}
 
 		return $this->query($query);
 	}
