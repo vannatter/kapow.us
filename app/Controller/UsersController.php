@@ -154,6 +154,8 @@ class UsersController extends AppController {
 	}
 
 	public function favoritePublishers() {
+		parent::hasSession();
+
 		$this->paginate = array(
 			'UserFavorite' => array(
 				'limit' => 24,
@@ -186,6 +188,8 @@ class UsersController extends AppController {
 	}
 
 	public function favoriteItems() {
+		parent::hasSession();
+
 		$this->paginate = array(
 			'UserFavorite' => array(
 				'limit' => 24,
@@ -208,6 +212,8 @@ class UsersController extends AppController {
 	}
 
 	public function favoriteCreators() {
+		parent::hasSession();
+
 		$this->paginate = array(
 			'UserFavorite' => array(
 				'limit' => 24,
@@ -242,6 +248,8 @@ class UsersController extends AppController {
 	}
 
 	public function favoriteSeries() {
+		parent::hasSession();
+
 		$this->paginate = array(
 			'UserFavorite' => array(
 				'limit' => 24,
@@ -275,6 +283,8 @@ class UsersController extends AppController {
 	}
 
 	public function favoriteShops() {
+		parent::hasSession();
+
 		$this->paginate = array(
 			'UserFavorite' => array(
 				'limit' => 24,
