@@ -2,5 +2,9 @@ Kapow! is creating a new platform for finding, tracking and interacting with you
 
 Follow us:
 
-https://www.facebook.com/kapow.us
-https://twitter.com/kapowus
+
+[Our Homepage](http://kapow.us/)
+
+[Facebook](https://www.facebook.com/kapow.us)
+
+[Twitter](https://twitter.com/kapowus)
