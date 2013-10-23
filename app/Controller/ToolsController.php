@@ -15,7 +15,6 @@ class ToolsController extends AppController {
 	public $components = array('Curl');
 	public $helpers = array('Common');
 	
-	
 	public function process_tags() {
 		
 		## delete all existing tags..
@@ -46,13 +45,58 @@ class ToolsController extends AppController {
 					$this->ItemTag->save($tmp);
 				}
 			}
-
-
 		}
 		
 		exit;
 	}
 	
+
+	public function cleanup_item_names() {
+
+		## get all items with broken/partials ID fields that regex didnt catch..
+		$items = $this->Item->find('all', array('conditions' => array('Item.status' => 1, 'Item.item_name LIKE' => '%(C:%'), 'order' => array('Item.id ASC'), 'limit' => 1000, 'recursive' => 1));
+
+		foreach ($items as $i) {
+			echo "parsing = " . $i['Item']['item_name'] . " ... <br/>";			
+
+			## split the name on the like parameter, see if we can get our valid part...
+			$name_parts = explode("(C:", $i['Item']['item_name']);
+			$clean_name = trim($name_parts[0]);
+			
+			if ($clean_name) {
+				## go ahead and update this guy..
+				$this->Item->id = $i['Item']['id'];
+				$this->Item->saveField('item_name', $clean_name);
+			}
+		}
+		
+		exit;
+	}
+
+	public function cleanup_series_names() {
+
+		## get all series with broken/partials ID fields that regex didnt catch..
+		$series = $this->Series->find('all', array('conditions' => array('Series.status' => 1, 'Series.series_name LIKE' => '%(C:%'), 'order' => array('Series.id ASC'), 'limit' => 1000, 'recursive' => 1));
+
+		foreach ($series as $s) {
+			echo "parsing = " . $s['Series']['series_name'] . " ... <br/>";			
+
+			## split the name on the like parameter, see if we can get our valid part...
+			$name_parts = explode("(C:", $s['Series']['series_name']);
+			$clean_name = trim($name_parts[0]);
+
+			echo "clean_name = " . $clean_name . "<br/>";
+						
+			if ($clean_name) {
+				## go ahead and update this guy..
+				$this->Series->id = $s['Series']['id'];
+				$this->Series->saveField('series_name', $clean_name);
+			}
+		}
+		
+		exit;
+	}
+
 
 	public function cleanup_series() {
 		
@@ -80,8 +124,6 @@ class ToolsController extends AppController {
 		}
 		
 		exit;
-		
-		
 	}
 
 	public function update_images() {
