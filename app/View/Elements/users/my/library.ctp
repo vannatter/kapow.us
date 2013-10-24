@@ -13,7 +13,6 @@
 				<div class="preview_img"><a href="/items/<?php echo $this->Common->seoize($lib['Item']['id'], $lib['Item']['item_name']); ?>"><?php if ($lib['Item']['img_fullpath'] == "/img/covers") { ?><img border="0" alt="<?php echo $lib['Item']['item_name']; ?>" src="/img/nocover.png" width="210" height="140" /><?php } else { ?><img border="0" alt="<?php echo $lib['Item']['item_name']; ?>" src="<?php echo $this->Common->thumb($lib['Item']['img_fullpath']); ?>" /><?php } ?></a></div>
 
 				<h4><a href="/items/<?php echo $this->Common->seoize($lib['Item']['id'], $lib['Item']['item_name']); ?>"><?php echo $lib['Item']['item_name']; ?></a></h4>
-
 				<div class="item_desc">
 					<?php echo $this->Common->printing($lib['Item']['printing']); ?>
 					<p><?php echo $lib['Item']['description']; ?></p>

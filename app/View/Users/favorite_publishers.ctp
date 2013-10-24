@@ -57,10 +57,11 @@
 
 				<?php echo $this->Common->favRemoveButton($publisher['UserFavorite']['id']); ?>
 
-				<h4><?php echo $this->Html->link($name, sprintf('/publishers/%s', $seoString)); ?></h4>
-
-				<div class="item_desc">
-					<p><?php echo $publisher['Publisher']['publisher_bio']; ?></p>
+				<div class="item_blck">			
+					<h4><?php echo $this->Html->link($name, sprintf('/publishers/%s', $seoString)); ?></h4>
+					<div class="item_desc">
+						<p><?php echo $publisher['Publisher']['publisher_bio']; ?></p>
+					</div>
 				</div>
 			</div>
 			<?php if($row == 6) { ?>

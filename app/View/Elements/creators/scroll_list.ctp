@@ -67,10 +67,11 @@
 					</a>
 				</div>
 
-				<h4><a href="/creators/<?php echo $seoString; ?>"><?php echo $name; ?></a></h4>
-
-				<div class="item_desc">
-					<p><?php echo $creator['Creator']['creator_bio']; ?></p>
+				<div class="item_blck">			
+					<h4><a href="/creators/<?php echo $seoString; ?>"><?php echo $name; ?></a></h4>
+					<div class="item_desc">
+						<p><?php echo $creator['Creator']['creator_bio']; ?></p>
+					</div>
 				</div>
 			</div>
 			<?php if($row == 6) { ?>

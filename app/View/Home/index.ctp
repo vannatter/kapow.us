@@ -79,12 +79,13 @@
 						<div class="preview_img"><a href="/items/<?php echo $this->Common->seoize($ri['Item']['id'], $ri['Item']['item_name']); ?>"><?php if ($ri['Item']['img_fullpath'] == "/img/covers") { ?><img border="0" alt="<?php echo $ri['Item']['item_name']; ?>" src="/img/nocover.png" width="210" height="140" /><?php } else { ?><img border="0" alt="<?php echo $ri['Item']['item_name']; ?>" src="<?php echo $this->Common->thumb($ri['Item']['img_fullpath']); ?>" /><?php } ?></a></div>
 			
 						<?php echo $this->Common->pullButton($ri['Item']['id'], $hasPull); ?>
-			
-						<h4><a href="/items/<?php echo $this->Common->seoize($ri['Item']['id'], $ri['Item']['item_name']); ?>"><?php echo $name; ?></a></h4>
-			
-						<div class="item_desc">
-							<?php echo $this->Common->printing($ri['Item']['printing']); ?>
-							<p><?php echo $description; ?></p>
+
+						<div class="item_blck">			
+							<h4><a href="/items/<?php echo $this->Common->seoize($ri['Item']['id'], $ri['Item']['item_name']); ?>"><?php echo $name; ?></a></h4>
+							<div class="item_desc">
+								<?php echo $this->Common->printing($ri['Item']['printing']); ?>
+								<p><?php echo $description; ?></p>
+							</div>
 						</div>
 					</div>
 				

@@ -20,11 +20,12 @@
 
 				<?php echo $this->Common->libraryRemoveButton($item['UserItem']['id']); ?>
 
-				<h4><a href="/items/<?php echo $this->Common->seoize($item['Item']['id'], $item['Item']['item_name']); ?>"><?php echo $name; ?></a></h4>
-
-				<div class="item_desc">
-					<?php echo $this->Common->printing($item['Item']['printing']); ?>
-					<p><?php echo $description; ?></p>
+				<div class="item_blck">			
+					<h4><a href="/items/<?php echo $this->Common->seoize($item['Item']['id'], $item['Item']['item_name']); ?>"><?php echo $name; ?></a></h4>
+					<div class="item_desc">
+						<?php echo $this->Common->printing($item['Item']['printing']); ?>
+						<p><?php echo $description; ?></p>
+					</div>
 				</div>
 			</div>
 			<?php if($row == 6) { ?>
