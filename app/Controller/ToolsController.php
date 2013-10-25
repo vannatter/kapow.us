@@ -46,7 +46,6 @@ class ToolsController extends AppController {
 				}
 			}
 		}
-		
 		exit;
 	}
 	
@@ -69,7 +68,6 @@ class ToolsController extends AppController {
 				$this->Item->saveField('item_name', $clean_name);
 			}
 		}
-		
 		exit;
 	}
 
@@ -93,7 +91,6 @@ class ToolsController extends AppController {
 				$this->Series->saveField('series_name', $clean_name);
 			}
 		}
-		
 		exit;
 	}
 
@@ -122,7 +119,6 @@ class ToolsController extends AppController {
 			}
 			
 		}
-		
 		exit;
 	}
 

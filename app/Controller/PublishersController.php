@@ -103,6 +103,10 @@ class PublishersController extends AppController {
 		$this->set('publisher', $publisher);
 		$this->set('title_for_layout', ucwords(strtolower($publisher['Publisher']['publisher_name'])));
 
+		$this->set('meta_description_for_layout','Kapow! ' . $publisher['Publisher']['publisher_name'] . (($publisher['Publisher']['publisher_bio']) ? " - " . substr(str_replace('"', '', $publisher['Publisher']['publisher_bio']),0,200) : " - Comics Publisher listed on Kapow!") );
+		$this->set('meta_keywords_for_layout','Kapow, Kapow.us, Comics, Comic database, Current comics, New comics, Comic app, ' . $publisher['Publisher']['publisher_name']); 
+		$this->set('og_description','Kapow! ' . $publisher['Publisher']['publisher_name'] . (($publisher['Publisher']['publisher_bio']) ? " - " . substr(str_replace('"', '', $publisher['Publisher']['publisher_bio']),0,200) : " - Comics Publisher listed on Kapow!") );
+
 		## see if the current user (if there is one), fav'd this publisher
 		if($userFav = $this->UserFavorite->findByFavoriteItemIdAndUserIdAndItemType($id, $this->Auth->user('id'), 4)) {
 			$this->set('userFav', true);
