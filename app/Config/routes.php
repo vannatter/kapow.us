@@ -1,9 +1,10 @@
 <?php
 
 Router::mapResources(array('User'));
-Router::parseExtensions();
+Router::parseExtensions('xml');
 
 Router::connect('/', array('controller' => 'home', 'action' => 'index'));
+Router::connect('/sitemap', array('controller' => 'home', 'action' => 'sitemap'));
 
 ##### SERIES
 Router::connect(

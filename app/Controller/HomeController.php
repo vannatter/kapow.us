@@ -8,7 +8,8 @@ App::uses('CakeEmail', 'Network/Email');
  */
 class HomeController extends AppController {
 	public $name = 'Home';
-	public $uses = array('Blog', 'Item', 'Creator');
+	public $uses = array('Blog', 'Item', 'Creator', 'Publisher', 'Store');
+	public $components = array('RequestHandler');
 
 	public function index() {
 
@@ -53,6 +54,33 @@ class HomeController extends AppController {
 		$this->set('title_for_layout', '');
 
 		$this->set('og_image', 'http://kapow.us/img/kapow_fb.png');
+	}
+	
+	public function sitemap() {
+
+		$this_release_date = $this->_getReleaseDate('this_week');
+		$next_release_date = $this->_getReleaseDate('next_week');
+
+		## new this week
+		$new_this_week = $this->Item->find('all', array('conditions' => array('Item.item_date' => $this_release_date), 'limit' => 500, 'recursive' => -1));
+		$this->set('new_this_week', $new_this_week);
+		
+		## new next week
+		$new_next_week = $this->Item->find('all', array('conditions' => array('Item.item_date' => $next_release_date), 'limit' => 500, 'recursive' => -1));
+		$this->set('new_next_week', $new_next_week);
+		
+		## get creators
+		$creators = $this->Creator->find('all', array('conditions' => array("not" => array('Creator.creator_bio' => null)), 'limit' => 1000, 'recursive' => -1));
+		$this->set('creators', $creators);
+
+		## get shops
+		$shops = $this->Store->find('all', array('conditions' => array("Store.status_id" => 0), 'limit' => 1000, 'recursive' => -1));
+		$this->set('shops', $shops);
+		
+		## get publishers
+		$publishers = $this->Publisher->find('all', array('conditions' => array("Publisher.id > " => 0), 'limit' => 1000, 'recursive' => -1));
+		$this->set('publishers', $publishers);
+		
 	}
 	
 	public function about() {

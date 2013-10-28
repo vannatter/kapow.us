@@ -92,7 +92,7 @@ class AppController extends Controller {
 	public function afterFacebookSave($memberId=null) {
 	}
 
-	function recordActivity() {
+	public function recordActivity() {
 		if($this->Auth->user('id')) {
 			$skip = array();
 			$check = sprintf('%s/%s', strtolower($this->name), strtolower($this->action));
@@ -115,6 +115,47 @@ class AppController extends Controller {
 			}
 		}
 	}
+	
+	public function _getReleaseDate($type='this_week') {
+		$first_day = date("N", strtotime("today"));
+		$release_date = date("Y-m-d", strtotime("today"));
+
+		switch(strtolower($type)) {
+			case 'this_week':
+				if ($first_day < 3) {
+					$release_date = date("Y-m-d", strtotime("this wednesday"));
+				}
+				if ($first_day == 3) {
+					$release_date = date("Y-m-d", strtotime("today"));
+				}
+				if ($first_day == 4) {
+					$release_date = date("Y-m-d", strtotime("yesterday"));
+				}
+				if ($first_day > 4) {
+					$release_date = date("Y-m-d", strtotime("last wednesday") );
+				}
+				break;
+			case 'next_week':
+				$release_date = date("Y-m-d", strtotime("+1 week"));
+
+				if ($first_day < 3) {
+					$release_date = date("Y-m-d", strtotime("+2 wednesdays"));
+				}
+				if ($first_day == 3) {
+					$release_date = date("Y-m-d", strtotime("+1 week"));
+				}
+				if ($first_day == 4) {
+					$release_date = date("Y-m-d", strtotime("+6 days"));
+				}
+				if ($first_day > 4) {
+					$release_date = date("Y-m-d", strtotime("this wednesday"));
+				}
+				break;
+		}
+
+		return $release_date;
+	}
+		
 }
 
 ?>
