@@ -127,7 +127,7 @@ class Item extends AppModel {
 			)
 		);
 
-		return $this->find('all', array('conditions' => array('Item.item_date' => $date, 'Section.category_id' => 1), 'limit'=> $limit, 'order' => array('RAND()'), 'contain' => $contain));
+		return $this->find('all', array('conditions' => array('Item.img_fullpath <> ' => '/img/covers', 'Item.item_date' => $date, 'Section.category_id' => 1), 'limit'=> $limit, 'order' => array('RAND()'), 'contain' => $contain));
 	}
 
 	function getRandom() {
