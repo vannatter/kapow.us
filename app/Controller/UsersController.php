@@ -168,6 +168,9 @@ class UsersController extends AppController {
 							'limit' => 1,
 							'fields' => array(
 								'Item.img_fullpath'
+							),
+							'order' => array(
+								'Item.created DESC'
 							)
 						)
 					)
@@ -226,9 +229,12 @@ class UsersController extends AppController {
 							'Item' => array(
 								'fields' => array(
 									'Item.img_fullpath'
-								)
+								),
 							),
-							'limit' => 1
+							'limit' => 1,
+							'order' => array(
+								'ItemCreator.created DESC'
+							)
 						)
 					)
 				)
@@ -365,10 +371,49 @@ class UsersController extends AppController {
 
 	private function _getProfileData(&$user) {
 		$this->User->UserFavorite->bindModel(array('belongsTo' => array('Publisher' => array('foreignKey' => 'favorite_item_id'))));
-		$user['favorites']['publishers'] = $this->User->UserFavorite->find('all', array('conditions' => array('UserFavorite.item_type' => 4, 'UserFavorite.user_id' => $this->Auth->user('id')), 'order' => array('UserFavorite.id' => 'DESC'), 'limit' => 4));
+		$user['favorites']['publishers'] = $this->User->UserFavorite->find('all', array(
+			'conditions' => array(
+				'UserFavorite.item_type' => 4,
+				'UserFavorite.user_id' => $this->Auth->user('id')
+			),
+			'order' => array(
+				'UserFavorite.id' => 'DESC'
+			),
+			'limit' => 4,
+			'contain' => array(
+				'Publisher' => array(
+					'Item' => array(
+						'limit' => 1,
+						'order' => array(
+							'Item.created DESC'
+						)
+					)
+				)
+			)
+		));
 
 		$this->User->UserFavorite->bindModel(array('belongsTo' => array('Creator' => array('foreignKey' => 'favorite_item_id'))));
-		$user['favorites']['creators'] = $this->User->UserFavorite->find('all', array('conditions' => array('UserFavorite.item_type' => 3, 'UserFavorite.user_id' => $this->Auth->user('id')), 'order' => array('UserFavorite.id' => 'DESC'), 'limit' => 4));
+		$user['favorites']['creators'] = $this->User->UserFavorite->find('all', array(
+			'conditions' => array(
+				'UserFavorite.item_type' => 3,
+				'UserFavorite.user_id' => $this->Auth->user('id')
+			),
+			'order' => array(
+				'UserFavorite.id' => 'DESC'
+			),
+			'limit' => 4,
+			'contain' => array(
+				'Creator' => array(
+					'ItemCreator' => array(
+						'limit' => 1,
+						'order' => array(
+							'ItemCreator.created DESC',
+						),
+						'Item'
+					)
+				)
+			)
+		));
 
 		$this->User->UserFavorite->bindModel(array('belongsTo' => array('Series' => array('foreignKey' => 'favorite_item_id'))));
 		$this->User->UserFavorite->Series->bindModel(array('hasOne' => array('Item' => array('foreignKey' => 'series_id', 'order' => 'RAND()'))));
