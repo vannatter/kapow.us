@@ -3,6 +3,11 @@ App::uses('AppModel', 'Model');
 class Series extends AppModel {
 	public $name = "Series";
 	public $actsAs = array('Containable');
+	public $virtualFields = array(
+		'total_items' => '
+		SELECT COUNT(*) AS icount FROM items WHERE items.series_id = series.id
+		'
+	);
 
 	public function getsetSeries($series_name) {
 
