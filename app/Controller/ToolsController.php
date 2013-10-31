@@ -1074,14 +1074,14 @@ class ToolsController extends AppController {
 
 							imagejpeg($image_p, $img_fullPath . $thumb['ext'], 100);
 
-							$this->Item->id = $item['Item']['id'];
-							$this->Item->saveField('thumbnails_processed', true);
-
 							$this->log(sprintf('generated thumb for %s - %s', $img, $img_fullPath . $thumb['ext']));
-
-							$this->_flushBuffers();
 						}
 					}
+
+					$this->Item->id = $item['Item']['id'];
+					$this->Item->saveField('thumbnails_processed', true);
+
+					$this->_flushBuffers();
 				} else {
 					$this->Item->id = $item['Item']['id'];
 					$this->Item->saveField('thumbnails_processed', true);
