@@ -1,2 +1,0 @@
-{"ts":1383253811915,"silentsave":true,"restoring":false,"patch":[[{"diffs":[[1,"\nafter change:\n\napp/Console/cake Migrations.migration generate\n\nget changes:\n\napp/Console/cake Migrations.migration run all\n\n\nrun asset compression:\n\napp/Console/cake AssetCompress.AssetCompress build_ini\n"]],"start1":0,"start2":0,"length1":0,"length2":205}]],"length":205}
-{"contributors":[],"silentsave":false,"ts":1383253815829,"patch":[[{"diffs":[[0,"uild_ini"],[-1,"\n"]],"start1":196,"start2":196,"length1":9,"length2":8}]],"length":204,"saved":false}
