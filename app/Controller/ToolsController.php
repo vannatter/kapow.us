@@ -1040,10 +1040,12 @@ class ToolsController extends AppController {
 		## get a list of items
 		$items = $this->Item->find('all', array(
 			'conditions' => array(
-				'Item.img_fullpath != ""'
+				'Item.img_fullpath != ""',
+				'Item.thumbnails_processed' => false
 			),
 			'fields' => array(
-				'Item.img_fullpath'
+				'Item.img_fullpath',
+				'Item.id'
 			),
 			'recursive' => -1
 		));
@@ -1072,11 +1074,21 @@ class ToolsController extends AppController {
 
 							imagejpeg($image_p, $img_fullPath . $thumb['ext'], 100);
 
+							$this->Item->id = $item['Item']['id'];
+							$this->Item->saveField('thumbnails_processed', true);
+
 							$this->log(sprintf('generated thumb for %s - %s', $img, $img_fullPath . $thumb['ext']));
+
+							$this->_flushBuffers();
 						}
 					}
 				} else {
+					$this->Item->id = $item['Item']['id'];
+					$this->Item->saveField('thumbnails_processed', true);
+
 					$this->log(sprintf('file not found - %s', $img_fullPath));
+
+					$this->_flushBuffers();
 				}
 			}
 		} else {
@@ -1086,5 +1098,11 @@ class ToolsController extends AppController {
 		$this->log('generateThumbs() - FINISHED');
 
 		exit;
+	}
+
+	private function _flushBuffers() {
+		ob_end_flush();
+		ob_flush();
+		ob_start();
 	}
 }
