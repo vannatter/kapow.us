@@ -20,3 +20,5 @@
 /app/Config/config.php
 /app/Config/core.php
 /app/webroot/cache_js/*
+.c9revisions
+.c9revisions/*
