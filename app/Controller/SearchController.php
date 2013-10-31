@@ -52,6 +52,7 @@ class SearchController extends AppController {
 						)
 					));
 					break;
+					
 				case 2:   ## PUBLISHERS
 					$this->paginate = array(
 						'Publisher' => array(
@@ -62,7 +63,6 @@ class SearchController extends AppController {
 							'limit' => 50
 						)
 					);
-
 					$results = $this->paginate('Publisher', array(
 						'OR' => array(
 							'Publisher.publisher_name LIKE' => '%' . $terms . '%',
@@ -70,6 +70,7 @@ class SearchController extends AppController {
 						)
 					));
 					break;
+
 				case 3:   ## CREATORS
 					$this->paginate = array(
 						'Creator' => array(
@@ -80,7 +81,6 @@ class SearchController extends AppController {
 							'limit' => 50
 						)
 					);
-
 					$results = $this->paginate('Creator', array(
 						'OR' => array(
 							'Creator.creator_name LIKE' => '%' . $terms . '%',
@@ -88,16 +88,24 @@ class SearchController extends AppController {
 						)
 					));
 					break;
+
 				case 4:   ## SERIES
+					$this->Series->bindModel(array('hasMany' => array('Item' => array('foreignKey' => 'series_id', 'order' => 'Item.item_date DESC', 'limit' => 1))));
 					$this->paginate = array(
+			            'Item' => array(
+			                'fields' => array(
+			                    'Item.img_fullpath',
+			                    'Item.description'
+			                )
+			            ),
 						'Series' => array(
 							'order' => array(
+								'Series.total_items' => 'DESC',
 								'Series.series_name' => 'ASC'
 							),
 							'limit' => 50
 						)
 					);
-
 					$results = $this->paginate('Series', array(
 						'Series.series_name LIKE' => '%' . $terms . '%'
 					));
