@@ -42,10 +42,9 @@ class SearchController extends AppController {
 								'Item.item_date' => 'DESC',
 								'Item.item_name' => 'ASC'
 							),
-							'limit' => 100
+							'limit' => 50
 						)
 					);
-
 					$results = $this->paginate('Item', array(
 						'OR' => array(
 							'Item.item_name LIKE' => '%' . $terms . '%',
@@ -57,9 +56,10 @@ class SearchController extends AppController {
 					$this->paginate = array(
 						'Publisher' => array(
 							'order' => array(
+								'Publisher.publisher_bio' => 'DESC',
 								'Publisher.publisher_name' => 'ASC'
 							),
-							'limit' => 100
+							'limit' => 50
 						)
 					);
 
@@ -74,9 +74,10 @@ class SearchController extends AppController {
 					$this->paginate = array(
 						'Creator' => array(
 							'order' => array(
+								'Creator.creator_bio' => 'DESC',
 								'Creator.creator_name' => 'ASC'
 							),
-							'limit' => 100
+							'limit' => 50
 						)
 					);
 
@@ -93,7 +94,7 @@ class SearchController extends AppController {
 							'order' => array(
 								'Series.series_name' => 'ASC'
 							),
-							'limit' => 100
+							'limit' => 50
 						)
 					);
 
