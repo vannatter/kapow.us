@@ -20,7 +20,12 @@
 				$name = $creator['Creator']['creator_name'];
 				$img = $creator['Creator']['creator_photo'];
 				if(!$img || empty($img)) {
-					$img = '/img/nocover.png';
+					## see if there is an album cover to use
+					if(isset($creator['Creator']['ItemCreator'][0]['Item']['img_fullpath'])) {
+						$img = $this->Common->thumb($creator['Creator']['ItemCreator'][0]['Item']['img_fullpath']);
+					} else {
+						$img = '/img/nocover.png';
+					}
 				} else {
 					$img = $this->Common->thumb($img);
 				}

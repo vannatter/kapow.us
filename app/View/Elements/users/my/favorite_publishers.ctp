@@ -20,7 +20,12 @@
 				$name = $publisher['Publisher']['publisher_name'];
 				$img = $publisher['Publisher']['publisher_photo'];
 				if(!$img || empty($img)) {
-					$img = '/img/nocover.png';
+					## see if there is an album cover to use
+					if(isset($publisher['Publisher']['Item'][0]['img_fullpath'])) {
+						$img = $this->Common->thumb($publisher['Publisher']['Item'][0]['img_fullpath']);
+					} else {
+						$img = '/img/nocover.png';
+					}
 				} else {
 					$img = $this->Common->thumb($img);
 				}
