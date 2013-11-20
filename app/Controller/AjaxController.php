@@ -55,4 +55,32 @@ class AjaxController extends AppController {
 		exit;
 	}
 	
+	public function itemHotness() {
+		$result = $this->_startResponse();
+		
+		if(isset($this->request->query['itemId']) && isset($this->request->query['value'])) {
+			$itemId = $this->request->query['itemId'];
+			$value = $this->request->query['value'];
+			
+			## make sure the item is valid
+			if($item = $this->Item->findById($itemId)) {
+				$this->Item->id = $itemId;
+				$this->Item->saveField('hot', $value);
+			} else {
+				$result['status']['message'] = __('Invalid Item');
+			}
+		} else {
+			$result['status']['message'] = __('Invalid Item');
+		}
+		
+		return $this->_sendResponse($result);
+	}
+	
+	private function _startResponse() {
+		return array('error' => false, 'status' => array('status_code' => 204, 'status_message' => ''));
+	}
+	
+	private function _sendResponse($result=null) {
+		return new CakeResponse(array('body' => json_encode($result)));
+	}
 }
