@@ -39,6 +39,7 @@ class SearchController extends AppController {
 					$this->paginate = array(
 						'Item' => array(
 							'order' => array(
+								'Publisher.weight' => 'DESC',
 								'Item.item_date' => 'DESC',
 								'Item.item_name' => 'ASC'
 							),
