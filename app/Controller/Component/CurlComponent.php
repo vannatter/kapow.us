@@ -23,9 +23,20 @@
       		$local_path = Configure::read('Settings.icon_path') . strtolower($img);
       		$web_path   = Configure::read('Settings.icon_web_path') . strtolower($img);
       		
+      		
+			echo $local_path . "<br/>\n";
+      		
       		if (file_exists($local_path)) {
+				
+				echo "exists";      		
+				exit;      		
+      		
         		return $web_path;        
       		} else {
+      		
+				echo "doesnt exists";      		
+				exit;      		
+      		
         		$img_path = Configure::read('Settings.root_domain') . strtolower($img);
         		mkdir(dirname($local_path), 0777, true);        		
         
