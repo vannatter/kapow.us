@@ -8,6 +8,7 @@
 
 		echo $this->fetch('meta');
 
+		echo $this->Html->css('jquery-ui.custom.min');
 		echo $this->Html->css('bootstrap.min');
 		echo $this->Html->css('bootstrap-responsive.min');
 		echo $this->Html->css('datepicker');
@@ -18,6 +19,7 @@
 		echo $this->fetch('css');
 
 		echo $this->Html->script('libs/jquery');
+		echo $this->Html->script('libs/jquery-ui');
 		echo $this->Html->script('libs/bootstrap.min');
 		echo $this->Html->script('libs/bootstrap-datepicker');
 

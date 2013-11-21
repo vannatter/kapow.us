@@ -128,6 +128,12 @@ class AdminController extends AppController {
 				'Flag.status !=' => 99
 			)
 		)));
+		
+		$this->set('hotItems', $this->Item->find('count', array(
+			'conditions' => array(
+				'Item.hot >' => 0
+			)
+		)));
 	}
 
 	public function index() {
@@ -151,8 +157,32 @@ class AdminController extends AppController {
 
 	##### ITEMS
 	public function items() {
+		$filter = null;
+		
+		if(isset($this->request->params['named']['filter'])) {
+			$filter = $this->request->params['named']['filter'];
+		} elseif(isset($this->request->data['Item']['filter'])) {
+			$filter = $this->request->data['Item']['filter'];
+		}
+		
 		$this->Item->recursive = 0;
-		$this->set('items', $this->paginate('Item'));
+		
+		if($filter) {
+			switch(strtoupper($filter)) {
+				case 'HOT':
+					$items = $this->paginate('Item', array('Item.hot >' => 0));
+					break;
+				default:
+					$items = $this->paginate('Item');
+					break;
+			}
+			
+			$this->set('filter', $filter);
+		} else {
+			$items = $this->paginate('Item');
+		}
+		
+		$this->set('items', $items);
 	}
 
 	public function itemsEdit($id) {

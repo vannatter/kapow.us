@@ -23,4 +23,8 @@
 		<h4><?php echo __('Total Users'); ?></h4>
 		<?php echo $userTotal; ?>
 	</div>
+	<div class="span3">
+		<h4><?php echo __('Hot Items'); ?></h4>
+		<?php echo $hotItems; ?>
+	</div>
 </div>
