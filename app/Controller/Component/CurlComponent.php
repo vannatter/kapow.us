@@ -20,6 +20,9 @@
 		}
 		
 	    function getImage($img) {
+	    
+	    	echo "img = " . $img . "<br/>\n";
+	    
       		$local_path = Configure::read('Settings.icon_path') . strtolower($img);
       		$web_path   = Configure::read('Settings.icon_web_path') . strtolower($img);
       		
