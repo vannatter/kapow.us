@@ -128,12 +128,6 @@ class AdminController extends AppController {
 				'Flag.status !=' => 99
 			)
 		)));
-		
-		$this->set('hotItems', $this->Item->find('count', array(
-			'conditions' => array(
-				'Item.hot >' => 0
-			)
-		)));
 	}
 
 	public function index() {
@@ -153,16 +147,28 @@ class AdminController extends AppController {
 		$this->set('shopTotal', $this->Store->find('count'));
 
 		$this->set('userTotal', $this->User->find('count'));
+		
+		$this->set('hotItems', $this->Item->find('count', array(
+			'conditions' => array(
+				'Item.hot >' => 0
+			)
+		)));
+		
+		$this->set('weightedPublishers', $this->Publisher->find('count', array(
+			'conditions' => array(
+				'Publisher.weight >' => 0
+			)
+		)));
 	}
 
 	##### ITEMS
 	public function items() {
 		$filter = null;
 		
-		if(isset($this->request->params['named']['filter'])) {
-			$filter = $this->request->params['named']['filter'];
-		} elseif(isset($this->request->data['Item']['filter'])) {
+		if(isset($this->request->data['Item']['filter'])) {
 			$filter = $this->request->data['Item']['filter'];
+		} elseif(isset($this->request->params['named']['filter'])) {
+			$filter = $this->request->params['named']['filter'];
 		}
 		
 		$this->Item->recursive = 0;
@@ -355,8 +361,31 @@ class AdminController extends AppController {
 		$this->Publisher->bindModel(array('belongsTo' => array('LockUser' => array('className' => 'User', 'foreignKey' => 'locked_by_user_id'))));
 		$this->Publisher->unbindModel(array('hasMany' => array('Item')));
 
+		$filter = null;
+		
+		if(isset($this->request->data['Publisher']['filter'])) {
+			$filter = $this->request->data['Publisher']['filter'];
+		} elseif(isset($this->request->params['named']['filter'])) {
+			$filter = $this->request->params['named']['filter'];
+		}
+		
 		$this->Publisher->recursive = 0;
-		$this->set('publishers', $this->paginate('Publisher'));
+		
+		if($filter) {
+			switch(strtoupper($filter)) {
+				case 'WEIGHTED':
+					$publishers = $this->paginate('Publisher', array('Publisher.weight >' => 0));
+					break;
+				default:
+					$publishers = $this->paginate('Publisher');
+					break;
+			}
+		} else {
+			$publishers = $this->paginate('Publisher');
+		}
+		
+		$this->set('filter', $filter);
+		$this->set('publishers', $publishers);
 	}
 
 	public function publishersEdit($id) {

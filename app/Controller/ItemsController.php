@@ -339,6 +339,7 @@ class ItemsController extends AppController {
 				'Section.category_id' => $content_type
 			),
 			'order' => array(
+				'Publisher.weight' => 'DESC',
 				'Pull.created' => 'DESC',
 				'Item.series_id' => 'DESC'
 			),
@@ -581,6 +582,7 @@ class ItemsController extends AppController {
 				'Section.category_id' => $content_type
 			),
 			'order' => array(
+				'Publisher.weight' => 'DESC',
 				'Pull.created' => 'DESC',
 				'Item.series_id' => 'DESC'
 			),

@@ -1,3 +1,5 @@
+var msg_timeout;
+
 $(document).ready(function() {
 	var hash = document.location.hash;
 	if(hash) {
@@ -12,3 +14,13 @@ $(document).ready(function() {
 		window.scrollTo(0, 0);
 	});
 });
+
+function flash(msg, delay) {
+	if (!delay) {
+		delay = 3000;
+	}
+	clearTimeout(msg_timeout);
+	$('#flash_msg').html(msg);
+	$('#flash_msg').fadeIn();
+	msg_timeout = setTimeout( function() { $("#flash_msg").fadeOut(); }, delay );
+}

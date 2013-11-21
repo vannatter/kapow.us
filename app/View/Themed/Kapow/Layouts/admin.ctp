@@ -29,6 +29,28 @@
 		?>
 		<style>
 			#content { margin-top: 50px; }
+			
+			.flash_msg {
+				position: fixed;
+				left: 0;
+				bottom: 0;
+				z-index: 50000;
+				width: 100%;
+				height: 25px;
+				border: none;
+				text-align:center;
+				padding: 5px 0 0 0;
+				margin: 0;
+				font-weight: normal;
+				font-size: 17px;
+				text-transform:capitalize;
+				cursor: pointer;
+			}
+			   	
+			.flash_msg {
+				background:rgba(31,61,122,0.9);
+				color: #fff;
+			}
 		</style>
 	</head>
 
@@ -45,6 +67,7 @@
 				<?php echo $this->fetch('content'); ?>
 			</div>
 		</div>
+		<div id="flash_msg" class="flash_msg" style="display:none;"></div>
 	</div>
 	</body>
 </html>

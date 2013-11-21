@@ -1,3 +1,6 @@
+<style>
+#weight { width: 75%; margin-left: auto; margin-right: auto; }
+</style>
 <?php if($this->Session->read('Auth.User')) { ?>
 	<div class="item_actions">
 		<?php echo $this->Common->addFavButton($publisher['Publisher']['id'], 'publisher', $userFav); ?>
@@ -10,8 +13,36 @@
 						<?php if ($this->Session->read('Auth.User.access_level') > 50) { ?>
 							<li class="divider"></li>
 							<li><a href="/admin/publishers/edit/<?php echo $publisher['Publisher']['id']; ?>"><?php echo __('Edit Publisher'); ?></a></li>
+							<li class="divider"></li>
+								<li><div style="display: block; padding: 3px 10px; clear: both; color: #333; font-weight: bold; margin-top: 5px;">Weight</div><div id="weight"></div></li>
 						<?php } ?>
 					</ul>
 			</div>
 	</div>
 <?php } ?>
+
+<script>
+$(function() {
+  $( "#weight" ).slider({
+    range: "max",
+    min: 0,
+    max: 100,
+    value: <?php echo $publisher['Publisher']['weight']; ?>,
+    slide: function( event, ui ) {
+      $(this).find('.ui-slider-handle').text(ui.value);
+    },
+    change: function( event, ui ) {
+    	$.getJSON('/ajax/publisherWeight', { publisherId: <?php echo $publisher['Publisher']['id']; ?>, value: ui.value }, function(data) {
+    		if(data.error) {
+    			flash('Error updating weight', 3000);
+    		} else {
+    			flash('Updated Weight', 3000);
+    		}
+      });
+    }
+  });
+ 	
+ 	var value = $("#weight").slider("option","value");
+ 	$('#weight').find('.ui-slider-handle').text(value);
+});
+</script>

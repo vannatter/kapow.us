@@ -83,4 +83,25 @@ class AjaxController extends AppController {
 	private function _sendResponse($result=null) {
 		return new CakeResponse(array('body' => json_encode($result)));
 	}
+	
+	public function publisherWeight() {
+		$result = $this->_startResponse();
+		
+		if(isset($this->request->query['publisherId']) && isset($this->request->query['value'])) {
+			$publisherId = $this->request->query['publisherId'];
+			$value = $this->request->query['value'];
+			
+			## make sure the publisher is valid
+			if($publisher = $this->Publisher->findById($publisherId)) {
+				$this->Publisher->id = $publisherId;
+				$this->Publisher->saveField('weight', $value);
+			} else {
+				$result['status']['message'] = __('Invalid Publisher');
+			}
+		} else {
+			$result['status']['message'] = __('Invalid Publisher');
+		}
+		
+		return $this->_sendResponse($result);
+	}
 }
