@@ -339,8 +339,8 @@ class ItemsController extends AppController {
 				'Section.category_id' => $content_type
 			),
 			'order' => array(
-				'Publisher.weight' => 'DESC',
 				'Pull.created' => 'DESC',
+				'Publisher.weight' => 'DESC',
 				'Item.series_id' => 'DESC'
 			),
 			'limit' => 24,
@@ -582,8 +582,8 @@ class ItemsController extends AppController {
 				'Section.category_id' => $content_type
 			),
 			'order' => array(
-				'Publisher.weight' => 'DESC',
 				'Pull.created' => 'DESC',
+				'Publisher.weight' => 'DESC',
 				'Item.series_id' => 'DESC'
 			),
 			'limit' => 24,
