@@ -24,6 +24,7 @@
 				} else {
 					$img = $this->Common->thumb($img);
 				}
+				$desc = $series['Series']['description'];
 				?>
 				<div class="preview_img">
 					<?php echo $this->Html->link(
@@ -49,6 +50,10 @@
 				<h4>
 					<?php echo $this->Html->link($name, sprintf('/series/%s', $this->Common->seoize($id, $name))); ?>
 				</h4>
+
+				<div class="item_desc">
+					<?php echo $desc; ?>
+				</div>
 
 			</div>
 
