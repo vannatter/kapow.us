@@ -14,7 +14,7 @@
 				<div class="row thisweek scroll-list-item">
 			<?php } ?>
 			<?php $row++; ?>
-			<div class="span2 preview_block">
+			<div class="span2 preview_block preview_block_on">
 				<?php
 				$id = $ser['Series']['id'];
 				$name = $ser['Series']['series_name'];
