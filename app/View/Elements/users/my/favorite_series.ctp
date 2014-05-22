@@ -52,7 +52,7 @@
 				</h4>
 
 				<div class="item_desc">
-					<?php echo $desc; ?>
+					xx<?php echo $desc; ?>
 				</div>
 
 			</div>
