@@ -18,6 +18,7 @@
 				<?php
 				$id = $ser['Series']['id'];
 				$name = $ser['Series']['series_name'];
+				$desc = $ser['Series']['description'];
 
 				if(isset($ser['Series']['Item'][0])) {
 					$img = $ser['Series']['Item'][0]['img_fullpath'];
@@ -57,6 +58,9 @@
 				<?php echo $this->Common->favRemoveButton($ser['UserFavorite']['id']); ?>
 
 				<h4><?php echo $this->Html->link($name, sprintf('/series/%s', $seoString)); ?></h4>
+				<div class="item_desc">
+					<?php echo $desc; ?>
+				</div>
 
 			</div>
 			<?php if($row == 6) { ?>

@@ -50,11 +50,9 @@
 				<h4>
 					<?php echo $this->Html->link($name, sprintf('/series/%s', $this->Common->seoize($id, $name))); ?>
 				</h4>
-
 				<div class="item_desc">
-					xx<?php echo $desc; ?>
+					<?php echo $desc; ?>
 				</div>
-
 			</div>
 
 		<?php } ?>
