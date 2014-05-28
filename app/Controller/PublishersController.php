@@ -12,7 +12,7 @@ class PublishersController extends AppController {
 	public $uses = array('Publisher', 'Item', 'UserFavorite');
 	public $paginate = array(
 		'Publisher' => array(
-			'order' => array('Publisher.publisher_name' => 'ASC'),
+			'order' => array('Publisher.weight' => 'DESC', 'Publisher.publisher_name' => 'ASC'),
 			'limit' => 24,
 			'contain' => array(
 				'Item' => array(
@@ -23,7 +23,7 @@ class PublishersController extends AppController {
 			)
 		)
 	);
-
+	
 	public function index() {
 		if($this->request->is('post') || $this->request->is('put')) {
 			$data = Sanitize::clean($this->request->data);
