@@ -75,8 +75,8 @@ class AppController extends Controller {
 	}
 
 	public function seoize($id, $string) {
-		$string = str_replace("'", "", $string);
-		return $id . "--" . strtolower(Inflector::slug($string, '-'));
+		$clean = str_replace("'", "", $string);
+		return $id . "--" . strtolower(Inflector::slug($clean, '-'));
 	}
 
 	## this is a callback for the Facebook plugin

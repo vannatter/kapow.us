@@ -102,10 +102,11 @@ class CommonHelper extends Helper {
 	    	return $orig;
 	    }
     }
-    
-    public function seoize($id, $string) {
-	    return $id . "--" . strtolower(Inflector::slug($string, '-'));
-    }
+
+	public function seoize($id, $string) {
+		$clean = str_replace("'", "", $string);
+		return $id . "--" . strtolower(Inflector::slug($clean, '-'));
+	}
     
     public function creators($creator_array) {
 		$formatted = array();	    
