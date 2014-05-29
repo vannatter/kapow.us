@@ -3,6 +3,7 @@
  *@var $this View
  */
 ?>
+
 <?php $this->Html->script('page/users.pulllist.js', array('inline' => false)); ?>
 <div id="item-scroll-list">
 
@@ -52,15 +53,19 @@
 
 	<?php if ($row == 6) { ?>
 	<?php } else { ?>
-		<?
-			$fill = 6 - $row;
-			for ($i = 0; $i < $fill; $i++) {
-				?>
-					<div class="span2 preview_block <?php if ($hasPull) { echo "preview_block_on"; } ?>"></div>
-				<?						
-			}
-		?>
-		</div>
+		<?php if ($row == 0) { ?>
+		
+		<?php } else { ?>
+			<?
+				$fill = 6 - $row;
+				for ($i = 0; $i < $fill; $i++) {
+					?>
+						<div class="span2 preview_block <?php if ($hasPull) { echo "preview_block_on"; } ?>"></div>
+					<?						
+				}
+			?>
+			</div>
+		<?php } ?>
 	<?php } ?>
 
 </div>

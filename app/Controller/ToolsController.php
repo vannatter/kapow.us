@@ -52,6 +52,21 @@ class ToolsController extends AppController {
 
 	public function cleanup_item_names() {
 
+		$items = $this->Item->find('all', array('conditions' => array('Item.status' => 1, 'Item.item_name LIKE' => '%(COMBO)%'), 'order' => array('Item.id ASC'), 'limit' => 1000, 'recursive' => 1));
+
+		foreach ($items as $i) {
+			echo "parsing = " . $i['Item']['item_name'] . " ... <br/>";			
+
+			## split the name on the like parameter, see if we can get our valid part...
+
+			$clean_name = trim(str_replace("(COMBO)", "[COMBO]", $i['Item']['item_name']));
+			if ($clean_name) {
+				## go ahead and update this guy..
+				$this->Item->id = $i['Item']['id'];
+				$this->Item->saveField('item_name', $clean_name);
+			}
+		}
+
 		## get all items with broken/partials ID fields that regex didnt catch..
 		$items = $this->Item->find('all', array('conditions' => array('Item.status' => 1, 'Item.item_name LIKE' => '%(C:%'), 'order' => array('Item.id ASC'), 'limit' => 1000, 'recursive' => 1));
 
@@ -68,12 +83,63 @@ class ToolsController extends AppController {
 				$this->Item->saveField('item_name', $clean_name);
 			}
 		}
+
+		$items = $this->Item->find('all', array('conditions' => array('Item.status' => 1, 'Item.item_name LIKE' => '%(C%'), 'order' => array('Item.id ASC'), 'limit' => 1000, 'recursive' => 1));
+		foreach ($items as $i) {
+			echo "parsing = " . $i['Item']['item_name'] . " ... <br/>";			
+
+			## split the name on the like parameter, see if we can get our valid part...
+			$name_parts = explode("(C", $i['Item']['item_name']);
+			$clean_name = trim($name_parts[0]);
+			
+			if ($clean_name) {
+				## go ahead and update this guy..
+				$this->Item->id = $i['Item']['id'];
+				$this->Item->saveField('item_name', $clean_name);
+			}
+		}
+
+		## get all items with broken/partials ID fields that regex didnt catch..
+		$items = $this->Item->find('all', array('conditions' => array('Item.status' => 1, 'Item.item_name LIKE' => '%(PP%'), 'order' => array('Item.id ASC'), 'limit' => 1000, 'recursive' => 1));
+
+		foreach ($items as $i) {
+			echo "parsing = " . $i['Item']['item_name'] . " ... <br/>";			
+
+			## split the name on the like parameter, see if we can get our valid part...
+			$name_parts = explode("(PP", $i['Item']['item_name']);
+			$clean_name = trim($name_parts[0]);
+			
+			if ($clean_name) {
+				## go ahead and update this guy..
+				$this->Item->id = $i['Item']['id'];
+				$this->Item->saveField('item_name', $clean_name);
+			}
+		}
+
 		exit;
 	}
 
 	public function cleanup_series_names() {
 
 		## get all series with broken/partials ID fields that regex didnt catch..
+
+		$series = $this->Series->find('all', array('conditions' => array('Series.status' => 1, 'Series.series_name LIKE' => '%(COMBO)%'), 'order' => array('Series.id ASC'), 'limit' => 1000, 'recursive' => 1));
+
+		foreach ($series as $s) {
+			echo "parsing = " . $s['Series']['series_name'] . " ... <br/>";			
+
+			## split the name on the like parameter, see if we can get our valid part...
+
+			$clean_name = trim(str_replace("(COMBO)", "[COMBO]", $s['Series']['series_name']));
+			echo "clean_name = " . $clean_name . "<br/>";
+						
+			if ($clean_name) {
+				## go ahead and update this guy..
+				$this->Series->id = $s['Series']['id'];
+				$this->Series->saveField('series_name', $clean_name);
+			}
+		}
+
 		$series = $this->Series->find('all', array('conditions' => array('Series.status' => 1, 'Series.series_name LIKE' => '%(C:%'), 'order' => array('Series.id ASC'), 'limit' => 1000, 'recursive' => 1));
 
 		foreach ($series as $s) {
@@ -91,6 +157,42 @@ class ToolsController extends AppController {
 				$this->Series->saveField('series_name', $clean_name);
 			}
 		}
+		
+		$series = $this->Series->find('all', array('conditions' => array('Series.status' => 1, 'Series.series_name LIKE' => '%(C%'), 'order' => array('Series.id ASC'), 'limit' => 1000, 'recursive' => 1));
+
+		foreach ($series as $s) {
+			echo "parsing = " . $s['Series']['series_name'] . " ... <br/>";			
+
+			## split the name on the like parameter, see if we can get our valid part...
+			$name_parts = explode("(C", $s['Series']['series_name']);
+			$clean_name = trim($name_parts[0]);
+
+			echo "clean_name = " . $clean_name . "<br/>";
+						
+			if ($clean_name) {
+				## go ahead and update this guy..
+				$this->Series->id = $s['Series']['id'];
+				$this->Series->saveField('series_name', $clean_name);
+			}
+		}		
+		
+		$series = $this->Series->find('all', array('conditions' => array('Series.status' => 1, 'Series.series_name LIKE' => '%(PP%'), 'order' => array('Series.id ASC'), 'limit' => 1000, 'recursive' => 1));
+
+		foreach ($series as $s) {
+			echo "parsing = " . $s['Series']['series_name'] . " ... <br/>";			
+
+			## split the name on the like parameter, see if we can get our valid part...
+			$name_parts = explode("(PP", $s['Series']['series_name']);
+			$clean_name = trim($name_parts[0]);
+
+			echo "clean_name = " . $clean_name . "<br/>";
+						
+			if ($clean_name) {
+				## go ahead and update this guy..
+				$this->Series->id = $s['Series']['id'];
+				$this->Series->saveField('series_name', $clean_name);
+			}
+		}		
 		exit;
 	}
 
