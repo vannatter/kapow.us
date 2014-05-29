@@ -117,6 +117,118 @@ class ToolsController extends AppController {
 				$this->Item->saveField('item_name', $clean_name);
 			}
 		}
+		
+		
+
+		$items = $this->Item->find('all', array('conditions' => array('Item.status' => 1, 'Item.item_name LIKE' => '%(OF 1)%'), 'order' => array('Item.id ASC'), 'limit' => 1000, 'recursive' => 1));
+		foreach ($items as $i) {
+			echo "parsing = " . $i['Item']['item_name'] . " ... <br/>";			
+			$clean_name = trim(str_replace("(OF 1)", "[OF 1]", $i['Item']['item_name']));
+			if ($clean_name) {
+				$this->Item->id = $i['Item']['id'];
+				$this->Item->saveField('item_name', $clean_name);
+			}
+		}		
+		$items = $this->Item->find('all', array('conditions' => array('Item.status' => 1, 'Item.item_name LIKE' => '%(OF 2)%'), 'order' => array('Item.id ASC'), 'limit' => 1000, 'recursive' => 1));
+		foreach ($items as $i) {
+			echo "parsing = " . $i['Item']['item_name'] . " ... <br/>";			
+			$clean_name = trim(str_replace("(OF 2)", "[OF 2]", $i['Item']['item_name']));
+			if ($clean_name) {
+				$this->Item->id = $i['Item']['id'];
+				$this->Item->saveField('item_name', $clean_name);
+			}
+		}		
+		$items = $this->Item->find('all', array('conditions' => array('Item.status' => 1, 'Item.item_name LIKE' => '%(OF 3)%'), 'order' => array('Item.id ASC'), 'limit' => 1000, 'recursive' => 1));
+		foreach ($items as $i) {
+			echo "parsing = " . $i['Item']['item_name'] . " ... <br/>";			
+			$clean_name = trim(str_replace("(OF 3)", "[OF 3]", $i['Item']['item_name']));
+			if ($clean_name) {
+				$this->Item->id = $i['Item']['id'];
+				$this->Item->saveField('item_name', $clean_name);
+			}
+		}		
+		$items = $this->Item->find('all', array('conditions' => array('Item.status' => 1, 'Item.item_name LIKE' => '%(OF 4)%'), 'order' => array('Item.id ASC'), 'limit' => 1000, 'recursive' => 1));
+		foreach ($items as $i) {
+			echo "parsing = " . $i['Item']['item_name'] . " ... <br/>";			
+			$clean_name = trim(str_replace("(OF 4)", "[OF 4]", $i['Item']['item_name']));
+			if ($clean_name) {
+				$this->Item->id = $i['Item']['id'];
+				$this->Item->saveField('item_name', $clean_name);
+			}
+		}		
+		$items = $this->Item->find('all', array('conditions' => array('Item.status' => 1, 'Item.item_name LIKE' => '%(OF 5)%'), 'order' => array('Item.id ASC'), 'limit' => 1000, 'recursive' => 1));
+		foreach ($items as $i) {
+			echo "parsing = " . $i['Item']['item_name'] . " ... <br/>";			
+			$clean_name = trim(str_replace("(OF 5)", "[OF 5]", $i['Item']['item_name']));
+			if ($clean_name) {
+				$this->Item->id = $i['Item']['id'];
+				$this->Item->saveField('item_name', $clean_name);
+			}
+		}		
+		$items = $this->Item->find('all', array('conditions' => array('Item.status' => 1, 'Item.item_name LIKE' => '%(OF 6)%'), 'order' => array('Item.id ASC'), 'limit' => 1000, 'recursive' => 1));
+		foreach ($items as $i) {
+			echo "parsing = " . $i['Item']['item_name'] . " ... <br/>";			
+			$clean_name = trim(str_replace("(OF 6)", "[OF 6]", $i['Item']['item_name']));
+			if ($clean_name) {
+				$this->Item->id = $i['Item']['id'];
+				$this->Item->saveField('item_name', $clean_name);
+			}
+		}		
+		$items = $this->Item->find('all', array('conditions' => array('Item.status' => 1, 'Item.item_name LIKE' => '%(OF 7)%'), 'order' => array('Item.id ASC'), 'limit' => 1000, 'recursive' => 1));
+		foreach ($items as $i) {
+			echo "parsing = " . $i['Item']['item_name'] . " ... <br/>";			
+			$clean_name = trim(str_replace("(OF 7)", "[OF 7]", $i['Item']['item_name']));
+			if ($clean_name) {
+				$this->Item->id = $i['Item']['id'];
+				$this->Item->saveField('item_name', $clean_name);
+			}
+		}		
+		$items = $this->Item->find('all', array('conditions' => array('Item.status' => 1, 'Item.item_name LIKE' => '%(OF 8)%'), 'order' => array('Item.id ASC'), 'limit' => 1000, 'recursive' => 1));
+		foreach ($items as $i) {
+			echo "parsing = " . $i['Item']['item_name'] . " ... <br/>";			
+			$clean_name = trim(str_replace("(OF 8)", "[OF 8]", $i['Item']['item_name']));
+			if ($clean_name) {
+				$this->Item->id = $i['Item']['id'];
+				$this->Item->saveField('item_name', $clean_name);
+			}
+		}		
+		$items = $this->Item->find('all', array('conditions' => array('Item.status' => 1, 'Item.item_name LIKE' => '%(OF 9)%'), 'order' => array('Item.id ASC'), 'limit' => 1000, 'recursive' => 1));
+		foreach ($items as $i) {
+			echo "parsing = " . $i['Item']['item_name'] . " ... <br/>";			
+			$clean_name = trim(str_replace("(OF 9)", "[OF 9]", $i['Item']['item_name']));
+			if ($clean_name) {
+				$this->Item->id = $i['Item']['id'];
+				$this->Item->saveField('item_name', $clean_name);
+			}
+		}		
+		$items = $this->Item->find('all', array('conditions' => array('Item.status' => 1, 'Item.item_name LIKE' => '%(OF 10)%'), 'order' => array('Item.id ASC'), 'limit' => 1000, 'recursive' => 1));
+		foreach ($items as $i) {
+			echo "parsing = " . $i['Item']['item_name'] . " ... <br/>";			
+			$clean_name = trim(str_replace("(OF 10)", "[OF 10]", $i['Item']['item_name']));
+			if ($clean_name) {
+				$this->Item->id = $i['Item']['id'];
+				$this->Item->saveField('item_name', $clean_name);
+			}
+		}		
+		$items = $this->Item->find('all', array('conditions' => array('Item.status' => 1, 'Item.item_name LIKE' => '%(OF 11)%'), 'order' => array('Item.id ASC'), 'limit' => 1000, 'recursive' => 1));
+		foreach ($items as $i) {
+			echo "parsing = " . $i['Item']['item_name'] . " ... <br/>";			
+			$clean_name = trim(str_replace("(OF 11)", "[OF 11]", $i['Item']['item_name']));
+			if ($clean_name) {
+				$this->Item->id = $i['Item']['id'];
+				$this->Item->saveField('item_name', $clean_name);
+			}
+		}		
+		$items = $this->Item->find('all', array('conditions' => array('Item.status' => 1, 'Item.item_name LIKE' => '%(OF 12)%'), 'order' => array('Item.id ASC'), 'limit' => 1000, 'recursive' => 1));
+		foreach ($items as $i) {
+			echo "parsing = " . $i['Item']['item_name'] . " ... <br/>";			
+			$clean_name = trim(str_replace("(OF 12)", "[OF 12]", $i['Item']['item_name']));
+			if ($clean_name) {
+				$this->Item->id = $i['Item']['id'];
+				$this->Item->saveField('item_name', $clean_name);
+			}
+		}		
+
 
 		exit;
 	}
