@@ -17,11 +17,12 @@ $(document).ready(function() {
 					} else {
 						obj.parent().addClass('fav_on');
 						flash('Added ' + val + ' to your favorites!', 3000);
-						$('.favorite_tags').append(' <span class="label fav_label"><i class="icon-heart icon-white icon_tiny"></i> ' + val + '</a></span> ');			
+						$('.favorite_tags').append(' <span class="tag_' + type + '_' + id + ' label fav_label"><i class="icon-heart icon-white icon_tiny"></i> ' + val + '</a></span> ');			
 					}
 				} else {
 					obj.parent().removeClass('fav_on');
-						flash('Removed ' + val + ' from your favorites!', 3000);
+					flash('Removed ' + val + ' from your favorites!', 3000);
+					$('.tag_' + type + '_' + id).remove();
 				}
 			}
 		});
