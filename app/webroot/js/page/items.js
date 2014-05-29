@@ -5,17 +5,21 @@ $(document).ready(function() {
 		var obj = $(this);
 		var id = obj.attr('data-id');
 		var type = obj.attr('data-type');
+		var lbl = obj.text();
 
 		$.getJSON('/favorites/toggle', { 'id': id, 'type': type }, function(data) {
 			if(!data.error) {
 				if(data.type == 1) {
 					if(type == 'all') {
 						$('.toggle_favorite').not('[data-type="all"]').parent().addClass('fav_on');
+						flash('Added everything to your favorites!', 3000);
 					} else {
 						obj.parent().addClass('fav_on');
+						flash('Added ' + lbl + ' to your favorites!', 3000);
 					}
 				} else {
 					obj.parent().removeClass('fav_on');
+						flash('Removed ' + lbl + ' from your favorites!', 3000);
 				}
 			}
 		});
