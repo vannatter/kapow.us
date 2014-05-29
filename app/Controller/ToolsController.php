@@ -118,7 +118,7 @@ class ToolsController extends AppController {
 			}
 		}
 		
-		$keywords = array('NOTE PRICE', 'VU', 'TRINITY', 'IDW', 'DC', 'NEW PTG', 'UNLEASHED PT5', 'WRATH', 'EVIL', 'ONE SHOT', 'ONGOING', 'AOFD', 'ZERO YEAR', 'WEEKLY', 'VF', 'DOOMED', 'UNLEASHED PT6', 'UNLEASHED PT4', 'UNLEASHED PT3', 'UNLEASHED PT2');
+		$keywords = array('UNLSHD PT2', 'UPRISING', 'AH', 'NOTE PRICE', 'VU', 'TRINITY', 'IDW', 'DC', 'NEW PTG', 'UNLEASHED PT5', 'WRATH', 'EVIL', 'ONE SHOT', 'ONGOING', 'AOFD', 'ZERO YEAR', 'WEEKLY', 'VF', 'DOOMED', 'UNLEASHED PT6', 'UNLEASHED PT4', 'UNLEASHED PT3', 'UNLEASHED PT2');
 		
 		foreach ($keywords as $vv) {
 			echo "checking keyword -> " . $vv . " ... <br/>";	
