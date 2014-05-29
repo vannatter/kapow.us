@@ -7,6 +7,7 @@
 	
 	<div class="span6 item_detail">
 		<?php echo $this->Element('items/actions'); ?>
+		<?php echo $this->Element('items/favorite_tags'); ?>
 		<h2><?php echo $item['Item']['item_name']; ?></h2>
 		<?php echo $this->Common->creators($item['ItemCreator']); ?>		
 		<?php echo $this->Element('items/description'); ?>

@@ -6,6 +6,7 @@ $(document).ready(function() {
 		var id = obj.attr('data-id');
 		var type = obj.attr('data-type');
 		var lbl = obj.text();
+		var val = obj.attr('data-val');
 
 		$.getJSON('/favorites/toggle', { 'id': id, 'type': type }, function(data) {
 			if(!data.error) {
@@ -15,18 +16,19 @@ $(document).ready(function() {
 						flash('Added everything to your favorites!', 3000);
 					} else {
 						obj.parent().addClass('fav_on');
-						flash('Added ' + lbl + ' to your favorites!', 3000);
+						flash('Added ' + val + ' to your favorites!', 3000);
+						$('.favorite_tags').append(' <span class="label fav_label"><i class="icon-heart icon-white icon_tiny"></i> ' + val + '</a></span> ');			
 					}
 				} else {
 					obj.parent().removeClass('fav_on');
-						flash('Removed ' + lbl + ' from your favorites!', 3000);
+						flash('Removed ' + val + ' from your favorites!', 3000);
 				}
 			}
 		});
 
 		// return false so we don't close the menu
 		// possibly change this later
-		return false;
+		return true;
 	});
 
 	$('#item-scroll-list').infinitescroll({

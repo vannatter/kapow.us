@@ -31,7 +31,8 @@
 									array(
 										'class' => 'toggle_favorite',
 										'data-type' => 'creator',
-										'data-id' => $k
+										'data-id' => $k,
+										'data-val' => $v['name']
 									)
 								);
 								?>
@@ -45,7 +46,8 @@
 								array(
 									'class' => 'toggle_favorite',
 									'data-type' => 'series',
-									'data-id' => $item['Item']['series_id']
+									'data-id' => $item['Item']['series_id'],
+									'data-val' => $item['Series']['series_name']
 								)
 							);
 							?>
@@ -58,7 +60,8 @@
 								array(
 									'class' => 'toggle_favorite',
 									'data-type' => 'publisher',
-									'data-id' => $item['Item']['publisher_id']
+									'data-id' => $item['Item']['publisher_id'],
+									'data-val' => ucwords(strtolower($item['Publisher']['publisher_name']))
 								)
 							);
 							?>
