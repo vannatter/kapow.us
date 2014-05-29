@@ -118,7 +118,15 @@ class ToolsController extends AppController {
 			}
 		}
 		
-		
+		$items = $this->Item->find('all', array('conditions' => array('Item.status' => 1, 'Item.item_name LIKE' => '%(NOTE PRICE)%'), 'order' => array('Item.id ASC'), 'limit' => 1000, 'recursive' => 1));
+		foreach ($items as $i) {
+			echo "parsing = " . $i['Item']['item_name'] . " ... <br/>";			
+			$clean_name = trim(str_replace("(NOTE PRICE)", "", $i['Item']['item_name']));
+			if ($clean_name) {
+				$this->Item->id = $i['Item']['id'];
+				$this->Item->saveField('item_name', $clean_name);
+			}
+		}		
 
 		$items = $this->Item->find('all', array('conditions' => array('Item.status' => 1, 'Item.item_name LIKE' => '%(OF 1)%'), 'order' => array('Item.id ASC'), 'limit' => 1000, 'recursive' => 1));
 		foreach ($items as $i) {
@@ -228,7 +236,6 @@ class ToolsController extends AppController {
 				$this->Item->saveField('item_name', $clean_name);
 			}
 		}		
-
 
 		exit;
 	}
