@@ -160,45 +160,59 @@ class AppSchema extends CakeSchema {
 		'id' => array('type' => 'integer', 'null' => false, 'default' => null, 'key' => 'primary'),
 		'item_id' => array('type' => 'integer', 'null' => false, 'default' => null, 'key' => 'index'),
 		'creator_id' => array('type' => 'integer', 'null' => false, 'default' => null, 'key' => 'index'),
-		'creator_type_id' => array('type' => 'integer', 'null' => false, 'default' => null, 'key' => 'index'),
+		'creator_type_id' => array('type' => 'integer', 'null' => false, 'default' => null),
 		'created' => array('type' => 'datetime', 'null' => false, 'default' => null),
 		'modified' => array('type' => 'datetime', 'null' => false, 'default' => null),
 		'indexes' => array(
 			'PRIMARY' => array('column' => 'id', 'unique' => 1),
 			'item_id' => array('column' => 'item_id', 'unique' => 0),
-			'creator_id' => array('column' => 'creator_id', 'unique' => 0),
-			'creator_type_id' => array('column' => 'creator_type_id', 'unique' => 0)
+			'creator_id' => array('column' => 'creator_id', 'unique' => 0)
 		),
 		'tableParameters' => array('charset' => 'utf8', 'collate' => 'utf8_general_ci', 'engine' => 'InnoDB')
 	);
 
 	public $item_tags = array(
 		'id' => array('type' => 'integer', 'null' => false, 'default' => null, 'key' => 'primary'),
-		'item_id' => array('type' => 'integer', 'null' => true, 'default' => null, 'key' => 'index'),
-		'tag_id' => array('type' => 'integer', 'null' => true, 'default' => null, 'key' => 'index'),
+		'item_id' => array('type' => 'integer', 'null' => true, 'default' => null),
+		'tag_id' => array('type' => 'integer', 'null' => true, 'default' => null),
 		'created' => array('type' => 'datetime', 'null' => true, 'default' => null),
 		'modified' => array('type' => 'datetime', 'null' => true, 'default' => null),
 		'indexes' => array(
+			'PRIMARY' => array('column' => 'id', 'unique' => 1)
+		),
+		'tableParameters' => array('charset' => 'latin1', 'collate' => 'latin1_swedish_ci', 'engine' => 'MyISAM')
+	);
+
+	public $item_user_favorites = array(
+		'id' => array('type' => 'integer', 'null' => false, 'default' => null, 'key' => 'primary'),
+		'item_id' => array('type' => 'integer', 'null' => false, 'default' => null, 'key' => 'index'),
+		'user_id' => array('type' => 'integer', 'null' => false, 'default' => null, 'key' => 'index'),
+		'favorite_type_id' => array('type' => 'integer', 'null' => false, 'default' => null, 'key' => 'index'),
+		'user_favorite_id' => array('type' => 'integer', 'null' => false, 'default' => null, 'key' => 'index'),
+		'created' => array('type' => 'datetime', 'null' => false, 'default' => null),
+		'modified' => array('type' => 'datetime', 'null' => false, 'default' => null),
+		'indexes' => array(
 			'PRIMARY' => array('column' => 'id', 'unique' => 1),
 			'item_id' => array('column' => 'item_id', 'unique' => 0),
-			'tag_id' => array('column' => 'tag_id', 'unique' => 0)
+			'user_id' => array('column' => 'user_id', 'unique' => 0),
+			'favorite_type_id' => array('column' => 'favorite_type_id', 'unique' => 0),
+			'user_favorite_id' => array('column' => 'user_favorite_id', 'unique' => 0)
 		),
 		'tableParameters' => array('charset' => 'latin1', 'collate' => 'latin1_swedish_ci', 'engine' => 'MyISAM')
 	);
 
 	public $items = array(
 		'id' => array('type' => 'integer', 'null' => false, 'default' => null, 'key' => 'primary'),
-		'status' => array('type' => 'integer', 'null' => true, 'default' => '1', 'length' => 4, 'key' => 'index'),
-		'section_id' => array('type' => 'integer', 'null' => false, 'default' => null, 'key' => 'index'),
-		'publisher_id' => array('type' => 'integer', 'null' => false, 'default' => null, 'key' => 'index'),
+		'status' => array('type' => 'integer', 'null' => false, 'default' => '1', 'length' => 4),
+		'section_id' => array('type' => 'integer', 'null' => false, 'default' => null),
+		'publisher_id' => array('type' => 'integer', 'null' => false, 'default' => null),
 		'series_id' => array('type' => 'integer', 'null' => false, 'default' => null, 'key' => 'index'),
 		'item_id' => array('type' => 'string', 'null' => true, 'default' => null, 'length' => 50, 'key' => 'index', 'collate' => 'utf8_general_ci', 'charset' => 'utf8'),
 		'stock_id' => array('type' => 'string', 'null' => false, 'default' => null, 'length' => 50, 'collate' => 'utf8_general_ci', 'charset' => 'utf8'),
-		'series_num' => array('type' => 'integer', 'null' => false, 'default' => null),
 		'printing' => array('type' => 'integer', 'null' => false, 'default' => '1'),
-		'combo_pack' => array('type' => 'integer', 'null' => true, 'default' => '0'),
 		'item_date' => array('type' => 'date', 'null' => true, 'default' => null, 'key' => 'index'),
 		'item_name' => array('type' => 'string', 'null' => false, 'default' => null, 'length' => 200, 'collate' => 'utf8_general_ci', 'charset' => 'utf8'),
+		'series_num' => array('type' => 'integer', 'null' => false, 'default' => null),
 		'img_fullpath' => array('type' => 'string', 'null' => false, 'default' => null, 'length' => 300, 'collate' => 'utf8_general_ci', 'charset' => 'utf8'),
 		'srp' => array('type' => 'string', 'null' => false, 'default' => null, 'length' => 50, 'collate' => 'utf8_general_ci', 'charset' => 'utf8'),
 		'description' => array('type' => 'text', 'null' => false, 'default' => null, 'collate' => 'utf8_general_ci', 'charset' => 'utf8'),
@@ -209,9 +223,6 @@ class AppSchema extends CakeSchema {
 		'indexes' => array(
 			'PRIMARY' => array('column' => 'id', 'unique' => 1),
 			'item_date' => array('column' => 'item_date', 'unique' => 0),
-			'section_id' => array('column' => 'section_id', 'unique' => 0),
-			'status' => array('column' => 'status', 'unique' => 0),
-			'publisher_id' => array('column' => 'publisher_id', 'unique' => 0),
 			'series_id' => array('column' => 'series_id', 'unique' => 0),
 			'item_id' => array('column' => 'item_id', 'unique' => 0),
 			'hot' => array('column' => 'hot', 'unique' => 0)
@@ -221,10 +232,10 @@ class AppSchema extends CakeSchema {
 
 	public $publishers = array(
 		'id' => array('type' => 'integer', 'null' => false, 'default' => null, 'key' => 'primary'),
-		'status' => array('type' => 'integer', 'null' => true, 'default' => '0'),
+		'status' => array('type' => 'integer', 'null' => false, 'default' => '0'),
 		'publisher_name' => array('type' => 'string', 'null' => true, 'default' => null, 'length' => 200, 'collate' => 'utf8_general_ci', 'charset' => 'utf8'),
-		'publisher_photo' => array('type' => 'string', 'null' => true, 'default' => null, 'length' => 200, 'collate' => 'utf8_general_ci', 'charset' => 'utf8'),
-		'publisher_bio' => array('type' => 'text', 'null' => true, 'default' => null, 'collate' => 'utf8_general_ci', 'charset' => 'utf8'),
+		'publisher_photo' => array('type' => 'string', 'null' => false, 'default' => null, 'length' => 200, 'collate' => 'utf8_general_ci', 'charset' => 'utf8'),
+		'publisher_bio' => array('type' => 'text', 'null' => false, 'default' => null, 'collate' => 'utf8_general_ci', 'charset' => 'utf8'),
 		'publisher_website' => array('type' => 'string', 'null' => false, 'default' => null, 'length' => 200, 'collate' => 'utf8_general_ci', 'charset' => 'utf8'),
 		'locked_by_user_id' => array('type' => 'integer', 'null' => false, 'default' => '0'),
 		'weight' => array('type' => 'integer', 'null' => false, 'default' => null, 'key' => 'index'),
@@ -282,7 +293,6 @@ class AppSchema extends CakeSchema {
 		'id' => array('type' => 'integer', 'null' => false, 'default' => null, 'key' => 'primary'),
 		'series_name' => array('type' => 'string', 'null' => false, 'default' => null, 'length' => 200, 'collate' => 'utf8_general_ci', 'charset' => 'utf8'),
 		'description' => array('type' => 'text', 'null' => false, 'default' => null, 'collate' => 'utf8_general_ci', 'charset' => 'utf8'),
-		'status' => array('type' => 'integer', 'null' => true, 'default' => '1', 'length' => 4),
 		'created' => array('type' => 'datetime', 'null' => false, 'default' => null),
 		'modified' => array('type' => 'datetime', 'null' => false, 'default' => null),
 		'indexes' => array(
@@ -295,17 +305,16 @@ class AppSchema extends CakeSchema {
 		'id' => array('type' => 'integer', 'null' => false, 'default' => null, 'key' => 'primary'),
 		'store_id' => array('type' => 'integer', 'null' => true, 'default' => null, 'key' => 'index'),
 		'uploader_user_id' => array('type' => 'integer', 'null' => true, 'default' => '0'),
-		'active' => array('type' => 'integer', 'null' => true, 'default' => '1', 'length' => 4),
 		'photo_path' => array('type' => 'text', 'null' => true, 'default' => null, 'collate' => 'latin1_swedish_ci', 'charset' => 'latin1'),
 		'photo_description' => array('type' => 'text', 'null' => true, 'default' => null, 'collate' => 'latin1_swedish_ci', 'charset' => 'latin1'),
-		'primary' => array('type' => 'boolean', 'null' => false, 'default' => '0', 'key' => 'index'),
+		'primary' => array('type' => 'boolean', 'null' => false, 'default' => '0'),
+		'active' => array('type' => 'integer', 'null' => false, 'default' => '0', 'length' => 4),
 		'status' => array('type' => 'integer', 'null' => false, 'default' => '0', 'comment' => '0=needs attention,1=visible'),
 		'created' => array('type' => 'datetime', 'null' => true, 'default' => null),
 		'modified' => array('type' => 'datetime', 'null' => true, 'default' => null),
 		'indexes' => array(
 			'PRIMARY' => array('column' => 'id', 'unique' => 1),
-			'store_id' => array('column' => 'store_id', 'unique' => 0),
-			'primary_2' => array('column' => 'primary', 'unique' => 0)
+			'store_id' => array('column' => 'store_id', 'unique' => 0)
 		),
 		'tableParameters' => array('charset' => 'latin1', 'collate' => 'latin1_swedish_ci', 'engine' => 'InnoDB')
 	);
@@ -326,8 +335,8 @@ class AppSchema extends CakeSchema {
 		'website' => array('type' => 'string', 'null' => false, 'default' => null, 'length' => 150, 'collate' => 'latin1_swedish_ci', 'charset' => 'latin1'),
 		'google_reference' => array('type' => 'text', 'null' => false, 'default' => null, 'collate' => 'latin1_swedish_ci', 'charset' => 'latin1'),
 		'facebook_url' => array('type' => 'string', 'null' => false, 'default' => null, 'length' => 400, 'collate' => 'latin1_swedish_ci', 'charset' => 'latin1'),
-		'twitter_url' => array('type' => 'string', 'null' => true, 'default' => null, 'length' => 200, 'collate' => 'latin1_swedish_ci', 'charset' => 'latin1'),
-		'ebay_url' => array('type' => 'string', 'null' => true, 'default' => null, 'length' => 400, 'collate' => 'latin1_swedish_ci', 'charset' => 'latin1'),
+		'twitter_url' => array('type' => 'string', 'null' => false, 'default' => null, 'length' => 200, 'collate' => 'latin1_swedish_ci', 'charset' => 'latin1'),
+		'ebay_url' => array('type' => 'string', 'null' => false, 'default' => null, 'length' => 400, 'collate' => 'latin1_swedish_ci', 'charset' => 'latin1'),
 		'user_id' => array('type' => 'integer', 'null' => true, 'default' => null),
 		'admin_user_id' => array('type' => 'integer', 'null' => true, 'default' => null),
 		'created' => array('type' => 'datetime', 'null' => false, 'default' => null),
@@ -338,7 +347,7 @@ class AppSchema extends CakeSchema {
 			'state' => array('column' => 'state', 'unique' => 0),
 			'latitude' => array('column' => 'latitude', 'unique' => 0),
 			'longitude' => array('column' => 'longitude', 'unique' => 0),
-			'name' => array('column' => 'name', 'type' => 'fulltext')
+			'name' => array('column' => 'name', 'unique' => 0)
 		),
 		'tableParameters' => array('charset' => 'latin1', 'collate' => 'latin1_swedish_ci', 'engine' => 'MyISAM')
 	);
@@ -429,11 +438,11 @@ class AppSchema extends CakeSchema {
 		'password' => array('type' => 'string', 'null' => false, 'default' => null, 'length' => 50, 'collate' => 'latin1_swedish_ci', 'charset' => 'latin1'),
 		'facebook_id' => array('type' => 'biginteger', 'null' => false, 'default' => null, 'key' => 'index'),
 		'access_level' => array('type' => 'integer', 'null' => false, 'default' => '1', 'key' => 'index', 'comment' => '1=default,99=admin'),
-		'user_bio' => array('type' => 'text', 'null' => true, 'default' => null, 'collate' => 'latin1_swedish_ci', 'charset' => 'latin1'),
-		'user_fullname' => array('type' => 'string', 'null' => true, 'default' => null, 'length' => 300, 'collate' => 'latin1_swedish_ci', 'charset' => 'latin1'),
-		'user_website' => array('type' => 'string', 'null' => true, 'default' => null, 'length' => 300, 'collate' => 'latin1_swedish_ci', 'charset' => 'latin1'),
-		'user_facebook' => array('type' => 'string', 'null' => true, 'default' => null, 'length' => 300, 'collate' => 'latin1_swedish_ci', 'charset' => 'latin1'),
-		'user_twitter' => array('type' => 'string', 'null' => true, 'default' => null, 'length' => 300, 'collate' => 'latin1_swedish_ci', 'charset' => 'latin1'),
+		'user_bio' => array('type' => 'text', 'null' => false, 'default' => null, 'collate' => 'latin1_swedish_ci', 'charset' => 'latin1'),
+		'user_fullname' => array('type' => 'string', 'null' => false, 'default' => null, 'length' => 300, 'collate' => 'latin1_swedish_ci', 'charset' => 'latin1'),
+		'user_website' => array('type' => 'string', 'null' => false, 'default' => null, 'length' => 300, 'collate' => 'latin1_swedish_ci', 'charset' => 'latin1'),
+		'user_facebook' => array('type' => 'string', 'null' => false, 'default' => null, 'length' => 300, 'collate' => 'latin1_swedish_ci', 'charset' => 'latin1'),
+		'user_twitter' => array('type' => 'string', 'null' => false, 'default' => null, 'length' => 300, 'collate' => 'latin1_swedish_ci', 'charset' => 'latin1'),
 		'private_profile' => array('type' => 'boolean', 'null' => false, 'default' => '0', 'key' => 'index'),
 		'created' => array('type' => 'datetime', 'null' => false, 'default' => null),
 		'modified' => array('type' => 'datetime', 'null' => false, 'default' => null),

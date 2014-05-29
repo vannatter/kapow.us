@@ -7,11 +7,13 @@ App::uses('AppController', 'Controller');
  * @property Creator $Creator
  * @property Tag $Tag
  * @property Item $Item
+ * @property ItemUserFavorite $ItemUserFavorite
+ * @property UserFavorite $UserFavorite
  */
 class ToolsController extends AppController {
 
 	public $name = 'Tools';
-	public $uses = array('Item','Section','Publisher','Series','Creator','CreatorType','ItemCreator', 'Store','Tag','ItemTag','StorePhoto');
+	public $uses = array('Item','Section','Publisher','Series','Creator','CreatorType','ItemCreator', 'Store','Tag','ItemTag','StorePhoto', 'ItemUserFavorite', 'UserFavorite');
 	public $components = array('Curl');
 	public $helpers = array('Common');
 	
@@ -440,7 +442,9 @@ class ToolsController extends AppController {
 	
 
 	function _getItem($item_id, $item_name, $section, $date) {
-	
+
+		$updatedTypes = array();
+
 		$print = 1;
 		$rand = rand(500,999);
 		$url = Configure::read('Settings.root_domain') . Configure::read('Settings.root_domain_path') . $rand . "?stockItemID=" . $item_id;
@@ -679,11 +683,53 @@ class ToolsController extends AppController {
 							$item_creators['creator_id'] = $creator_id;
 	
 							$this->ItemCreator->create();
-							$this->ItemCreator->save($item_creators);						
+							$this->ItemCreator->save($item_creators);
+
+							$updatedTypes['creator'][] = array(
+								'item_id' => $item_id,
+								'creator_id' => $creator_id
+							);
 						}
 					}
 				}
 
+				///*************************************************************************************
+				/// this code updates item_user_favorites so we can sort lists based on user favorites
+				$favPublisher = $this->UserFavorite->find('all', array(
+					'conditions' => array(
+						'UserFavorite.favorite_item_id' => $item['publisher_id'],
+						'UserFavorite.item_type' => 4
+					)
+				));
+
+				foreach($favPublisher as $fav) {
+					$this->ItemUserFavorite->add($fav['UserFavorite']['user_id'], $item_id, 4, $fav['UserFavorite']['id']);
+				}
+
+				$favSeries = $this->UserFavorite->find('all', array(
+					'conditions' => array(
+						'UserFavorite.favorite_item_id' => $item['series_id'],
+						'UserFavorite.item_type' => 2
+					)
+				));
+
+				foreach($favSeries as $fav) {
+					$this->ItemUserFavorite->add($fav['UserFavorite']['user_id'], $item_id, 2, $fav['UserFavorite']['id']);
+				}
+
+				foreach($updatedTypes['creator'] as $creator) {
+					$favCreator = $this->UserFavorite->find('all', array(
+						'conditions' => array(
+							'UserFavorite.favorite_item_id' => $creator['creator_id'],
+							'UserFavorite.item_type' => 3
+						)
+					));
+
+					foreach($favCreator as $fav) {
+						$this->ItemUserFavorite->add($fav['UserFavorite']['user_id'], $item_id, 3, $fav['UserFavorite']['id']);
+					}
+				}
+				///*************************************************************************************
 			} else {
 				echo "server responded without data (" . $item_id . ") <br/>\n";
 			}

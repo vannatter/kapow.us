@@ -572,6 +572,11 @@ class ItemsController extends AppController {
 					'conditions' => array(
 						'Pull.user_id' => $this->Auth->user('id')
 					)
+				),
+				'ItemUserFavorite' => array(
+					'conditions' => array(
+						'ItemUserFavorite.user_id' => $this->Auth->user('id')
+					)
 				)
 			)
 		));
@@ -583,6 +588,7 @@ class ItemsController extends AppController {
 			),
 			'order' => array(
 				'Pull.created' => 'DESC',
+				'ItemUserFavorite.created' => 'DESC',
 				'Publisher.weight' => 'DESC',
 				'Item.series_id' => 'DESC'
 			),
@@ -596,7 +602,11 @@ class ItemsController extends AppController {
 					'CreatorType'
 				),
 				'ItemTag',
-				'Pull'
+				'Pull',
+				'ItemUserFavorite'
+			),
+			'group' => array(
+				'Item.id'
 			)
 		);
 
@@ -618,7 +628,7 @@ class ItemsController extends AppController {
 
 		#$items = $this->Item->find('all', array('conditions' => array('Item.item_date' => $release_date, 'Section.category_id' => $content_type), 'limit' => 2500, 'recursive' => 4));
 		$categories = $this->Category->find('all', array('limit' => 2500, 'recursive' => -1));
-		
+
 		$this->set('items', $items);
 		$this->set('categories', $categories);
 		$this->set('content_type', $content_type);

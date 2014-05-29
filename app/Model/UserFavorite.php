@@ -4,6 +4,7 @@ App::uses('AppModel', 'Model');
  * UserFavorite Model
  *
  * @property User $User
+ * @property ItemUserFavorite $ItemUserFavorite
  */
 class UserFavorite extends AppModel {
 	public $actsAs = array('Containable');
@@ -54,6 +55,9 @@ class UserFavorite extends AppModel {
 				## remove
 				$this->delete($fav['UserFavorite']['id']);
 
+				$this->bindModel(array('hasOne' => array('ItemUserFavorite')));
+				$this->ItemUserFavorite->removeByFavoriteId($fav['UserFavorite']['id']);
+
 				$returnType = 2;   ## REMOVE
 			}
 		} else {
@@ -68,6 +72,37 @@ class UserFavorite extends AppModel {
 
 			$this->create($toAdd);
 			$this->save($toAdd);
+
+			$this->bindModel(array('hasOne' => array('ItemUserFavorite')));
+			switch($type) {
+				case 2:
+					$this->bindModel(array('hasOne' => array('Item' => array('foreignKey' => 'favorite_item_id'))));
+					if($items = $this->Item->find('list', array('conditions' => array('Item.series_id' => $id), 'fields' => array('id')))) {
+						foreach($items as $item) {
+							$this->ItemUserFavorite->add($userId, $item, 2, $this->id);
+						}
+					}
+
+					break;
+				case 3:
+					$this->bindModel(array('hasOne' => array('Item' => array('foreignKey' => 'favorite_item_id'))));
+					if($items = $this->Item->ItemCreator->find('list', array('conditions' => array('ItemCreator.creator_id' => $id), 'fields' => array('item_id')))) {
+						foreach($items as $item) {
+							$this->ItemUserFavorite->add($userId, $item, 3, $this->id);
+						}
+					}
+
+					break;
+				case 4:
+					$this->bindModel(array('hasOne' => array('Item' => array('foreignKey' => 'favorite_item_id'))));
+					if($items = $this->Item->find('list', array('conditions' => array('Item.publisher_id' => $id), 'fields' => array('id')))) {
+						foreach($items as $item) {
+							$this->ItemUserFavorite->add($userId, $item, 4, $this->id);
+						}
+					}
+
+					break;
+			}
 		}
 
 		return $returnType;
