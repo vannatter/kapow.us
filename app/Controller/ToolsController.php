@@ -118,6 +118,23 @@ class ToolsController extends AppController {
 			}
 		}
 		
+		$keywords = array('NOTE PRICE', 'VU', 'TRINITY', 'IDW', 'DC', 'NEW PTG', 'UNLEASHED PT5', 'WRATH', 'EVIL', 'ONE SHOT');
+		
+		foreach ($keywords as $vv) {
+			echo "checking keyword -> " . $vv . " ... <br/>";	
+		
+			$items = $this->Item->find('all', array('conditions' => array('Item.status' => 1, 'Item.item_name LIKE' => '%('.$vv.')%'), 'order' => array('Item.id ASC'), 'limit' => 1000, 'recursive' => 1));
+			foreach ($items as $i) {
+				echo "parsing = " . $i['Item']['item_name'] . " ... <br/>";			
+				$clean_name = trim(str_replace("(".$vv.")", "", $i['Item']['item_name']));
+				if ($clean_name) {
+					$this->Item->id = $i['Item']['id'];
+					$this->Item->saveField('item_name', $clean_name);
+				}
+			}		
+
+		}
+				
 		$items = $this->Item->find('all', array('conditions' => array('Item.status' => 1, 'Item.item_name LIKE' => '%(NOTE PRICE)%'), 'order' => array('Item.id ASC'), 'limit' => 1000, 'recursive' => 1));
 		foreach ($items as $i) {
 			echo "parsing = " . $i['Item']['item_name'] . " ... <br/>";			
