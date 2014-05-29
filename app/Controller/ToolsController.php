@@ -118,7 +118,7 @@ class ToolsController extends AppController {
 			}
 		}
 		
-		$keywords = array('NOTE PRICE', 'VU', 'TRINITY', 'IDW', 'DC', 'NEW PTG', 'UNLEASHED PT5', 'WRATH', 'EVIL', 'ONE SHOT');
+		$keywords = array('NOTE PRICE', 'VU', 'TRINITY', 'IDW', 'DC', 'NEW PTG', 'UNLEASHED PT5', 'WRATH', 'EVIL', 'ONE SHOT', 'ONGOING', 'AOFD', 'ZERO YEAR');
 		
 		foreach ($keywords as $vv) {
 			echo "checking keyword -> " . $vv . " ... <br/>";	
