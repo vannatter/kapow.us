@@ -8,6 +8,9 @@ App::uses('AppModel', 'Model');
 class Publisher extends AppModel {
 	public $actsAs = array('Containable');
 	public $recursive = 0;
+	public $virtualFields = array(
+		'item_count' => 'SELECT COUNT(*) as i_count FROM items AS Item WHERE Item.publisher_id = Publisher.id'
+	);
 
 /**
  * Display field

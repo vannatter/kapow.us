@@ -23,6 +23,7 @@ if(isset($filter) && $filter) {
 		<th><?php echo $this->Paginator->sort('Publisher.status', __('Status')); ?></th>
 		<th><?php echo $this->Paginator->sort('LockUser.email', __('Locked By')); ?></th>
 		<th><?php echo $this->Paginator->sort('Publisher.weight', __('Weighted')); ?></th>
+		<th><?php echo $this->Paginator->sort('Publisher.item_count', __('Items')); ?></th>
 		<th>&nbsp;</th>
 	</tr>
 	</thead>
@@ -54,6 +55,7 @@ if(isset($filter) && $filter) {
 			</td>
 			<td><?php echo @$publisher['LockUser']['username']; ?></td>
 			<td><?php echo $publisher['Publisher']['weight']; ?></td>
+			<td><?php echo $publisher['Publisher']['item_count']; ?></td>
 			<td>
 				<?php echo $this->Html->link(__('edit'), sprintf('/admin/publishers/edit/%s', $publisher['Publisher']['id']), array(
 					'class' => 'btn btn-small btn-inverse'
