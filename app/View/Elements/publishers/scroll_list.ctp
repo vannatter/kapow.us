@@ -39,9 +39,11 @@
 <?php if(isset($publishers) && is_array($publishers) && count($publishers) > 0) { ?>
 	<div id="item-scroll-list">
 		<?php $row = 0; ?>
+		<?php $open = false; ?>
 		<?php foreach($publishers as $publisher) { ?>
 			<?php if($row == 0) { ?>
 				<div class="row thisweek scroll-list-item">
+				<?php $open = true; ?>
 			<?php } ?>
 			<?php $row++; ?>
 			<div class="span2 publisher_block">
@@ -74,15 +76,21 @@
 			</div>
 			<?php if($row == 6) { ?>
 				</div>
+				<?php $open = false; ?>
 				<?php $row = 0; ?>
 			<?php } ?>
 		<?php } ?>
+		<?php
+		if($open) {
+			echo '</div>';
+		}
+		?>
 	</div>
-	<div id="item-scroll-nav">
-		<div class="pagination">
-			<?php if(isset($this->request->params['paging']['Publisher']['count']) && $this->request->params['paging']['Publisher']['count'] > 1) { ?>
+	<?php if($this->Paginator->hasNext()) { ?>
+		<div id="item-scroll-nav">
+			<div class="pagination">
 				<?php echo $this->Paginator->next('next'); ?>
-			<?php } ?>
+			</div>
 		</div>
-	</div>
+	<?php } ?>
 <?php } ?>

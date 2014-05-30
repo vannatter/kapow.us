@@ -40,9 +40,11 @@
 <?php if(isset($creators) && is_array($creators) && count($creators) > 0) { ?>
 	<div id="item-scroll-list">
 		<?php $row = 0; ?>
+		<?php $open = false; ?>
 		<?php foreach($creators as $creator) { ?>
 			<?php if($row == 0) { ?>
 				<div class="row thisweek scroll-list-item">
+				<?php $open = true; ?>
 			<?php } ?>
 			<?php $row++; ?>
 			<div class="span2 preview_block">
@@ -76,9 +78,15 @@
 			</div>
 			<?php if($row == 6) { ?>
 				</div>
+				<?php $open = false; ?>
 				<?php $row = 0; ?>
 			<?php } ?>
 		<?php } ?>
+		<?php
+		if($open) {
+			echo '</div>';
+		}
+		?>
 	</div>
 	<?php if($this->Paginator->hasNext()) { ?>
 		<div id="item-scroll-nav">
