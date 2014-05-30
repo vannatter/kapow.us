@@ -1154,22 +1154,24 @@ class ToolsController extends AppController {
 		);
 
 		foreach($data->result->address_components as $addressParts) {
-			switch($addressParts->types[0]) {
-				case 'street_number':
-					$store['address'] = $addressParts->long_name;
-					break;
-				case 'route':
-					$store['address'] .= ' ' . $addressParts->long_name;
-					break;
-				case 'administrative_area_level_1':
-					$store['state'] = $addressParts->long_name;
-					break;
-				case 'postal_code':
-					$store['zip'] = $addressParts->long_name;
-					break;
-				case 'locality':
-					$store['city'] = $addressParts->long_name;
-					break;
+			if(@$addressParts->types[0]) {
+				switch($addressParts->types[0]) {
+					case 'street_number':
+						$store['address'] = $addressParts->long_name;
+						break;
+					case 'route':
+						$store['address'] .= ' ' . $addressParts->long_name;
+						break;
+					case 'administrative_area_level_1':
+						$store['state'] = $addressParts->long_name;
+						break;
+					case 'postal_code':
+						$store['zip'] = $addressParts->long_name;
+						break;
+					case 'locality':
+						$store['city'] = $addressParts->long_name;
+						break;
+				}
 			}
 		}
 
@@ -1188,35 +1190,37 @@ class ToolsController extends AppController {
 
 		if(isset($data->result->opening_hours->periods)) {
 			foreach($data->result->opening_hours->periods as $day) {
-				switch($day->close->day) {
-					case 0:   ## SUNDAY
-						$store['Hour']['sunday_close'] = (int)$day->close->time;
-						$store['Hour']['sunday_open'] = (int)$day->open->time;
-						break;
-					case 1:   ## MONDAY
-						$store['Hour']['monday_close'] = (int)$day->close->time;
-						$store['Hour']['monday_open'] = (int)$day->open->time;
-						break;
-					case 2:   ## TUESDAY
-						$store['Hour']['tuesday_close'] = (int)$day->close->time;
-						$store['Hour']['tuesday_open'] = (int)$day->open->time;
-						break;
-					case 3:   ## WEDNESDAY
-						$store['Hour']['wednesday_close'] = (int)$day->close->time;
-						$store['Hour']['wednesday_open'] = (int)$day->open->time;
-						break;
-					case 4:   ## THURSDAY
-						$store['Hour']['thursday_close'] = (int)$day->close->time;
-						$store['Hour']['thursday_open'] = (int)$day->open->time;
-						break;
-					case 5:   ## FRIDAY
-						$store['Hour']['friday_close'] = (int)$day->close->time;
-						$store['Hour']['friday_open'] = (int)$day->open->time;
-						break;
-					case 6:   ## SATURDAY
-						$store['Hour']['saturday_close'] = (int)$day->close->time;
-						$store['Hour']['saturday_open'] = (int)$day->open->time;
-						break;
+				if(@$day->close->day) {
+					switch($day->close->day) {
+						case 0:   ## SUNDAY
+							$store['Hour']['sunday_close'] = (int)$day->close->time;
+							$store['Hour']['sunday_open'] = (int)$day->open->time;
+							break;
+						case 1:   ## MONDAY
+							$store['Hour']['monday_close'] = (int)$day->close->time;
+							$store['Hour']['monday_open'] = (int)$day->open->time;
+							break;
+						case 2:   ## TUESDAY
+							$store['Hour']['tuesday_close'] = (int)$day->close->time;
+							$store['Hour']['tuesday_open'] = (int)$day->open->time;
+							break;
+						case 3:   ## WEDNESDAY
+							$store['Hour']['wednesday_close'] = (int)$day->close->time;
+							$store['Hour']['wednesday_open'] = (int)$day->open->time;
+							break;
+						case 4:   ## THURSDAY
+							$store['Hour']['thursday_close'] = (int)$day->close->time;
+							$store['Hour']['thursday_open'] = (int)$day->open->time;
+							break;
+						case 5:   ## FRIDAY
+							$store['Hour']['friday_close'] = (int)$day->close->time;
+							$store['Hour']['friday_open'] = (int)$day->open->time;
+							break;
+						case 6:   ## SATURDAY
+							$store['Hour']['saturday_close'] = (int)$day->close->time;
+							$store['Hour']['saturday_open'] = (int)$day->open->time;
+							break;
+					}
 				}
 			}
 		}
