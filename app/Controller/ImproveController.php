@@ -28,7 +28,7 @@ class ImproveController extends AppController {
 		if($this->request->is('post') || $this->request->is('put')) {
 			$data = Sanitize::clean($this->request->data, array('encode' => false, 'escape' => false));
 
-			$fields = array('section_id', 'publisher_id', 'series_id', 'stock_id', 'printing', 'item_date', 'series_num', 'srp', 'description', 'item_name');
+			$fields = array('section_id', 'publisher_id', 'stock_id', 'printing', 'item_date', 'series_num', 'srp', 'description', 'item_name');
 
 			$toSave = array();
 
@@ -58,7 +58,6 @@ class ImproveController extends AppController {
 
 		$this->set('sections', $this->Improvement->Item->Section->find('list', array('fields' => array('id', 'section_name'))));
 		$this->set('publishers', $this->Improvement->Item->Publisher->find('list', array('fields' => array('id', 'publisher_name'))));
-		$this->set('series', $this->Improvement->Item->Series->find('list', array('fields' => array('id', 'series_name'))));
 		$this->set('title_for_layout', 'Improve This Content');
 	}
 

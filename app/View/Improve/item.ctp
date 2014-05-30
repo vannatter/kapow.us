@@ -17,7 +17,6 @@
 			<?php echo $this->Form->input('item_name', array('class' => 'span3')); ?>
 			<?php echo $this->Form->input('section_id', array('class' => 'span3')); ?>
 			<?php echo $this->Form->input('publisher_id', array('class' => 'span3')); ?>
-			<?php echo $this->Form->input('series_id', array('class' => 'span3')); ?>
 			<?php echo $this->Form->input('series_num', array('class' => 'span3', 'label' => 'Series Number')); ?>
 			<?php echo $this->Form->input('srp', array('class' => 'span3', 'label' => 'Suggested Retail Price')); ?>
 			<?php echo $this->Form->input('stock_id', array('type' => 'text', 'class' => 'span3', 'label' => 'Stock ID')); ?>
