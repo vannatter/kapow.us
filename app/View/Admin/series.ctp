@@ -16,6 +16,7 @@
 	<tr>
 		<th><?php echo $this->Paginator->sort('Series.id', __('ID')); ?></th>
 		<th><?php echo $this->Paginator->sort('Series.series_name', __('Name')); ?></th>
+		<th><?php echo $this->Paginator->sort('Series.total_items', __('Items')); ?></th>
 		<th>&nbsp;</th>
 	</tr>
 	</thead>
@@ -24,6 +25,7 @@
 		<tr>
 			<td><?php echo $ser['Series']['id']; ?></td>
 			<td><?php echo $ser['Series']['series_name']; ?></td>
+			<td><?php echo $ser['Series']['total_items']; ?></td>
 			<td>
 				<?php echo $this->Html->link(__('edit'), sprintf('/admin/series/edit/%s', $ser['Series']['id']), array(
 					'class' => 'btn btn-small btn-inverse'
