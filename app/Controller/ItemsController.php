@@ -329,6 +329,11 @@ class ItemsController extends AppController {
 					'conditions' => array(
 						'Pull.user_id' => $this->Auth->user('id')
 					)
+				),
+				'ItemUserFavorite' => array(
+					'conditions' => array(
+						'ItemUserFavorite.user_id' => $this->Auth->user('id')
+					)
 				)
 			)
 		));
@@ -340,6 +345,7 @@ class ItemsController extends AppController {
 			),
 			'order' => array(
 				'Pull.created' => 'DESC',
+				'ItemUserFavorite.created' => 'DESC',
 				'Publisher.weight' => 'DESC',
 				'Item.series_id' => 'DESC'
 			),
@@ -353,7 +359,11 @@ class ItemsController extends AppController {
 					'CreatorType'
 				),
 				'ItemTag',
-				'Pull'
+				'Pull',
+				'ItemUserFavorite'
+			),
+			'group' => array(
+				'Item.id'
 			)
 		);
 

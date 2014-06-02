@@ -169,23 +169,30 @@ class CreatorsController extends AppController {
 						'conditions' => array(
 							'Pull.user_id' => $this->Auth->user('id')
 						)
+					),
+					'ItemUserFavorite' => array(
+						'conditions' => array(
+							'ItemUserFavorite.user_id' => $this->Auth->user('id')
+						)
 					)
 				)
 			));
 
 			$this->paginate = array(
 				'Item' => array(
-					'conditions' => array(
-						'Item.id' => $itemList
-					),
+					'limit' => 24,
 					'order' => array(
 						'Pull.created' => 'DESC',
+						'ItemUserFavorite.created' => 'DESC',
 						'Item.created' => 'DESC'
 					),
-					'contain' => array(
-						'Pull'
+					'group' => array(
+						'Item.id'
 					),
-					'limit' => 24
+					'contain' => array(
+						'Pull',
+						'ItemUserFavorite'
+					)
 				)
 			);
 

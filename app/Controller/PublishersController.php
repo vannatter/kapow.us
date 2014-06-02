@@ -130,7 +130,15 @@ class PublishersController extends AppController {
 					'limit' => 16,
 					'order' => array(
 						'Pull.created' => 'DESC',
+						'ItemUserFavorite.created' => 'DESC',
 						'Item.created' => 'DESC'
+					),
+					'group' => array(
+						'Item.id'
+					),
+					'contain' => array(
+						'Pull',
+						'ItemUserFavorite'
 					)
 				)
 			);
@@ -140,6 +148,11 @@ class PublishersController extends AppController {
 					'Pull' => array(
 						'conditions' => array(
 							'Pull.user_id' => $this->Auth->user('id')
+						)
+					),
+					'ItemUserFavorite' => array(
+						'conditions' => array(
+							'ItemUserFavorite.user_id' => $this->Auth->user('id')
 						)
 					)
 				)
