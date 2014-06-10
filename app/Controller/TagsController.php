@@ -12,12 +12,11 @@ class TagsController extends AppController {
 	public function index() {
 		$this->paginate = array(
 			'Tag' => array(
-				'limit' => '10',
+				'limit' => '10',			
 				'contain' => array(
 					'ItemTag' => array(
 						'Item',
-						'limit' => 6,
-						'order' => array('Item.id' => 'desc')
+						'limit' => 6
 					),
 				)
 			)
