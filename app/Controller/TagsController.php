@@ -13,13 +13,11 @@ class TagsController extends AppController {
 		$this->paginate = array(
 			'Tag' => array(
 				'limit' => '10',
-				'order' => array(
-					'Item.id' => 'DESC'
-				),				
 				'contain' => array(
 					'ItemTag' => array(
 						'Item',
-						'limit' => 6
+						'limit' => 6,
+						'order' => array('Item.id' => 'desc')
 					),
 				)
 			)
