@@ -16,7 +16,8 @@ class TagsController extends AppController {
 				'contain' => array(
 					'ItemTag' => array(
 						'Item',
-						'limit' => 6
+						'limit' => 6,
+						'order' => array('ItemTag.item_id' => 'desc')
 					),
 				)
 			)
