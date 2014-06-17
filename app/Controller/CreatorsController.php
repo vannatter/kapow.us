@@ -192,6 +192,9 @@ class CreatorsController extends AppController {
 					'contain' => array(
 						'Pull',
 						'ItemUserFavorite'
+					),
+					'conditions' => array(
+						'Item.id' => $itemList
 					)
 				)
 			);
