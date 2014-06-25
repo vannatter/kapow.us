@@ -98,22 +98,6 @@ class CommonHelper extends Helper {
 					imagejpeg($image_p, WWW_ROOT . $orig . $thumb_ext, 100);	    
 				}
 				
-				// build 10p
-				$percent = 0.10;
-				$thumb_ext = '_10p.jpg';
-				
-				if (!is_file(WWW_ROOT . $orig . $thumb_ext)) {
-		 			list($width, $height) = getimagesize(WWW_ROOT . $orig);
-					$new_width = $width * $percent;
-					$new_height = $height * $percent;
-					
-					$image_p = imagecreatetruecolor($new_width, $new_height);
-					$image = imagecreatefromjpeg(WWW_ROOT . $orig);
-					imagecopyresampled($image_p, $image, 0, 0, 0, 0, $new_width, $new_height, $width, $height);
-					
-					imagejpeg($image_p, WWW_ROOT . $orig . $thumb_ext, 100);	    
-				}				
-				
 				return ($orig . "_" . $which . ".jpg");
 	    } else {
 	    	return $orig;

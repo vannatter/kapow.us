@@ -76,7 +76,7 @@
 						}
 					?>				
 					<div class="span2 preview_block">
-						<div class="preview_img"><a href="/items/<?php echo $this->Common->seoize($ri['Item']['id'], $ri['Item']['item_name']); ?>"><?php if ($ri['Item']['img_fullpath'] == "/img/covers") { ?><img border="0" alt="<?php echo $ri['Item']['item_name']; ?>" src="/img/nocover.png" width="210" height="140" /><?php } else { ?><img border="0" alt="<?php echo $ri['Item']['item_name']; ?>" src="<?php echo $this->Common->thumb($ri['Item']['img_fullpath'], "10p"); ?>" /><?php } ?></a></div>
+						<div class="preview_img"><a href="/items/<?php echo $this->Common->seoize($ri['Item']['id'], $ri['Item']['item_name']); ?>"><?php if ($ri['Item']['img_fullpath'] == "/img/covers") { ?><img border="0" alt="<?php echo $ri['Item']['item_name']; ?>" src="/img/nocover.png" width="210" height="140" /><?php } else { ?><img border="0" alt="<?php echo $ri['Item']['item_name']; ?>" src="<?php echo $this->Common->thumb($ri['Item']['img_fullpath']); ?>" /><?php } ?></a></div>
 			
 						<?php echo $this->Common->pullButton($ri['Item']['id'], $hasPull); ?>
 
