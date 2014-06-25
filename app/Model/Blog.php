@@ -80,6 +80,6 @@ class Blog extends AppModel {
 	);
 
 	public function getLatestEntry() {
-		return $this->find('first', array('order' => 'Blog.created DESC'));
+		return $this->find('first', array('order' => 'Blog.id DESC'));
 	}
 }
