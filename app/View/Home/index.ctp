@@ -76,7 +76,7 @@
 						}
 					?>				
 					<div class="span2 preview_block">
-						<div class="preview_img"><a href="/items/<?php echo $this->Common->seoize($ri['Item']['id'], $ri['Item']['item_name']); ?>"><?php if ($ri['Item']['img_fullpath'] == "/img/covers") { ?><img border="0" alt="<?php echo $ri['Item']['item_name']; ?>" src="/img/nocover.png" width="210" height="140" /><?php } else { ?><img border="0" alt="<?php echo $ri['Item']['item_name']; ?>" src="<?php echo $this->Common->thumb($ri['Item']['img_fullpath']); ?>" /><?php } ?></a></div>
+						<div class="preview_img"><a href="/items/<?php echo $this->Common->seoize($ri['Item']['id'], $ri['Item']['item_name']); ?>"><?php if ($ri['Item']['img_fullpath'] == "/img/covers") { ?><img border="0" alt="<?php echo $ri['Item']['item_name']; ?>" src="/img/nocover.png" width="210" height="140" /><?php } else { ?><img border="0" alt="<?php echo $ri['Item']['item_name']; ?>" src="<?php echo $this->Common->thumb($ri['Item']['img_fullpath'], "25p"); ?>" /><?php } ?></a></div>
 			
 						<?php echo $this->Common->pullButton($ri['Item']['id'], $hasPull); ?>
 
@@ -147,7 +147,7 @@
 			
 				<div class="row hot_block">
 					<div class="span2 hot_img">
-						<a href="/items/<?php echo $this->Common->seoize($ticker['Item']['id'], $ticker['Item']['item_name']); ?>"><?php if ($ticker['Item']['img_fullpath'] == "/img/covers") { ?><img border="0" alt="<?php echo $ticker['Item']['item_name']; ?>" src="/img/nocover_large.png" class="detail_img" /><?php } else { ?><img border="0" alt="<?php echo $ticker['Item']['item_name']; ?>" class="detail_img" src="<?php echo $this->Common->thumb($ticker['Item']['img_fullpath'], "50p"); ?>" /><?php } ?></a>
+						<a href="/items/<?php echo $this->Common->seoize($ticker['Item']['id'], $ticker['Item']['item_name']); ?>"><?php if ($ticker['Item']['img_fullpath'] == "/img/covers") { ?><img border="0" alt="<?php echo $ticker['Item']['item_name']; ?>" src="/img/nocover_large.png" class="detail_img" /><?php } else { ?><img border="0" alt="<?php echo $ticker['Item']['item_name']; ?>" class="detail_img" src="<?php echo $this->Common->thumb($ticker['Item']['img_fullpath'], "25p"); ?>" /><?php } ?></a>
 					</div>
 				</div>
 	
