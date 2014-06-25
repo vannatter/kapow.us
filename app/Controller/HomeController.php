@@ -16,11 +16,6 @@ class HomeController extends AppController {
 		$blog = $this->Blog->getLatestEntry();
 		$this->set('blog', $blog);
 
-		$items = $this->Item->getRandomItems(5);
-		$this->set('random_items', $items);
-
-/*
-
 		$this->Item->bindModel(array(
 			'hasOne' => array(
 				'Pull' => array(
@@ -30,6 +25,9 @@ class HomeController extends AppController {
 				)
 			)
 		));
+		
+		$items = $this->Item->getRandomItems(5);
+		$this->set('random_items', $items);
 		
 		$ticker = null;
 		$tapeTypes = array('item', 'creator');
@@ -50,7 +48,6 @@ class HomeController extends AppController {
 			'3' => __('Creator'),
 			'4' => __('Series')
 		));
-*/
 		
 		// dynamically set this, or set it from a collection
 		$this->set('welcome', 'Welcome to Kapow!');
