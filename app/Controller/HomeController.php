@@ -13,6 +13,7 @@ class HomeController extends AppController {
 
 	public function index() {
 
+/*
 		$blog = $this->Blog->getLatestEntry();
 		$this->set('blog', $blog);
 
@@ -48,6 +49,7 @@ class HomeController extends AppController {
 			'3' => __('Creator'),
 			'4' => __('Series')
 		));
+*/
 		
 		// dynamically set this, or set it from a collection
 		$this->set('welcome', 'Welcome to Kapow!');
