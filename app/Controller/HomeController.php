@@ -26,8 +26,10 @@ class HomeController extends AppController {
 			)
 		));
 		
+/*
 		$items = $this->Item->getRandomItems(5);
 		$this->set('random_items', $items);
+*/
 		
 		$ticker = null;
 		$tapeTypes = array('item', 'creator');
