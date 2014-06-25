@@ -13,7 +13,6 @@ class HomeController extends AppController {
 
 	public function index() {
 
-/*
 		$blog = $this->Blog->getLatestEntry();
 		$this->set('blog', $blog);
 
@@ -32,6 +31,8 @@ class HomeController extends AppController {
 		
 		$ticker = null;
 		$tapeTypes = array('item', 'creator');
+
+/*
 
 		switch($tapeTypes[array_rand($tapeTypes)]) {
 			case 'item':
