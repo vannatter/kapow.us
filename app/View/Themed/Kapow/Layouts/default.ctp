@@ -49,11 +49,6 @@
 			echo $this->Html->css('jquery-ui.custom.min');
 
 			echo $this->fetch('css');
-
-			echo $this->AssetCompress->script('js-libs');
-			echo $this->AssetCompress->script('js-combined');
-
-			echo $this->fetch('script');
 		?>
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 		<link href='http://fonts.googleapis.com/css?family=Open+Sans+Condensed:300' rel='stylesheet' type='text/css'>
@@ -93,4 +88,10 @@
 	  })();
 	
 	</script>	
+	
+	<?php
+		echo $this->AssetCompress->script('js-libs');
+		echo $this->AssetCompress->script('js-combined');
+		echo $this->fetch('script');
+	?>	
 </html>
