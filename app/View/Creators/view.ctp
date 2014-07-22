@@ -1,3 +1,9 @@
+<?php
+/**
+ *@var $this View
+ */
+?>
+<?php echo $this->Html->script('page/creators', array('block' => 'scriptBottom')); ?>
 <?php echo $this->Element('headers/creators/view'); ?>
 
 <div class="row">

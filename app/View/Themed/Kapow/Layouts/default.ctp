@@ -93,5 +93,6 @@
 		echo $this->AssetCompress->script('js-libs');
 		echo $this->AssetCompress->script('js-combined');
 		echo $this->fetch('script');
+		echo $this->fetch('scriptBottom');
 	?>	
 </html>

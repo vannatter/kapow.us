@@ -19,23 +19,24 @@ $(document).ready(function() {
 
 				path = left + 'page:' + nextPage;
 
-				var terms = $content.find('input#PublisherTerms').val();
+				var terms = $content.find('input#CreatorTerms').val();
 
 				if(terms) {
 					path += '?terms='+ terms;
 				}
 			}
+
 			return path;
 		}
 	});
 
-	var $items = $('div#publisher-items');
+	var $items = $('div#creator-items');
 	if($items.length > 0) {
-		var publisherId = $items.attr('data-publisher-id');
+		var creatorId = $items.attr('data-creator-id');
 
 		$items.append('<img src="/img/ajax-loader2.gif" />');
 
-		$.get('/publishers/items/' + publisherId, function(data) {
+		$.get('/creators/items/' + creatorId, function(data) {
 			$items.empty().append(data);
 		});
 	}

@@ -1,3 +1,9 @@
+<?php
+/**
+ *@var $this View
+ */
+?>
+<?php echo $this->Html->script('page/publishers', array('block' => 'scriptBottom')); ?>
 <?php echo $this->Element('headers/publishers/view'); ?>
 
 <div class="row">

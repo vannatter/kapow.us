@@ -286,4 +286,22 @@ class ShopsController extends AppController {
 			}
 		}
 	}
+
+	public function claim($shopId=null) {
+		if(!$shopId) {
+			$this->Session->setFlash(__('Invalid Shop'), 'flash_neg');
+			$this->redirect('/shops');
+			exit;
+		}
+
+		## make sure the shop is valid
+		if($shop = $this->Store->findById($shopId)) {
+			$this->set('title_for_layout', __('Claim Shop'));
+
+			$this->set('shop', $shop);
+		} else {
+			$this->Session->setFlash(__('Invalid Shop'), 'flash_neg');
+			$this->redirect('/shops');
+		}
+	}
 }
