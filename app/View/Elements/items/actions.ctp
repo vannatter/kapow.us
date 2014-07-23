@@ -94,36 +94,10 @@
 								<li class="divider"></li>
 								<li><a href="/admin/items/edit/<?php echo $item['Item']['id']; ?>"><?php echo __('Edit Item'); ?></a></li>
 								<li class="divider"></li>
-								<li><div style="display: block; padding: 3px 10px; clear: both; color: #333; font-weight: bold; margin-top: 5px;">Hotness</div><div id="hotness"></div></li>
+								<li><div style="display: block; padding: 3px 10px; clear: both; color: #333; font-weight: bold; margin-top: 5px;">Hotness</div><div id="hotness" data-item-id="<?php echo $item['Item']['id']; ?>" data-hotness="<?php echo $item['Item']['hot']; ?>"></div></li>
 							<?php } ?>
 					</ul>
 			</div>
 
 	</div>
 <?php } ?>
-
-<script>
-$(function() {
-  $( "#hotness" ).slider({
-    range: "max",
-    min: 0,
-    max: 100,
-    value: <?php echo $item['Item']['hot']; ?>,
-    slide: function( event, ui ) {
-      $(this).find('.ui-slider-handle').text(ui.value);
-    },
-    change: function( event, ui ) {
-    	$.getJSON('/ajax/itemHotness', { itemId: <?php echo $item['Item']['id']; ?>, value: ui.value }, function(data) {
-    		if(data.error) {
-    			flash('Error updating hotness', 3000);
-    		} else {
-    			flash('Updated Hotness', 3000);
-    		}
-      });
-    }
-  });
- 	
- 	var value = $("#hotness").slider("option","value");
- 	$('#hotness').find('.ui-slider-handle').text(value);
-});
-</script>

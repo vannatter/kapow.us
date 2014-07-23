@@ -69,6 +69,34 @@ $(document).ready(function() {
 		}
 	});
 
+	var $hotness = $('#hotness');
+	if($hotness.length > 0) {
+		var itemId = $hotness.attr('data-item-id');
+		var hotness = $hotness.attr('data-hotness');
+
+		$hotness.slider({
+			range: "max",
+			min: 0,
+			max: 100,
+			value: hotness,
+			slide: function( event, ui ) {
+				$(this).find('.ui-slider-handle').text(ui.value);
+			},
+			change: function( event, ui ) {
+				$.getJSON('/ajax/itemHotness', { itemId: itemId, value: ui.value }, function(data) {
+					if(data.error) {
+						flash('Error updating hotness', 3000);
+					} else {
+						flash('Updated Hotness', 3000);
+					}
+				});
+			}
+		});
+
+		var value = $("#hotness").slider("option","value");
+		$('#hotness').find('.ui-slider-handle').text(value);
+	}
+
 	/*$(document).on('click', 'button.pull_list_btn', function(e) {
 		e.preventDefault();
 
