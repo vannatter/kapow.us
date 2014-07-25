@@ -54,4 +54,15 @@ $(document).ready(function() {
 
 		return false;
 	});
+
+	var $items = $('div#series-items');
+	if($items.length > 0) {
+		var seriesId = $items.attr('data-series-id');
+
+		$items.append('<img src="/img/ajax-loader2.gif" />');
+
+		$.get('/series/items/' + seriesId, function(data) {
+			$items.empty().append(data);
+		});
+	}
 });

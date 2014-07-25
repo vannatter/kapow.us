@@ -3,7 +3,7 @@
  * @var $this View
  */
 ?>
-
+<?php echo $this->Html->script('page/improve', array('block' => 'scriptBottom')); ?>
 <?php echo $this->Element('headers/improve/item'); ?>
 
 <div class="pad">
@@ -31,14 +31,3 @@
 	<?php echo $this->Form->end(); ?>
 
 </div>
-<script>
-	$(document).ready(function() {
-		$('#ItemItemDate').datepicker({
-			dateFormat: 'yy-mm-dd',
-			beforeShowDay: function(date) {
-				return [date.getDay() === 3, ''];
-			}
-		}).attr('readonly', true)
-			.css('cursor', 'pointer');
-	});
-</script>
