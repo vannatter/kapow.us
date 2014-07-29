@@ -606,7 +606,8 @@ class ToolsController extends AppController {
 			$stock_code_desc = $xpath->query('//div[@class="StockCodeDescription"]/a');
 			foreach ($stock_code_desc as $tag) {
 
-				$item['item_name'] = trim($tag->nodeValue);
+#				$item['item_name'] = trim($tag->nodeValue);
+				$item['item_name'] = $item_name;
 				echo "item_name  = [" . $item['item_name'] . "]<br/>";
 				
 				// fix 'of x' formatting..
