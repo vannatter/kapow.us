@@ -579,6 +579,8 @@ class ToolsController extends AppController {
 
 	function _getItem($item_id, $item_name, $section, $date) {
 
+		echo "iname=" . $item_name . "<br/>";
+		
 		$updatedTypes = array();
 
 		$print = 1;
