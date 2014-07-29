@@ -652,7 +652,6 @@ class ToolsController extends AppController {
 				
 				// remove 'COMBO PACK'..
 				$item['item_name'] = trim(str_replace("COMBO PACK", "", $item['item_name']));
-
 				
 			    $stock_url = $tag->getAttribute('href');
 				$stock_parts = split("=", $stock_url);		
@@ -666,7 +665,7 @@ class ToolsController extends AppController {
 				$item['series_name'] = trim(str_replace(" TP", "", $item['series_name']));
 						
 				if (@$series_parts[1]) {
-					$series_num_parts = split(" ", $series_parts[1]);
+					$series_num_parts = explode("\t", $series_parts[1]);
 					$item['series_num'] = (int) $series_num_parts[0];
 				}
 			}
