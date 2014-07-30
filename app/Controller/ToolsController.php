@@ -1392,7 +1392,7 @@ class ToolsController extends AppController {
 
 	private function _flushBuffers() {
 		ob_end_flush();
-		ob_flush();
+		@ob_flush();
 		ob_start();
 	}
 }
