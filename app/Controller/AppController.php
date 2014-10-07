@@ -153,7 +153,6 @@ class AppController extends Controller {
 				}
 				break;
 		}
-
 		return $release_date;
 	}
 		

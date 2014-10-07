@@ -306,31 +306,31 @@ class ToolsController extends AppController {
 			$clean_name = trim($name_parts[0]);
 
 			echo "clean_name = " . $clean_name . "<br/>";
-						
+
 			if ($clean_name) {
 				## go ahead and update this guy..
 				$this->Series->id = $s['Series']['id'];
 				$this->Series->saveField('series_name', $clean_name);
 			}
-		}		
-		
+		}
+
 		$series = $this->Series->find('all', array('conditions' => array('Series.status' => 1, 'Series.series_name LIKE' => '%(PP%'), 'order' => array('Series.id ASC'), 'limit' => 1000, 'recursive' => 1));
 
 		foreach ($series as $s) {
-			echo "parsing = " . $s['Series']['series_name'] . " ... <br/>";			
+			echo "parsing = " . $s['Series']['series_name'] . " ... <br/>";
 
 			## split the name on the like parameter, see if we can get our valid part...
 			$name_parts = explode("(PP", $s['Series']['series_name']);
 			$clean_name = trim($name_parts[0]);
 
 			echo "clean_name = " . $clean_name . "<br/>";
-						
+
 			if ($clean_name) {
 				## go ahead and update this guy..
 				$this->Series->id = $s['Series']['id'];
 				$this->Series->saveField('series_name', $clean_name);
 			}
-		}		
+		}
 		exit;
 	}
 
@@ -362,9 +362,56 @@ class ToolsController extends AppController {
 		exit;
 	}
 
+
+	public function update_images_filesystem() {
+		set_time_limit(0);	
+		
+		## this should get all the items from this week and make sure the file is on the filesystem. if its not, it should repull it..
+		$release_date = $this->_getReleaseDate('this_week');
+		
+		echo "release_date = " . $release_date;
+		
+		$items = $this->Item->find('all', array('conditions' => array('Item.item_date' => $release_date), 'limit' => 2500, 'recursive' => 1));
+		foreach ($items as $item) {
+			
+			$save = array();
+			$updated_image = false;
+			$rand = rand(500,999);
+			$url = Configure::read('Settings.root_domain') . Configure::read('Settings.root_domain_path') . $rand . "?stockItemID=" . $item['Item']['item_id'];
+			
+			echo "updating image for (" . $item['Item']['item_id'] . ")  from [" . $url . "] .. <br/>";
+			
+			## first check if we have an image now in the file; sometimes they get updated..
+			list ($d, $i) = $this->Curl->getRaw($url);
+			$dom = new DOMDocument();
+			@$dom->loadHTML($d);
+			$xpath = new DOMXPath($dom);
+			
+			$img = $xpath->query('//div[@class="StockCodeImage"]/a');
+			$final_img = "";
+			foreach ($img as $tag) {
+				$final_img = trim($tag->getAttribute('href'));
+			}
+			
+			echo "img=" . $final_img . "<br/>";
+			if ($final_img) {
+				echo "[1] updating to use - " . $final_img . "<br/>";
+				$imgpath = $this->Curl->getImage($final_img);
+				
+				$save['id'] = $item['Item']['id'];
+				$save['img_fullpath'] = $imgpath;
+				$this->Item->save($save);
+				
+				$updated_image = true;
+			}
+			
+		}
+		exit;
+	}
+
 	public function update_images() {
 		set_time_limit(0);	
-
+		
 		## get a list of items that have no images..
 		$items = $this->Item->find('all', array('conditions' => array('Item.img_fullpath' => "/img/covers"), 'limit' => 2500, 'recursive' => 1));
 		foreach ($items as $item) {
@@ -448,12 +495,11 @@ class ToolsController extends AppController {
 			}
 			
 			## still nothing?! try something external (google)
-						
 			echo "<br/>";
 			
 		}
 		
-		exit;				
+		exit;
 	}
 
 	public function import_archives() {
