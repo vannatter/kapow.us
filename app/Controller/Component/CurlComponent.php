@@ -13,38 +13,35 @@
 			
   			$f = curl_exec($curl);
 			$i = curl_getinfo($curl);
-  			
   			curl_close($curl);	
 
   			return array($f, $i);
 		}
 		
 		function getImage($img) {
+			$local_path = Configure::read('Settings.icon_path') . strtolower($img);
+			$web_path   = Configure::read('Settings.icon_web_path') . strtolower($img);
 
-				$local_path = Configure::read('Settings.icon_path') . strtolower($img);
-				$web_path   = Configure::read('Settings.icon_web_path') . strtolower($img);
+			if (file_exists($local_path)) {
+				return $web_path;
+			} else {
+				$img_path = Configure::read('Settings.root_domain') . strtolower($img);
+				@mkdir(dirname($local_path), 0777, true);
 
-				if (file_exists($local_path)) {
-					return $web_path;
-				} else {
-					$img_path = Configure::read('Settings.root_domain') . strtolower($img);
-					@mkdir(dirname($local_path), 0777, true);
+				$ch = curl_init();
+				curl_setopt ($ch, CURLOPT_URL, $img_path);
+				curl_setopt ($ch, CURLOPT_RETURNTRANSFER, 1);
+				curl_setopt ($ch, CURLOPT_CONNECTTIMEOUT, 0);
+				$fc = curl_exec($ch);
+				curl_close($ch);
 
-					$ch = curl_init();
-					curl_setopt ($ch, CURLOPT_URL, $img_path);
-					curl_setopt ($ch, CURLOPT_RETURNTRANSFER, 1);
-					curl_setopt ($ch, CURLOPT_CONNECTTIMEOUT, 0);
-					$fc = curl_exec($ch);
-					curl_close($ch);
-
-					$new_img = imagecreatefromstring($fc);
-					imagejpeg($new_img, $local_path, 100);
-					return $web_path;
-				}
+				$new_img = imagecreatefromstring($fc);
+				imagejpeg($new_img, $local_path, 100);
+				return $web_path;
+			}
 		}
 
 		function getStoreImage($img, $store_id, $image_id) {
-
 			set_time_limit(0);
 
 			$local_path = Configure::read('Settings.store_img_path') . "/" . $store_id . "/" . $image_id . ".jpg";
@@ -66,7 +63,7 @@
 				#curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 1);
 				$fc = curl_exec($ch);
 
-				if($fc) {
+				if ($fc) {
 					$new_img = imagecreatefromstring($fc);
 					imagejpeg($new_img, $local_path, 100);
 					return $web_path;
@@ -76,18 +73,14 @@
 			}
 		}
 
-		private function get_furl($url)
-		{
+		private function get_furl($url) {
 			$furl = false;
 			// First check response headers
 			$headers = get_headers($url);
 			// Test for 301 or 302
-			if(preg_match('/^HTTP\/\d\.\d\s+(301|302)/',$headers[0]))
-			{
-				foreach($headers as $value)
-				{
-					if(substr(strtolower($value), 0, 9) == "location:")
-					{
+			if (preg_match('/^HTTP\/\d\.\d\s+(301|302)/',$headers[0])) {
+				foreach ($headers as $value) {
+					if (substr(strtolower($value), 0, 9) == "location:") {
 						$furl = trim(substr($value, 9, strlen($value)));
 					}
 				}

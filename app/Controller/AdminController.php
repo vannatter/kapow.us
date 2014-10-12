@@ -138,14 +138,11 @@ class AdminController extends AppController {
 		)));
 
 		$this->set('seriesTotal', $this->Series->find('count'));
-
 		$this->set('creatorTotal', $this->Creator->find('count'));
-
 		$this->set('publisherTotal', $this->Publisher->find('count'));
 
 		$this->Store->recursive = -1;
 		$this->set('shopTotal', $this->Store->find('count'));
-
 		$this->set('userTotal', $this->User->find('count'));
 		
 		$this->set('hotItems', $this->Item->find('count', array(
@@ -153,7 +150,7 @@ class AdminController extends AppController {
 				'Item.hot >' => 0
 			)
 		)));
-		
+
 		$this->set('weightedPublishers', $this->Publisher->find('count', array(
 			'conditions' => array(
 				'Publisher.weight >' => 0

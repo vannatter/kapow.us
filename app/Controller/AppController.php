@@ -45,13 +45,12 @@ class AppController extends Controller {
 
 	public function beforeFilter() {
 		$this->Auth->allow();
-
 		$this->recordActivity();
 
-		if($this->Auth->user()) {
-			if(!in_array(strtolower($this->request->action), array('setusername', 'logout', 'login'))) {
+		if ($this->Auth->user()) {
+			if (!in_array(strtolower($this->request->action), array('setusername', 'logout', 'login'))) {
 				$username = $this->Auth->user('username');
-				if(empty($username)) {
+				if (empty($username)) {
 					$this->redirect('/users/setUsername');
 				}
 			}
@@ -67,7 +66,7 @@ class AppController extends Controller {
 	}
 
 	public function hasSession() {
-		if(!$this->Auth->user()) {
+		if (!$this->Auth->user()) {
 			$this->Session->setFlash(__('You are not logged in!'), 'flash_neg');
 			$this->redirect('/');
 			exit;
@@ -94,11 +93,11 @@ class AppController extends Controller {
 	}
 
 	public function recordActivity() {
-		if($this->Auth->user('id')) {
+		if ($this->Auth->user('id')) {
 			$skip = array();
 			$check = sprintf('%s/%s', strtolower($this->name), strtolower($this->action));
 
-			if(!in_array($check, $skip) && strtolower($this->name) != 'admin') {
+			if (!in_array($check, $skip) && strtolower($this->name) != 'admin') {
 				$data = array(
 					'UserActivity' => array(
 						'user_id' => $this->Auth->user('id'),

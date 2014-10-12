@@ -15,26 +15,24 @@ class ApiController extends AppController {
 	}
 
 	public function findCloseByShops() {
-		if($this->request->ext == 'json') {
+		if ($this->request->ext == 'json') {
 			$result = array('status' => array('status_code' => 204, 'status_message' => ''));
-
 			$radius = 10;
 
-			if(!isset($this->request->query['lat']) || !isset($this->request->query['long']) || !isset($this->request->query['userId'])) {
+			if (!isset($this->request->query['lat']) || !isset($this->request->query['long']) || !isset($this->request->query['userId'])) {
 				$result['status']['status_message'] = __('Invalid Parameters');
-
 				return new CakeResponse(array('body' => json_encode($result)));
 			}
-			$userId = $this->request->query['userId'];
 
+			$userId = $this->request->query['userId'];
 			$lat = $this->request->query['lat'];
 			$long = $this->request->query['long'];
 
-			if(isset($this->request->query['radius'])) {
+			if (isset($this->request->query['radius'])) {
 				$radius = $this->request->query['radius'];
 			}
 
-			if($data = $this->Store->radius($lat, $long, $radius, $userId)) {
+			if ($data = $this->Store->radius($lat, $long, $radius, $userId)) {
 				$result['status']['status_code'] = 200;
 				$result['latitude'] = $lat;
 				$result['longitude'] = $long;
@@ -58,7 +56,7 @@ class ApiController extends AppController {
 				$result['status']['status_message'] = __('No Shops Found');
 			}
 
-			if($message = $this->AppMessage->getLatestMessage()) {
+			if ($message = $this->AppMessage->getLatestMessage()) {
 				$result['status']['app_message_title'] = $message['AppMessage']['title'];
 				$result['status']['app_message_body'] = $message['AppMessage']['body'];
 			} else {
@@ -68,7 +66,6 @@ class ApiController extends AppController {
 
 			return new CakeResponse(array('body' => json_encode($result)));
 		}
-
 		return 'error';
 	}
 }

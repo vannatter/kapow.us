@@ -19,14 +19,13 @@ class ItemsController extends AppController {
 	);
 
 	public function index() {
-		if($this->request->is('post') || $this->request->is('put')) {
+		if ($this->request->is('post') || $this->request->is('put')) {
 			$data = Sanitize::clean($this->request->data);
 
-			if(isset($data['Item']['terms'])) {
-				if(empty($data['Item']['terms'])) {
+			if (isset($data['Item']['terms'])) {
+				if (empty($data['Item']['terms'])) {
 					$this->redirect('/items');
 				}
-
 				$this->set('terms', $data['Item']['terms']);
 				$this->redirect(sprintf('/items?terms=%s', $data['Item']['terms']));
 			}
@@ -44,7 +43,7 @@ class ItemsController extends AppController {
 			)
 		);
 
-		if(isset($this->request->query['terms'])) {
+		if (isset($this->request->query['terms'])) {
 			$terms = $this->request->query['terms'];
 
 			$con = array(
@@ -63,7 +62,6 @@ class ItemsController extends AppController {
 					)
 				)
 			));
-
 			$items = $this->paginate('Item', $con);
 		} else {
 			$this->Item->bindModel(array(
@@ -75,32 +73,29 @@ class ItemsController extends AppController {
 					)
 				)
 			));
-
 			$items = $this->paginate('Item');
 		}
-
 		$this->set('items', $items);
 	}
 	
 	public function detail($item_id=null, $item_name=null) {
-		if($this->request->ext == 'json') {
+		if ($this->request->ext == 'json') {
 			$itemId = $this->request->query['itemId'];
 			$item = $this->Item->getItemForDisplay($itemId);
 
 			$result = array('status' => array('status_code' => 204, 'status_message' => ''));
-			if($item) {
+			if ($item) {
 				$result['status']['status_code'] = 200;
 				$result['data'] = $item;
 			}
 
-			if($message = $this->AppMessage->getLatestMessage()) {
+			if ($message = $this->AppMessage->getLatestMessage()) {
 				$result['status']['app_message_title'] = $message['AppMessage']['title'];
 				$result['status']['app_message_body'] = $message['AppMessage']['body'];
 			} else {
 				$result['status']['app_message_title'] = '';
 				$result['status']['app_message_body'] = '';
 			}
-
 			return new CakeResponse(array('body' => json_encode($result)));
 		}
 
@@ -121,27 +116,23 @@ class ItemsController extends AppController {
 		## get a distinct set of creators for the 'favorites' logic..
 		$unique_creators = array();
 	    foreach ($item['ItemCreator'] as $c) {
-				$fav = false;
-
-				if(isset($c['Creator']['UserFavorite']['id'])) {
-					$fav = true;
-				}
-
-		    $unique_creators[$c['Creator']['id']] = array('name' => $c['Creator']['creator_name'], 'is_fav' => $fav);
+			$fav = false;
+			if (isset($c['Creator']['UserFavorite']['id'])) {
+				$fav = true;
+			}
+			$unique_creators[$c['Creator']['id']] = array('name' => $c['Creator']['creator_name'], 'is_fav' => $fav);
 	    }
 
 		$this->set('unique_creators', $unique_creators);
 		$this->set('item', $item);
 		$this->set('title_for_layout', $item['Item']['item_name']);
-
 		$this->set('meta_description_for_layout','Kapow! ' . $item['Item']['item_name'] . ' - ' . substr(str_replace('"', '', $item['Item']['description']),0,200));
 		$this->set('meta_keywords_for_layout','Kapow, Kapow.us, Comics, Comic database, Current comics, New comics, Comic app, ' . $item['Item']['item_name'] . ',' . $item['Series']['series_name']); 
 		$this->set('og_description','Kapow! ' . $item['Item']['item_name'] . ' - ' . substr(str_replace('"', '', $item['Item']['description']),0,200));
-		
 	}
 
 	public function next_week($content_type="1") {
-		if($this->request->ext == 'json') {
+		if ($this->request->ext == 'json') {
 			$result = array('error' => false);
 
 			$release_date = $this->_getReleaseDate('next_week');
@@ -169,7 +160,7 @@ class ItemsController extends AppController {
 			));
 
 			## get a list of the current users favorite creators, if logged in
-			if($this->Auth->user()) {
+			if ($this->Auth->user()) {
 				$userFavCreators = $this->UserFavorite->find('list', array(
 					'conditions' => array(
 						'UserFavorite.user_id' => $this->Auth->user('id'),
@@ -185,7 +176,7 @@ class ItemsController extends AppController {
 
 			$data = array('thumbs' => array('large' => '_50p.jpg', 'small' => '_25p.jpg'));
 
-			foreach($publishers as $pub) {
+			foreach ($publishers as $pub) {
 				$pubId = $pub['Publisher']['id'];
 
 				$this->Item->bindModel(array(
@@ -248,7 +239,7 @@ class ItemsController extends AppController {
 					)
 				));
 
-				if($items) {
+				if ($items) {
 					$data['publishers'][] = array(
 						'publisher_id' => $pubId,
 						'publisher_name' => $pub['Publisher']['publisher_name'],
@@ -267,8 +258,8 @@ class ItemsController extends AppController {
 						)
 					));
 
-					if($favItems) {
-						foreach($favItems as $fav) {
+					if ($favItems) {
+						foreach ($favItems as $fav) {
 							$data['favorites'][$fav['ItemCreator']['id']][] = array(
 								'fav_name' => $fav['Creator']['creator_name'],
 								'item' => array(
@@ -282,7 +273,7 @@ class ItemsController extends AppController {
 				}
 			}
 
-			if(@$data['publishers']) {
+			if (@$data['publishers']) {
 				$result['data'] = $data;
 				$result['status'] = array(
 					'status_code' => 200,
@@ -297,7 +288,7 @@ class ItemsController extends AppController {
 
 			$result['release_date'] = date('m/d/Y', strtotime($release_date));
 
-			if($message = $this->AppMessage->getLatestMessage()) {
+			if ($message = $this->AppMessage->getLatestMessage()) {
 				$result['status']['app_message_title'] = $message['AppMessage']['title'];
 				$result['status']['app_message_body'] = $message['AppMessage']['body'];
 			} else {
@@ -308,14 +299,13 @@ class ItemsController extends AppController {
 			return new CakeResponse(array('body' => json_encode($result)));
 		}
 
-		if($this->request->is('post') || $this->request->is('put')) {
+		if ($this->request->is('post') || $this->request->is('put')) {
 			$data = Sanitize::clean($this->request->data);
 
-			if(isset($data['Item']['publisher_id'])) {
-				if(empty($data['Item']['publisher_id'])) {
+			if (isset($data['Item']['publisher_id'])) {
+				if (empty($data['Item']['publisher_id'])) {
 					$this->redirect('/items/next_week');
 				}
-
 				$this->set('publisher_id', $data['Item']['publisher_id']);
 				$this->redirect(sprintf('/items/next_week?pubid=%s', $data['Item']['publisher_id']));
 			}
@@ -367,17 +357,17 @@ class ItemsController extends AppController {
 			)
 		);
 
-		if(isset($this->request->query['pubid']) && $this->request->query['pubid'] != 0) {
+		if (isset($this->request->query['pubid']) && $this->request->query['pubid'] != 0) {
 			$this->paginate['conditions']['Item.publisher_id'] = $this->request->query['pubid'];
 		}
 
 		$items = $this->paginate('Item');
 
-		if(!$this->request->is('ajax')) {
+		if (!$this->request->is('ajax')) {
 			$list = $this->Item->find('all', array('conditions' => array('Item.item_date' => $release_date, 'Section.category_id' => $content_type), 'fields' => array('Publisher.publisher_name'), 'group' => array('Publisher.publisher_name'), 'contain' => array('Publisher', 'Section'), 'order' => array('Publisher.publisher_name' => 'ASC')));
 
 			$publishers = array('0' => __('All'));
-			foreach($list as $pub) {
+			foreach ($list as $pub) {
 				$publishers[$pub['Publisher']['id']] = $pub['Publisher']['publisher_name'];
 			}
 			$this->set('publishers', $publishers);
@@ -394,7 +384,7 @@ class ItemsController extends AppController {
 	}
 
 	public function this_week($content_type="1") {
-		if($this->request->ext == 'json') {
+		if ($this->request->ext == 'json') {
 			$result = array('error' => false);
 
 			$release_date = $this->_getReleaseDate('this_week');
@@ -422,7 +412,7 @@ class ItemsController extends AppController {
 			));
 
 			## get a list of the current users favorite creators, if logged in
-			if($this->Auth->user()) {
+			if ($this->Auth->user()) {
 				$userFavCreators = $this->UserFavorite->find('list', array(
 					'conditions' => array(
 						'UserFavorite.user_id' => $this->Auth->user('id'),
@@ -438,7 +428,7 @@ class ItemsController extends AppController {
 
 			$data = array('thumbs' => array('large' => '_50p.jpg', 'small' => '_25p.jpg'), 'favorites' => array());
 
-			foreach($publishers as $pub) {
+			foreach ($publishers as $pub) {
 				$pubId = $pub['Publisher']['id'];
 
 				$this->Item->bindModel(array(
@@ -501,7 +491,7 @@ class ItemsController extends AppController {
 					)
 				));
 
-				if($items) {
+				if ($items) {
 					$data['publishers'][] = array(
 						'publisher_id' => $pubId,
 						'publisher_name' => $pub['Publisher']['publisher_name'],
@@ -520,8 +510,8 @@ class ItemsController extends AppController {
 						)
 					));
 
-					if($favItems) {
-						foreach($favItems as $fav) {
+					if ($favItems) {
+						foreach ($favItems as $fav) {
 							$data['favorites'][$fav['ItemCreator']['id']][] = array(
 								'fav_name' => $fav['Creator']['creator_name'],
 								'item' => array(
@@ -535,7 +525,7 @@ class ItemsController extends AppController {
 				}
 			}
 
-			if(@$data['publishers']) {
+			if (@$data['publishers']) {
 				$result['data'] = $data;
 				$result['status'] = array(
 					'status_code' => 200,
@@ -550,7 +540,7 @@ class ItemsController extends AppController {
 
 			$result['release_date'] = date('m/d/Y', strtotime($release_date));
 
-			if($message = $this->AppMessage->getLatestMessage()) {
+			if ($message = $this->AppMessage->getLatestMessage()) {
 				$result['status']['app_message_title'] = $message['AppMessage']['title'];
 				$result['status']['app_message_body'] = $message['AppMessage']['body'];
 			} else {
@@ -561,11 +551,11 @@ class ItemsController extends AppController {
 			return new CakeResponse(array('body' => json_encode($result)));
 		}
 
-		if($this->request->is('post') || $this->request->is('put')) {
+		if ($this->request->is('post') || $this->request->is('put')) {
 			$data = Sanitize::clean($this->request->data);
 
-			if(isset($data['Item']['publisher_id'])) {
-				if(empty($data['Item']['publisher_id'])) {
+			if (isset($data['Item']['publisher_id'])) {
+				if (empty($data['Item']['publisher_id'])) {
 					$this->redirect('/items/this_week');
 				}
 
@@ -620,17 +610,17 @@ class ItemsController extends AppController {
 			)
 		);
 
-		if(isset($this->request->query['pubid']) && $this->request->query['pubid'] != 0) {
+		if (isset($this->request->query['pubid']) && $this->request->query['pubid'] != 0) {
 			$this->paginate['conditions']['Item.publisher_id'] = $this->request->query['pubid'];
 		}
 
 		$items = $this->paginate('Item');
 
-		if(!$this->request->is('ajax')) {
+		if (!$this->request->is('ajax')) {
 			$list = $this->Item->find('all', array('conditions' => array('Item.item_date' => $release_date, 'Section.category_id' => $content_type), 'fields' => array('Publisher.publisher_name'), 'group' => array('Publisher.publisher_name'), 'contain' => array('Publisher', 'Section'), 'order' => array('Publisher.publisher_name' => 'ASC')));
 
 			$publishers = array('0' => __('All'));
-			foreach($list as $pub) {
+			foreach ($list as $pub) {
 				$publishers[$pub['Publisher']['id']] = $pub['Publisher']['publisher_name'];
 			}
 			$this->set('publishers', $publishers);
@@ -653,34 +643,34 @@ class ItemsController extends AppController {
 	}
 
 	public function listByDate($date=null) {
-		if(!$date) {
+		if (!$date) {
 			$date = date('Y-m-d', strtotime('NOW'));
 		}
 
-		if($this->request->is('post') || $this->request->is('put')) {
+		if ($this->request->is('post') || $this->request->is('put')) {
 			$data = Sanitize::clean($this->request->data);
 
 			$pubid = "";
 			$terms = "";
 
-			if(isset($data['Item']['publisher_id'])) {
+			if (isset($data['Item']['publisher_id'])) {
 				$pubid = $data['Item']['publisher_id'];
 			}
 
-			if(isset($data['Item']['terms'])) {
+			if (isset($data['Item']['terms'])) {
 				$terms = $data['Item']['terms'];
 			}
 
 			$query = "";
-			if(!empty($pubid)) {
+			if (!empty($pubid)) {
 				$this->set('publisher_id', $data['Item']['publisher_id']);
 				$query = sprintf("?pubid=%s", $pubid);
 			}
 
-			if(!empty($terms)) {
+			if (!empty($terms)) {
 				$this->set('terms', $data['Item']['terms']);
 
-				if(empty($query)) {
+				if (empty($query)) {
 					$query = sprintf("?terms=%s", $terms);
 				} else {
 					$query .= sprintf('&terms=%s', $terms);
@@ -690,7 +680,7 @@ class ItemsController extends AppController {
 			$this->redirect(sprintf('/items/date/%s%s', $date, $query));
 		}
 
-		if(strtoupper(date('l', strtotime($date))) == 'WEDNESDAY') {
+		if (strtoupper(date('l', strtotime($date))) == 'WEDNESDAY') {
 			## date passed is a wednesday, no need to do extra work
 		} else {
 			## date passed wasn't a wednesday, get the next wednesday after date to start with
@@ -722,7 +712,7 @@ class ItemsController extends AppController {
 			)
 		);
 
-		if(isset($this->request->query['terms'])) {
+		if (isset($this->request->query['terms'])) {
 			$terms = $this->request->query['terms'];
 
 			$con['OR'] = array(
@@ -741,7 +731,7 @@ class ItemsController extends AppController {
 			)
 		));
 
-		if(isset($this->request->query['pubid']) && $this->request->query['pubid'] != 0) {
+		if (isset($this->request->query['pubid']) && $this->request->query['pubid'] != 0) {
 			$con['AND']['Item.publisher_id'] = $this->request->query['pubid'];
 		}
 
@@ -749,11 +739,11 @@ class ItemsController extends AppController {
 
 		$this->set('items', $items);
 
-		if(!$this->request->is('ajax')) {
+		if (!$this->request->is('ajax')) {
 			$list = $this->Item->find('all', array('conditions' => array('Item.item_date' => $date), 'fields' => array('Publisher.publisher_name'), 'group' => array('Publisher.publisher_name'), 'contain' => array('Publisher', 'Section'), 'order' => array('Publisher.publisher_name' => 'ASC')));
 
 			$publishers = array('0' => __('All'));
-			foreach($list as $pub) {
+			foreach ($list as $pub) {
 				$publishers[$pub['Publisher']['id']] = $pub['Publisher']['publisher_name'];
 			}
 			$this->set('publishers', $publishers);
