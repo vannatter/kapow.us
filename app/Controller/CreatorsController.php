@@ -25,29 +25,26 @@ class CreatorsController extends AppController {
 	);
 
 	public function index() {
-		if($this->request->is('post') || $this->request->is('put')) {
+		if ($this->request->is('post') || $this->request->is('put')) {
 			$data = Sanitize::clean($this->request->data);
 
-			if(isset($data['Creator']['terms'])) {
-				if(empty($data['Creator']['terms'])) {
+			if (isset($data['Creator']['terms'])) {
+				if (empty($data['Creator']['terms'])) {
 					$this->redirect('/creators');
 				}
-
 				$this->set('terms', $data['Creator']['terms']);
 				$this->redirect(sprintf('/creators?terms=%s', $data['Creator']['terms']));
 			}
 		}
 
-		if(isset($this->request->query['terms'])) {
+		if (isset($this->request->query['terms'])) {
 			$terms = $this->request->query['terms'];
-
 			$con = array(
 				'OR' => array(
 					'Creator.creator_name LIKE' => '%' . $terms . '%',
 					'Creator.creator_bio LIKE' => '%' . $terms . '%'
 				)
 			);
-
 			$creators = $this->paginate('Creator', $con);
 		} else {
 			$creators = $this->paginate('Creator');
@@ -110,7 +107,7 @@ class CreatorsController extends AppController {
 		$this->set('og_description','Kapow! ' . $creator['Creator']['creator_name'] . (($creator['Creator']['creator_bio']) ? " - " . substr(str_replace('"', '', $creator['Creator']['creator_bio']),0,200) : "") );
 
 		## see if the current user (if there is one), fav'd this publisher
-		if($userFav = $this->UserFavorite->findByFavoriteItemIdAndUserIdAndItemType($creator_id, $this->Auth->user('id'), 3)) {
+		if ($userFav = $this->UserFavorite->findByFavoriteItemIdAndUserIdAndItemType($creator_id, $this->Auth->user('id'), 3)) {
 			$this->set('userFav', true);
 		} else {
 			$this->set('userFav', false);
@@ -146,7 +143,7 @@ class CreatorsController extends AppController {
 	}
 
 	public function items($id) {
-		if($this->request->is('ajax')) {
+		if ($this->request->is('ajax')) {
 			$this->layout = 'blank';
 
 			## get a list of items for the creator
