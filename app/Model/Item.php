@@ -143,7 +143,7 @@ class Item extends AppModel {
 	}
 
 	function getRandom() {
-		return $this->find('first', array('order' => array('RAND()')));
+		return $this->find('first', array('conditions' => array('Item.id >= FLOOR(1 + RAND()*(SELECT MAX(id) FROM items))')));
 	}
 
 	function getItemForDisplay($itemId=null) {
