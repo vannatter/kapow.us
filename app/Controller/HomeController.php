@@ -132,7 +132,6 @@ class HomeController extends AppController {
 
 		$this->set('ticker', $ticker);
 	}
-		
 }
 
 ?>
