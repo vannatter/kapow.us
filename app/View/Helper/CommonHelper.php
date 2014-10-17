@@ -61,15 +61,22 @@ class CommonHelper extends Helper {
 		}
 	}
 	
-    public function thumb($orig, $which="25p") {
-	    $ext = pathinfo($orig, PATHINFO_EXTENSION);
-	    
-	    if ( ($ext == "jpg") || ($ext == "jpeg") ) {
-	    
-				// build 50p    
+	public function thumb($orig, $which="25p") {
+		$ext = pathinfo($orig, PATHINFO_EXTENSION);
+
+		if ( ($ext == "jpg") || ($ext == "jpeg") ) {
+
+			if (!is_file(WWW_ROOT . $orig)) {
+
+				// original not found, we need to flag this for reload..
+				return ("/img/nocover.png");
+
+			} else {
+
+				// build 50p
 				$percent = 0.5;
 				$thumb_ext = '_50p.jpg';
-	    	
+
 				if (!is_file(WWW_ROOT . $orig . $thumb_ext)) {
 		 			list($width, $height) = getimagesize(WWW_ROOT . $orig);
 					$new_width = $width * $percent;
@@ -99,6 +106,8 @@ class CommonHelper extends Helper {
 				}
 				
 				return ($orig . "_" . $which . ".jpg");
+			}
+				
 	    } else {
 	    	return $orig;
 	    }
