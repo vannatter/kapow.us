@@ -60,6 +60,62 @@ class CommonHelper extends Helper {
 				break;
 		}
 	}
+
+	public function creator_thumb($orig, $which="25p") {
+		
+		$ext = pathinfo($orig, PATHINFO_EXTENSION);
+		if ( ($ext == "jpg") || ($ext == "jpeg") ) {
+
+			if (!is_file(WWW_ROOT . $orig)) {
+
+				// original not found, we need to flag this for reload..
+				return ("/img/noprofile.png");
+
+			} else {
+
+				return ($orig);
+/*
+				// build 50p
+				$percent = 0.5;
+				$thumb_ext = '_50p.jpg';
+
+				if (!is_file(WWW_ROOT . $orig . $thumb_ext)) {
+		 			list($width, $height) = getimagesize(WWW_ROOT . $orig);
+					$new_width = $width * $percent;
+					$new_height = $height * $percent;
+					
+					$image_p = imagecreatetruecolor($new_width, $new_height);
+					$image = imagecreatefromjpeg(WWW_ROOT . $orig);
+					imagecopyresampled($image_p, $image, 0, 0, 0, 0, $new_width, $new_height, $width, $height);
+					
+					imagejpeg($image_p, WWW_ROOT . $orig . $thumb_ext, 100);	    
+				}
+				
+				// build 25p
+				$percent = 0.25;
+				$thumb_ext = '_25p.jpg';
+				
+				if (!is_file(WWW_ROOT . $orig . $thumb_ext)) {
+		 			list($width, $height) = getimagesize(WWW_ROOT . $orig);
+					$new_width = $width * $percent;
+					$new_height = $height * $percent;
+					
+					$image_p = imagecreatetruecolor($new_width, $new_height);
+					$image = imagecreatefromjpeg(WWW_ROOT . $orig);
+					imagecopyresampled($image_p, $image, 0, 0, 0, 0, $new_width, $new_height, $width, $height);
+					
+					imagejpeg($image_p, WWW_ROOT . $orig . $thumb_ext, 100);	    
+				}
+				
+				return ($orig . "_" . $which . ".jpg");
+*/
+			}
+				
+	    } else {
+	    	return $orig;
+	    }
+		
+	}
 	
 	public function thumb($orig, $which="25p") {
 		$ext = pathinfo($orig, PATHINFO_EXTENSION);
