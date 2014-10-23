@@ -3,12 +3,13 @@
  *@var $this View
  */
 ?>
+
 <?php echo $this->Form->create('Item', array('class' => 'form-horizontal')); ?>
 <?php echo $this->Form->input('item_name', array('class' => 'span6')); ?>
 <?php echo $this->Form->input('section_id', array('class' => 'span6')); ?>
 <?php echo $this->Form->input('publisher_id', array('class' => 'span6')); ?>
 <?php echo $this->Form->input('series_id', array('class' => 'span6')); ?>
-<?php echo $this->Form->input('item_id', array('type' => 'text', 'label' => __('Item Id'), 'class' => 'span6')); ?>
+<?php echo $this->Form->input('item_id', array('type' => 'text', 'label' => __('Item ID'), 'class' => 'span6')); ?>
 <?php echo $this->Form->input('printing', array('class' => 'span2')); ?>
 <?php echo $this->Form->input('series_num', array('class' => 'span2')); ?>
 <?php echo $this->Form->input('item_date', array('type' => 'text', 'class' => 'span3 datepicker')); ?>

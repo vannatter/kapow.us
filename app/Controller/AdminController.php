@@ -204,6 +204,8 @@ class AdminController extends AppController {
 			}
 		} else {
 			$this->Item->id = $id;
+			$this->Item->contain(array('Section', 'Section.Category', 'Publisher', 'Series', 'ItemCreator', 'ItemTag'));
+			
 			if(!$this->Item->exists()) {
 				$this->Session->setFlash(__('Item Not Found'), 'alert', array(
 					'plugin' => 'TwitterBootstrap',
@@ -216,7 +218,16 @@ class AdminController extends AppController {
 			$this->request->data = $item;
 		}
 
-		$this->set('sections', $this->Item->Section->find('list', array('fields' => array('id', 'section_name'))));
+		$sections = $this->Item->Section->find('all', array('recursive' => 2));
+		$sects = array();
+		foreach ($sections as $s) {
+			if ($s['Category']['id']) {
+				$sects[$s['Section']['id']] = $s['Section']['section_name'] . " (" . $s['Category']['category_name'] . ")";
+			} else {
+				$sects[$s['Section']['id']] = $s['Section']['section_name'];;
+			}
+		}
+		$this->set('sections', $sects);
 		$this->set('publishers', $this->Publisher->find('list', array('fields' => array('id', 'publisher_name'))));
 		$this->set('series', $this->Series->find('list', array('fields' => array('id', 'series_name'))));
 	}
