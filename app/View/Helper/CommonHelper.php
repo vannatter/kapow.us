@@ -62,8 +62,10 @@ class CommonHelper extends Helper {
 	}
 
 	public function creator_thumb($orig, $which="25p") {
-		
+
 		$ext = pathinfo($orig, PATHINFO_EXTENSION);
+		$orig = str_replace(" ", "%20", $orig);
+				
 		if ( ($ext == "jpg") || ($ext == "jpeg") ) {
 
 			if (!is_file(WWW_ROOT . $orig)) {

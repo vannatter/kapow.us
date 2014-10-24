@@ -127,7 +127,7 @@
 	
 				<div class="row hot_block">
 					<div class="span2 hot_img">
-						<a href="/creators/<?php echo $this->Common->seoize($ticker['Creator']['id'], $ticker['Creator']['creator_name']); ?>"><?php if ( ($ticker['Creator']['creator_photo'] == "/img/covers") || (!$ticker['Creator']['creator_photo']) ) { ?><img alt="<?php echo $ticker['Creator']['creator_name']; ?>" src="/img/nocover_large.png" class="detail_img" /><?php } else { ?><img alt="<?php echo $ticker['Creator']['creator_name']; ?>" class="detail_img" src="<?php echo $ticker['Creator']['creator_photo']; ?>" /><?php } ?></a>
+						<a href="/creators/<?php echo $this->Common->seoize($ticker['Creator']['id'], $ticker['Creator']['creator_name']); ?>"><?php if ( ($ticker['Creator']['creator_photo'] == "/img/covers") || (!$ticker['Creator']['creator_photo']) ) { ?><img alt="<?php echo $ticker['Creator']['creator_name']; ?>" src="/img/nocover_large.png" class="detail_img" /><?php } else { ?><img alt="<?php echo $ticker['Creator']['creator_name']; ?>" class="detail_img" src="<?php echo $this->Common->creator_thumb($ticker['Creator']['creator_photo']); ?>" /><?php } ?></a>
 					</div>
 				</div>
 	
