@@ -1,7 +1,6 @@
 <!DOCTYPE html>
-<?php echo $this->Facebook->html(); ?>
-
-	<head>
+<html>
+	<?php echo $this->Facebook->head(); ?>
 		<?php echo $this->Html->charset(); ?>
 		<title>Kapow! <?php echo $title_for_layout; ?></title>
 	    <? if(isset($meta_description_for_layout)){ ?>

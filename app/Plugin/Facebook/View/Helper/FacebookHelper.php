@@ -71,7 +71,14 @@ class FacebookHelper extends AppHelper {
 	public function html(){
 		return '<html xmlns="http://www.w3.org/1999/xhtml" xmlns:fb="http://ogp.me/ns/fb#">';
 	}
-	
+
+	/**
+	 * @return string
+	 */
+	public function head() {
+		return '<head prefix="og: http://ogp.me/ns# fb: http://ogp.me/ns/fb#">';
+	}
+
 	/**
 	* Register Button
 	* $this->Facebook->init() is required for this
