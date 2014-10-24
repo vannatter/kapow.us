@@ -69,7 +69,7 @@
 		</div>
 
 	</body>
-	<script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?key=AIzaSyAf5DtChzuCwa8uGr4gehSrhklvVHjzKhk&sensor=true"></script>
+	<script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?key=AIzaSyAf5DtChzuCwa8uGr4gehSrhklvVHjzKhk&amp;sensor=true"></script>
 	<?php echo $this->Facebook->init(); ?>
 	
 	<script type="text/javascript">
