@@ -19,7 +19,7 @@
 		<div class="random_block">
 		<div class="home_hdr"><h4>Random Goodness</h4></div>
 		<div class="row random_item">
-			<div class="span3 item_detail_img"><div class="pad_it"><a title="<?php echo $random_items[0]['Item']['item_name']; ?>" href="/items/<?php echo $this->Common->seoize($random_items[0]['Item']['id'], $random_items[0]['Item']['item_name']); ?>"><?php if ($random_items[0]['Item']['img_fullpath'] == "/img/covers") { ?><img border="0" alt="<?php echo $random_items[0]['Item']['item_name']; ?>" src="/img/nocover_large.png" class="detail_img" /><?php } else { ?><img border="0" alt="<?php echo $random_items[0]['Item']['item_name']; ?>" class="detail_img" src="<?php echo $this->Common->thumb($random_items[0]['Item']['img_fullpath'], "25p"); ?>" /><?php } ?></a></div>
+			<div class="span3 item_detail_img"><div class="pad_it"><a title="<?php echo $random_items[0]['Item']['item_name']; ?>" href="/items/<?php echo $this->Common->seoize($random_items[0]['Item']['id'], $random_items[0]['Item']['item_name']); ?>"><?php if ($random_items[0]['Item']['img_fullpath'] == "/img/covers") { ?><img alt="<?php echo $random_items[0]['Item']['item_name']; ?>" src="/img/nocover_large.png" class="detail_img" /><?php } else { ?><img alt="<?php echo $random_items[0]['Item']['item_name']; ?>" class="detail_img" src="<?php echo $this->Common->thumb($random_items[0]['Item']['img_fullpath'], "25p"); ?>" /><?php } ?></a></div>
 			</div>
 
 			<div class="span6 item_detail">
@@ -76,7 +76,7 @@
 						}
 					?>				
 					<div class="span2 preview_block">
-						<div class="preview_img"><a href="/items/<?php echo $this->Common->seoize($ri['Item']['id'], $ri['Item']['item_name']); ?>"><?php if ($ri['Item']['img_fullpath'] == "/img/covers") { ?><img border="0" alt="<?php echo $ri['Item']['item_name']; ?>" src="/img/nocover.png" width="210" height="140" /><?php } else { ?><img border="0" alt="<?php echo $ri['Item']['item_name']; ?>" src="<?php echo $this->Common->thumb($ri['Item']['img_fullpath'], "25p"); ?>" /><?php } ?></a></div>
+						<div class="preview_img"><a href="/items/<?php echo $this->Common->seoize($ri['Item']['id'], $ri['Item']['item_name']); ?>"><?php if ($ri['Item']['img_fullpath'] == "/img/covers") { ?><img alt="<?php echo $ri['Item']['item_name']; ?>" src="/img/nocover.png" width="210" height="140" /><?php } else { ?><img alt="<?php echo $ri['Item']['item_name']; ?>" src="<?php echo $this->Common->thumb($ri['Item']['img_fullpath'], "25p"); ?>" /><?php } ?></a></div>
 			
 						<?php echo $this->Common->pullButton($ri['Item']['id'], $hasPull); ?>
 
@@ -127,7 +127,7 @@
 	
 				<div class="row hot_block">
 					<div class="span2 hot_img">
-						<a href="/creators/<?php echo $this->Common->seoize($ticker['Creator']['id'], $ticker['Creator']['creator_name']); ?>"><?php if ( ($ticker['Creator']['creator_photo'] == "/img/covers") || (!$ticker['Creator']['creator_photo']) ) { ?><img border="0" alt="<?php echo $ticker['Creator']['creator_name']; ?>" src="/img/nocover_large.png" class="detail_img" /><?php } else { ?><img border="0" alt="<?php echo $ticker['Creator']['creator_name']; ?>" class="detail_img" src="<?php echo $ticker['Creator']['creator_photo']; ?>" /><?php } ?></a>
+						<a href="/creators/<?php echo $this->Common->seoize($ticker['Creator']['id'], $ticker['Creator']['creator_name']); ?>"><?php if ( ($ticker['Creator']['creator_photo'] == "/img/covers") || (!$ticker['Creator']['creator_photo']) ) { ?><img alt="<?php echo $ticker['Creator']['creator_name']; ?>" src="/img/nocover_large.png" class="detail_img" /><?php } else { ?><img alt="<?php echo $ticker['Creator']['creator_name']; ?>" class="detail_img" src="<?php echo $ticker['Creator']['creator_photo']; ?>" /><?php } ?></a>
 					</div>
 				</div>
 	
@@ -147,7 +147,7 @@
 			
 				<div class="row hot_block">
 					<div class="span2 hot_img">
-						<a href="/items/<?php echo $this->Common->seoize($ticker['Item']['id'], $ticker['Item']['item_name']); ?>"><?php if ($ticker['Item']['img_fullpath'] == "/img/covers") { ?><img border="0" alt="<?php echo $ticker['Item']['item_name']; ?>" src="/img/nocover_large.png" class="detail_img" /><?php } else { ?><img border="0" alt="<?php echo $ticker['Item']['item_name']; ?>" class="detail_img" src="<?php echo $this->Common->thumb($ticker['Item']['img_fullpath'], "25p"); ?>" /><?php } ?></a>
+						<a href="/items/<?php echo $this->Common->seoize($ticker['Item']['id'], $ticker['Item']['item_name']); ?>"><?php if ($ticker['Item']['img_fullpath'] == "/img/covers") { ?><img alt="<?php echo $ticker['Item']['item_name']; ?>" src="/img/nocover_large.png" class="detail_img" /><?php } else { ?><img alt="<?php echo $ticker['Item']['item_name']; ?>" class="detail_img" src="<?php echo $this->Common->thumb($ticker['Item']['img_fullpath'], "25p"); ?>" /><?php } ?></a>
 					</div>
 				</div>
 	
@@ -174,9 +174,9 @@
 				
 		<div class="row">
 			<div class="span3">
-				<a href="https://twitter.com/kapowus"><img src="/img/twitter.png" border="0" alt="Twitter" width="48" height="48" /></a>
-				<a href="https://facebook.com/kapow.us"><img src="/img/facebook.png" border="0" alt="Facebook" width="48" height="48" /></a>
-				<a href="https://plus.google.com/112418984867940299271"><img src="/img/googleplus.png" border="0" alt="Google+" width="48" height="48" /></a>
+				<a href="https://twitter.com/kapowus"><img src="/img/twitter.png"  alt="Twitter" width="48" height="48" /></a>
+				<a href="https://facebook.com/kapow.us"><img src="/img/facebook.png"  alt="Facebook" width="48" height="48" /></a>
+				<a href="https://plus.google.com/112418984867940299271"><img src="/img/googleplus.png"  alt="Google+" width="48" height="48" /></a>
 			</div>
 		</div>
 				

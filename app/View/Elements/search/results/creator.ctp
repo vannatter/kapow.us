@@ -8,7 +8,7 @@
 		<?php foreach($results as $creator) { ?>
 			<div class="row search_row scroll-list-item" style="color: #fff;">
 				<div class="span1">
-					<div class="search_img"><a href="/creators/<?php echo $this->Common->seoize($creator['Creator']['id'], $creator['Creator']['creator_name']); ?>"><?php if ( ($creator['Creator']['creator_photo'] == "/img/covers") || (!$creator['Creator']['creator_photo']) ) { ?><img border="0" alt="<?php echo $creator['Creator']['creator_name']; ?>" src="/img/noprofile.png" /><?php } else { ?><img border="0" alt="<?php echo $creator['Creator']['creator_name']; ?>" src="<?php echo $creator['Creator']['creator_photo']; ?>" /><?php } ?></a></div>
+					<div class="search_img"><a href="/creators/<?php echo $this->Common->seoize($creator['Creator']['id'], $creator['Creator']['creator_name']); ?>"><?php if ( ($creator['Creator']['creator_photo'] == "/img/covers") || (!$creator['Creator']['creator_photo']) ) { ?><img alt="<?php echo $creator['Creator']['creator_name']; ?>" src="/img/noprofile.png" /><?php } else { ?><img alt="<?php echo $creator['Creator']['creator_name']; ?>" src="<?php echo $creator['Creator']['creator_photo']; ?>" /><?php } ?></a></div>
 				</div>
 				<div class="span11">
 					<h3><?php echo $this->Html->link($creator['Creator']['creator_name'], '/creators/' . $this->Common->seoize($creator['Creator']['id'], $creator['Creator']['creator_name'])); ?></h3>

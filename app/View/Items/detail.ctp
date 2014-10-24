@@ -2,7 +2,7 @@
 
 <div class="row">
 	<div class="span6 item_detail_img">	
-		<?php if ($item['Item']['img_fullpath'] == "/img/covers") { ?><img border="0" alt="<?php echo $item['Item']['item_name']; ?>" src="/img/nocover_large.png" class="detail_img" /><?php } else { ?><img border="0" alt="<?php echo $item['Item']['item_name']; ?>" class="detail_img" src="<?php echo $this->Common->thumb($item['Item']['img_fullpath'], "50p"); ?>" /><?php } ?>
+		<?php if ($item['Item']['img_fullpath'] == "/img/covers") { ?><img alt="<?php echo $item['Item']['item_name']; ?>" src="/img/nocover_large.png" class="detail_img" /><?php } else { ?><img alt="<?php echo $item['Item']['item_name']; ?>" class="detail_img" src="<?php echo $this->Common->thumb($item['Item']['img_fullpath'], "50p"); ?>" /><?php } ?>
 	</div>
 	
 	<div class="span6 item_detail">

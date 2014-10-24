@@ -28,9 +28,9 @@
 				<div class="preview_img">
 					<a href="/publishers/<?php echo $seoString; ?>">
 						<?php if (empty($img) || $img == "/img/covers") { ?>
-							<img border="0" alt="<?php echo $name; ?>" src="/img/nocover.png" width="210" height="140" />
+							<img alt="<?php echo $name; ?>" src="/img/nocover.png" width="210" height="140" />
 						<?php } else { ?>
-							<img border="0" alt="<?php echo $name; ?>" src="<?php echo $this->Common->thumb($img); ?>" />
+							<img alt="<?php echo $name; ?>" src="<?php echo $this->Common->thumb($img); ?>" />
 						<?php } ?>
 					</a>
 				</div>

@@ -106,9 +106,11 @@ class UsersController extends AppController {
 		$this->paginate = array(
 			'UserItem' => array(
 				'order' => array(
-					'UserItem.created' => 'DESC'
+					'Item.series_id' => 'ASC',
+					'UserItem.created' => 'ASC'
 				),
-				'limit' => 24
+				'limit' => 24,
+				'recursive' => 2
 			)
 		);
 
