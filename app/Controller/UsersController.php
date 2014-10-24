@@ -103,19 +103,72 @@ class UsersController extends AppController {
 	public function library() {
 		$this->set('title_for_layout','My Library');
 
-		$this->paginate = array(
-			'UserItem' => array(
-				'order' => array(
-					'Item.series_id' => 'ASC',
-					'UserItem.created' => 'ASC'
+		$items = $this->UserItem->find('all', array(
+			'conditions' => array(
+				'UserItem.user_id' => $this->Auth->user('id')
+			),
+			'joins' => array(
+				array(
+					'alias' => 'Item',
+					'table' => 'items',
+					'type' => 'INNER',
+					'conditions' => 'Item.id = UserItem.item_id'
 				),
-				'limit' => 24,
-				'recursive' => 2
-			)
-		);
+				array(
+					'alias' => 'Section',
+					'table' => 'sections',
+					'type' => 'INNER',
+					'conditions' => 'Section.id = Item.section_id'
+				),
+				array(
+					'alias' => 'Series',
+					'table' => 'series',
+					'type' => 'INNER',
+					'conditions' => 'Series.id = Item.series_id'
+				),
+				array(
+					'alias' => 'Publisher',
+					'table' => 'publishers',
+					'type' => 'INNER',
+					'conditions' => 'Publisher.id = Item.publisher_id'
+				)
+			),
+			'fields' => array(
+				'UserItem.*',
+				'Item.*',
+				'Section.*',
+				'Series.*',
+				'Publisher.*'
+			),
+			'order' => array(
+				'Series.series_name' => 'ASC'
+			),
+			'limit' => 24,
+			'recursive' => -1
+		));
 
-		$list = $this->paginate('UserItem', array('UserItem.user_id' => $this->Auth->user('id')));
-		$this->set('items', $list);
+		foreach($items as $k=>$item) {
+			$creators = $this->UserItem->Item->ItemCreator->find('all', array(
+				'conditions' => array(
+					'ItemCreator.item_id' => $item['Item']['id']
+				),
+				'contain' => array(
+					'Creator'
+				)
+			));
+
+			$items[$k]['ItemCreator'] = $creators;
+
+			$tags = $this->UserItem->Item->ItemTag->find('all', array(
+				'conditions' => array(
+					'ItemTag.item_id' => $item['Item']['id']
+				)
+			));
+
+			$items[$k]['ItemTag'] = $tags;
+		}
+
+		$this->set('items', $items);
 	}
 	
 	public function pull_list() {
