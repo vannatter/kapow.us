@@ -68,7 +68,6 @@ class Merge extends CakeMigration {
 					),
 				),
 				'items' => array(
-					'combo_pack' => array('type' => 'integer', 'null' => true, 'default' => '0', 'after' => 'printing'),
 					'indexes' => array(
 						'section_id' => array('column' => 'section_id', 'unique' => 0),
 						'status' => array('column' => 'status', 'unique' => 0),
@@ -80,9 +79,6 @@ class Merge extends CakeMigration {
 						'user_id' => array('column' => 'user_id', 'unique' => 0),
 						'item_id' => array('column' => 'item_id', 'unique' => 0),
 					),
-				),
-				'series' => array(
-					'status' => array('type' => 'integer', 'null' => true, 'default' => '1', 'length' => 4, 'after' => 'description'),
 				),
 				'store_photos' => array(
 					'indexes' => array(
