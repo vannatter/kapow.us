@@ -1,6 +1,7 @@
 <?php
 
 App::uses('AppController', 'Controller');
+App::uses('SmushIt','Lib');
 
 /**
  * @property Store $Store
@@ -16,6 +17,20 @@ class ToolsController extends AppController {
 	public $uses = array('Item','Section','Publisher','Series','Creator','CreatorType','ItemCreator', 'Store','Tag','ItemTag','StorePhoto', 'ItemUserFavorite', 'UserFavorite');
 	public $components = array('Curl');
 	public $helpers = array('Common');
+	
+	
+	public function hi() {
+
+		set_time_limit(0);
+		$smushit = new SmushIt('http://kapow.us/img/covers/catalogimages/stk_images/stk640001-660000/stk651647.jpg_50p.jpg');
+
+		// get all filesystem images for all items that havent had their smushed flag set..
+		
+		
+		
+		echo "hi!";
+		exit;
+	}
 	
 	public function process_tags() {
 		
