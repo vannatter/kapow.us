@@ -16,7 +16,7 @@
 	    <? } ?>
 
 		<meta property="og:type" content="company" /> 
-		<meta property="og:site_name" content="kapow.us"/> 
+		<meta property="og:site_name" content="kapow.us" /> 
 
 	    <? if(isset($og_title)){ ?>
 		<meta property="og:title" content="<?= $og_title; ?>" /> 
@@ -40,8 +40,6 @@
 			
 			echo $this->Html->css('bootstrap.min');
 			echo $this->Html->css('bootstrap-responsive.min');
-			echo $this->Html->css('core');
-			echo $this->Html->css('color');
 			echo $this->Html->css('style');
 			echo $this->Html->css('bootstrap-image-gallery.min');
 			echo $this->Html->css('jquery-ui.custom.min');
