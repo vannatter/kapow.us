@@ -91,7 +91,7 @@ class FacebookHelperTestCase extends CakeTestCase {
 	
 	public function testLogout(){
 		$results = $this->Facebook->logout();
-		$this->assertEqual('<a href="#"><img src="/Facebook/img/facebook-logout.png" alt="Facebook logout" id="" onclick="logout();" /></a>', $results);
+		$this->assertEqual('<a href="#"><img src="/Facebook/img/facebook-logout.png" alt="Facebook logout" onclick="logout();" /></a>', $results);
 	}
 	
 	public function testShare(){
