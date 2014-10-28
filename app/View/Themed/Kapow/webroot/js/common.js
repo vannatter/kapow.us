@@ -2,6 +2,11 @@ var msg_timeout;
 var load_hot_timeout;
 
 $(document).ready(function() {
+	
+	$('img').each(function() {
+		$(this).attr('width', $(this).width());
+		$(this).attr('height', $(this).height());
+	});
 
 	$('.contact_btn').on('click', function(e) {
 		var first_name 	= $('#first_name').val();
