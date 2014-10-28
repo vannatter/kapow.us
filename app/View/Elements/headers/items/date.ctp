@@ -13,8 +13,9 @@ if(isset($this->request->query['terms'])) {
 ?>
 
 <div class="filter_box">
-	<div class="bread"><h3><?php echo __('Released on ') . $release; ?></h3></div>
+	<div class="bread"><h3><a href="/items/date/<?php echo $datePrevious . $query; ?>"><i class="icon-arrow-left icon-white"></i></a> <?php echo __('Released on ') . $release; ?> <a href="/items/date/<?php echo $dateNext . $query; ?>"><i class="icon-arrow-right icon-white"></i></a></h3></div>
 
-	<a href="/items/date/<?php echo $dateNext . $query; ?>"><div class="filter_tab"><?php echo date("m/d/Y", strtotime($dateNext)); ?> <i class="icon-arrow-right icon-white"></i></div></a>
-	<a href="/items/date/<?php echo $datePrevious . $query; ?>"><div class="filter_tab"><i class="icon-arrow-left icon-white"></i> <?php echo date("m/d/Y", strtotime($datePrevious)); ?></div></a>
+	<?php foreach ($categories as $category) { ?>
+		<a href="/items/date/<?php echo $dateCurrent; ?>/<?php echo $category['Category']['id']; ?>"><div class="filter_tab <?php echo (($content_type == $category['Category']['id']) ? " filter_tab_on ":""); ?>"><?php echo $category['Category']['category_name']; ?></div></a>
+	<?php } ?>
 </div>
