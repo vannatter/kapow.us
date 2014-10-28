@@ -18,20 +18,6 @@ class ToolsController extends AppController {
 	public $components = array('Curl');
 	public $helpers = array('Common');
 	
-	
-	public function hi() {
-
-		set_time_limit(0);
-		$smushit = new SmushIt('http://kapow.us/img/covers/catalogimages/stk_images/stk640001-660000/stk651647.jpg_50p.jpg');
-
-		// get all filesystem images for all items that havent had their smushed flag set..
-		
-		
-		
-		echo "hi!";
-		exit;
-	}
-	
 	public function process_tags() {
 		
 		## delete all existing tags..

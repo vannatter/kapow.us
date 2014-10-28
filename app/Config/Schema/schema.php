@@ -221,6 +221,7 @@ class AppSchema extends CakeSchema {
 		'srp' => array('type' => 'string', 'null' => false, 'default' => null, 'length' => 50, 'collate' => 'utf8_general_ci', 'charset' => 'utf8'),
 		'description' => array('type' => 'text', 'null' => false, 'default' => null, 'collate' => 'utf8_general_ci', 'charset' => 'utf8'),
 		'thumbnails_processed' => array('type' => 'boolean', 'null' => false, 'default' => '0'),
+		'smushed' => array('type' => 'integer', 'null' => true, 'default' => '0', 'length' => 4),
 		'hot' => array('type' => 'integer', 'null' => false, 'default' => null, 'key' => 'index'),
 		'created' => array('type' => 'datetime', 'null' => true, 'default' => null),
 		'modified' => array('type' => 'datetime', 'null' => true, 'default' => null),
