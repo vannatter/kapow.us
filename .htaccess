@@ -47,18 +47,9 @@
   ExpiresByType image/svg+xml             "access plus 1 year"
   ExpiresByType application/vnd.ms-fontobject "access plus 1 year"
 
-# css and javascript
-#  ExpiresByType text/css                  "access plus 1 year"
-#  ExpiresByType application/javascript    "access plus 1 year"
-#  ExpiresByType text/javascript           "access plus 1 year"
-
   <IfModule mod_headers.c>
     Header append Cache-Control "public"
   </IfModule>
-  
-	<FilesMatch "\.(css|js)$">
-		Header set Cache-Control "max-age=604800, public"
-	</FilesMatch>
   
 </IfModule>
 
