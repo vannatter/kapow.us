@@ -58,5 +58,5 @@
 </IfModule>
 
 <FilesMatch "\.(css|js)$">
-	Header set Cache-Control "max-age=31536000, public, must-revalidate"
+	Header set Cache-Control "max-age=7257600, public, must-revalidate"
 </FilesMatch>
