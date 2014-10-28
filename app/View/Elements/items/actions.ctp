@@ -1,6 +1,3 @@
-<style>
-#hotness { width: 75%; margin-left: auto; margin-right: auto; }
-</style>
 <?php
 /**
  *@var $this View
