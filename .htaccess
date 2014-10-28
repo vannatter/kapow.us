@@ -55,5 +55,8 @@
   <IfModule mod_headers.c>
     Header append Cache-Control "public"
   </IfModule>
-
 </IfModule>
+
+<FilesMatch "\.(css|js)$">
+	Header set Cache-Control "max-age=172800, public, must-revalidate"
+</FilesMatch>
