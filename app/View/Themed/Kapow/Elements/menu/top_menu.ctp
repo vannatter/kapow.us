@@ -18,7 +18,7 @@
 					if ($this->Session->read('Auth.User')) {
 						echo sprintf('<li>%s</li>', $this->Html->link(__('My Account'), array('controller' => 'my')));
 						if ($this->Session->read('Auth.User.facebook_id')) {
-							echo sprintf('<li>%s</li>', $this->Facebook->logout(array('redirect' => array('controller' => 'users', 'action' => 'logout'), 'label' => __('Logout'))));
+							echo sprintf('<li>%s</li>', $this->Facebook->logout(array('redirect' => array('controller' => 'users', 'action' => 'logout'), 'id' => false, 'label' => __('Logout'))));
 						} else {
 							echo sprintf('<li>%s</li>', $this->Html->link(__('Logout'), array('controller' => 'users', 'action' => 'logout')));
 						}
