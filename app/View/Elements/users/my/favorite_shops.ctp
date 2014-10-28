@@ -19,7 +19,7 @@
 				} elseif(isset($shop['Store']['StorePhoto'][0])) {
 					$img = $this->Common->thumb($shop['Store']['StorePhoto'][0]['photo_path']);
 				} else {
-					$img = '/img/nocover.png';
+					$img = '/theme/Kapow/img/nocover.png';
 				}
 				?>
 				<div class="preview_img">

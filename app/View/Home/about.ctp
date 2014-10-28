@@ -8,8 +8,8 @@
 	You can find out more about our team at our <a href="http://www.vannatter.com/about">corporate website</a>, or you can find us on the social sites linked below. Make sure you also watch
 	our <a href="/blog">development blog</a> for updates on what we're up to.
 	<br/><br/>
-	<a href="https://twitter.com/kapowus"><img src="/img/twitter.png" alt="Twitter" /></a>
-	<a href="https://facebook.com/kapow.us"><img src="/img/facebook.png" alt="Facebook" /></a>
-	<a href="https://plus.google.com/112418984867940299271"><img src="/img/googleplus.png" alt="Google+" /></a>
+	<a href="https://twitter.com/kapowus"><img src="/theme/Kapow/img/twitter.png" alt="Twitter" /></a>
+	<a href="https://facebook.com/kapow.us"><img src="/theme/Kapow/img/facebook.png" alt="Facebook" /></a>
+	<a href="https://plus.google.com/112418984867940299271"><img src="/theme/Kapow/img/googleplus.png" alt="Google+" /></a>
 
 </div>

@@ -24,7 +24,7 @@
 					if(isset($creator['Creator']['ItemCreator'][0]['Item']['img_fullpath'])) {
 						$img = $this->Common->thumb($creator['Creator']['ItemCreator'][0]['Item']['img_fullpath']);
 					} else {
-						$img = '/img/nocover.png';
+						$img = '/theme/Kapow/img/nocover.png';
 					}
 				} else {
 					$img = $this->Common->thumb($img);

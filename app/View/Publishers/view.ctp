@@ -8,7 +8,7 @@
 
 <div class="row">
 	<div class="span3 item_detail_img">	
-		<?php if ( ($publisher['Publisher']['publisher_photo'] == "/img/covers") || (!$publisher['Publisher']['publisher_photo']) ) { ?><img alt="<?php echo $publisher['Publisher']['publisher_name']; ?>" src="/img/nocover_large.png" class="detail_img" /><?php } else { ?><img alt="<?php echo $publisher['Publisher']['publisher_name']; ?>" class="detail_img" src="<?php echo $publisher['Publisher']['publisher_photo']; ?>" /><?php } ?>
+		<?php if ( ($publisher['Publisher']['publisher_photo'] == "/img/covers") || (!$publisher['Publisher']['publisher_photo']) ) { ?><img alt="<?php echo $publisher['Publisher']['publisher_name']; ?>" src="/theme/Kapow/img/nocover_large.png" class="detail_img" /><?php } else { ?><img alt="<?php echo $publisher['Publisher']['publisher_name']; ?>" class="detail_img" src="<?php echo $publisher['Publisher']['publisher_photo']; ?>" /><?php } ?>
 
 		<div class="publisher_desc">
 			<?php echo $publisher['Publisher']['publisher_bio']; ?>		

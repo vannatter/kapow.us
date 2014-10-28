@@ -24,7 +24,7 @@
 					if(isset($publisher['Publisher']['Item'][0]['img_fullpath'])) {
 						$img = $this->Common->thumb($publisher['Publisher']['Item'][0]['img_fullpath']);
 					} else {
-						$img = '/img/nocover.png';
+						$img = '/theme/Kapow/img/nocover.png';
 					}
 				} else {
 					$img = $this->Common->thumb($img);

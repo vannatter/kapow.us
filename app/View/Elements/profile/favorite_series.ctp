@@ -17,7 +17,7 @@
 			$name = $series['Series']['series_name'];
 			$img = $series['Series']['Item']['img_fullpath'];
 			if(!$img || empty($img) || $img == '/img/covers') {
-				$img = '/img/nocover.png';
+				$img = '/theme/Kapow/img/nocover.png';
 			} else {
 				$img = $this->Common->thumb($img);
 			}

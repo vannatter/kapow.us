@@ -1,6 +1,16 @@
 @import "variables.less";
 @import "mixins.less";
 
+/*
+			echo $this->Html->css('bootstrap.min');
+			echo $this->Html->css('bootstrap-responsive.min');
+			echo $this->Html->css('style');
+			echo $this->Html->css('bootstrap-image-gallery.min');
+			echo $this->Html->css('jquery-ui.custom.min');
+*/
+
+@import (inline) "../css/bootstrap.min.css";
+@import (inline) "../css/bootstrap-responsive.min.css";
 @import "color.less";
 
 html, body {height: 100%;}
@@ -62,7 +72,7 @@ body {
 #header {
 	margin-top: 0px;
 	background-color: rgb(44,83,158);
-	background-image: url(/img/bg.png) !important;
+	background-image: url(/theme/Kapow/img/bg.png) !important;
 	background-repeat: no-repeat !important;
 }
 
@@ -622,7 +632,7 @@ li a.pull_list_btn {
 	color: #fff;
 	padding: 4px 0 6px 8px;
 	margin-bottom: 8px;
-	background-image: url(/img/bg.png);
+	background-image: url(/theme/Kapow/img/bg.png);
 	background-position: -100px 0;
 	background-repeat: no-repeat;
 	border-bottom: 2px solid darken(@kapow_blue, 15%);
@@ -853,3 +863,6 @@ li a.pull_list_btn {
 @import "media_max480.less";
 @import "media_min980.less";
 @import "media_min1200.less";
+
+@import (inline) "../css/bootstrap-image-gallery.min.css";
+@import (inline) "../css/jquery-ui.custom.min.css";

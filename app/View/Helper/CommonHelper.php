@@ -71,7 +71,7 @@ class CommonHelper extends Helper {
 			if (!is_file(WWW_ROOT . $orig)) {
 
 				// original not found, we need to flag this for reload..
-				return ("/img/noprofile.png");
+				return ("/theme/Kapow/img/noprofile.png");
 
 			} else {
 
@@ -127,7 +127,7 @@ class CommonHelper extends Helper {
 			if (!is_file(WWW_ROOT . $orig)) {
 
 				// original not found, we need to flag this for reload..
-				return ("/img/nocover.png");
+				return ("/theme/Kapow/img/nocover.png");
 
 			} else {
 

@@ -11,7 +11,7 @@
 
 		<?php
 		if($series['Item'][0]['img_fullpath'] == "/img/covers") {
-			$img = "/img/nocover_large.png";
+			$img = "/theme/Kapow/img/nocover_large.png";
 		} else {
 			$img = $series['Item'][0]['img_fullpath'];
 		}

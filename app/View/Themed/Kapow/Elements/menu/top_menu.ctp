@@ -6,7 +6,7 @@
 				<span class="icon-bar"></span>
 				<span class="icon-bar"></span>
 			</a>
-			<a class="brand" href="/"><img src="/img/logo.png" width="200" height="103" alt="Kapow" /></a>
+			<a class="brand" href="/"><img src="/theme/Kapow/img/logo.png" width="200" height="103" alt="Kapow" /></a>
 			<div class="nav-collapse">
 				<ul class="nav">
 					<li><?php echo $this->Html->link(__('New This Week'), array('controller' => 'items', 'action' => 'this_week')); ?></li>

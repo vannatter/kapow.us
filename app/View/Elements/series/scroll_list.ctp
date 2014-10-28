@@ -16,7 +16,7 @@
 				$id = $ser['Series']['id'];
 				$name = $ser['Series']['series_name'];
 
-				$img = "/img/nocover.png";
+				$img = "/theme/Kapow/img/nocover.png";
 
 				if(isset($ser['Item'][0]['img_fullpath'])) {
 					$img = $ser['Item'][0]['img_fullpath'];

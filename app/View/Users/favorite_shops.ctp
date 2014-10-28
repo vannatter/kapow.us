@@ -23,12 +23,12 @@
 					$img = $shop['Store']['StorePhoto'][0]['photo_path'];
 
 					if(empty($img)) {
-						$img = "/img/nocover.png";
+						$img = "/theme/Kapow/img/nocover.png";
 					} else {
 						$img = $this->Common->thumb($img);
 					}
 				} else {
-					$img = "/img/nocover.png";
+					$img = "/theme/Kapow/img/nocover.png";
 				}
 
 				$seoString = $this->Common->seoize($id, $name);
