@@ -1,19 +1,13 @@
 @import "variables.less";
 @import "mixins.less";
 
-/*
-			echo $this->Html->css('bootstrap.min');
-			echo $this->Html->css('bootstrap-responsive.min');
-			echo $this->Html->css('style');
-			echo $this->Html->css('bootstrap-image-gallery.min');
-			echo $this->Html->css('jquery-ui.custom.min');
-*/
-
 @import (inline) "../css/bootstrap.min.css";
 @import (inline) "../css/bootstrap-responsive.min.css";
 @import "color.less";
 
-html, body {height: 100%;}
+html, body {
+	height: 100%;
+}
 
 body {
 	background-color: @kapow_blue;
@@ -30,12 +24,6 @@ body {
     background-repeat: no-repeat;
     background-attachment: fixed;
 }
-
-/*
-#content {
-	min-height: 70%;
-}
-*/
 
 .container {
 	padding-left: 10px;
@@ -90,7 +78,7 @@ body {
 	margin-bottom: 0;
 }
 .navbar-inner {
-	background: transparent;	
+	background: transparent;
 	border: none;
 	border-radius: 0;
 	padding-left: 0;
@@ -113,6 +101,7 @@ body {
 	overflow: hidden;
 	font-size: 14px;
 }
+
 .btn.disabled {
 	color: #fff;
 	cursor: pointer;
@@ -124,6 +113,7 @@ body {
 	margin-bottom: 20px;
 	overflow: hidden;
 }
+
 .publisher_block {
 	min-height: 300px;
 	max-height: 400px;
@@ -140,7 +130,6 @@ body {
 .filter_box {
 	padding: 0 10px 0 0;
 	text-align: right;
-/* 	border-top: 2px solid darken(@kapow_blue, 15%); */
 	border-bottom: 2px solid darken(@kapow_blue, 15%);
 	margin-bottom: 15px;
 	overflow: hidden;
@@ -395,11 +384,6 @@ li a.pull_list_btn {
 #infscr-loading img {
 	text-align: center;
 }
-/*
-#infscr-loading div {
-	display: none !important;
-}
-*/
 
 .infin_txt {
 	font-size: 18px;
@@ -735,14 +719,6 @@ li a.pull_list_btn {
 }
 .blog_list_well h4 a {
 	color: #fff !important;
-}
-
-.profile_edit_block {
-/*
-	background-color: darken(@kapow_blue, 15%);
-	border: 1px solid darken(@kapow_blue, 18%);
-	margin-left: 20px;
-*/
 }
 
 .profile_edit_block .form-actions {
