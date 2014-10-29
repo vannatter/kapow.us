@@ -31,7 +31,7 @@
 		</div>
 	
 		<div id="storeList">
-			<div class="loading"><img src="/img/ajax-loader2.gif" /></div>
+			<div class="loading"><img src="/theme/Kapow/img/ajax-loader2.gif" /></div>
 		</div>
 
 	</div>

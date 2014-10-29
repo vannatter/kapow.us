@@ -3,7 +3,7 @@ $(document).ready(function() {
 		loading: {
 			finishedMsg: '<div class="row"><div class="span4 offset4 infin_txt">Nothing else!</div></div>',
 			msgText: '',
-			img: '/img/ajax-loader.gif'
+			img: '/theme/Kapow/img/ajax-loader.gif'
 		},
 		navSelector: '#item-scroll-nav',
 		nextSelector: $('#item-scroll-nav a').last(),
@@ -33,7 +33,7 @@ $(document).ready(function() {
 	if($items.length > 0) {
 		var publisherId = $items.attr('data-publisher-id');
 
-		$items.append('<img src="/img/ajax-loader2.gif" />');
+		$items.append('<img src="/theme/Kapow/img/ajax-loader2.gif" />');
 
 		$.get('/publishers/items/' + publisherId, function(data) {
 			$items.empty().append(data);
