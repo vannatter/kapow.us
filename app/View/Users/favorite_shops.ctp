@@ -59,17 +59,15 @@
 				<h4><?php echo $this->Html->link($name, sprintf('/shops/%s', $seoString)); ?></h4>
 
 			</div>
-			<?php if($row == 6) { ?>
+			<?php if ($row == 6) { ?>
 				</div>
 				<?php $row = 0; ?>
 			<?php } ?>
 		<?php } ?>
 	</div>
-	<?php if($this->Paginator->hasNext()) { ?>
+	<?php if ($this->Paginator->hasNext()) { ?>
 		<div id="item-scroll-nav">
-			<div class="pagination">
-				<?php echo $this->Paginator->next('next'); ?>
-			</div>
+			<div class="pagination"><ul><?php echo $this->Paginator->next('next'); ?></ul></div>
 		</div>
 	<?php } ?>
 <?php } ?>
