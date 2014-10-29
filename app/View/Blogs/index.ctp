@@ -11,8 +11,8 @@
 		<div class="blog-item">
 			<div class="well blog_list_well">
 				<h4><?php echo $this->Html->link($blog['Blog']['title'], sprintf('/blogs/%s', $this->Common->seoize($blog['Blog']['id'], $blog['Blog']['title']))); ?></h4>
-				<p><?php echo $blog['Blog']['body']; ?></p>
-				<p><?php echo date("F jS, Y", strtotime($blog['Blog']['created'])); ?></p>
+				<?php echo $blog['Blog']['body']; ?>
+				<div class="blog_date"><?php echo date("F jS, Y", strtotime($blog['Blog']['created'])); ?></div>
 			</div>
 		</div>
 	<?php } ?>
