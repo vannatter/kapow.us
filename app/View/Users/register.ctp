@@ -13,7 +13,7 @@
 				<?php echo $this->Form->submit(__('Register'), array('class' => 'btn btn-custom')); ?>
 			</div>
 			<div class="float-left fb_login_connect">
-				<?php echo $this->Facebook->login(array('custom' => true, 'img' => 'connectwithfacebook.gif', 'show-faces' => false, 'perms' => 'email')); ?>
+				<?php echo $this->Facebook->login(array('custom' => true, 'img' => 'connectwithfacebook.gif', 'id' => false, 'show-faces' => false, 'perms' => 'email')); ?>
 			</div>
 		</div>
 		<?php echo $this->Form->end(); ?>
