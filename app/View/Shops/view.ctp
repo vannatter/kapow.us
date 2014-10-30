@@ -12,13 +12,13 @@
 		<?php if (@$shop['StorePhoto'][0]['photo_path']) { ?>
 		<div class="row">
 			<?php
-			if(isset($shop['PrimaryPhoto']['photo_path'])) {
+			if (isset($shop['PrimaryPhoto']['photo_path'])) {
 				$photoPath = $shop['PrimaryPhoto']['photo_path'];
 			} else {
 				$photoPath = $shop['StorePhoto'][0]['photo_path'];
 			}
 			?>
-			<div class="span4"><img class="store_main_photo" src="<?php echo $photoPath; ?>" /></div>
+			<div class="span4"><img class="store_main_photo" src="<?php echo $photoPath; ?>" alt="<?php echo $shop['Store']['name']; ?>" /></div>
 		</div>
 		<?php } ?>
 
@@ -34,7 +34,7 @@
 
 		<?php } ?>
 
-		<?php if($shop['Store']['latitude'] && $shop['Store']['longitude']) { ?>
+		<?php if ($shop['Store']['latitude'] && $shop['Store']['longitude']) { ?>
 			<div class="row">
 				<div id="shop-map" class="span4" data-lat="<?php echo $shop['Store']['latitude']; ?>" data-long="<?php echo $shop['Store']['longitude']; ?>"></div>
 			</div>
@@ -82,7 +82,7 @@
 <div id="modal-gallery" class="modal modal-gallery hide fade" tabindex="-1">
     <div class="modal-header">
         <a class="close" data-dismiss="modal">&times;</a>
-        <h3 class="modal-title"></h3>
+        <h3 class="modal-title">&nbsp;</h3>
     </div>
     <div class="modal-body"><div class="modal-image"></div></div>
     <div class="modal-footer">

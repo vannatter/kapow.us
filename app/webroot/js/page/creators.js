@@ -34,7 +34,7 @@ $(document).ready(function() {
 	if($items.length > 0) {
 		var creatorId = $items.attr('data-creator-id');
 
-		$items.append('<img src="/img/ajax-loader2.gif" />');
+		$items.append('<img src="/img/ajax-loader2.gif" alt="Loading" />');
 
 		$.get('/creators/items/' + creatorId, function(data) {
 			$items.empty().append(data);
