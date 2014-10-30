@@ -7,7 +7,7 @@
 	<h5>
 		<?php echo __('My Favorite Series'); ?>
 		<?php if(count($user['favorites']['series']) > 0) { ?>
-			<a href="/my/favorite/series"><button class="btn btn-custom edit_profile btn-small"><?php echo __('View All'); ?> <i class="icon-arrow-right icon-white"></i></button></a>
+			<a href="/my/favorite/series"><span class="btn btn-custom edit_profile btn-small"><?php echo __('View All'); ?> <i class="icon-arrow-right icon-white"></i></span></a>
 		<?php } ?>
 	</h5>
 

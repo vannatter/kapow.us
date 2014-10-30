@@ -2,7 +2,7 @@
 	<h5>
 		<?php echo __('My Library'); ?>
 		<?php if(count($library) > 0) { ?>
-			<a href="/my/library"><button class="btn btn-custom edit_profile btn-small"><?php echo __('View All'); ?> <i class="icon-arrow-right icon-white"></i></button></a>
+			<a href="/my/library"><span class="btn btn-custom edit_profile btn-small"><?php echo __('View All'); ?> <i class="icon-arrow-right icon-white"></i></span></a>
 		<?php } ?>
 	</h5>
 

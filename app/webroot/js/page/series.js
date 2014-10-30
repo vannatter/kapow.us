@@ -59,7 +59,7 @@ $(document).ready(function() {
 	if($items.length > 0) {
 		var seriesId = $items.attr('data-series-id');
 
-		$items.append('<img src="/theme/Kapow/img/ajax-loader2.gif" />');
+		$items.append('<img src="/theme/Kapow/img/ajax-loader2.gif" alt="Loading" />');
 
 		$.get('/series/items/' + seriesId, function(data) {
 			$items.empty().append(data);

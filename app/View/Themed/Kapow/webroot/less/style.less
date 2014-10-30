@@ -5,13 +5,19 @@
 @import (inline) "../css/bootstrap-responsive.min.css";
 @import "color.less";
 
+* {
+	font-family: 'Open Sans Condensed', sans-serif !important;
+}
+
 html, body {
 	height: 100%;
 }
 
 body {
+	margin: 0;
+	font-size: 13px;
+
 	background-color: @kapow_blue;
-	font-family: 'Open Sans Condensed', sans-serif;
 	background: #00040c; /* Old browsers */
 	background: -moz-linear-gradient(top, #00040c 0%, #2c539e 100%); /* FF3.6+ */
 	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#00040c), color-stop(100%,#2c539e)); /* Chrome,Safari4+ */
@@ -20,9 +26,8 @@ body {
 	background: -ms-linear-gradient(top, #00040c 0%,#2c539e 100%); /* IE10+ */
 	background: linear-gradient(to bottom, #00040c 0%,#2c539e 100%); /* W3C */
 	
-	margin-top: 0;
-    background-repeat: no-repeat;
-    background-attachment: fixed;
+	background-repeat: no-repeat;
+	background-attachment: fixed;
 }
 
 .container {
@@ -343,6 +348,7 @@ h2 {
 	color: #fff !important;
 	text-shadow: none !important;	
 	-webkit-font-smoothing: antialiased;
+	font-weight: bold;
 }
 
 .fav_menu > li > a:hover, .fav_menu > li > a:focus {
@@ -853,6 +859,13 @@ li a.pull_list_btn {
 .blog_date {
 	clear: both;
 	margin-top: 20px;
+}
+
+.icon-white {
+	margin-top: 3px;
+}
+.label .icon-white {
+	margin-top: 1px;
 }
 
 @import "media_min768max979.less";

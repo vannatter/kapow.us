@@ -2,7 +2,7 @@
 	<h5>
 		<?php echo __('My Favorite Shops'); ?>
 		<?php if(count($user['favorites']['shops']) > 0) { ?>
-			<a href="/my/favorite/shops"><button class="btn btn-custom edit_profile btn-small"><?php echo __('View All'); ?> <i class="icon-arrow-right icon-white"></i></button></a>
+			<a href="/my/favorite/shops"><span class="btn btn-custom edit_profile btn-small"><?php echo __('View All'); ?> <i class="icon-arrow-right icon-white"></i></span></a>
 		<?php } ?>
 	</h5>
 

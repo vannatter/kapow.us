@@ -33,7 +33,7 @@ $(document).ready(function() {
 	if($items.length > 0) {
 		var publisherId = $items.attr('data-publisher-id');
 
-		$items.append('<img src="/theme/Kapow/img/ajax-loader2.gif" />');
+		$items.append('<img src="/theme/Kapow/img/ajax-loader2.gif" alt="Loading" />');
 
 		$.get('/publishers/items/' + publisherId, function(data) {
 			$items.empty().append(data);

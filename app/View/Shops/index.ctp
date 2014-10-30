@@ -27,11 +27,11 @@
 	<div class="span5">
 
 		<div class="item_actions">
-			<a href="/shops/add"><button class="btn btn-custom"><i class="icon-shopping-cart icon-white"></i> <?php echo __('Add Missing Shop'); ?></button></a>
+			<a href="/shops/add"><span class="btn btn-custom"><i class="icon-shopping-cart icon-white"></i> <?php echo __('Add Missing Shop'); ?></span></a>
 		</div>
 	
 		<div id="storeList">
-			<div class="loading"><img src="/theme/Kapow/img/ajax-loader2.gif" /></div>
+			<div class="loading"><img src="/theme/Kapow/img/ajax-loader2.gif" alt="Loading" /></div>
 		</div>
 
 	</div>
