@@ -13,7 +13,7 @@ $(document).ready(function() {
 		path: function(nextPage) {
 			var $content = $('#content');
 			var path = $content.find('#item-scroll-nav a').last().attr("href");
-			if(path) {
+			if (path) {
 				var start = path.indexOf('page:');
 				var left = path.substring(0, start);
 
@@ -31,7 +31,7 @@ $(document).ready(function() {
 		var block = $(this).parent();
 
 		$.getJSON('/users/libraryRemove', { id: id }, function(result) {
-			if(result.error) {
+			if (result.error) {
 				alert(result.message);
 			} else {
 				block.remove();

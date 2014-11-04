@@ -316,7 +316,7 @@ class ItemsController extends AppController {
 
 	private function _getItems($content_type, $release_date, $return='html') {
 
-		if(strtolower($return) == 'json') {
+		if (strtolower($return) == 'json') {
 			$result = array('error' => false);
 
 			## get a list of publishers for the given date

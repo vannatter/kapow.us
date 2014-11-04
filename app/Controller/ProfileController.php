@@ -36,7 +36,7 @@ class ProfileController extends AppController {
 		$this->_getProfileData($user);
 
 		## see if the current user (if there is one), fav'd this publisher
-		if($userFav = $this->UserFavorite->findByFavoriteItemIdAndUserIdAndItemType($user['User']['id'], $this->Auth->user('id'), 6)) {
+		if ($userFav = $this->UserFavorite->findByFavoriteItemIdAndUserIdAndItemType($user['User']['id'], $this->Auth->user('id'), 6)) {
 			$this->set('userFav', true);
 		} else {
 			$this->set('userFav', false);

@@ -71,7 +71,7 @@
 			<?php } ?>
 		</div>
 
-		<?php if(isset($shop['UserFavorite']) && count($shop['UserFavorite']) > 0) { ?>
+		<?php if (isset($shop['UserFavorite']) && count($shop['UserFavorite']) > 0) { ?>
 			<?php echo $this->Element('favorites/list', array('users' => $shop['UserFavorite'])); ?>
 		<?php } ?>
 	</div>

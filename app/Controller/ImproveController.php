@@ -18,14 +18,14 @@ class ImproveController extends AppController {
 		parent::hasSession();
 
 		$this->Improvement->Item->id = $itemId;
-		if(!$this->Improvement->Item->exists()) {
+		if (!$this->Improvement->Item->exists()) {
 			$this->Session->setFlash(__('Invalid Item'), 'flash_neg');
 			$this->redirect("/");
 		}
 
 		$item = $this->Improvement->Item->read();
 
-		if($this->request->is('post') || $this->request->is('put')) {
+		if ($this->request->is('post') || $this->request->is('put')) {
 			$data = Sanitize::clean($this->request->data, array('encode' => false, 'escape' => false));
 
 			$fields = array('section_id', 'publisher_id', 'stock_id', 'printing', 'item_date', 'series_num', 'srp', 'description', 'item_name');
@@ -33,7 +33,7 @@ class ImproveController extends AppController {
 			$toSave = array();
 
 			foreach($fields as $field) {
-				if($item['Item'][$field] != $data['Item'][$field]) {
+				if ($item['Item'][$field] != $data['Item'][$field]) {
 					$toSave[] = array(
 						'field_name' => $field,
 						'data' => $data['Item'][$field]
@@ -42,7 +42,7 @@ class ImproveController extends AppController {
 			}
 
 			## only add if fields changed
-			if(count($toSave) > 0) {
+			if (count($toSave) > 0) {
 				$this->Improvement->add(1, $itemId, $toSave, $this->Auth->user('id'));
 
 				$this->Session->setFlash(__('Item data submitted for Admin approval'), 'flash_pos');
@@ -65,14 +65,14 @@ class ImproveController extends AppController {
 		parent::hasSession();
 
 		$this->Improvement->Creator->id = $creatorId;
-		if(!$this->Improvement->Creator->exists()) {
+		if (!$this->Improvement->Creator->exists()) {
 			$this->Session->setFlash(__('Invalid Creator'), 'flash_neg');
 			$this->redirect("/");
 		}
 
 		$creator = $this->Improvement->Creator->read();
 
-		if($this->request->is('post') || $this->request->is('put')) {
+		if ($this->request->is('post') || $this->request->is('put')) {
 			$data = Sanitize::clean($this->request->data, array('encode' => false, 'escape' => false));
 
 			$fields = array('creator_name', 'creator_bio', 'creator_website', 'creator_twitter', 'creator_facebook');
@@ -80,7 +80,7 @@ class ImproveController extends AppController {
 			$toSave = array();
 
 			foreach($fields as $field) {
-				if($creator['Creator'][$field] != $data['Creator'][$field]) {
+				if ($creator['Creator'][$field] != $data['Creator'][$field]) {
 					$toSave[] = array(
 						'field_name' => $field,
 						'data' => $data['Creator'][$field]
@@ -89,7 +89,7 @@ class ImproveController extends AppController {
 			}
 
 			## only add if fields changed
-			if(count($toSave) > 0) {
+			if (count($toSave) > 0) {
 				$this->Improvement->add(3, $creatorId, $toSave, $this->Auth->user('id'));
 
 				$this->Session->setFlash(__('Creator data submitted for Admin approval'), 'flash_pos');
@@ -109,14 +109,14 @@ class ImproveController extends AppController {
 		parent::hasSession();
 
 		$this->Improvement->Series->id = $seriesId;
-		if(!$this->Improvement->Series->exists()) {
+		if (!$this->Improvement->Series->exists()) {
 			$this->Session->setFlash(__('Invalid Series'), 'flash_neg');
 			$this->redirect("/");
 		}
 
 		$series = $this->Improvement->Series->read();
 
-		if($this->request->is('post') || $this->request->is('put')) {
+		if ($this->request->is('post') || $this->request->is('put')) {
 			$data = Sanitize::clean($this->request->data, array('encode' => false, 'escape' => false));
 
 			$fields = array('series_name', 'description');
@@ -124,7 +124,7 @@ class ImproveController extends AppController {
 			$toSave = array();
 
 			foreach($fields as $field) {
-				if($series['Series'][$field] != $data['Series'][$field]) {
+				if ($series['Series'][$field] != $data['Series'][$field]) {
 					$toSave[] = array(
 						'field_name' => $field,
 						'data' => $data['Series'][$field]
@@ -133,7 +133,7 @@ class ImproveController extends AppController {
 			}
 
 			## only add if fields changed
-			if(count($toSave) > 0) {
+			if (count($toSave) > 0) {
 				$this->Improvement->add(2, $seriesId, $toSave, $this->Auth->user('id'));
 
 				$this->Session->setFlash(__('Series data submitted for Admin approval'), 'flash_pos');
@@ -153,14 +153,14 @@ class ImproveController extends AppController {
 		parent::hasSession();
 
 		$this->Improvement->Publisher->id = $publisherId;
-		if(!$this->Improvement->Publisher->exists()) {
+		if (!$this->Improvement->Publisher->exists()) {
 			$this->Session->setFlash(__('Invalid Publisher'), 'flash_neg');
 			$this->redirect("/");
 		}
 
 		$publisher = $this->Improvement->Publisher->read();
 
-		if($this->request->is('post') || $this->request->is('put')) {
+		if ($this->request->is('post') || $this->request->is('put')) {
 			$data = Sanitize::clean($this->request->data, array('encode' => false, 'escape' => false));
 
 			$fields = array('publisher_name', 'publisher_bio', 'publisher_website');
@@ -168,7 +168,7 @@ class ImproveController extends AppController {
 			$toSave = array();
 
 			foreach($fields as $field) {
-				if($publisher['Publisher'][$field] != $data['Publisher'][$field]) {
+				if ($publisher['Publisher'][$field] != $data['Publisher'][$field]) {
 					$toSave[] = array(
 						'field_name' => $field,
 						'data' => $data['Publisher'][$field]
@@ -177,7 +177,7 @@ class ImproveController extends AppController {
 			}
 
 			## only add if fields changed
-			if(count($toSave) > 0) {
+			if (count($toSave) > 0) {
 				$this->Improvement->add(4, $publisherId, $toSave, $this->Auth->user('id'));
 
 				$this->Session->setFlash(__('Publisher data submitted for Admin approval'), 'flash_pos');
@@ -197,7 +197,7 @@ class ImproveController extends AppController {
 		parent::hasSession();
 
 		$this->Improvement->Store->id = $storeId;
-		if(!$this->Improvement->Store->exists()) {
+		if (!$this->Improvement->Store->exists()) {
 			$this->Session->setFlash(__('Invalid Store'), 'flash_neg');
 			$this->redirect("/");
 		}
@@ -211,7 +211,7 @@ class ImproveController extends AppController {
 			$toSave = array();
 
 			foreach($fields as $field) {
-				if($store['Store'][$field] != $data['Store'][$field]) {
+				if ($store['Store'][$field] != $data['Store'][$field]) {
 					$toSave[] = array(
 						'field_name' => $field,
 						'data' => $data['Store'][$field]
@@ -220,7 +220,7 @@ class ImproveController extends AppController {
 			}
 
 			## only add if fields changed
-			if(count($toSave) > 0) {
+			if (count($toSave) > 0) {
 				$this->Improvement->add(5, $storeId, $toSave, $this->Auth->user('id'));
 
 				$this->Session->setFlash(__('Store data submitted for Admin approval'), 'flash_pos');

@@ -8,7 +8,7 @@ $(document).ready(function() {
 		var location = $content.find('input#ShopLocation').val();
 		var radius = $content.find('select#ShopRadius').val();
 
-		if(location != '') {
+		if (location != '') {
 			var btn = $(this).find('button');
 			var controls = $(this).find('input, select');
 
@@ -20,7 +20,7 @@ $(document).ready(function() {
 			btn.html('Searching');
 
 			$.getJSON('/shops/getStores', { 'location': location, 'radius': radius }, function(data) {
-				if(data.error == false) {
+				if (data.error == false) {
 					doMap(data);
 				} else {
 					alert(data.message);
@@ -37,10 +37,10 @@ $(document).ready(function() {
 	});
 
 	$content.find('#map-canvas').gmap().bind('init', function(ev, map) {
-		if(navigator.geolocation) {
+		if (navigator.geolocation) {
 			navigator.geolocation.getCurrentPosition(function(location) {
 				$.getJSON('/shops/getStores', { 'lat': location.coords.latitude, 'long': location.coords.longitude }, function(data) {
-					if(data.error == false) {
+					if (data.error == false) {
 						$content.find('input#ShopLocation').val(data.location);
 						doMap(data);
 					}

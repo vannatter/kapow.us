@@ -3,7 +3,7 @@
  *@var $this View
  */
 ?>
-<?php if($this->Session->read('Auth.User')) { ?>
+<?php if ($this->Session->read('Auth.User')) { ?>
 	<?php $this->Html->script('page/items.js', array('inline' => false)); ?>
 	<div class="item_actions">
 	

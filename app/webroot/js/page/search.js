@@ -13,7 +13,7 @@ $(document).ready(function() {
 		path: function(nextPage) {
 			var $content = $('#content');
 			var path = $('#item-scroll-nav a').last().attr("href");
-			if(path) {
+			if (path) {
 				var start = path.indexOf('page:');
 				var left = path.substring(0, start);
 
@@ -22,7 +22,7 @@ $(document).ready(function() {
 				var type = $content.find('#SearchType').val();
 				var terms = $content.find('#SearchTerms').val();
 
-				if(type && terms) {
+				if (type && terms) {
 					path += '?type=' + type + '&terms=' + terms;
 				}
 			}

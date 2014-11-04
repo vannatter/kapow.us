@@ -78,7 +78,7 @@ class Item extends AppModel {
 	}
 
 	function getRandomItemByDate($date=null) {
-		if(!$date) {
+		if (!$date) {
 			$first_day = date("N", strtotime("today"));
 
 			if ($first_day < 3) {
@@ -147,7 +147,7 @@ class Item extends AppModel {
 	}
 
 	function getItemForDisplay($itemId=null) {
-		if($itemId) {
+		if ($itemId) {
 			$this->ItemCreator->Creator->bindModel(array(
 				'hasOne' => array(
 					'UserFavorite' => array(
@@ -251,13 +251,13 @@ class Item extends AppModel {
 				)
 			));
 
-			if($item) {
+			if ($item) {
 				## get a distinct set of creators for the 'favorites' logic..
 				$unique_creators = array();
 				foreach ($item['ItemCreator'] as $c) {
 					$fav = false;
 
-					if(isset($c['Creator']['UserFavorite']['id'])) {
+					if (isset($c['Creator']['UserFavorite']['id'])) {
 						$fav = true;
 					}
 

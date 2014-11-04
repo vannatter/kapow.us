@@ -1,7 +1,7 @@
 <style>
 #weight { width: 75%; margin-left: auto; margin-right: auto; }
 </style>
-<?php if($this->Session->read('Auth.User')) { ?>
+<?php if ($this->Session->read('Auth.User')) { ?>
 	<div class="item_actions">
 		<?php echo $this->Common->addFavButton($publisher['Publisher']['id'], 'publisher', $userFav); ?>
 			<div class="btn-group">

@@ -196,7 +196,7 @@ Create a custom registration form.
 ### Processing Registration Data.
 To access the registartion data posted by your registration user, use the convienient ConnectComponent::registrationData() function.
 
-	if($user = $this->Connect->registrationData()){
+	if ($user = $this->Connect->registrationData()){
 		print_r($user);
 	}
 

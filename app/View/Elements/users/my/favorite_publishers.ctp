@@ -6,12 +6,12 @@
 <div class="my_block">
 	<h5>
 		<?php echo __('My Favorite Publishers'); ?>
-		<?php if(count($user['favorites']['publishers']) > 0) { ?>
+		<?php if (count($user['favorites']['publishers']) > 0) { ?>
 			<a href="/my/favorite/publishers"><span class="btn btn-custom edit_profile btn-small"><?php echo __('View All'); ?> <i class="icon-arrow-right icon-white"></i></span></a>
 		<?php } ?>
 	</h5>
 
-	<?php if(count($user['favorites']['publishers']) > 0) { ?>
+	<?php if (count($user['favorites']['publishers']) > 0) { ?>
 		<?php foreach ($user['favorites']['publishers'] as $publisher) { ?>
 
 			<div class="span2 my_block">
@@ -19,9 +19,9 @@
 				$id = $publisher['Publisher']['id'];
 				$name = $publisher['Publisher']['publisher_name'];
 				$img = $publisher['Publisher']['publisher_photo'];
-				if(!$img || empty($img)) {
+				if (!$img || empty($img)) {
 					## see if there is an album cover to use
-					if(isset($publisher['Publisher']['Item'][0]['img_fullpath'])) {
+					if (isset($publisher['Publisher']['Item'][0]['img_fullpath'])) {
 						$img = $this->Common->thumb($publisher['Publisher']['Item'][0]['img_fullpath']);
 					} else {
 						$img = '/theme/Kapow/img/nocover.png';

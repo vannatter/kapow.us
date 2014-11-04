@@ -6,11 +6,11 @@
 <?php $this->Html->script('page/users.favorites', array('inline' => false)); ?>
 <?php echo $this->Element('headers/users/favorite_shops'); ?>
 
-<?php if(isset($shops) && is_array($shops) && count($shops) > 0) { ?>
+<?php if (isset($shops) && is_array($shops) && count($shops) > 0) { ?>
 	<div id="item-scroll-list">
 		<?php $row = 0; ?>
 		<?php foreach($shops as $shop) { ?>
-			<?php if($row == 0) { ?>
+			<?php if ($row == 0) { ?>
 				<div class="row thisweek scroll-list-item">
 			<?php } ?>
 			<?php $row++; ?>
@@ -19,10 +19,10 @@
 				$id = $shop['Store']['id'];
 				$name = $shop['Store']['name'];
 
-				if(isset($shop['Store']['StorePhoto'][0])) {
+				if (isset($shop['Store']['StorePhoto'][0])) {
 					$img = $shop['Store']['StorePhoto'][0]['photo_path'];
 
-					if(empty($img)) {
+					if (empty($img)) {
 						$img = "/theme/Kapow/img/nocover.png";
 					} else {
 						$img = $this->Common->thumb($img);

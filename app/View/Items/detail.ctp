@@ -22,7 +22,7 @@
 			<?php echo $this->Element('items/stock'); ?>
 		</div>
 		<?php echo $this->Element('items/tags'); ?>
-		<?php if(isset($item['UserFavorite']) && count($item['UserFavorite']) > 0) { ?>
+		<?php if (isset($item['UserFavorite']) && count($item['UserFavorite']) > 0) { ?>
 			<div class="creator_collabs element_sideblock">
 				<h4><?php echo __('Users'); ?></h4>
 				<ul class="unstyled">

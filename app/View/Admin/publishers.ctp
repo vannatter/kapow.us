@@ -48,7 +48,6 @@ if(isset($filter) && $filter) {
 					if(!empty($publisher['Publisher']['publisher_website'])) {
 						$count++;
 					}
-
 					echo sprintf('<span class="badge badge-important">%s of %s</span>', $count, $total);
 				}
 				?>
@@ -65,4 +64,4 @@ if(isset($filter) && $filter) {
 	<?php } ?>
 	</tbody>
 </table>
-<?= $this->Paginator->pagination(); ?>
+<?php echo $this->Paginator->pagination(); ?>

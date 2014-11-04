@@ -972,7 +972,7 @@ class CakeTimeTest extends CakeTestCase {
  * @return void
  */
 	public function testConvertPercentE() {
-		$this->skipIf(DIRECTORY_SEPARATOR !== '\\', 'Cannot run windows tests on non-windows OS.');
+		$this->skipif (DIRECTORY_SEPARATOR !== '\\', 'Cannot run windows tests on non-windows OS.');
 
 		$time = strtotime('Thu Jan 14 11:43:39 2010');
 		$result = $this->Time->convertSpecifiers('%e', $time);
@@ -1062,7 +1062,7 @@ class CakeTimeTest extends CakeTestCase {
 		$this->assertTrue(isset($return['America/Argentina/Buenos_Aires']));
 		$this->assertTrue(isset($return['Pacific/Tahiti']));
 
-		if (!$this->skipIf(version_compare(PHP_VERSION, '5.3.0', '<'))) {
+		if (!$this->skipif (version_compare(PHP_VERSION, '5.3.0', '<'))) {
 			$return = CakeTime::listTimezones(DateTimeZone::ASIA);
 			$this->assertTrue(isset($return['Asia']['Asia/Bangkok']));
 			$this->assertFalse(isset($return['Pacific']));

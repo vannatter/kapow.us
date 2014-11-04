@@ -5,11 +5,11 @@
 ?>
 <?php
 $query = '';
-if(isset($this->request->query['pubid'])) {
+if (isset($this->request->query['pubid'])) {
 	$query = sprintf('?pubid=%s', $this->request->query['pubid']);
 }
-if(isset($this->request->query['terms'])) {
-	if(empty($query)) {
+if (isset($this->request->query['terms'])) {
+	if (empty($query)) {
 		$query = sprintf('?terms=%s', $this->request->query['terms']);
 	} else {
 		$query .= sprintf('&terms=%s', $this->request->query['terms']);

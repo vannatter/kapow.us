@@ -219,7 +219,7 @@ class CommonHelper extends Helper {
 
 	public function addFavButton($id, $type, $isFav) {
 		$caption = __('Add Favorite');
-		if($isFav) {
+		if ($isFav) {
 			$caption = __('Remove Favorite');
 		}
 		$caption = sprintf('<i class="icon-heart icon-white"></i> <span>%s</span>', $caption);
@@ -230,7 +230,7 @@ class CommonHelper extends Helper {
 	public function pullButton($id, $hasPull) {
 		$caption = __('Pull List');
 		$more_css = "";
-		if($hasPull) {
+		if ($hasPull) {
 			$caption = __('Remove Pull');
 			$more_css = "btn btn-mini pull_list_btn btn-on";
 			$icon_color = "black";

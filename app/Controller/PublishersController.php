@@ -25,11 +25,11 @@ class PublishersController extends AppController {
 	);
 	
 	public function index() {
-		if($this->request->is('post') || $this->request->is('put')) {
+		if ($this->request->is('post') || $this->request->is('put')) {
 			$data = Sanitize::clean($this->request->data);
 
-			if(isset($data['Publisher']['terms'])) {
-				if(empty($data['Publisher']['terms'])) {
+			if (isset($data['Publisher']['terms'])) {
+				if (empty($data['Publisher']['terms'])) {
 					$this->redirect('/publishers');
 				}
 
@@ -38,7 +38,7 @@ class PublishersController extends AppController {
 			}
 		}
 
-		if(isset($this->request->query['terms'])) {
+		if (isset($this->request->query['terms'])) {
 			$terms = $this->request->query['terms'];
 
 			$con = array(
@@ -94,7 +94,7 @@ class PublishersController extends AppController {
 			)
 		);
 
-		if(!$publisher) {
+		if (!$publisher) {
 			$this->Session->setFlash('Publisher not found.', 'flash_neg');
 			$this->redirect("/");
 			exit;
@@ -108,7 +108,7 @@ class PublishersController extends AppController {
 		$this->set('og_description','Kapow! ' . $publisher['Publisher']['publisher_name'] . (($publisher['Publisher']['publisher_bio']) ? " - " . substr(str_replace('"', '', $publisher['Publisher']['publisher_bio']),0,200) : " - Comics Publisher listed on Kapow!") );
 
 		## see if the current user (if there is one), fav'd this publisher
-		if($userFav = $this->UserFavorite->findByFavoriteItemIdAndUserIdAndItemType($id, $this->Auth->user('id'), 4)) {
+		if ($userFav = $this->UserFavorite->findByFavoriteItemIdAndUserIdAndItemType($id, $this->Auth->user('id'), 4)) {
 			$this->set('userFav', true);
 		} else {
 			$this->set('userFav', false);
@@ -122,7 +122,7 @@ class PublishersController extends AppController {
 	}
 
 	public function items($id) {
-		if($this->request->is('ajax')) {
+		if ($this->request->is('ajax')) {
 			$this->layout = 'blank';
 
 			$this->paginate = array(

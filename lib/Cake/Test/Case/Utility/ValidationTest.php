@@ -1697,7 +1697,7 @@ class ValidationTest extends CakeTestCase {
  * @return void
  */
 	public function testEmailDeep() {
-		$this->skipIf(gethostbynamel('example.abcd'), 'Your DNS service responds for non-existant domains, skipping deep email checks.');
+		$this->skipif (gethostbynamel('example.abcd'), 'Your DNS service responds for non-existant domains, skipping deep email checks.');
 
 		$this->assertTrue(Validation::email('abc.efg@cakephp.org', true));
 		$this->assertFalse(Validation::email('abc.efg@caphpkeinvalid.com', true));
@@ -2270,7 +2270,7 @@ class ValidationTest extends CakeTestCase {
 	public function testMimeType() {
 		$image = CORE_PATH . 'Cake' . DS . 'Test' . DS . 'test_app' . DS . 'webroot' . DS . 'img' . DS . 'cake.power.gif';
 		$File = new File($image, false);
-		$this->skipIf(!$File->mime(), 'Cannot determine mimeType');
+		$this->skipif (!$File->mime(), 'Cannot determine mimeType');
 		$this->assertTrue(Validation::mimeType($image, array('image/gif')));
 		$this->assertTrue(Validation::mimeType(array('tmp_name' => $image), array('image/gif')));
 
@@ -2287,7 +2287,7 @@ class ValidationTest extends CakeTestCase {
 	public function testMimeTypeFalse() {
 		$image = CORE_PATH . 'Cake' . DS . 'Test' . DS . 'test_app' . DS . 'webroot' . DS . 'img' . DS . 'cake.power.gif';
 		$File = new File($image, false);
-		$this->skipIf($File->mime(), 'mimeType can be determined, no Exception will be thrown');
+		$this->skipif ($File->mime(), 'mimeType can be determined, no Exception will be thrown');
 		Validation::mimeType($image, array('image/gif'));
 	}
 

@@ -106,7 +106,7 @@ class ConnectComponent extends Component {
 	* @return associative array of registration data (if there is any)
 	*/
 	function registrationData(){
-		if(isset($this->Controller->request->data['signed_request'])){
+		if (isset($this->Controller->request->data['signed_request'])){
 			return FacebookInfo::parseSignedRequest($this->Controller->request->data['signed_request']);
 		}
 		return array();
@@ -127,7 +127,7 @@ class ConnectComponent extends Component {
 	* @return boolean True if successful, false otherwise.
 	*/
 	private function __syncFacebookUser(){
-		if(!isset($this->Controller->Auth)){
+		if (!isset($this->Controller->Auth)){
 			return false;
 		}
 		// set Auth to a convenience publiciable
@@ -136,14 +136,14 @@ class ConnectComponent extends Component {
 			return false;
 		}
 		// if you don't have a facebook_id field in your user table, throw an error
-		if(!$this->User->hasField('facebook_id')){
+		if (!$this->User->hasField('facebook_id')){
 			$this->__error("Facebook.Connect handleFacebookUser Error.  facebook_id not found in {$Auth->userModel} table.");
 			return false;
 		}
 		
 		// check if the user already has an account
 		// User is logged in but doesn't have a 
-		if($Auth->user('id')){
+		if ($Auth->user('id')){
 			$this->hasAccount = true;
 			$this->User->id = $Auth->user($this->User->primaryKey);
 			if (!$this->User->field('facebook_id')) {
@@ -155,14 +155,14 @@ class ConnectComponent extends Component {
 			// attempt to find the user by their facebook id
 			$this->authUser = $this->User->findByFacebookId($this->uid);
 			//if we have a user, set hasAccount
-			if(!empty($this->authUser)){
+			if (!empty($this->authUser)){
 				$this->hasAccount = true;
 			}
 			//create the user if we don't have one
-			elseif(empty($this->authUser) && $this->createUser) {
+			elseif (empty($this->authUser) && $this->createUser) {
 				$this->authUser[$this->User->alias]['facebook_id'] = $this->uid;
 				$this->authUser[$this->User->alias][$this->modelFields['password']] = $Auth->password(FacebookInfo::randPass());
-				if($this->__runCallback('beforeFacebookSave')){
+				if ($this->__runCallback('beforeFacebookSave')){
 					$this->hasAccount = ($this->User->save($this->authUser, array('validate' => false)));
 				}
 				else {
@@ -170,14 +170,14 @@ class ConnectComponent extends Component {
 				}
 			}
 			//Login user if we have one
-			if($this->authUser){
+			if ($this->authUser){
 				$this->__runCallback('beforeFacebookLogin', $this->authUser);
 				$Auth->authenticate = array(
 					'Form' => array(
 						'fields' => array('username' => 'facebook_id', 'password' => $this->modelFields['password'])
 					)
 				);
-				if($Auth->login($this->authUser[$this->model])){
+				if ($Auth->login($this->authUser[$this->model])){
 					$this->__runCallback('afterFacebookLogin');
 				}
 			}
@@ -191,8 +191,8 @@ class ConnectComponent extends Component {
 	* @param mixed return
 	*/
 	public function user($field = null){
-		if(isset($this->uid)){
-			if($this->Controller->Session->read('FB.Me') == null){
+		if (isset($this->uid)){
+			if ($this->Controller->Session->read('FB.Me') == null){
 				$this->Controller->Session->write('FB.Me', $this->FB->api('/me'));
 			}
 			$this->me = $this->Controller->Session->read('FB.Me');
@@ -201,11 +201,11 @@ class ConnectComponent extends Component {
 			$this->Controller->Session->delete('FB');
 		}
 		
-		if(!$this->me){
+		if (!$this->me){
 			return null;
 		}
 		
-		if($field){
+		if ($field){
 			$retval = Set::extract("/$field", $this->me);
 			return empty($retval) ? null : $retval[0];
 		}
@@ -220,7 +220,7 @@ class ConnectComponent extends Component {
 	* @return mixed result of the callback function
 	*/ 
 	private function __runCallback($callback, $passedIn = null){
-		if(method_exists($this->Controller, $callback)){
+		if (method_exists($this->Controller, $callback)){
 			return call_user_func_array(array($this->Controller, $callback), array($passedIn));
 		}
 		return true;
@@ -232,7 +232,7 @@ class ConnectComponent extends Component {
 	* @access private
 	*/
 	private function __initUserModel(){
-		if($this->model){
+		if ($this->model){
 			$plugin = '';
 			if ($this->plugin) {
 				$plugin = $this->plugin.'.';

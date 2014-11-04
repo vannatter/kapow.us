@@ -36,7 +36,7 @@ class Pull extends AppModel {
 	public function toggle($id, $userId) {
 		$return = 1;
 
-		if($pull = $this->findByItemIdAndUserId($id, $userId)) {
+		if ($pull = $this->findByItemIdAndUserId($id, $userId)) {
 			## remove pull
 			$this->delete($pull['Pull']['id']);
 			$return = 2;
@@ -50,7 +50,7 @@ class Pull extends AppModel {
 			);
 
 			$this->create($toAdd);
-			if($this->save($toAdd)) {
+			if ($this->save($toAdd)) {
 				$return = 1;
 			}
 		}

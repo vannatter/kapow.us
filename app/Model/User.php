@@ -81,7 +81,7 @@ class User extends AppModel {
 	);
 
 	public function validateConfirmPasswordEmptyUpdate() {
-		if(isset($this->data[$this->alias]['clear_password']) && isset($this->data[$this->alias]['confirm_password'])) {
+		if (isset($this->data[$this->alias]['clear_password']) && isset($this->data[$this->alias]['confirm_password'])) {
 			return !empty($this->data[$this->alias]['clear_password']) && !empty($this->data[$this->alias]['confirm_password']);
 		}
 
@@ -93,7 +93,7 @@ class User extends AppModel {
 	}
 
 	public function beforeSave($options = array()) {
-		if(isset($this->data[$this->alias]['clear_password'])) {
+		if (isset($this->data[$this->alias]['clear_password'])) {
 			$this->data[$this->alias]['password'] = AuthComponent::password($this->data[$this->alias]['clear_password']);
 		}
 

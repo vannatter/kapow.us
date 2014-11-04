@@ -21,7 +21,7 @@
 		</div>
 		<?php } ?>
 
-		<?php if(isset($publisher['UserFavorite']) && count($publisher['UserFavorite']) > 0) { ?>
+		<?php if (isset($publisher['UserFavorite']) && count($publisher['UserFavorite']) > 0) { ?>
 			<?php echo $this->Element('favorites/list', array('users' => $publisher['UserFavorite'])); ?>
 		<?php } ?>
 	</div>

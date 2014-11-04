@@ -13,7 +13,7 @@ $(document).ready(function() {
 		path: function(nextPage) {
 			var $content = $('#content');
 			var path = $content.find('#item-scroll-nav a').last().attr("href");
-			if(path) {
+			if (path) {
 				var start = path.indexOf('page:');
 				var left = path.substring(0, start);
 
@@ -21,7 +21,7 @@ $(document).ready(function() {
 
 				var terms = $content.find('input#PublisherTerms').val();
 
-				if(terms) {
+				if (terms) {
 					path += '?terms='+ terms;
 				}
 			}
@@ -30,7 +30,7 @@ $(document).ready(function() {
 	});
 
 	var $items = $('div#publisher-items');
-	if($items.length > 0) {
+	if ($items.length > 0) {
 		var publisherId = $items.attr('data-publisher-id');
 
 		$items.append('<img src="/theme/Kapow/img/ajax-loader2.gif" alt="Loading" />');
@@ -41,7 +41,7 @@ $(document).ready(function() {
 	}
 
 	var $weight = $('#weight');
-	if($weight.length > 0) {
+	if ($weight.length > 0) {
 		var weight = $weight.attr('data-weight');
 		var publisherId = $weight.attr('data-publisher-id');
 
@@ -55,7 +55,7 @@ $(document).ready(function() {
 			},
 			change: function( event, ui ) {
 				$.getJSON('/ajax/publisherWeight', { publisherId: publisherId, value: ui.value }, function(data) {
-					if(data.error) {
+					if (data.error) {
 						flash('Error updating weight', 3000);
 					} else {
 						flash('Updated Weight', 3000);

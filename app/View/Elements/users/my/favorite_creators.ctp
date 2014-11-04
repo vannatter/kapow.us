@@ -6,12 +6,12 @@
 <div class="my_block">
 	<h5>
 		<?php echo __('My Favorite Creators'); ?>
-		<?php if(count($user['favorites']['creators']) > 0) { ?>
+		<?php if (count($user['favorites']['creators']) > 0) { ?>
 			<a href="/my/favorite/creators"><span class="btn btn-custom edit_profile btn-small"><?php echo __('View All'); ?> <i class="icon-arrow-right icon-white"></i></span></a>
 		<?php } ?>
 	</h5>
 
-	<?php if(count($user['favorites']['creators']) > 0) { ?>
+	<?php if (count($user['favorites']['creators']) > 0) { ?>
 		<?php foreach ($user['favorites']['creators'] as $creator) { ?>
 
 			<div class="span2 my_block">
@@ -19,9 +19,9 @@
 				$id = $creator['Creator']['id'];
 				$name = $creator['Creator']['creator_name'];
 				$img = $creator['Creator']['creator_photo'];
-				if(!$img || empty($img)) {
+				if (!$img || empty($img)) {
 					## see if there is an album cover to use
-					if(isset($creator['Creator']['ItemCreator'][0]['Item']['img_fullpath'])) {
+					if (isset($creator['Creator']['ItemCreator'][0]['Item']['img_fullpath'])) {
 						$img = $this->Common->thumb($creator['Creator']['ItemCreator'][0]['Item']['img_fullpath']);
 					} else {
 						$img = '/theme/Kapow/img/nocover.png';

@@ -40,7 +40,7 @@
 	    },
 	    change: function( event, ui ) {
 	    	$.getJSON('/ajax/itemHotness', { itemId: <?php echo  $this->request->data['Item']['id']; ?>, value: ui.value }, function(data) {
-	    		if(data.error) {
+	    		if (data.error) {
 	    			flash('Error updating hotness', 3000);
 	    		} else {
 	    			flash('Updated Hotness', 3000);

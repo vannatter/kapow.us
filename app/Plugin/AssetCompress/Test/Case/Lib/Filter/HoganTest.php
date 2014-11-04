@@ -15,7 +15,7 @@ class HoganTest extends CakeTestCase {
 		$this->filter->settings($settings);
 
 		$hasHogan = `which hulk`;
-		$this->skipIf(empty($hasHogan), 'Nodejs and Hogan.js to be installed');
+		$this->skipif (empty($hasHogan), 'Nodejs and Hogan.js to be installed');
 	}
 
 	public function testInput() {

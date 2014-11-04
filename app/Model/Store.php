@@ -92,20 +92,20 @@ class Store extends AppModel {
 	);	
 
 	public function add($store=array()) {
-		if($store && count($store) > 0) {
+		if ($store && count($store) > 0) {
 			## get the store Id if it exists already
-			if($check = $this->find('first', array('conditions' => array('Store.name' => $store['Store']['name']), 'recursive' => -1))) {
+			if ($check = $this->find('first', array('conditions' => array('Store.name' => $store['Store']['name']), 'recursive' => -1))) {
 				$store['Store']['id'] = $check['Store']['id'];
 			} else {
 				$this->create($store);
 			}
 
-			if($this->save($store)) {
-				if(isset($store['Store']['Hour'])) {
+			if ($this->save($store)) {
+				if (isset($store['Store']['Hour'])) {
 					$store['Store']['Hour']['store_id'] = $this->id;
 
 					## get the hour ID if it exists already
-					if($hourCheck = $this->Hour->find('first', array('conditions' => array('Hour.store_id' => $this->id), 'recursive' => -1))) {
+					if ($hourCheck = $this->Hour->find('first', array('conditions' => array('Hour.store_id' => $this->id), 'recursive' => -1))) {
 						$store['Store']['Hour']['id'] = $hourCheck['Hour']['id'];
 					} else {
 						$this->Hour->create($store['Store']['Hour']);
@@ -120,7 +120,7 @@ class Store extends AppModel {
 	public function radius($lat, $long, $rad=25, $userId=null) {
 		$distanceQuery = '(3959 * acos( cos( radians(' . $lat . ') ) * cos( radians( ' . $this->alias. '.latitude ) ) * cos( radians( ' . $this->alias . '.longitude ) - radians(' . $long . ') ) + sin( radians(' . $lat . ') ) * sin( radians( ' . $this->alias . '.latitude ) ) ) )';
 
-		if($userId) {
+		if ($userId) {
 			$query = '
 			SELECT Store.*, Hour.*, ' . $distanceQuery . ' AS distance, UserFavorite.id AS is_fav
 				FROM stores AS Store

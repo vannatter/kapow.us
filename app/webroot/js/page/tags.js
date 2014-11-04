@@ -12,7 +12,7 @@ $(document).ready(function() {
 		debug: true,
 		path: function(nextPage) {
 			var path = $('#item-scroll-nav a').last().attr("href");
-			if(path) {
+			if (path) {
 				var start = path.indexOf('page:');
 				var left = path.substring(0, start);
 

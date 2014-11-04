@@ -35,7 +35,7 @@
 		</div>
 		<?php } ?>
 
-		<?php if(isset($collabs) && count($collabs) > 0) { ?>
+		<?php if (isset($collabs) && count($collabs) > 0) { ?>
 			<div class="creator_collabs element_sideblock">
 				<h4><?php echo __('Collaborations'); ?>:</h4>
 				<ul class="unstyled">
@@ -46,7 +46,7 @@
 			</div>
 		<?php } ?>
 
-		<?php if(isset($creator['UserFavorite']) && count($creator['UserFavorite']) > 0) { ?>
+		<?php if (isset($creator['UserFavorite']) && count($creator['UserFavorite']) > 0) { ?>
 			<?php echo $this->Element('favorites/list', array('users' => $creator['UserFavorite'])); ?>
 		<?php } ?>
 	</div>

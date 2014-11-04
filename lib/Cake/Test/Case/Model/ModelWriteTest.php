@@ -178,7 +178,7 @@ class ModelWriteTest extends BaseModelTest {
  */
 	public function testAutoSaveUuid() {
 		// SQLite does not support non-integer primary keys
-		$this->skipIf($this->db instanceof Sqlite, 'This test is not compatible with SQLite.');
+		$this->skipif ($this->db instanceof Sqlite, 'This test is not compatible with SQLite.');
 
 		$this->loadFixtures('Uuid');
 		$TestModel = new Uuid();
@@ -200,7 +200,7 @@ class ModelWriteTest extends BaseModelTest {
  */
 	public function testSaveUuidNull() {
 		// SQLite does not support non-integer primary keys
-		$this->skipIf($this->db instanceof Sqlite, 'This test is not compatible with SQLite.');
+		$this->skipif ($this->db instanceof Sqlite, 'This test is not compatible with SQLite.');
 
 		$this->loadFixtures('Uuid');
 		$TestModel = new Uuid();
@@ -220,7 +220,7 @@ class ModelWriteTest extends BaseModelTest {
  * @return void
  */
 	public function testZeroDefaultFieldValue() {
-		$this->skipIf($this->db instanceof Sqlite, 'SQLite uses loose typing, this operation is unsupported.');
+		$this->skipif ($this->db instanceof Sqlite, 'SQLite uses loose typing, this operation is unsupported.');
 
 		$this->loadFixtures('DataTest');
 		$TestModel = new DataTest();
@@ -445,7 +445,7 @@ class ModelWriteTest extends BaseModelTest {
  * @return void
  */
 	public function testCounterCacheWithSelfJoin() {
-		$this->skipIf($this->db instanceof Sqlite, 'SQLite 2.x does not support ALTER TABLE ADD COLUMN');
+		$this->skipif ($this->db instanceof Sqlite, 'SQLite 2.x does not support ALTER TABLE ADD COLUMN');
 
 		$this->loadFixtures('CategoryThread');
 		$column = 'COLUMN ';
@@ -4804,7 +4804,7 @@ class ModelWriteTest extends BaseModelTest {
  * @return void
  */
 	public function testSaveAllEmptyData() {
-		$this->skipIf($this->db instanceof Sqlserver, 'This test is not compatible with SQL Server.');
+		$this->skipif ($this->db instanceof Sqlserver, 'This test is not compatible with SQL Server.');
 
 		$this->loadFixtures('Article', 'ProductUpdateAll', 'Comment', 'Attachment');
 		$model = new Article();
@@ -6192,7 +6192,7 @@ class ModelWriteTest extends BaseModelTest {
  * @return void
  */
 	public function testSaveManyEmptyData() {
-		$this->skipIf($this->db instanceof Sqlserver, 'This test is not compatible with SQL Server.');
+		$this->skipif ($this->db instanceof Sqlserver, 'This test is not compatible with SQL Server.');
 
 		$this->loadFixtures('Article', 'ProductUpdateAll', 'Comment', 'Attachment');
 		$model = new Article();
@@ -6211,7 +6211,7 @@ class ModelWriteTest extends BaseModelTest {
  * @return void
  */
 	public function testSaveAssociatedEmptyData() {
-		$this->skipIf($this->db instanceof Sqlserver, 'This test is not compatible with SQL Server.');
+		$this->skipif ($this->db instanceof Sqlserver, 'This test is not compatible with SQL Server.');
 
 		$this->loadFixtures('Article', 'ProductUpdateAll', 'Comment', 'Attachment');
 		$model = new Article();
@@ -6357,7 +6357,7 @@ class ModelWriteTest extends BaseModelTest {
  * @return void
  */
 	public function testUpdateAllEmptyValues() {
-		$this->skipIf($this->db instanceof Sqlserver || $this->db instanceof Postgres, 'This test is not compatible with Postgres or SQL Server.');
+		$this->skipif ($this->db instanceof Sqlserver || $this->db instanceof Postgres, 'This test is not compatible with Postgres or SQL Server.');
 
 		$this->loadFixtures('Author', 'Post');
 		$model = new Author();
@@ -6371,7 +6371,7 @@ class ModelWriteTest extends BaseModelTest {
  * @return void
  */
 	public function testUpdateAllWithJoins() {
-		$this->skipIf(!$this->db instanceof Mysql, 'Currently, there is no way of doing joins in an update statement in postgresql or sqlite');
+		$this->skipif (!$this->db instanceof Mysql, 'Currently, there is no way of doing joins in an update statement in postgresql or sqlite');
 
 		$this->loadFixtures('ProductUpdateAll', 'GroupUpdateAll');
 		$ProductUpdateAll = new ProductUpdateAll();
@@ -6418,7 +6418,7 @@ class ModelWriteTest extends BaseModelTest {
  * @return void
  */
 	public function testUpdateAllWithoutForeignKey() {
-		$this->skipIf(!$this->db instanceof Mysql, 'Currently, there is no way of doing joins in an update statement in postgresql');
+		$this->skipif (!$this->db instanceof Mysql, 'Currently, there is no way of doing joins in an update statement in postgresql');
 
 		$this->loadFixtures('ProductUpdateAll', 'GroupUpdateAll');
 		$ProductUpdateAll = new ProductUpdateAll();
@@ -6986,7 +6986,7 @@ class ModelWriteTest extends BaseModelTest {
  * return @void
  */
 	public function testSaveAllDeepEmptyHasManyHasMany() {
-		$this->skipIf(!$this->db instanceof Mysql, 'This test is only compatible with Mysql.');
+		$this->skipif (!$this->db instanceof Mysql, 'This test is only compatible with Mysql.');
 
 		$this->loadFixtures('Article', 'Comment', 'User', 'Attachment');
 		$TestModel = new Article();

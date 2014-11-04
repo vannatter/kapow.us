@@ -1,12 +1,12 @@
 <div class="my_block">
 	<h5>
 		<?php echo __('My Pull List'); ?>
-		<?php if(count($pulls) > 0) { ?>
+		<?php if (count($pulls) > 0) { ?>
 			<a href="/my/pull_list"><span class="btn btn-custom edit_profile btn-small"><?php echo __('View All'); ?> <i class="icon-arrow-right icon-white"></i></span></a>
 		<?php } ?>
 	</h5>
 
-	<?php if(count($pulls) > 0) { ?>
+	<?php if (count($pulls) > 0) { ?>
 		<?php foreach ($pulls as $pull) { ?>
 
 			<div class="span2 my_block">

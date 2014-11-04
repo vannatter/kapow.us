@@ -14,7 +14,7 @@
 	</div>
 </div>
 <?php echo $this->Form->input('publisher_photo', array('class' => 'span6', 'disabled' => true)); ?>
-<?php if(!empty($this->request->data['Publisher']['publisher_photo'])) { ?>
+<?php if (!empty($this->request->data['Publisher']['publisher_photo'])) { ?>
 	<div class="control-group">
 		<div class="controls">
 				<?php echo $this->Html->image($this->request->data['Publisher']['publisher_photo'], array('class' => 'span6')); ?>
@@ -45,7 +45,7 @@
 	    },
 	    change: function( event, ui ) {
 	    	$.getJSON('/ajax/publisherWeight', { publisherId: <?php echo  $this->request->data['Publisher']['id']; ?>, value: ui.value }, function(data) {
-	    		if(data.error) {
+	    		if (data.error) {
 	    			flash('Error updating weight', 3000);
 	    		} else {
 	    			flash('Updated Weight', 3000);

@@ -16,7 +16,7 @@
 			$id = $publisher['Publisher']['id'];
 			$name = $publisher['Publisher']['publisher_name'];
 			$img = $publisher['Publisher']['publisher_photo'];
-			if(!$img || empty($img)) {
+			if (!$img || empty($img)) {
 				$img = '/theme/Kapow/img/nocover.png';
 			} else {
 				$img = $this->Common->thumb($img);

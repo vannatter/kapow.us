@@ -13,7 +13,7 @@ $(document).ready(function() {
 		path: function(nextPage) {
 			var $content = $('#content');
 			var path = $content.find('#item-scroll-nav a').last().attr("href");
-			if(path) {
+			if (path) {
 				var start = path.indexOf('page:');
 				var left = path.substring(0, start);
 
@@ -21,7 +21,7 @@ $(document).ready(function() {
 
 				var terms = $content.find('input#CreatorTerms').val();
 
-				if(terms) {
+				if (terms) {
 					path += '?terms='+ terms;
 				}
 			}
@@ -31,7 +31,7 @@ $(document).ready(function() {
 	});
 
 	var $items = $('div#creator-items');
-	if($items.length > 0) {
+	if ($items.length > 0) {
 		var creatorId = $items.attr('data-creator-id');
 
 		$items.append('<img src="/img/ajax-loader2.gif" alt="Loading" />');

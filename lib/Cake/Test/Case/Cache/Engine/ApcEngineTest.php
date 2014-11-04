@@ -34,7 +34,7 @@ class ApcEngineTest extends CakeTestCase {
  */
 	public function setUp() {
 		parent::setUp();
-		$this->skipIf(!function_exists('apc_store'), 'Apc is not installed or configured properly.');
+		$this->skipif (!function_exists('apc_store'), 'Apc is not installed or configured properly.');
 
 		$this->_cacheDisable = Configure::read('Cache.disable');
 		Configure::write('Cache.disable', false);
@@ -145,7 +145,7 @@ class ApcEngineTest extends CakeTestCase {
  * @return void
  */
 	public function testDecrement() {
-		$this->skipIf(!function_exists('apc_dec'), 'No apc_dec() function, cannot test decrement().');
+		$this->skipif (!function_exists('apc_dec'), 'No apc_dec() function, cannot test decrement().');
 
 		$result = Cache::write('test_decrement', 5, 'apc');
 		$this->assertTrue($result);
@@ -169,7 +169,7 @@ class ApcEngineTest extends CakeTestCase {
  * @return void
  */
 	public function testIncrement() {
-		$this->skipIf(!function_exists('apc_inc'), 'No apc_inc() function, cannot test increment().');
+		$this->skipif (!function_exists('apc_inc'), 'No apc_inc() function, cannot test increment().');
 
 		$result = Cache::write('test_increment', 5, 'apc');
 		$this->assertTrue($result);

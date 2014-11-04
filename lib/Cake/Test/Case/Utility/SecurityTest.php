@@ -159,7 +159,7 @@ class SecurityTest extends CakeTestCase {
 	public function testHashBlowfish() {
 		Security::setCost(10);
 		$test = Security::hash('password', 'blowfish');
-		$this->skipIf(strpos($test, '$2a$') === false, 'Blowfish hashes are incorrect.');
+		$this->skipif (strpos($test, '$2a$') === false, 'Blowfish hashes are incorrect.');
 
 		$_hashType = Security::$hashType;
 
@@ -244,7 +244,7 @@ class SecurityTest extends CakeTestCase {
  * @return void
  */
 	public function testRijndael() {
-		$this->skipIf(!function_exists('mcrypt_encrypt'));
+		$this->skipif (!function_exists('mcrypt_encrypt'));
 		$txt = 'The quick brown fox jumped over the lazy dog.';
 		$key = 'DYhG93b0qyJfIxfs2guVoUubWwvniR2G0FgaC9mi';
 
@@ -268,7 +268,7 @@ class SecurityTest extends CakeTestCase {
  * @return void
  */
 	public function testRijndaelBackwardCompatibility() {
-		$this->skipIf(!function_exists('mcrypt_encrypt'));
+		$this->skipif (!function_exists('mcrypt_encrypt'));
 
 		$txt = 'The quick brown fox jumped over the lazy dog.';
 		$key = 'DYhG93b0qyJfIxfs2guVoUubWwvniR2G0FgaC9mi';

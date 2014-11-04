@@ -199,7 +199,7 @@ class SmushIt
 		} else if ($this->hasFlag(self::LOCAL_ORIGIN)) {
 			if (!is_readable($path)) {
 				$this->error = "$path is not readable";
-			} else if(filesize($path) > self::SERVICE_API_LIMIT) {
+			} else if (filesize($path) > self::SERVICE_API_LIMIT) {
 				$this->error = "$path exceeds 1MB size limit";
 			}
 		}

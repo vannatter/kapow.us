@@ -35,10 +35,10 @@ class FacebookHelper extends AppHelper {
 	public function __construct(View $View, $settings = array()){
 		$this->_set($settings);
 		
-		if(!$this->locale){
+		if (!$this->locale){
 			$this->locale = FacebookInfo::getConfig('locale');
 		}
-		if(!$this->locale){
+		if (!$this->locale){
 			$this->locale = 'en_US';
 		}
 		parent::__construct($View, $settings);
@@ -55,7 +55,7 @@ class FacebookHelper extends AppHelper {
 	* @return string plugin version
 	*/
 	public function info($name = 'version'){
-		if(FacebookInfo::_isAvailable($name)){ 
+		if (FacebookInfo::_isAvailable($name)){ 
 			return FacebookInfo::$name();
 		}
 		else {
@@ -134,10 +134,10 @@ class FacebookHelper extends AppHelper {
 			),
 			$options
 		);
-		if((isset($options['redirect']) && $options['redirect']) || $options['custom']){
+		if ((isset($options['redirect']) && $options['redirect']) || $options['custom']){
 			$options['redirect'] = Router::url($options['redirect']);
 			$onclick = "login('".$options['redirect']."');";
-			if($options['img']){
+			if ($options['img']){
 				$source = '/Facebook/img/'.$options['img'];
 				return $this->Html->image($source, array(
 				'alt' => $options['alt'],
@@ -152,7 +152,7 @@ class FacebookHelper extends AppHelper {
 			}
 		}
 		else {
-			if(!$options['id']){ unset($options['id']); }
+			if (!$options['id']){ unset($options['id']); }
 			unset($options['label'], $options['custom'], $options['redirect'], $options['img'], $options['alt']);
 			return $this->__fbTag('fb:login-button', $label, $options);
 		}
@@ -188,13 +188,13 @@ class FacebookHelper extends AppHelper {
 			), 
 			$options
 		);
-		if((isset($options['redirect']) && $options['redirect']) || $options['custom']){
+		if ((isset($options['redirect']) && $options['redirect']) || $options['custom']){
 			$options['redirect'] = Router::url($options['redirect']);
 			$onclick = "logout('".$options['redirect']."');";
-			if(isset($options['confirm'])){
-				$onclick = 'if(confirm("'.$options['confirm'].'")){'.$onclick.'}';
+			if (isset($options['confirm'])){
+				$onclick = 'if (confirm("'.$options['confirm'].'")){'.$onclick.'}';
 			}
-			if($options['img']){
+			if ($options['img']){
 				$source = '/Facebook/img/'.$options['img'];
 				return $this->Html->image($source, array(
 				'alt' => $options['alt'],
@@ -233,15 +233,15 @@ class FacebookHelper extends AppHelper {
 			), 
 			$options
 		);
-		if(isset($options['redirect']) && $options['redirect']){
+		if (isset($options['redirect']) && $options['redirect']){
 			$options['redirect'] = Router::url($options['redirect']);
 			$response = "window.location = '{$options['redirect']}';";
 		} else {
 			$response = "window.location.reload();";
 		}
 		$onclick = "FB.api({ method: 'Auth.revokeAuthorization' }, function(response) {".$response."});";
-		if(isset($options['confirm'])){
-			$onclick = 'if(confirm("'.$options['confirm'].'")){'.$onclick.'}';
+		if (isset($options['confirm'])){
+			$onclick = 'if (confirm("'.$options['confirm'].'")){'.$onclick.'}';
 		}
 		return $this->Html->link($options['label'], '#', array('onclick' => $onclick));
 	}
@@ -258,7 +258,7 @@ class FacebookHelper extends AppHelper {
 	* @access public
 	*/
 	public function share($url = null, $options = array()){
-		if(empty($url)){
+		if (empty($url)){
 			$url = Router::url(null, true);
 		}
 		$defaults = array(
@@ -269,14 +269,14 @@ class FacebookHelper extends AppHelper {
 		);
 		$options = array_merge($defaults, $options);
 		
-		if(!$options['fbxml']){
+		if (!$options['fbxml']){
 			switch($options['style']){
 			case 'link': $options['type'] = 'icon_link'; break;
 				default: $options['type'] = 'button'; break;
 			}
 		}
 		
-		if($options['fbxml']){
+		if ($options['fbxml']){
 			unset($options['fbxml']);
 			$retval = $this->__fbTag('fb:share-button','',$options);
 		}
@@ -309,7 +309,7 @@ class FacebookHelper extends AppHelper {
 			),
 			$options
 		);
-		if($options['uid']){
+		if ($options['uid']){
 			return $this->__fbTag('fb:profile-pic', '', $options);
 		}
 		else {
@@ -328,7 +328,7 @@ class FacebookHelper extends AppHelper {
 	* @access public
 	*/
 	function sendbutton($url = null, $options = array()){
-		if(empty($url)){
+		if (empty($url)){
 			$url = Router::url(null, true);
 		}
 		$defaults = array(
@@ -505,7 +505,7 @@ class FacebookHelper extends AppHelper {
 		), (array)$options);
 		if ($appId = FacebookInfo::getConfig('appId')) {
 			$isAuth = 0;
-			if($this->Session->read('Auth.User')) {
+			if ($this->Session->read('Auth.User')) {
 				$isAuth = 1;
 			}
 			$init = '<div id="fb-root"></div>';
@@ -526,7 +526,7 @@ class FacebookHelper extends AppHelper {
 		FB.getLoginStatus(function(response) {
 			if (response.authResponse) {
 				// logged in and connected user, someone you know
-				if(isAuth == 0) {
+				if (isAuth == 0) {
 					window.location.reload();
 				}
 				// alert('You are connected');
@@ -553,10 +553,10 @@ class FacebookHelper extends AppHelper {
 	// logs the user in the application and facebook
 	function login(redirection){
 		FB.login(function (response) {
-			if(response.authResponse) {
+			if (response.authResponse) {
 				// user is logged in
 				// console.log('Welcome!');
-				if(redirection != null && redirection != ''){
+				if (redirection != null && redirection != ''){
 					top.location.href = redirection;
 				}
 			} else {
@@ -571,7 +571,7 @@ class FacebookHelper extends AppHelper {
 		FB.logout(function(response) {
 			// user is logged out
 			// redirection if any
-			if(redirection != null && redirection != ''){
+			if (redirection != null && redirection != ''){
 				top.location.href = redirection;
 			}
 		});
@@ -601,7 +601,7 @@ class FacebookHelper extends AppHelper {
 		//TODO make this a little nicer, pron to errors if a value has a ' in it.
 		$retval = "<$tag";
 		foreach($options as $name => $value){
-			if($value === false) $value = 0;
+			if ($value === false) $value = 0;
 			$retval .= " " . $name . "='" . $value . "'";
 		}
 		$retval .= ">$label</$tag>";

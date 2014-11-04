@@ -195,7 +195,7 @@ class ErrorHandlerTest extends CakeTestCase {
  * @return void
  */
 	public function testHandleException() {
-		$this->skipIf(file_exists(APP . 'app_error.php'), 'App error exists cannot run.');
+		$this->skipif (file_exists(APP . 'app_error.php'), 'App error exists cannot run.');
 
 		$error = new NotFoundException('Kaboom!');
 		ob_start();
@@ -210,7 +210,7 @@ class ErrorHandlerTest extends CakeTestCase {
  * @return void
  */
 	public function testHandleExceptionLog() {
-		$this->skipIf(file_exists(APP . 'app_error.php'), 'App error exists cannot run.');
+		$this->skipif (file_exists(APP . 'app_error.php'), 'App error exists cannot run.');
 
 		if (file_exists(LOGS . 'error.log')) {
 			unlink(LOGS . 'error.log');
@@ -257,7 +257,7 @@ class ErrorHandlerTest extends CakeTestCase {
  * @return void
  */
 	public function testHandleFatalErrorPage() {
-		$this->skipIf(file_exists(APP . 'app_error.php'), 'App error exists cannot run.');
+		$this->skipif (file_exists(APP . 'app_error.php'), 'App error exists cannot run.');
 
 		$line = __LINE__;
 
@@ -286,7 +286,7 @@ class ErrorHandlerTest extends CakeTestCase {
  * @return void
  */
 	public function testHandleFatalErrorLog() {
-		$this->skipIf(file_exists(APP . 'app_error.php'), 'App error exists cannot run.');
+		$this->skipif (file_exists(APP . 'app_error.php'), 'App error exists cannot run.');
 
 		if (file_exists(LOGS . 'error.log')) {
 			unlink(LOGS . 'error.log');

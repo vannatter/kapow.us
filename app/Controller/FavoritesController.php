@@ -14,7 +14,7 @@ class FavoritesController extends AppController {
 	}
 
 	public function toggle($id=null, $type=null) {
-		if($this->request->is('ajax')) {
+		if ($this->request->is('ajax')) {
 			$result = array('error' => true, 'message' => __('Invalid'), 'type' => 1);
 
 			$type = $this->request->query['type'];
@@ -22,7 +22,7 @@ class FavoritesController extends AppController {
 
 			## make sure use is logged in
 			## 1=item,2=series,3=creator,4=publisher,5=store
-			if($this->Auth->user()) {
+			if ($this->Auth->user()) {
 				switch(strtoupper($type)) {
 					case 'CREATOR':
 						$result['type'] = $this->UserFavorite->toggle($this->Auth->user('id'), $id, 3);
@@ -64,7 +64,7 @@ class FavoritesController extends AppController {
 							)
 						));
 
-						if($item) {
+						if ($item) {
 							## toggle favorite on for each type
 							$this->UserFavorite->toggle($this->Auth->user('id'), $item['Series']['id'], 2, 1);
 							$this->UserFavorite->toggle($this->Auth->user('id'), $item['Publisher']['id'], 4, 1);
@@ -97,15 +97,15 @@ class FavoritesController extends AppController {
 	}
 
 	public function myRemove($favId=null) {
-		if($this->request->is('ajax')) {
+		if ($this->request->is('ajax')) {
 			$result = array('error' => true, 'message' => __('Invalid'), 'type' => 1);
 
 			$favId = $this->request->query['id'];
 
-			if($this->Auth->user()) {
+			if ($this->Auth->user()) {
 				## make sure the this favorite belongs to the user
-				if($fav = $this->UserFavorite->find('first', array('conditions' => array('UserFavorite.id' => $favId), 'recursive' => -1))) {
-					if($fav['UserFavorite']['user_id'] == $this->Auth->user('id')) {
+				if ($fav = $this->UserFavorite->find('first', array('conditions' => array('UserFavorite.id' => $favId), 'recursive' => -1))) {
+					if ($fav['UserFavorite']['user_id'] == $this->Auth->user('id')) {
 						$this->UserFavorite->delete($favId);
 
 						$result['error'] = false;

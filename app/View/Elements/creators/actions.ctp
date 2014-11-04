@@ -1,4 +1,4 @@
-<?php if($this->Session->read('Auth.User')) { ?>
+<?php if ($this->Session->read('Auth.User')) { ?>
 	<div class="item_actions">
 		<?php echo $this->Common->addFavButton($creator['Creator']['id'], 'creator', $userFav); ?>
 			<div class="btn-group">

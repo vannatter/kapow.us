@@ -9,7 +9,7 @@
 <div class="row">
 	<div class="span3 item_detail_img">
 		<?php
-		if($series['Item'][0]['img_fullpath'] == "/img/covers") {
+		if ($series['Item'][0]['img_fullpath'] == "/img/covers") {
 			$img = "/theme/Kapow/img/nocover_large.png";
 		} else {
 			$img = $this->Common->thumb($series['Item'][0]['img_fullpath']);
@@ -21,7 +21,7 @@
 			<?php echo nl2br($series['Series']['description']); ?>		
 		</div>
 	
-		<?php if(isset($series['UserFavorite']) && count($series['UserFavorite']) > 0) { ?>
+		<?php if (isset($series['UserFavorite']) && count($series['UserFavorite']) > 0) { ?>
 			<?php echo $this->Element('favorites/list', array('users' => $series['UserFavorite'])); ?>
 		<?php } ?>
 	</div>

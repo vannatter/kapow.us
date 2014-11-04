@@ -55,12 +55,12 @@ class ReportsController extends AppController {
 
 	public function creator($id) {
 		$this->Creator->id = $id;
-		if(!$this->Creator->exists()) {
+		if (!$this->Creator->exists()) {
 			$this->Session->setFlash(__('Invalid ID!'), 'flash_neg');
 			$this->redirect($this->referer());
 		}
 
-		if($this->request->is('post') || $this->request->is('put')) {
+		if ($this->request->is('post') || $this->request->is('put')) {
 			$data = Sanitize::clean($this->request->data);
 
 			$data['Report']['user_id'] = $this->Auth->user('id');
@@ -68,7 +68,7 @@ class ReportsController extends AppController {
 			$data['Report']['report_item_id'] = $id;
 
 			$this->Report->create($data);
-			if($this->Report->save($data)) {
+			if ($this->Report->save($data)) {
 				$this->Session->setFlash(__('Report Submitted!'), 'flash_pos');
 				$this->redirect(array('controller' => 'creators', 'action' => $id));
 			}
@@ -86,12 +86,12 @@ class ReportsController extends AppController {
 
 	public function series($id) {
 		$this->Series->id = $id;
-		if(!$this->Series->exists()) {
+		if (!$this->Series->exists()) {
 			$this->Session->setFlash(__('Invalid ID!'), 'flash_neg');
 			$this->redirect($this->referer());
 		}
 
-		if($this->request->is('post') || $this->request->is('put')) {
+		if ($this->request->is('post') || $this->request->is('put')) {
 			$data = Sanitize::clean($this->request->data);
 
 			$data['Report']['user_id'] = $this->Auth->user('id');
@@ -99,7 +99,7 @@ class ReportsController extends AppController {
 			$data['Report']['report_item_id'] = $id;
 
 			$this->Report->create($data);
-			if($this->Report->save($data)) {
+			if ($this->Report->save($data)) {
 				$this->Session->setFlash(__('Report Submitted!'), 'flash_pos');
 				$this->redirect(array('controller' => 'series', 'action' => $id));
 			}
@@ -117,12 +117,12 @@ class ReportsController extends AppController {
 
 	public function shop($id) {
 		$this->Store->id = $id;
-		if(!$this->Store->exists()) {
+		if (!$this->Store->exists()) {
 			$this->Session->setFlash(__('Invalid ID!'), 'flash_neg');
 			$this->redirect($this->referer());
 		}
 
-		if($this->request->is('post') || $this->request->is('put')) {
+		if ($this->request->is('post') || $this->request->is('put')) {
 			$data = Sanitize::clean($this->request->data);
 
 			$data['Report']['user_id'] = $this->Auth->user('id');
@@ -130,7 +130,7 @@ class ReportsController extends AppController {
 			$data['Report']['report_item_id'] = $id;
 
 			$this->Report->create($data);
-			if($this->Report->save($data)) {
+			if ($this->Report->save($data)) {
 				$this->Session->setFlash(__('Report Submitted!'), 'flash_pos');
 				$this->redirect(array('controller' => 'shops', 'action' => $id));
 			}
@@ -148,12 +148,12 @@ class ReportsController extends AppController {
 
 	public function publisher($id) {
 		$this->Publisher->id = $id;
-		if(!$this->Publisher->exists()) {
+		if (!$this->Publisher->exists()) {
 			$this->Session->setFlash(__('Invalid ID!'), 'flash_neg');
 			$this->redirect($this->referer());
 		}
 
-		if($this->request->is('post') || $this->request->is('put')) {
+		if ($this->request->is('post') || $this->request->is('put')) {
 			$data = Sanitize::clean($this->request->data);
 
 			$data['Report']['user_id'] = $this->Auth->user('id');
@@ -161,7 +161,7 @@ class ReportsController extends AppController {
 			$data['Report']['report_item_id'] = $id;
 
 			$this->Report->create($data);
-			if($this->Report->save($data)) {
+			if ($this->Report->save($data)) {
 				$this->Session->setFlash(__('Report Submitted!'), 'flash_pos');
 				$this->redirect(array('controller' => 'publishers', 'action' => $id));
 			}

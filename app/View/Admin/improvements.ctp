@@ -40,7 +40,6 @@
 							$name = $improve['Store']['name'];
 							break;
 					}
-
 					echo substr($name, 0, 30);
 					?>
 				</td>
@@ -59,4 +58,4 @@
 		<?php } ?>
 		</tbody>
 	</table>
-<?= $this->Paginator->pagination(); ?>
+<?php echo $this->Paginator->pagination(); ?>

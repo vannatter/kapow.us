@@ -126,7 +126,7 @@ class ConnectTest extends CakeTestCase {
   }
   
   function mockController($callback = false){
-  	if($callback){
+  	if ($callback){
   		Mock::generate('TestCallbackController');
   		$Controller = new MockTestCallbackController();
   	}

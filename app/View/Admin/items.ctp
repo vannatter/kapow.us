@@ -43,4 +43,4 @@ if(isset($filter)) {
 	<?php } ?>
 	</tbody>
 </table>
-<?= $this->Paginator->pagination(); ?>
+<?php echo $this->Paginator->pagination(); ?>

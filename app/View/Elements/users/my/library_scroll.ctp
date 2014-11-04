@@ -28,13 +28,13 @@
 					</div>
 				</div>
 			</div>
-			<?php if($row == 6) { ?>
+			<?php if ($row == 6) { ?>
 				</div>
 				<?php $row = 0; ?>
 			<?php } ?>
 		<?php } ?>
 	</div>
-<?php if($this->Paginator->hasNext()) { ?>
+<?php if ($this->Paginator->hasNext()) { ?>
 	<div id="item-scroll-nav">
 		<div class="pagination"><ul><?php echo $this->Paginator->next('next'); ?></ul></div>
 	</div>

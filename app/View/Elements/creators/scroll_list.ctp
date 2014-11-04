@@ -3,12 +3,12 @@
  *@var $this View
  */
 ?>
-<?php if(isset($creators) && is_array($creators) && count($creators) > 0) { ?>
+<?php if (isset($creators) && is_array($creators) && count($creators) > 0) { ?>
 	<div id="item-scroll-list">
 		<?php $row = 0; ?>
 		<?php $open = false; ?>
 		<?php foreach($creators as $creator) { ?>
-			<?php if($row == 0) { ?>
+			<?php if ($row == 0) { ?>
 				<div class="row thisweek scroll-list-item">
 				<?php $open = true; ?>
 			<?php } ?>
@@ -19,7 +19,7 @@
 				$name = $creator['Creator']['creator_name'];
 
 				$img = $creator['Creator']['creator_photo'];
-				if(empty($img) && isset($creator['ItemCreator'][0])) {
+				if (empty($img) && isset($creator['ItemCreator'][0])) {
 					$img = $creator['ItemCreator'][0]['Item']['img_fullpath'];
 				}
 
@@ -42,19 +42,19 @@
 					</div>
 				</div>
 			</div>
-			<?php if($row == 6) { ?>
+			<?php if ($row == 6) { ?>
 				</div>
 				<?php $open = false; ?>
 				<?php $row = 0; ?>
 			<?php } ?>
 		<?php } ?>
 		<?php
-		if($open) {
+		if ($open) {
 			echo '</div>';
 		}
 		?>
 	</div>
-	<?php if($this->Paginator->hasNext()) { ?>
+	<?php if ($this->Paginator->hasNext()) { ?>
 		<div id="item-scroll-nav">
 			<div class="pagination"><ul><?php echo $this->Paginator->next('next'); ?></ul></div>
 		</div>

@@ -9,7 +9,7 @@
 	<div class="span5">
 		<?php echo $this->Form->create('StorePhoto', array('type' => 'file', 'class' => 'form-horizontal')); ?>
 		<div class="login_block photo_upload_block">
-			<?php if(isset($this->validationErrors['StorePhoto']['photo_upload'])) { ?>
+			<?php if (isset($this->validationErrors['StorePhoto']['photo_upload'])) { ?>
 				<span class="help-inline error-message"><?php echo $this->validationErrors['StorePhoto']['photo_upload']; ?></span>
 			<?php } ?>
 

@@ -26,7 +26,7 @@
 		</div>
 	<?php } ?>
 </div>
-<?php if($this->Paginator->hasNext()) { ?>
+<?php if ($this->Paginator->hasNext()) { ?>
 	<div id="item-scroll-nav">
 		<div class="pagination"><ul><?php echo $this->Paginator->next('next'); ?></ul></div>
 	</div>

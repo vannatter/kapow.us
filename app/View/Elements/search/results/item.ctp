@@ -3,7 +3,7 @@
  * @var $this View
  */
 ?>
-<?php if(isset($results) && count($results) > 0) { ?>
+<?php if (isset($results) && count($results) > 0) { ?>
 <div id="item-scroll-list">
 		<?php foreach($results as $item) { ?>
 			<div class="row search_row scroll-list-item" style="color: #fff;">
@@ -16,7 +16,7 @@
 				</div>
 			</div>
 		<?php } ?>
-	<?php if($this->Paginator->hasNext()) { ?>
+	<?php if ($this->Paginator->hasNext()) { ?>
 		<div id="item-scroll-nav">
 			<div class="pagination"><ul><?php echo $this->Paginator->next('next'); ?></ul></div>
 		</div>

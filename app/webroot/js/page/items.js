@@ -9,9 +9,9 @@ $(document).ready(function() {
 		var val = obj.attr('data-val');
 
 		$.getJSON('/favorites/toggle', { 'id': id, 'type': type }, function(data) {
-			if(!data.error) {
-				if(data.type == 1) {
-					if(type == 'all') {
+			if (!data.error) {
+				if (data.type == 1) {
+					if (type == 'all') {
 						$('.toggle_favorite').not('[data-type="all"]').parent().addClass('fav_on');
 						flash('Added everything to your favorites!', 3000);
 					} else {
@@ -46,7 +46,7 @@ $(document).ready(function() {
 		path: function(nextPage) {
 			var $content = $('#content');
 			var path = $content.find('#item-scroll-nav a').last().attr("href");
-			if(path) {
+			if (path) {
 				var start = path.indexOf('page:');
 				var left = path.substring(0, start);
 
@@ -54,13 +54,13 @@ $(document).ready(function() {
 
 				var pubid = $content.find('#ItemPublisherId').val();
 
-				if(pubid) {
+				if (pubid) {
 					path += '?pubid=' + pubid;
 				}
 
 				var terms = $content.find('#ItemTerms').val();
 
-				if(terms) {
+				if (terms) {
 					path += '?terms=' + terms;
 				}
 			}
@@ -70,7 +70,7 @@ $(document).ready(function() {
 	});
 
 	var $hotness = $('#hotness');
-	if($hotness.length > 0) {
+	if ($hotness.length > 0) {
 		var itemId = $hotness.attr('data-item-id');
 		var hotness = $hotness.attr('data-hotness');
 
@@ -84,7 +84,7 @@ $(document).ready(function() {
 			},
 			change: function( event, ui ) {
 				$.getJSON('/ajax/itemHotness', { itemId: itemId, value: ui.value }, function(data) {
-					if(data.error) {
+					if (data.error) {
 						flash('Error updating hotness', 3000);
 					} else {
 						flash('Updated Hotness', 3000);
@@ -106,10 +106,10 @@ $(document).ready(function() {
 		$.getJSON('/pulls/toggle', { 'id': id }, function(data) {
 			console.log(data);
 
-			if(data.error) {
+			if (data.error) {
 				flash(data.message, 3000);
 			} else {
-				if(data.type == 1) {
+				if (data.type == 1) {
 					// added
 					obj.find('span').text('Remove Pull');
 					flash('Added to your pull list', 3000);

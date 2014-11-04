@@ -52,7 +52,7 @@ class FacebookHelperTestCase extends CakeTestCase {
 		$this->assertEqual('<a href="#" onclick="FB.api({ method: &#039;Auth.revokeAuthorization&#039; }, function(response) {window.location = &#039;/users/logout&#039;});">logout</a>', $results);
 		
 		$results = $this->Facebook->disconnect(array('confirm' => 'Are you sure?'));
-		$this->assertEqual('<a href="#" onclick="if(confirm(&quot;Are you sure?&quot;)){FB.api({ method: &#039;Auth.revokeAuthorization&#039; }, function(response) {window.location.reload();});}">logout</a>', $results);
+		$this->assertEqual('<a href="#" onclick="if (confirm(&quot;Are you sure?&quot;)){FB.api({ method: &#039;Auth.revokeAuthorization&#039; }, function(response) {window.location.reload();});}">logout</a>', $results);
 	}
 	
 	public function testInfo(){
@@ -233,10 +233,10 @@ class FacebookHelperTestCase extends CakeTestCase {
 	// logs the user in the application and facebook
 	function login(redirection){
 		FB.login(function (response) {
-			if(response.authResponse) {
+			if (response.authResponse) {
 				// user is logged in
 				// console.log('Welcome!');
-				if(redirection != null && redirection != ''){
+				if (redirection != null && redirection != ''){
 					top.location.href = redirection;
 				}
 			} else {
@@ -251,7 +251,7 @@ class FacebookHelperTestCase extends CakeTestCase {
 		FB.logout(function(response) {
 			// user is logged out
 			// redirection if any
-			if(redirection != null && redirection != ''){
+			if (redirection != null && redirection != ''){
 				top.location.href = redirection;
 			}
 		});

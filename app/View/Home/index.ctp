@@ -1,4 +1,3 @@
-
 <?php $this->Html->script('page/search', array('inline' => false)); ?>
 <?php echo $this->Element('headers/home/index'); ?>
 
@@ -13,7 +12,6 @@
 <?php echo $this->Form->end(); ?>
 
 <div class="row">
-
 	<div class="span9 home_main">	
 	
 		<?php if (count($random_items) > 0) { ?>
@@ -24,21 +22,13 @@
 				<div class="span6 item_detail">
 					<div class="pad_it">
 						<h2><?php echo $this->Html->link($random_items[0]['Item']['item_name'], '/items/' . $this->Common->seoize($random_items[0]['Item']['id'], $random_items[0]['Item']['item_name'])); ?></h2>
-		
 						<?php
-						if (isset($random_items[0]['Pull']['id'])) {
-							$hasPull = true;
-						} else {
-							$hasPull = false;
-						}
-		
-						echo $this->Common->pullButton($random_items[0]['Item']['id'], $hasPull);
+							$hasPull = (isset($random_items[0]['Pull']['id'])) ? true : false;
+							echo $this->Common->pullButton($random_items[0]['Item']['id'], $hasPull);
 						?>
-									
 						<div class="item_description">
 							<?php echo $random_items[0]['Item']['description']; ?>
 						</div>
-		
 						<div class="row item_grid">
 							<div class="span2 item_grid_lbl">Series:&nbsp;</div>
 							<div class="span4 item_grid_row"><?php echo $this->Common->series($random_items[0]['Item']['series_num'], $random_items[0]['Series']); ?></div>
@@ -49,7 +39,6 @@
 							<div class="span2 item_grid_lbl">Released:&nbsp;</div>
 							<div class="span4 item_grid_row"><?php echo date("m/d/Y", strtotime($random_items[0]['Item']['item_date'])); ?></div>
 						</div>
-						
 						<div class="item_tags">
 							<?php foreach ($random_items[0]['ItemTag'] as $it) { ?>
 								<span class="label"><a href="/tags/<?php echo $this->Common->seoize($it['Tag']['id'], $it['Tag']['tag_name']); ?>"><?php echo $it['Tag']['tag_name']; ?></a></span>
@@ -68,11 +57,7 @@
 						<?php
 							$description = $ri['Item']['description'];
 							$name = $ri['Item']['item_name'];
-							if (isset($ri['Pull']['id'])) {
-								$hasPull = true;
-							} else {
-								$hasPull = false;
-							}
+							$hasPull = (isset($ri['Pull']['id'])) ? true : false;
 						?>				
 						<div class="span2 preview_block">
 							<div class="preview_img"><a href="/items/<?php echo $this->Common->seoize($ri['Item']['id'], $ri['Item']['item_name']); ?>"><?php if ($ri['Item']['img_fullpath'] == "/img/covers") { ?><img alt="<?php echo $ri['Item']['item_name']; ?>" src="/theme/Kapow/img/nocover.png" width="210" height="140" /><?php } else { ?><img alt="<?php echo $ri['Item']['item_name']; ?>" src="<?php echo $this->Common->thumb($ri['Item']['img_fullpath'], "25p"); ?>" /><?php } ?></a></div>
@@ -95,7 +80,7 @@
 
 		<?php } else { ?>
 			<div class="home_hdr"><h4>Nothing found, check back soon!</h4></div>
-		<?php } ?>
+		<?php } ?> 
 		
 		<br/>
 
@@ -185,8 +170,3 @@
 				
 	</div>
 </div>
-
-
-
-
-

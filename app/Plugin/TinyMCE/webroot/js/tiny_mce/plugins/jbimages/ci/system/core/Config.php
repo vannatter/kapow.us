@@ -231,7 +231,7 @@ class CI_Config {
 		{
 			return FALSE;
 		}
-		if( trim($this->config[$item]) == '')
+		if ( trim($this->config[$item]) == '')
 		{
 			return '';
 		}

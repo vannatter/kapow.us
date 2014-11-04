@@ -54,7 +54,7 @@ class FacebookApi {
     * Builds the facebook API if we need it
     */
   public static function buildFacebook(){
-    if(!self::$Facebook){
+    if (!self::$Facebook){
       self::$Facebook = new Facebook(array(
         'appId' => Configure::read('Facebook.appId'),
         'secret' => Configure::read('Facebook.secret'),

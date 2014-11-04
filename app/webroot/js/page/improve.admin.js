@@ -9,13 +9,13 @@ $(document).ready(function() {
 		var fieldId = button.attr('data-field-id');
 
 		$.getJSON('/admin/improvements/accept', { id: id, fieldId: fieldId }, function(result) {
-			if(result.error) {
+			if (result.error) {
 				alert(result.message);
 			} else {
 				button.parent().fadeOut('normal', function() {
 					$(this).remove();
 
-					if(result.redirect != '') {
+					if (result.redirect != '') {
 						window.location = result.redirect;
 					}
 				})
@@ -31,13 +31,13 @@ $(document).ready(function() {
 		var fieldId = button.attr('data-field-id');
 
 		$.getJSON('/admin/improvements/decline', { id: id, fieldId: fieldId }, function(result) {
-			if(result.error) {
+			if (result.error) {
 				alert(result.message);
 			} else {
 				button.parent().fadeOut('normal', function() {
 					$(this).remove();
 
-					if(result.redirect != '') {
+					if (result.redirect != '') {
 						window.location = result.redirect;
 					}
 				})

@@ -7,7 +7,7 @@
 
 <div class="pad">
 
-	Before you continue, please choose a username<?php if($this->Session->read('Auth.User.facebook_id')) { echo ' and password'; } ?>. This will be your unique handle here on Kapow! that others will identify you by - make sure it's memorable!
+	Before you continue, please choose a username<?php if ($this->Session->read('Auth.User.facebook_id')) { echo ' and password'; } ?>. This will be your unique handle here on Kapow! that others will identify you by - make sure it's memorable!
 	<br/><br/>
 	Your username must be alphanumeric and must be at least 3 characters long.
 	<br/><br/>
@@ -21,7 +21,7 @@
 			<?php echo $this->Form->input('username', array('label'=>false, 'maxlength'=>50, 'class'=>'span4')); ?>
 		</div>
 	</div>
-	<?php if($this->Session->read('Auth.User.facebook_id')) { ?>
+	<?php if ($this->Session->read('Auth.User.facebook_id')) { ?>
 		<div class="row">
 			<div class="span1">
 				Password:
