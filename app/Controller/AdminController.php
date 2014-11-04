@@ -971,7 +971,7 @@ class AdminController extends AppController {
 		$this->Flag->recursive = 0;
 
 		$this->Flag->bindModel(array('belongsTo' => array(
-			'Item' => array('foreignKey' => 'flag_item_id', 'conditions' => array('item_type' => 1)),
+			'Item' => array('foreignKey' => 'flag_item_id', 'conditions' => array('item_type' => array(1, 6))),
 			'Series' => array('foreignKey' => 'flag_item_id', 'conditions' => array('item_type' => '2')),
 			'Creator' => array('foreignKey' => 'flag_item_id', 'conditions' => array('item_type' => '3')),
 			'Publisher' => array('foreignKey' => 'flag_item_id', 'conditions' => array('item_type' => '4')),
@@ -1007,6 +1007,7 @@ class AdminController extends AppController {
 		## 1=item, 2=series, 3=creator, 4=publisher, 5=store
 		switch($flag['Flag']['item_type']) {
 			case 1:
+			case 6:
 				$this->Flag->bindModel(array('belongsTo' => array('Item' => array('foreignKey' => 'flag_item_id'))));
 				break;
 			case 2:

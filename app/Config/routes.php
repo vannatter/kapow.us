@@ -271,6 +271,15 @@ Router::connect(
 	)
 );
 
+Router::connect(
+	'/flag/item/image/:id',
+	array('controller' => 'flags', 'action' => 'itemImage'),
+	array(
+		'pass' => array('id'),
+		'id' => '[0-9]+'
+	)
+);
+
 ##### BLOGS
 Router::connect(
 	'/blogs/:id--:name',

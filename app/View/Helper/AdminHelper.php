@@ -37,6 +37,9 @@ class AdminHelper extends Helper {
 			case 5:
 				return __('Shop');
 				break;
+			case 6:
+				return __('Item Image');
+				break;
 		}
 
 		return __('Unknown');

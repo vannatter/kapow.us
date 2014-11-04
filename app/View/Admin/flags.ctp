@@ -25,6 +25,7 @@
 					$name = '';
 					switch($flag['Flag']['item_type']) {
 						case 1:   ## ITEM
+						case 6:   ## ITEM IMAGE
 							$name = $flag['Item']['item_name'];
 							break;
 						case 2:   ## SERIES

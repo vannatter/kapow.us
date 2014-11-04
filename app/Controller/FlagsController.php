@@ -200,4 +200,35 @@ class FlagsController extends AppController {
 
 		$this->render('issue');
 	}
+
+	public function itemImage($itemId) {
+		$this->Item->id = $itemId;
+		if(!$this->Item->exists()) {
+			$this->Session->setFlash(__('Invalid Item'), 'flash_neg');
+			$this->redirect($this->referer());
+		}
+
+		if($this->request->is('post') || $this->request->is('put')) {
+			$data = Sanitize::clean($this->request->data);
+
+			$data['Flag']['user_id'] = $this->Auth->user('id');
+			$data['Flag']['item_type'] = 6;   ## ITEM IMAGE
+			$data['Flag']['flag_item_id'] = $itemId;
+
+			$this->Flag->create($data);
+			if($this->Flag->save($data)) {
+				$this->Session->setFlash(__('Flagged Item Image'), 'alert', array(
+					'plugin' => 'TwitterBootstrap',
+					'class' => 'alert-success'
+				));
+
+				$this->redirect(array('controller' => 'items', 'action' => $itemId));
+			}
+		}
+
+		$item = $this->Item->read();
+		$this->set('item', $item);
+
+		$this->set('title_for_layout', 'Flag Item Image');
+	}
 }
