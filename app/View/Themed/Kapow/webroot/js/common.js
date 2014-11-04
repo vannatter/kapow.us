@@ -50,8 +50,8 @@ $(document).ready(function() {
 		var type = obj.attr('data-type');
 
 		$.getJSON('/favorites/toggle', { 'id': id, 'type': type }, function(data) {
-			if(!data.error) {
-				if(data.type == 1) {
+			if (!data.error) {
+				if (data.type == 1) {
 					obj.find('span').text('Remove Favorite');
 				} else {
 					obj.find('span').text('Add Favorite');
@@ -71,10 +71,10 @@ $(document).ready(function() {
 		var id = obj.attr('data-id');
 
 		$.getJSON('/pulls/toggle', { 'id': id }, function(data) {
-			if(data.error) {
+			if (data.error) {
 				flash(data.message, 3000);
 			} else {
-				if(data.type == 1) {
+				if (data.type == 1) {
 					// added
 					obj.find('span').text('Remove Pull').parent().removeClass('btn-off').addClass('btn-on').find('i').removeClass('icon-white').addClass('icon-black');
 					flash('Added to your pull list', 3000);
@@ -96,10 +96,10 @@ $(document).ready(function() {
 		var id = obj.attr('data-id');
 
 		$.getJSON('/pulls/toggle', { 'id': id }, function(data) {
-			if(data.error) {
+			if (data.error) {
 				flash(data.message, 3000);
 			} else {
-				if(data.type == 1) {
+				if (data.type == 1) {
 					// added
 					obj.text('Remove from Pull List').parent().addClass('fav_on');
 					flash('Added to your pull list!', 3000);
@@ -121,10 +121,10 @@ $(document).ready(function() {
 		var id = obj.attr('data-id');
 
 		$.getJSON('/ajax/toggle_library', { 'id': id }, function(data) {
-			if(data.error) {
+			if (data.error) {
 				flash(data.message, 3000);
 			} else {
-				if(data.type == 1) {
+				if (data.type == 1) {
 					// added
 					obj.text('Remove from Library').parent().addClass('fav_on');
 					$('li a.pull_list_btn').text('Add to Pull List').parent().removeClass('fav_on');

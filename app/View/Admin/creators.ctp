@@ -20,24 +20,24 @@
 				<td><?php echo $creator['Creator']['creator_name']; ?></td>
 				<td>
 					<?php
-					if($creator['Creator']['status'] == 1) {
+					if ($creator['Creator']['status'] == 1) {
 						echo 'CLEAN';
 					} else {
 						$count = 0;
 						$total = 5;
-						if(!empty($creator['Creator']['creator_bio'])) {
+						if (!empty($creator['Creator']['creator_bio'])) {
 							$count++;
 						}
-						if(!empty($creator['Creator']['creator_photo'])) {
+						if (!empty($creator['Creator']['creator_photo'])) {
 							$count++;
 						}
-						if(!empty($creator['Creator']['creator_website'])) {
+						if (!empty($creator['Creator']['creator_website'])) {
 							$count++;
 						}
-						if(!empty($creator['Creator']['creator_twitter'])) {
+						if (!empty($creator['Creator']['creator_twitter'])) {
 							$count++;
 						}
-						if(!empty($creator['Creator']['creator_facebook'])) {
+						if (!empty($creator['Creator']['creator_facebook'])) {
 							$count++;
 						}
 

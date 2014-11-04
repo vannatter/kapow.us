@@ -3,7 +3,7 @@
  *@var $this View
  */
 
-if(isset($filter) && $filter) {
+if (isset($filter) && $filter) {
 	$this->Paginator->options(array('url' => array('filter' => $filter)));
 } else {
 	$filter = 'all';
@@ -34,18 +34,18 @@ if(isset($filter) && $filter) {
 			<td><?php echo $publisher['Publisher']['publisher_name']; ?></td>
 			<td>
 				<?php
-				if($publisher['Publisher']['status'] == 1) {
+				if ($publisher['Publisher']['status'] == 1) {
 					echo 'CLEAN';
 				} else {
 					$count = 0;
 					$total = 3;
-					if(!empty($publisher['Publisher']['publisher_bio'])) {
+					if (!empty($publisher['Publisher']['publisher_bio'])) {
 						$count++;
 					}
-					if(!empty($publisher['Publisher']['publisher_photo'])) {
+					if (!empty($publisher['Publisher']['publisher_photo'])) {
 						$count++;
 					}
-					if(!empty($publisher['Publisher']['publisher_website'])) {
+					if (!empty($publisher['Publisher']['publisher_website'])) {
 						$count++;
 					}
 					echo sprintf('<span class="badge badge-important">%s of %s</span>', $count, $total);

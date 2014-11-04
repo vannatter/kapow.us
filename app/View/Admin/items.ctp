@@ -3,7 +3,7 @@
  *@var $this View
  */
 
-if(isset($filter)) {
+if (isset($filter)) {
 	$this->Paginator->options(array('url' => array('filter' => $filter)));
 } else {
 	$filter = 'all';

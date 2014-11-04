@@ -47,10 +47,10 @@
 				<td><?php echo $this->Admin->cleanDate($flag['Flag']['created']); ?></td>
 				<td>
 					<?php
-					if($flag['Flag']['status'] == 0 || $flag['Flag']['admin_user_id'] == $this->Session->read('Auth.User.id')) {
+					if ($flag['Flag']['status'] == 0 || $flag['Flag']['admin_user_id'] == $this->Session->read('Auth.User.id')) {
 						echo $this->Html->link(__('Open'), sprintf('/admin/flags/view/%s', $flag['Flag']['id']), array(
 							'class' => 'btn btn-small btn-inverse'));
-					} elseif($flag['Flag']['status'] == 1) {
+					} elseif ($flag['Flag']['status'] == 1) {
 						echo $flag['LockUser']['username'];
 					}
 					?>
