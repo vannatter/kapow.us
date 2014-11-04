@@ -47,10 +47,10 @@
 			<td><?php echo $this->Admin->cleanDate($report['Report']['created']); ?></td>
 			<td>
 				<?php
-				if($report['Report']['status'] == 0 || $report['Report']['admin_user_id'] == $this->Session->read('Auth.User.id')) {
+				if ($report['Report']['status'] == 0 || $report['Report']['admin_user_id'] == $this->Session->read('Auth.User.id')) {
 					echo $this->Html->link(__('Open'), sprintf('/admin/reports/view/%s', $report['Report']['id']), array(
 						'class' => 'btn btn-small btn-inverse'));
-				} elseif($report['Report']['status'] == 1) {
+				} elseif ($report['Report']['status'] == 1) {
 					echo $report['LockUser']['username'];
 				}
 				?>
@@ -59,4 +59,4 @@
 	<?php } ?>
 	</tbody>
 </table>
-<?= $this->Paginator->pagination(); ?>
+<?php echo $this->Paginator->pagination(); ?>

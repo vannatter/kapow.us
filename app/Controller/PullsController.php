@@ -14,15 +14,15 @@ class PullsController extends AppController {
 	}
 
 	public function toggle($id=null) {
-		if($this->request->is('ajax')) {
+		if ($this->request->is('ajax')) {
 			$result = array('error' => true, 'message' => __('Invalid'));
 
 			$id = $this->request->query['id'];
 
 			## make sure user id logged in
-			if($this->Auth->user()) {
+			if ($this->Auth->user()) {
 				## make sure item is valid
-				if($item = $this->Pull->Item->findById($id)) {
+				if ($item = $this->Pull->Item->findById($id)) {
 					$result['type'] = $this->Pull->toggle($id, $this->Auth->user('id'));
 					$result['error'] = false;
 				} else {
@@ -40,15 +40,15 @@ class PullsController extends AppController {
 	}
 
 	public function myRemove($pullId=null) {
-		if($this->request->is('ajax')) {
+		if ($this->request->is('ajax')) {
 			$result = array('error' => true, 'message' => __('Invalid'), 'type' => 1);
 
 			$pullId = $this->request->query['id'];
 
-			if($this->Auth->user()) {
+			if ($this->Auth->user()) {
 				## make sure the this item belongs to the user
-				if($pull = $this->Pull->find('first', array('conditions' => array('Pull.id' => $pullId), 'recursive' => -1))) {
-					if($pull['Pull']['user_id'] == $this->Auth->user('id')) {
+				if ($pull = $this->Pull->find('first', array('conditions' => array('Pull.id' => $pullId), 'recursive' => -1))) {
+					if ($pull['Pull']['user_id'] == $this->Auth->user('id')) {
 						$this->Pull->delete($pullId);
 
 						$result['error'] = false;

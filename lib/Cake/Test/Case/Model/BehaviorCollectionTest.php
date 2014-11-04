@@ -647,7 +647,7 @@ class BehaviorCollectionTest extends CakeTestCase {
  * @return void
  */
 	public function testBehaviorFindCallbacks() {
-		$this->skipIf($this->db instanceof Sqlserver, 'This test is not compatible with SQL Server.');
+		$this->skipif ($this->db instanceof Sqlserver, 'This test is not compatible with SQL Server.');
 
 		$Apple = new Apple();
 		$expected = $Apple->find('all');
@@ -782,7 +782,7 @@ class BehaviorCollectionTest extends CakeTestCase {
  * @return void
  */
 	public function testBehaviorBelongsToFindCallbacks() {
-		$this->skipIf($this->db instanceof Sqlserver, 'This test is not compatible with SQL Server.');
+		$this->skipif ($this->db instanceof Sqlserver, 'This test is not compatible with SQL Server.');
 
 		$conditions = array('order' => 'Apple.id ASC');
 		$Apple = new Apple();

@@ -17,7 +17,7 @@ class StorePhoto extends AppModel {
 	
 	public function remove($id) {
 		$this->id = $id;
-		if(!$this->exists()) {
+		if (!$this->exists()) {
 			return false;
 		}
 

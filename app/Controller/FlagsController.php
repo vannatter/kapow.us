@@ -24,12 +24,12 @@ class FlagsController extends AppController {
 
 	public function item($id) {
 		$this->Item->id = $id;
-		if(!$this->Item->exists()) {
+		if (!$this->Item->exists()) {
 			$this->Session->setFlash(__('Invalid ID!'), 'flash_neg');
 			$this->redirect($this->referer());
 		}
 
-		if($this->request->is('post') || $this->request->is('put')) {
+		if ($this->request->is('post') || $this->request->is('put')) {
 			$data = Sanitize::clean($this->request->data);
 
 			$data['Flag']['user_id'] = $this->Auth->user('id');
@@ -37,7 +37,7 @@ class FlagsController extends AppController {
 			$data['Flag']['flag_item_id'] = $id;
 
 			$this->Flag->create($data);
-			if($this->Flag->save($data)) {
+			if ($this->Flag->save($data)) {
 				$this->Session->setFlash(__('Flagged Item Submitted'), 'alert', array(
 					'plugin' => 'TwitterBootstrap',
 					'class' => 'alert-success'
@@ -59,12 +59,12 @@ class FlagsController extends AppController {
 
 	public function creator($id) {
 		$this->Creator->id = $id;
-		if(!$this->Creator->exists()) {
+		if (!$this->Creator->exists()) {
 			$this->Session->setFlash(__('Invalid ID!'), 'flash_neg');
 			$this->redirect($this->referer());
 		}
 
-		if($this->request->is('post') || $this->request->is('put')) {
+		if ($this->request->is('post') || $this->request->is('put')) {
 			$data = Sanitize::clean($this->request->data);
 
 			$data['Flag']['user_id'] = $this->Auth->user('id');
@@ -72,7 +72,7 @@ class FlagsController extends AppController {
 			$data['Flag']['flag_item_id'] = $id;
 
 			$this->Flag->create($data);
-			if($this->Flag->save($data)) {
+			if ($this->Flag->save($data)) {
 				$this->Session->setFlash(__('Flagged Creator Submitted'), 'alert', array(
 					'plugin' => 'TwitterBootstrap',
 					'class' => 'alert-success'
@@ -95,12 +95,12 @@ class FlagsController extends AppController {
 
 	public function series($id) {
 		$this->Series->id = $id;
-		if(!$this->Series->exists()) {
+		if (!$this->Series->exists()) {
 			$this->Session->setFlash(__('Invalid ID!'), 'flash_neg');
 			$this->redirect($this->referer());
 		}
 
-		if($this->request->is('post') || $this->request->is('put')) {
+		if ($this->request->is('post') || $this->request->is('put')) {
 			$data = Sanitize::clean($this->request->data);
 
 			$data['Flag']['user_id'] = $this->Auth->user('id');
@@ -108,7 +108,7 @@ class FlagsController extends AppController {
 			$data['Flag']['flag_item_id'] = $id;
 
 			$this->Flag->create($data);
-			if($this->Flag->save($data)) {
+			if ($this->Flag->save($data)) {
 				$this->Session->setFlash(__('Flagged Series Submitted'), 'alert', array(
 					'plugin' => 'TwitterBootstrap',
 					'class' => 'alert-success'
@@ -131,12 +131,12 @@ class FlagsController extends AppController {
 
 	public function shop($id) {
 		$this->Store->id = $id;
-		if(!$this->Store->exists()) {
+		if (!$this->Store->exists()) {
 			$this->Session->setFlash(__('Invalid ID!'), 'flash_neg');
 			$this->redirect($this->referer());
 		}
 
-		if($this->request->is('post') || $this->request->is('put')) {
+		if ($this->request->is('post') || $this->request->is('put')) {
 			$data = Sanitize::clean($this->request->data);
 
 			$data['Flag']['user_id'] = $this->Auth->user('id');
@@ -144,7 +144,7 @@ class FlagsController extends AppController {
 			$data['Flag']['flag_item_id'] = $id;
 
 			$this->Flag->create($data);
-			if($this->Flag->save($data)) {
+			if ($this->Flag->save($data)) {
 				$this->Session->setFlash(__('Flagged Shop Submitted'), 'alert', array(
 					'plugin' => 'TwitterBootstrap',
 					'class' => 'alert-success'
@@ -167,12 +167,12 @@ class FlagsController extends AppController {
 
 	public function publisher($id) {
 		$this->Publisher->id = $id;
-		if(!$this->Publisher->exists()) {
+		if (!$this->Publisher->exists()) {
 			$this->Session->setFlash(__('Invalid ID!'), 'flash_neg');
 			$this->redirect($this->referer());
 		}
 
-		if($this->request->is('post') || $this->request->is('put')) {
+		if ($this->request->is('post') || $this->request->is('put')) {
 			$data = Sanitize::clean($this->request->data);
 
 			$data['Flag']['user_id'] = $this->Auth->user('id');
@@ -180,7 +180,7 @@ class FlagsController extends AppController {
 			$data['Flag']['flag_item_id'] = $id;
 
 			$this->Flag->create($data);
-			if($this->Flag->save($data)) {
+			if ($this->Flag->save($data)) {
 				$this->Session->setFlash(__('Flagged Publisher Submitted'), 'alert', array(
 					'plugin' => 'TwitterBootstrap',
 					'class' => 'alert-success'

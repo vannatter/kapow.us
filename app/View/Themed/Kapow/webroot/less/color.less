@@ -1,0 +1,179 @@
+
+BODY {
+	background-color: @kapow_blue;
+	background: @kapow_bg_grade_color1; /* Old browsers */
+	background: -moz-linear-gradient(top, @kapow_bg_grade_color1 0%, @kapow_bg_grade_color2 100%); /* FF3.6+ */
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,@kapow_bg_grade_color1), color-stop(100%,@kapow_bg_grade_color2)); /* Chrome,Safari4+ */
+	background: -webkit-linear-gradient(top, @kapow_bg_grade_color1 0%, @kapow_bg_grade_color2 100%); /* Chrome10+,Safari5.1+ */
+	background: -o-linear-gradient(top, @kapow_bg_grade_color1 0%, @kapow_bg_grade_color2 100%); /* Opera 11.10+ */
+	background: -ms-linear-gradient(top, @kapow_bg_grade_color1 0%, @kapow_bg_grade_color2 100%); /* IE10+ */
+	background: linear-gradient(to bottom, @kapow_bg_grade_color1 0%, @kapow_bg_grade_color2 100%); /* W3C */
+	color: @kapow_white;
+}
+
+A {
+	color: lighten(@kapow_blue, 30%) !important;
+}
+
+A:hover {
+	color: lighten(@kapow_blue, 20%) !important;
+}
+
+H1, H2, H3, H4, H5, H6 {
+	color: #333333;
+}
+
+H2 {
+	color: @kapow_h2_color !important;
+}
+
+HR {
+  border-top: 1px solid #e5e5e5;
+  border-bottom: 1px solid #ffffff;
+}
+
+#header {
+	background-color: rgb(44,83,158);
+	background-image: url(/theme/Kapow/img/bg.png) !important;
+	background-repeat: no-repeat !important;
+}
+
+#map-canvas, #shop-map {
+	border: 3px solid darken(@kapow_blue, 90%);
+}
+
+.blu {
+	background-color: rgb(44,83,158);
+	background: -moz-radial-gradient(center, ellipse cover,  rgba(44,83,158,1) 0%, rgba(44,83,158,1) 100%);
+	background: -webkit-gradient(radial, center center, 0px, center center, 100%, color-stop(0%,rgba(44,83,158,1)), color-stop(100%,rgba(44,83,158,1)));
+	background: -webkit-radial-gradient(center, ellipse cover,  rgba(44,83,158,1) 0%,rgba(44,83,158,1) 100%);
+	background: -o-radial-gradient(center, ellipse cover,  rgba(44,83,158,1) 0%,rgba(44,83,158,1) 100%);
+	background: -ms-radial-gradient(center, ellipse cover,  rgba(44,83,158,1) 0%,rgba(44,83,158,1) 100%);
+	background: radial-gradient(ellipse at center,  rgba(44,83,158,1) 0%,rgba(44,83,158,1) 100%);
+}
+
+.btn.disabled {
+	color: @kapow_white;
+}
+
+.btn-custom {
+	background-color: hsl(215, 69%, 27%) !important;
+	background-image: -khtml-gradient(linear, left top, left bottom, from(#2365c1), to(#153c74)) !important;
+	background-image: -moz-linear-gradient(top, #2365c1, #153c74) !important;
+	background-image: -ms-linear-gradient(top, #2365c1, #153c74) !important;
+	background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #2365c1), color-stop(100%, #153c74)) !important;
+	background-image: -webkit-linear-gradient(top, #2365c1, #153c74) !important;
+	background-image: -o-linear-gradient(top, #2365c1, #153c74) !important;
+	background-image: linear-gradient(#2365c1, #153c74) !important;
+	border-color: #153c74 #153c74 hsl(215, 69%, 22.5%) !important;
+	color: #fff !important;
+}
+
+.btn-on {
+	background-color: @kapow_yellow !important;
+	background-image: none !important;
+	color: #000 !important;
+	border-color: darken(@kapow_yellow, 30%) !important;
+}
+
+.btn-off {
+	background-color: #213A6B !important;
+	background-image: none !important;
+	color: #fff !important;
+	border-color: darken(#213A6B, 5%) !important;
+}
+
+.creator_type h4, .store_hours h4 {
+	color: @kapow_white !important;
+}
+
+.detail_img {
+	border: 3px solid @kapow_img_brdr_color;
+}
+
+.fav_menu a {
+	color: @kapow_fav_lnk_color !important;
+}
+
+.filter_box {
+	border-bottom: 2px solid darken(@kapow_blue, 15%);
+}
+
+.filter_tab {
+	background-color: darken(@kapow_blue, 15%);
+	color: lighten(@kapow_blue, 30%);
+}
+
+.filter_tab_on {
+	background-color: darken(@kapow_blue, 20%);
+	color: lighten(@kapow_blue, 35%);
+}
+
+.item_actions {
+	background-color: darken(@kapow_blue, 15%);
+	padding: 12px;	
+	margin-bottom: 10px;
+	clear: both;
+}
+
+.item_desc, .item_desc p {
+	color: @kapow_detail_txt_color;
+}
+
+.item_detail, .shop_detail, .generic_body {
+	color: @kapow_detail_txt_color;
+}
+
+.item_grid_lbl {
+	color: @kapow_white;
+}
+
+.navbar-inner {
+	background: transparent;
+	-ms-filter: "progid:DXImageTransform.Microsoft.gradient(enabled = false)";
+	filter: none !important;	
+}
+
+.navbar .nav>li>a {
+	text-shadow: 0 1px 0 darken(@kapow_blue, 20%);
+}
+
+.preview_img img {
+	border: 3px solid darken(@kapow_blue, 90%);
+}
+
+.shop_photo img {
+	border: 3px solid darken(@kapow_blue, 90%);
+}
+
+.store_main_photo {
+	border: 3px solid darken(@kapow_blue, 90%);
+}
+
+.store_map_listing {
+	color: @kapow_detail_txt_color;
+}
+
+.store_map_listing h5 {
+	color: @kapow_white;
+}
+
+.store_search_bar {
+	background-color: darken(@kapow_blue, 15%);
+}
+
+.thisweek h4, .thisweek h4 a {
+	color: darken(@kapow_blue, 90%);
+}
+
+.usr_img {
+	border: 1px solid @kapow_img_brdr_color;
+}
+
+.white-caret {
+	border-top-color: @kapow_white !important;
+	border-bottom-color: @kapow_white !important;
+}
+
+
+//dpv 

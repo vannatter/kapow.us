@@ -2,7 +2,7 @@ var msg_timeout;
 
 $(document).ready(function() {
 	var hash = document.location.hash;
-	if(hash) {
+	if (hash) {
 		$('.nav-tabs a[href='+hash+']').tab('show');
 		$('html, body').animate({ scrollTop: 0 }, 'fast');
 	}

@@ -11,12 +11,12 @@
 			$id = $shop['Store']['id'];
 			$name = $shop['Store']['name'];
 
-			if(isset($shop['Store']['PrimaryPhoto']['id'])) {
+			if (isset($shop['Store']['PrimaryPhoto']['id'])) {
 				$img = $this->Common->thumb($shop['Store']['PrimaryPhoto']['photo_path']);
-			} elseif(isset($shop['Store']['StorePhoto'][0])) {
+			} elseif (isset($shop['Store']['StorePhoto'][0])) {
 				$img = $this->Common->thumb($shop['Store']['StorePhoto'][0]['photo_path']);
 			} else {
-				$img = '/img/nocover.png';
+				$img = '/theme/Kapow/img/nocover.png';
 			}
 			?>
 			<div class="preview_img">

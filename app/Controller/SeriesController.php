@@ -20,11 +20,11 @@ class SeriesController extends AppController {
 	);
 
 	public function index() {
-		if($this->request->is('post') || $this->request->is('put')) {
+		if ($this->request->is('post') || $this->request->is('put')) {
 			$data = Sanitize::clean($this->request->data);
 
-			if(isset($data['Series']['terms'])) {
-				if(empty($data['Series']['terms'])) {
+			if (isset($data['Series']['terms'])) {
+				if (empty($data['Series']['terms'])) {
 					$this->redirect('/series');
 				}
 
@@ -43,7 +43,7 @@ class SeriesController extends AppController {
 			)
 		);
 
-		if(isset($this->request->query['terms'])) {
+		if (isset($this->request->query['terms'])) {
 			$terms = $this->request->query['terms'];
 
 			$con = array(
@@ -109,7 +109,7 @@ class SeriesController extends AppController {
 			)
 		);
 
-		if(!$series) {
+		if (!$series) {
 			$this->Session->setFlash('Series not found.', 'flash_neg');
 			$this->redirect("/");
 			exit;
@@ -119,7 +119,7 @@ class SeriesController extends AppController {
 		$this->set('title_for_layout', ucwords(strtolower($series['Series']['series_name'])));
 
 		## see if the current user (if there is one), fav'd this publisher
-		if($userFav = $this->UserFavorite->findByFavoriteItemIdAndUserIdAndItemType($id, $this->Auth->user('id'), 2)) {
+		if ($userFav = $this->UserFavorite->findByFavoriteItemIdAndUserIdAndItemType($id, $this->Auth->user('id'), 2)) {
 			$this->set('userFav', true);
 		} else {
 			$this->set('userFav', false);
@@ -127,13 +127,13 @@ class SeriesController extends AppController {
 	}
 
 	public function viewById($id) {
-		if($series = $this->Series->findById($id)) {
+		if ($series = $this->Series->findById($id)) {
 			$this->redirect(sprintf('/series/%s', parent::seoize($id, $series['Series']['series_name'])), 301);
 		}
 	}
 
 	public function items($id) {
-		if($this->request->is('ajax')) {
+		if ($this->request->is('ajax')) {
 			$this->layout = 'blank';
 
 			$this->Item->bindModel(array(

@@ -6,11 +6,11 @@
 <?php $this->Html->script('page/users.favorites', array('inline' => false)); ?>
 <?php echo $this->Element('headers/users/favorite_items'); ?>
 
-<?php if(isset($items) && is_array($items) && count($items) > 0) { ?>
+<?php if (isset($items) && is_array($items) && count($items) > 0) { ?>
 	<div id="item-scroll-list">
 		<?php $row = 0; ?>
 		<?php foreach($items as $item) { ?>
-			<?php if($row == 0) { ?>
+			<?php if ($row == 0) { ?>
 				<div class="row thisweek scroll-list-item">
 			<?php } ?>
 			<?php $row++; ?>
@@ -20,8 +20,8 @@
 				$name = $item['Item']['item_name'];
 
 				$img = $item['Item']['img_fullpath'];
-				if(empty($img)) {
-					$img = "/img/nocover.png";
+				if (empty($img)) {
+					$img = "/theme/Kapow/img/nocover.png";
 				} else {
 					$img = $this->Common->thumb($img);
 				}
@@ -57,17 +57,15 @@
 					<p><?php echo $item['Item']['description']; ?></p>
 				</div>
 			</div>
-			<?php if($row == 6) { ?>
+			<?php if ($row == 6) { ?>
 				</div>
 				<?php $row = 0; ?>
 			<?php } ?>
 		<?php } ?>
 	</div>
-	<?php if($this->Paginator->hasNext()) { ?>
+	<?php if ($this->Paginator->hasNext()) { ?>
 		<div id="item-scroll-nav">
-			<div class="pagination">
-				<?php echo $this->Paginator->next('next'); ?>
-			</div>
+			<div class="pagination"><ul><?php echo $this->Paginator->next('next'); ?></ul></div>
 		</div>
 	<?php } ?>
 <?php } ?>

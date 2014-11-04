@@ -34,7 +34,7 @@ class WincacheEngineTest extends CakeTestCase {
  */
 	public function setUp() {
 		parent::setUp();
-		$this->skipIf(!function_exists('wincache_ucache_set'), 'Wincache is not installed or configured properly.');
+		$this->skipif (!function_exists('wincache_ucache_set'), 'Wincache is not installed or configured properly.');
 		$this->_cacheDisable = Configure::read('Cache.disable');
 		Configure::write('Cache.disable', false);
 		Cache::config('wincache', array('engine' => 'Wincache', 'prefix' => 'cake_'));
@@ -130,7 +130,7 @@ class WincacheEngineTest extends CakeTestCase {
  * @return void
  */
 	public function testDecrement() {
-		$this->skipIf(
+		$this->skipif (
 			!function_exists('wincache_ucache_dec'),
 			'No wincache_ucache_dec() function, cannot test decrement().'
 		);
@@ -157,7 +157,7 @@ class WincacheEngineTest extends CakeTestCase {
  * @return void
  */
 	public function testIncrement() {
-		$this->skipIf(
+		$this->skipif (
 			!function_exists('wincache_ucache_inc'),
 			'No wincache_inc() function, cannot test increment().'
 		);

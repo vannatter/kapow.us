@@ -111,6 +111,6 @@
 		<li class="divider"></li>
 		<li><?php echo $this->Html->link(__('Index'), '/'); ?></li>
 		<li class="divider"></li>
-		<li><?= $this->Session->read('Auth.User.email'); ?></li>
+		<li><?php echo $this->Session->read('Auth.User.email'); ?></li>
 	</ul>
 </div>

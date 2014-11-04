@@ -8,7 +8,7 @@
 
 <div class="row">
 	<div class="span3 item_detail_img">	
-		<?php if ( ($creator['Creator']['creator_photo'] == "/img/covers") || (!$creator['Creator']['creator_photo']) ) { ?><img alt="<?php echo $creator['Creator']['creator_name']; ?>" src="/img/noprofile.png" class="detail_img" /><?php } else { ?><img alt="<?php echo $creator['Creator']['creator_name']; ?>" class="detail_img" src="<?php echo $this->Common->creator_thumb($creator['Creator']['creator_photo']); ?>" /><?php } ?>
+		<?php if ( ($creator['Creator']['creator_photo'] == "/img/covers") || (!$creator['Creator']['creator_photo']) ) { ?><img alt="<?php echo $creator['Creator']['creator_name']; ?>" src="/theme/Kapow/img/noprofile.png" class="detail_img" /><?php } else { ?><img alt="<?php echo $creator['Creator']['creator_name']; ?>" class="detail_img" src="<?php echo $this->Common->creator_thumb($creator['Creator']['creator_photo']); ?>" /><?php } ?>
 
 		<div class="creator_desc">
 			<?php echo $creator['Creator']['creator_bio']; ?>		
@@ -35,7 +35,7 @@
 		</div>
 		<?php } ?>
 
-		<?php if(isset($collabs) && count($collabs) > 0) { ?>
+		<?php if (isset($collabs) && count($collabs) > 0) { ?>
 			<div class="creator_collabs element_sideblock">
 				<h4><?php echo __('Collaborations'); ?>:</h4>
 				<ul class="unstyled">
@@ -46,7 +46,7 @@
 			</div>
 		<?php } ?>
 
-		<?php if(isset($creator['UserFavorite']) && count($creator['UserFavorite']) > 0) { ?>
+		<?php if (isset($creator['UserFavorite']) && count($creator['UserFavorite']) > 0) { ?>
 			<?php echo $this->Element('favorites/list', array('users' => $creator['UserFavorite'])); ?>
 		<?php } ?>
 	</div>

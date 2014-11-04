@@ -35,7 +35,7 @@ function initCommonAttributes(elm) {
 }
 
 function setFormValue(name, value) {
-	if(document.forms[0].elements[name]) document.forms[0].elements[name].value = value;
+	if (document.forms[0].elements[name]) document.forms[0].elements[name].value = value;
 }
 
 function insertDateTime(id) {
@@ -157,7 +157,7 @@ SXE.insertElement = function(element_name) {
 	tinyMCEPopup.execCommand('mceBeginUndoLevel');
 	if (elm == null) {
 		var s = SXE.inst.selection.getContent();
-		if(s.length > 0) {
+		if (s.length > 0) {
 			tagName = element_name;
 
 			insertInlineElement(element_name);
@@ -185,7 +185,7 @@ SXE.insertElement = function(element_name) {
 SXE.removeElement = function(element_name){
 	element_name = element_name.toLowerCase();
 	elm = SXE.inst.dom.getParent(SXE.focusElement, element_name.toUpperCase());
-	if(elm && elm.nodeName.toUpperCase() == element_name.toUpperCase()){
+	if (elm && elm.nodeName.toUpperCase() == element_name.toUpperCase()){
 		tinyMCEPopup.execCommand('mceBeginUndoLevel');
 		tinyMCE.execCommand('mceRemoveNode', false, elm);
 		SXE.inst.nodeChanged();
@@ -202,7 +202,7 @@ SXE.containsClass = function(elm,cl) {
 }
 
 SXE.removeClass = function(elm,cl) {
-	if(elm.className == null || elm.className == "" || !SXE.containsClass(elm,cl)) {
+	if (elm.className == null || elm.className == "" || !SXE.containsClass(elm,cl)) {
 		return true;
 	}
 	var classNames = elm.className.split(" ");
@@ -216,7 +216,7 @@ SXE.removeClass = function(elm,cl) {
 }
 
 SXE.addClass = function(elm,cl) {
-	if(!SXE.containsClass(elm,cl)) elm.className ? elm.className += " " + cl : elm.className = cl;
+	if (!SXE.containsClass(elm,cl)) elm.className ? elm.className += " " + cl : elm.className = cl;
 	return true;
 }
 

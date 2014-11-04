@@ -17,7 +17,7 @@
 <?php echo $this->Form->end(); ?>
 
 <?php
-if(isset($type)) {
+if (isset($type)) {
 	switch($type) {
 		case 1:   ## ITEM
 			echo $this->element('search/results/item');

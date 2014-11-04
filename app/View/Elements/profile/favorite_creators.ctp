@@ -16,8 +16,8 @@
 			$id = $creator['Creator']['id'];
 			$name = $creator['Creator']['creator_name'];
 			$img = $creator['Creator']['creator_photo'];
-			if(!$img || empty($img)) {
-				$img = '/img/nocover.png';
+			if (!$img || empty($img)) {
+				$img = '/theme/Kapow/img/nocover.png';
 			} else {
 				$img = $this->Common->thumb($img);
 			}

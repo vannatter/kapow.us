@@ -28,7 +28,7 @@ function insertIns() {
 	tinyMCEPopup.execCommand('mceBeginUndoLevel');
 	if (elm == null) {
 		var s = SXE.inst.selection.getContent();
-		if(s.length > 0) {
+		if (s.length > 0) {
 			insertInlineElement('INS');
 			var elementArray = tinymce.grep(SXE.inst.dom.select('ins'), function(n) {return n.id == '#sxe_temp_ins#';});
 			for (var i=0; i<elementArray.length; i++) {

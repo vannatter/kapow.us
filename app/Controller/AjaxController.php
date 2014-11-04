@@ -58,12 +58,12 @@ class AjaxController extends AppController {
 	public function itemHotness() {
 		$result = $this->_startResponse();
 		
-		if(isset($this->request->query['itemId']) && isset($this->request->query['value'])) {
+		if (isset($this->request->query['itemId']) && isset($this->request->query['value'])) {
 			$itemId = $this->request->query['itemId'];
 			$value = $this->request->query['value'];
 			
 			## make sure the item is valid
-			if($item = $this->Item->findById($itemId)) {
+			if ($item = $this->Item->findById($itemId)) {
 				$this->Item->id = $itemId;
 				$this->Item->saveField('hot', $value);
 			} else {
@@ -87,12 +87,12 @@ class AjaxController extends AppController {
 	public function publisherWeight() {
 		$result = $this->_startResponse();
 		
-		if(isset($this->request->query['publisherId']) && isset($this->request->query['value'])) {
+		if (isset($this->request->query['publisherId']) && isset($this->request->query['value'])) {
 			$publisherId = $this->request->query['publisherId'];
 			$value = $this->request->query['value'];
 			
 			## make sure the publisher is valid
-			if($publisher = $this->Publisher->findById($publisherId)) {
+			if ($publisher = $this->Publisher->findById($publisherId)) {
 				$this->Publisher->id = $publisherId;
 				$this->Publisher->saveField('weight', $value);
 			} else {

@@ -129,7 +129,7 @@ class FileTest extends CakeTestCase {
  * testPermission method
  */
 	public function testPermission() {
-		$this->skipIf(DIRECTORY_SEPARATOR === '\\', 'File permissions tests not supported on Windows.');
+		$this->skipif (DIRECTORY_SEPARATOR === '\\', 'File permissions tests not supported on Windows.');
 
 		$dir = TMP . 'tests' . DS . 'permissions' . DS;
 		$old = umask();
@@ -530,7 +530,7 @@ class FileTest extends CakeTestCase {
  * @return void
  */
 	public function testMime() {
-		$this->skipIf(!function_exists('finfo_open') && !function_exists('mime_content_type'), 'Not able to read mime type');
+		$this->skipif (!function_exists('finfo_open') && !function_exists('mime_content_type'), 'Not able to read mime type');
 		$path = CAKE . 'Test' . DS . 'test_app' . DS . 'webroot' . DS . 'img' . DS . 'cake.power.gif';
 		$file = new File($path);
 		$expected = 'image/gif';

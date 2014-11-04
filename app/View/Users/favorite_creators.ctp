@@ -7,11 +7,11 @@
 <?php $this->Html->script('page/users.favorites', array('inline' => false)); ?>
 <?php echo $this->Element('headers/users/favorite_creators'); ?>
 
-<?php if(isset($creators) && is_array($creators) && count($creators) > 0) { ?>
+<?php if (isset($creators) && is_array($creators) && count($creators) > 0) { ?>
 	<div id="item-scroll-list">
 		<?php $row = 0; ?>
 		<?php foreach($creators as $creator) { ?>
-			<?php if($row == 0) { ?>
+			<?php if ($row == 0) { ?>
 				<div class="row thisweek scroll-list-item">
 			<?php } ?>
 			<?php $row++; ?>
@@ -21,7 +21,7 @@
 				$name = $creator['Creator']['creator_name'];
 
 				$img = $creator['Creator']['creator_photo'];
-				if(empty($img) && isset($creator['Creator']['ItemCreator'][0])) {
+				if (empty($img) && isset($creator['Creator']['ItemCreator'][0])) {
 					$img = $creator['Creator']['ItemCreator'][0]['Item']['img_fullpath'];
 				}
 
@@ -30,7 +30,7 @@
 				<div class="preview_img">
 					<a href="/creators/<?php echo $seoString; ?>">
 						<?php if (empty($img)) { ?>
-							<img alt="<?php echo $name; ?>" src="/img/nocover.png" width="210" height="140" />
+							<img alt="<?php echo $name; ?>" src="/theme/Kapow/img/nocover.png" width="210" height="140" />
 						<?php } else { ?>
 							<img alt="<?php echo $name; ?>" src="<?php echo $this->Common->thumb($img); ?>" />
 						<?php } ?>
@@ -45,17 +45,15 @@
 					<p><?php echo $creator['Creator']['creator_bio']; ?></p>
 				</div>
 			</div>
-			<?php if($row == 6) { ?>
+			<?php if ($row == 6) { ?>
 				</div>
 				<?php $row = 0; ?>
 			<?php } ?>
 		<?php } ?>
 	</div>
-	<?php if($this->Paginator->hasNext()) { ?>
+	<?php if ($this->Paginator->hasNext()) { ?>
 		<div id="item-scroll-nav">
-			<div class="pagination">
-				<?php echo $this->Paginator->next('next'); ?>
-			</div>
+			<div class="pagination"><ul><?php echo $this->Paginator->next('next'); ?></ul></div>
 		</div>
 	<?php } ?>
 <?php } ?>

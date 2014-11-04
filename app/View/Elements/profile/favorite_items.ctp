@@ -11,8 +11,8 @@
 			$id = $item['Item']['id'];
 			$name = $item['Item']['item_name'];
 			$img = $item['Item']['img_fullpath'];
-			if(!$img || empty($img) || $img == '/img/covers') {
-				$img = '/img/nocover.png';
+			if (!$img || empty($img) || $img == '/img/covers') {
+				$img = '/theme/Kapow/img/nocover.png';
 			} else {
 				$img = $this->Common->thumb($img);
 			}

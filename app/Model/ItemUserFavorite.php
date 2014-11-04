@@ -42,7 +42,7 @@ class ItemUserFavorite extends AppModel {
 	);
 
 	public function removeByFavoriteId($favId) {
-		if($fav = $this->findByUserFavoriteId($favId)) {
+		if ($fav = $this->findByUserFavoriteId($favId)) {
 			$this->deleteAll(array('ItemUserFavorite.user_favorite_id' => $favId));
 		}
 	}

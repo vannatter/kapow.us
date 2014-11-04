@@ -6,7 +6,7 @@
 				<span class="icon-bar"></span>
 				<span class="icon-bar"></span>
 			</a>
-			<a class="brand" href="/"><img src="/img/logo.png" width="200" height="103" alt="Kapow" /></a>
+			<a class="brand" href="/"><img src="/theme/Kapow/img/logo.png" width="200" height="103" alt="Kapow" /></a>
 			<div class="nav-collapse">
 				<ul class="nav">
 					<li><?php echo $this->Html->link(__('New This Week'), array('controller' => 'items', 'action' => 'this_week')); ?></li>
@@ -18,7 +18,7 @@
 					if ($this->Session->read('Auth.User')) {
 						echo sprintf('<li>%s</li>', $this->Html->link(__('My Account'), array('controller' => 'my')));
 						if ($this->Session->read('Auth.User.facebook_id')) {
-							echo sprintf('<li>%s</li>', $this->Facebook->logout(array('redirect' => array('controller' => 'users', 'action' => 'logout'), 'label' => __('Logout'))));
+							echo sprintf('<li>%s</li>', $this->Facebook->logout(array('redirect' => array('controller' => 'users', 'action' => 'logout'), 'id' => false, 'label' => __('Logout'))));
 						} else {
 							echo sprintf('<li>%s</li>', $this->Html->link(__('Logout'), array('controller' => 'users', 'action' => 'logout')));
 						}

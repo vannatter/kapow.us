@@ -87,7 +87,7 @@ class Improvement extends AppModel {
 			)
 		);
 
-		if($this->save($add)) {
+		if ($this->save($add)) {
 			$id = $this->id;
 
 			foreach($data as $field) {

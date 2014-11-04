@@ -29,7 +29,7 @@ function insertDel() {
 	tinyMCEPopup.execCommand('mceBeginUndoLevel');
 	if (elm == null) {
 		var s = SXE.inst.selection.getContent();
-		if(s.length > 0) {
+		if (s.length > 0) {
 			insertInlineElement('del');
 			var elementArray = tinymce.grep(SXE.inst.dom.select('del'), function(n) {return n.id == '#sxe_temp_del#';});
 			for (var i=0; i<elementArray.length; i++) {

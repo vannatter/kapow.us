@@ -162,15 +162,15 @@ class AdminController extends AppController {
 	public function items() {
 		$filter = null;
 		
-		if(isset($this->request->data['Item']['filter'])) {
+		if (isset($this->request->data['Item']['filter'])) {
 			$filter = $this->request->data['Item']['filter'];
-		} elseif(isset($this->request->params['named']['filter'])) {
+		} elseif (isset($this->request->params['named']['filter'])) {
 			$filter = $this->request->params['named']['filter'];
 		}
 		
 		$this->Item->recursive = 0;
 		
-		if($filter) {
+		if ($filter) {
 			switch(strtoupper($filter)) {
 				case 'HOT':
 					$items = $this->paginate('Item', array('Item.hot >' => 0));
@@ -189,12 +189,12 @@ class AdminController extends AppController {
 	}
 
 	public function itemsEdit($id) {
-		if($this->request->is('put')) {
+		if ($this->request->is('put')) {
 			$data = Sanitize::clean($this->request->data);
 
 			$data['Item']['id'] = $id;
 
-			if($this->Item->save($data)) {
+			if ($this->Item->save($data)) {
 				$this->Session->setFlash(__('Item Saved!'), 'alert', array(
 					'plugin' => 'TwitterBootstrap',
 					'class' => 'alert-success'
@@ -206,7 +206,7 @@ class AdminController extends AppController {
 			$this->Item->id = $id;
 			$this->Item->contain(array('Section', 'Section.Category', 'Publisher', 'Series', 'ItemCreator', 'ItemTag'));
 			
-			if(!$this->Item->exists()) {
+			if (!$this->Item->exists()) {
 				$this->Session->setFlash(__('Item Not Found'), 'alert', array(
 					'plugin' => 'TwitterBootstrap',
 					'class' => 'alert-error'
@@ -243,18 +243,18 @@ class AdminController extends AppController {
 	}
 
 	public function creatorsEdit($id) {
-		if($this->request->is('put') || $this->request->is('post')) {
+		if ($this->request->is('put') || $this->request->is('post')) {
 			$data = Sanitize::clean($this->request->data);
 
 			$skip = false;
-			if(isset($data['Creator']['photo_upload']['name']) && !empty($data['Creator']['photo_upload']['name'])) {
+			if (isset($data['Creator']['photo_upload']['name']) && !empty($data['Creator']['photo_upload']['name'])) {
 				$uploadPath = Configure::read('Settings.creator_img_path');
 				$uploadPath .= '/' . $id . '/';
 
 				## process the upload, make sure its valid
 				$upload = $data['Creator']['photo_upload'];
 
-				if($msg = $this->Upload->image($upload, $uploadPath)) {
+				if ($msg = $this->Upload->image($upload, $uploadPath)) {
 					$this->Creator->validationErrors['creator_photo'] = $msg;
 					$skip = true;
 				} else {
@@ -262,11 +262,11 @@ class AdminController extends AppController {
 				}
 			}
 
-			if(!$skip) {
+			if (!$skip) {
 				$data['Creator']['id'] = $id;
 				$data['Creator']['locked_by_user_id'] = 0;   ## unlock creator
 
-				if($this->Creator->save($data)) {
+				if ($this->Creator->save($data)) {
 					$this->Session->setFlash(__('Creator Saved!'), 'alert', array(
 						'plugin' => 'TwitterBootstrap',
 						'class' => 'alert-success'
@@ -276,7 +276,7 @@ class AdminController extends AppController {
 			}
 		} else {
 			$this->Creator->id = $id;
-			if(!$this->Creator->exists()) {
+			if (!$this->Creator->exists()) {
 				$this->Session->setFlash(__('Creator Not Found'), 'alert', array(
 					'plugin' => 'TwitterBootstrap',
 					'class' => 'alert-error'
@@ -286,7 +286,7 @@ class AdminController extends AppController {
 
 			$creator = $this->Creator->read();
 
-			if($creator['Creator']['locked_by_user_id'] != 0 && $creator['Creator']['locked_by_user_id'] != $this->Auth->user('id')) {
+			if ($creator['Creator']['locked_by_user_id'] != 0 && $creator['Creator']['locked_by_user_id'] != $this->Auth->user('id')) {
 				$this->Session->setFlash(__('Creator locked other user'), 'alert', array(
 					'plugin' => 'TwitterBootstrap',
 					'class' => 'alert-error'
@@ -302,7 +302,7 @@ class AdminController extends AppController {
 
 	public function creatorsUnlock($id) {
 		$this->Creator->id = $id;
-		if(!$this->Creator->exists()) {
+		if (!$this->Creator->exists()) {
 			$this->Session->setFlash(__('Invalid Creator'), 'alert', array(
 				'plugin' => 'TwitterBootstrap',
 				'class' => 'alert-error'
@@ -313,7 +313,7 @@ class AdminController extends AppController {
 		$this->Creator->recursive = -1;
 		$creator = $this->Creator->read();
 
-		if($creator['Creator']['locked_by_user_id'] == $this->Auth->user('id')) {
+		if ($creator['Creator']['locked_by_user_id'] == $this->Auth->user('id')) {
 			$this->Creator->saveField('locked_by_user_id', 0);
 
 			$this->Session->setFlash(__('Creator Unlocked'), 'alert', array(
@@ -336,12 +336,12 @@ class AdminController extends AppController {
 	}
 
 	public function creatorTypesEdit($id) {
-		if($this->request->is('put')) {
+		if ($this->request->is('put')) {
 			$data = Sanitize::clean($this->request->data);
 
 			$data['CreatorType']['id'] = $id;
 
-			if($this->CreatorType->save($data)) {
+			if ($this->CreatorType->save($data)) {
 				$this->Session->setFlash(__('Creator Type Saved!'), 'alert', array(
 					'plugin' => 'TwitterBootstrap',
 					'class' => 'alert-success'
@@ -350,7 +350,7 @@ class AdminController extends AppController {
 			}
 		} else {
 			$this->CreatorType->id = $id;
-			if(!$this->CreatorType->exists()) {
+			if (!$this->CreatorType->exists()) {
 				$this->Session->setFlash(__('Creator Type Not Found'), 'alert', array(
 					'plugin' => 'TwitterBootstrap',
 					'class' => 'alert-error'
@@ -371,15 +371,15 @@ class AdminController extends AppController {
 
 		$filter = null;
 		
-		if(isset($this->request->data['Publisher']['filter'])) {
+		if (isset($this->request->data['Publisher']['filter'])) {
 			$filter = $this->request->data['Publisher']['filter'];
-		} elseif(isset($this->request->params['named']['filter'])) {
+		} elseif (isset($this->request->params['named']['filter'])) {
 			$filter = $this->request->params['named']['filter'];
 		}
 		
 		$this->Publisher->recursive = 0;
 		
-		if($filter) {
+		if ($filter) {
 			switch(strtoupper($filter)) {
 				case 'WEIGHTED':
 					$publishers = $this->paginate('Publisher', array('Publisher.weight >' => 0));
@@ -431,7 +431,7 @@ class AdminController extends AppController {
 				}
 			}
 
-			if(!$skip) {
+			if (!$skip) {
 				$data['Publisher']['id'] = $id;
 				$data['Publisher']['locked_by_user_id'] = 0;   ## unlock publisher
 
@@ -455,7 +455,7 @@ class AdminController extends AppController {
 
 			$publisher = $this->Publisher->read();
 
-			if($publisher['Publisher']['locked_by_user_id'] != 0 && $publisher['Publisher']['locked_by_user_id'] != $this->Auth->user('id')) {
+			if ($publisher['Publisher']['locked_by_user_id'] != 0 && $publisher['Publisher']['locked_by_user_id'] != $this->Auth->user('id')) {
 				$this->Session->setFlash(__('Publisher locked other user'), 'alert', array(
 					'plugin' => 'TwitterBootstrap',
 					'class' => 'alert-error'
@@ -471,7 +471,7 @@ class AdminController extends AppController {
 
 	public function publishersUnlock($id) {
 		$this->Publisher->id = $id;
-		if(!$this->Publisher->exists()) {
+		if (!$this->Publisher->exists()) {
 			$this->Session->setFlash(__('Invalid Publisher'), 'alert', array(
 				'plugin' => 'TwitterBootstrap',
 				'class' => 'alert-error'
@@ -482,7 +482,7 @@ class AdminController extends AppController {
 		$this->Publisher->recursive = -1;
 		$publisher = $this->Publisher->read();
 
-		if($publisher['Publisher']['locked_by_user_id'] == $this->Auth->user('id')) {
+		if ($publisher['Publisher']['locked_by_user_id'] == $this->Auth->user('id')) {
 			$this->Publisher->saveField('locked_by_user_id', 0);
 
 			$this->Session->setFlash(__('Publisher Unlocked'), 'alert', array(
@@ -500,21 +500,21 @@ class AdminController extends AppController {
 	}
 
 	public function series() {
-		if($this->request->is('post') || $this->request->is('put')) {
+		if ($this->request->is('post') || $this->request->is('put')) {
 			$data = Sanitize::clean($this->request->data);
 
-			if(isset($data['Series']['series_name']) && !empty($data['Series']['series_name'])) {
+			if (isset($data['Series']['series_name']) && !empty($data['Series']['series_name'])) {
 				$name = $data['Series']['series_name'];
 				$this->redirect('/admin/series?name=' . $name);
 			}
 		}
 
 		$name = null;
-		if(isset($this->request->query['name'])) {
+		if (isset($this->request->query['name'])) {
 			$name = Sanitize::clean($this->request->query['name']);
 		}
 
-		if($name) {
+		if ($name) {
 			$series = $this->paginate('Series', array('Series.series_name LIKE' => '%' . $name . '%'));
 		} else {
 			$series = $this->paginate('Series');
@@ -618,11 +618,11 @@ class AdminController extends AppController {
 			$storeId = Sanitize::clean($this->request->query['storeId']);
 
 			$this->Store->StorePhoto->id = $id;
-			if($this->Store->StorePhoto->exists()) {
+			if ($this->Store->StorePhoto->exists()) {
 				## make sure the photo belongs to the current store
 				$photo = $this->Store->StorePhoto->read(array('id', 'store_id'));
 
-				if($photo['StorePhoto']['store_id'] == $storeId) {
+				if ($photo['StorePhoto']['store_id'] == $storeId) {
 					## remove previous primary photo
 					$this->Store->StorePhoto->updateAll(array('StorePhoto.primary' => false), array('StorePhoto.store_id' => $storeId));
 
@@ -656,7 +656,7 @@ class AdminController extends AppController {
 
 	public function storesPhotoAllow($id) {
 		$this->Store->StorePhoto->id = $id;
-		if(!$this->Store->StorePhoto->exists()) {
+		if (!$this->Store->StorePhoto->exists()) {
 			$this->Session->setFlash(__('Invalid Photo'), 'alert', array(
 				'plugin' => 'TwitterBootstrap',
 				'class' => 'alert-error'
@@ -675,7 +675,7 @@ class AdminController extends AppController {
 	}
 
 	public function storesPhotoDelete($id) {
-		if($this->Store->StorePhoto->remove($id)) {
+		if ($this->Store->StorePhoto->remove($id)) {
 			$this->Session->setFlash(__('Photo Removed'), 'alert', array(
 				'plugin' => 'TwitterBootstrap',
 				'class' => 'alert-success'
@@ -698,7 +698,7 @@ class AdminController extends AppController {
 
 	public function storesNewView($storeId=null) {
 		$this->Store->id = $storeId;
-		if(!$this->Store->exists()) {
+		if (!$this->Store->exists()) {
 			$this->Session->setFlash(__('Invalid Store'), 'alert', array(
 				'plugin' => 'TwitterBootstrap',
 				'class' => 'alert-error'
@@ -706,13 +706,13 @@ class AdminController extends AppController {
 			$this->redirect('/admin/stores/new');
 		}
 
-		if($this->request->is('post') || $this->request->is('put')) {
+		if ($this->request->is('post') || $this->request->is('put')) {
 			$data = Sanitize::clean($this->request->data, array('escape' => false, 'encode' => false));
 
 			$data['Store']['admin_user_id'] = $this->Auth->user('id');
 			$data['Store']['id'] = $storeId;
 
-			if($this->Store->save($data)) {
+			if ($this->Store->save($data)) {
 				$this->Session->setFlash(__('Store Saved'), 'alert', array(
 					'plugin' => 'TwitterBootstrap',
 					'class' => 'alert-success'
@@ -734,12 +734,12 @@ class AdminController extends AppController {
 	}
 
 	public function usersEdit($id) {
-		if($this->request->is('put')) {
+		if ($this->request->is('put')) {
 			$data = Sanitize::clean($this->request->data);
 
 			$data['User']['id'] = $id;
 
-			if($this->User->save($data)) {
+			if ($this->User->save($data)) {
 				$this->Session->setFlash(__('User Saved!'), 'alert', array(
 					'plugin' => 'TwitterBootstrap',
 					'class' => 'alert-success'
@@ -748,7 +748,7 @@ class AdminController extends AppController {
 			}
 		} else {
 			$this->User->id = $id;
-			if(!$this->User->exists()) {
+			if (!$this->User->exists()) {
 				$this->Session->setFlash(__('User Not Found'), 'alert', array(
 					'plugin' => 'TwitterBootstrap',
 					'class' => 'alert-error'
@@ -767,12 +767,12 @@ class AdminController extends AppController {
 	}
 
 	public function categoriesEdit($id) {
-		if($this->request->is('put')) {
+		if ($this->request->is('put')) {
 			$data = Sanitize::clean($this->request->data);
 
 			$data['Category']['id'] = $id;
 
-			if($this->Category->save($data)) {
+			if ($this->Category->save($data)) {
 				$this->Session->setFlash(__('Category Saved!'), 'alert', array(
 					'plugin' => 'TwitterBootstrap',
 					'class' => 'alert-success'
@@ -781,7 +781,7 @@ class AdminController extends AppController {
 			}
 		} else {
 			$this->Category->id = $id;
-			if(!$this->Category->exists()) {
+			if (!$this->Category->exists()) {
 				$this->Session->setFlash(__('Category Not Found'), 'alert', array(
 					'plugin' => 'TwitterBootstrap',
 					'class' => 'alert-error'
@@ -800,12 +800,12 @@ class AdminController extends AppController {
 	}
 
 	public function sectionsEdit($id) {
-		if($this->request->is('put')) {
+		if ($this->request->is('put')) {
 			$data = Sanitize::clean($this->request->data);
 
 			$data['Section']['id'] = $id;
 
-			if($this->Section->save($data)) {
+			if ($this->Section->save($data)) {
 				$this->Session->setFlash(__('Section Saved!'), 'alert', array(
 					'plugin' => 'TwitterBootstrap',
 					'class' => 'alert-success'
@@ -814,7 +814,7 @@ class AdminController extends AppController {
 			}
 		} else {
 			$this->Section->id = $id;
-			if(!$this->Section->exists()) {
+			if (!$this->Section->exists()) {
 				$this->Session->setFlash(__('Section Not Found'), 'alert', array(
 					'plugin' => 'TwitterBootstrap',
 					'class' => 'alert-error'
@@ -846,7 +846,7 @@ class AdminController extends AppController {
 
 	public function reportsView($id) {
 		$this->Report->id = $id;
-		if(!$this->Report->exists()) {
+		if (!$this->Report->exists()) {
 			$this->Session->setFlash(__('Report Not Found'), 'alert', array(
 				'plugin' => 'TwitterBootstrap',
 				'class' => 'alert-error'
@@ -857,7 +857,7 @@ class AdminController extends AppController {
 
 		$report = $this->Report->read();
 
-		if($report['Report']['status'] == 1 && $report['Report']['admin_user_id'] != $this->Auth->user('id')) {
+		if ($report['Report']['status'] == 1 && $report['Report']['admin_user_id'] != $this->Auth->user('id')) {
 			$this->Session->setFlash(__('Report open by another user'), 'alert', array(
 				'plugin' => 'TwitterBootstrap',
 				'class' => 'alert-error'
@@ -897,7 +897,7 @@ class AdminController extends AppController {
 
 	public function reportsCancel($reportId=null) {
 		$this->Report->id = $reportId;
-		if(!$this->Report->exists()) {
+		if (!$this->Report->exists()) {
 			$this->Session->setFlash(__('Report Not Found'), 'alert', array(
 				'plugin' => 'TwitterBootstrap',
 				'class' => 'alert-error'
@@ -909,7 +909,7 @@ class AdminController extends AppController {
 		$report = $this->Report->read();
 
 		## make sure report is opened by user
-		if($report['Report']['admin_user_id'] != $this->Auth->user('id')) {
+		if ($report['Report']['admin_user_id'] != $this->Auth->user('id')) {
 			$this->Session->setFlash(__('Report open by another user'), 'alert', array(
 				'plugin' => 'TwitterBootstrap',
 				'class' => 'alert-error'
@@ -930,7 +930,7 @@ class AdminController extends AppController {
 
 	public function reportsClose($reportId=null) {
 		$this->Report->id = $reportId;
-		if(!$this->Report->exists()) {
+		if (!$this->Report->exists()) {
 			$this->Session->setFlash(__('Report Not Found'), 'alert', array(
 				'plugin' => 'TwitterBootstrap',
 				'class' => 'alert-error'
@@ -942,7 +942,7 @@ class AdminController extends AppController {
 		$report = $this->Report->read();
 
 		## make sure report is opened by user
-		if($report['Report']['admin_user_id'] != $this->Auth->user('id')) {
+		if ($report['Report']['admin_user_id'] != $this->Auth->user('id')) {
 			$this->Session->setFlash(__('Report open by another user'), 'alert', array(
 				'plugin' => 'TwitterBootstrap',
 				'class' => 'alert-error'
@@ -984,7 +984,7 @@ class AdminController extends AppController {
 
 	public function flagsView($id) {
 		$this->Flag->id = $id;
-		if(!$this->Flag->exists()) {
+		if (!$this->Flag->exists()) {
 			$this->Session->setFlash(__('Flagged Item Not Found'), 'alert', array(
 				'plugin' => 'TwitterBootstrap',
 				'class' => 'alert-error'
@@ -995,7 +995,7 @@ class AdminController extends AppController {
 
 		$flag = $this->Flag->read();
 
-		if($flag['Flag']['status'] == 1 && $flag['Flag']['admin_user_id'] != $this->Auth->user('id')) {
+		if ($flag['Flag']['status'] == 1 && $flag['Flag']['admin_user_id'] != $this->Auth->user('id')) {
 			$this->Session->setFlash(__('Flag open by another user'), 'alert', array(
 				'plugin' => 'TwitterBootstrap',
 				'class' => 'alert-error'
@@ -1036,7 +1036,7 @@ class AdminController extends AppController {
 
 	public function flagsCancel($reportId=null) {
 		$this->Flag->id = $reportId;
-		if(!$this->Flag->exists()) {
+		if (!$this->Flag->exists()) {
 			$this->Session->setFlash(__('Flag Not Found'), 'alert', array(
 				'plugin' => 'TwitterBootstrap',
 				'class' => 'alert-error'
@@ -1048,7 +1048,7 @@ class AdminController extends AppController {
 		$flag = $this->Flag->read();
 
 		## make sure flag is opened by user
-		if($flag['Flag']['admin_user_id'] != $this->Auth->user('id')) {
+		if ($flag['Flag']['admin_user_id'] != $this->Auth->user('id')) {
 			$this->Session->setFlash(__('Flag open by another user'), 'alert', array(
 				'plugin' => 'TwitterBootstrap',
 				'class' => 'alert-error'
@@ -1069,7 +1069,7 @@ class AdminController extends AppController {
 
 	public function flagsClose($reportId=null) {
 		$this->Flag->id = $reportId;
-		if(!$this->Flag->exists()) {
+		if (!$this->Flag->exists()) {
 			$this->Session->setFlash(__('Flag Not Found'), 'alert', array(
 				'plugin' => 'TwitterBootstrap',
 				'class' => 'alert-error'
@@ -1081,7 +1081,7 @@ class AdminController extends AppController {
 		$flag = $this->Flag->read();
 
 		## make sure flag is opened by user
-		if($flag['Flag']['admin_user_id'] != $this->Auth->user('id')) {
+		if ($flag['Flag']['admin_user_id'] != $this->Auth->user('id')) {
 			$this->Session->setFlash(__('Flag open by another user'), 'alert', array(
 				'plugin' => 'TwitterBootstrap',
 				'class' => 'alert-error'
@@ -1112,14 +1112,14 @@ class AdminController extends AppController {
 	}
 
 	public function blogsAdd() {
-		if($this->request->is('post') || $this->request->is('put')) {
+		if ($this->request->is('post') || $this->request->is('put')) {
 			$data = Sanitize::clean($this->request->data, array('escape' => false, 'encode' => false));
 
 			$data['Blog']['user_id'] = $this->Auth->user('id');
 			$data['Blog']['status'] = 1;   ## VISIBLE/PUBLIC
 
 			$this->Blog->create($data);
-			if($this->Blog->save($data)) {
+			if ($this->Blog->save($data)) {
 				$this->Session->setFlash(__('Blog Entry Saved'), 'alert', array(
 					'plugin' => 'TwitterBootstrap',
 					'class' => 'alert-success'
@@ -1132,7 +1132,7 @@ class AdminController extends AppController {
 
 	public function blogsEdit($id) {
 		$this->Blog->id = $id;
-		if(!$this->Blog->exists()) {
+		if (!$this->Blog->exists()) {
 			$this->Session->setFlash(__('Invalid Blog Entry'), 'alert', array(
 				'plugin' => 'TwitterBootstrap',
 				'class' => 'alert-error'
@@ -1140,13 +1140,13 @@ class AdminController extends AppController {
 			$this->redirect('/admin/blogs');
 		}
 
-		if($this->request->is('post') || $this->request->is('put')) {
+		if ($this->request->is('post') || $this->request->is('put')) {
 			$data = Sanitize::clean($this->request->data, array('escape' => false, 'encode' => false));
 
 			$data['Blog']['user_id'] = $this->Auth->user('id');
 			$data['Blog']['id'] = $id;
 
-			if($this->Blog->save($data)) {
+			if ($this->Blog->save($data)) {
 				$this->Session->setFlash(__('Blog Entry Saved'), 'alert', array(
 					'plugin' => 'TwitterBootstrap',
 					'class' => 'alert-success'
@@ -1163,7 +1163,7 @@ class AdminController extends AppController {
 
 	public function blogsDelete($id) {
 		$this->Blog->id = $id;
-		if(!$this->Blog->exists()) {
+		if (!$this->Blog->exists()) {
 			$this->Session->setFlash(__('Invalid Blog Entry'), 'alert', array(
 				'plugin' => 'TwitterBootstrap',
 				'class' => 'alert-error'
@@ -1187,7 +1187,7 @@ class AdminController extends AppController {
 		$uploadPath = APP . 'webroot' . DS . 'img' . DS . 'admin' . DS;
 
 		$result = array('resultCode' => 'failed');
-		if($msg = $this->Upload->image($upload, $uploadPath)) {
+		if ($msg = $this->Upload->image($upload, $uploadPath)) {
 			$result['msg'] = $msg;
 		} else {
 			$result['resultCode'] = '';
@@ -1239,7 +1239,7 @@ class AdminController extends AppController {
 		parent::hasAdminSession();
 
 		$this->UserActivity->id = $detailId;
-		if(!$this->UserActivity->exists()) {
+		if (!$this->UserActivity->exists()) {
 			$this->Session->setFlash(__('Not Found'), 'alert', array(
 				'plugin' => 'TwitterBootstrap',
 				'class' => 'alert-error'
@@ -1258,7 +1258,7 @@ class AdminController extends AppController {
 
 	public function improvementsView($id=null) {
 		$this->Improvement->id = $id;
-		if(!$this->Improvement->exists()) {
+		if (!$this->Improvement->exists()) {
 			$this->Session->setFlash(__('Not Found'), 'alert', array(
 				'plugin' => 'TwitterBootstrap',
 				'class' => 'alert-error'
@@ -1279,16 +1279,16 @@ class AdminController extends AppController {
 	}
 
 	public function improvementsAccept() {
-		if($this->request->is('ajax')) {
+		if ($this->request->is('ajax')) {
 			$result = array('error' => true, 'message' => '', 'redirect' => '');
 
-			if(isset($this->params->query)) {
+			if (isset($this->params->query)) {
 				$data = $this->params->query;
 
-				if(isset($data['id']) && isset($data['fieldId'])) {
+				if (isset($data['id']) && isset($data['fieldId'])) {
 					## make sure we have a valid improvement record
 					$this->Improvement->id = $data['id'];
-					if(!$this->Improvement->exists()) {
+					if (!$this->Improvement->exists()) {
 						$result['message'] = __('Invalid');
 						return new CakeResponse(array('body' => json_encode($result)));
 					}
@@ -1296,7 +1296,7 @@ class AdminController extends AppController {
 
 					## make sure we have a valid improvement field
 					$this->Improvement->ImprovementField->id = $data['fieldId'];
-					if(!$this->Improvement->ImprovementField->exists()) {
+					if (!$this->Improvement->ImprovementField->exists()) {
 						$result['message'] = __('Invalid Field');
 						return new CakeResponse(array('body' => json_encode($result)));
 					}
@@ -1340,7 +1340,7 @@ class AdminController extends AppController {
 					$this->Improvement->ImprovementField->saveField('status', 1);
 					$this->Improvement->ImprovementField->saveField('admin_user_id', $this->Auth->user('id'));
 
-					if($this->Improvement->ImprovementField->find('count', array('conditions' => array('ImprovementField.improvement_id' => $data['id'], 'ImprovementField.status' => 0))) == 0) {
+					if ($this->Improvement->ImprovementField->find('count', array('conditions' => array('ImprovementField.improvement_id' => $data['id'], 'ImprovementField.status' => 0))) == 0) {
 						$this->Improvement->id = $data['id'];
 						$this->Improvement->saveField('status', 99);   ## CLOSED
 						$this->Improvement->saveField('admin_user_id', 0);
@@ -1367,16 +1367,16 @@ class AdminController extends AppController {
 	}
 
 	public function improvementsDecline() {
-		if($this->request->is('ajax')) {
+		if ($this->request->is('ajax')) {
 			$result = array('error' => true, 'message' => '', 'redirect' => '');
 
-			if(isset($this->params->query)) {
+			if (isset($this->params->query)) {
 				$data = $this->params->query;
 
-				if(isset($data['id']) && isset($data['fieldId'])) {
+				if (isset($data['id']) && isset($data['fieldId'])) {
 					## make sure we have a valid improvement record
 					$this->Improvement->id = $data['id'];
-					if(!$this->Improvement->exists()) {
+					if (!$this->Improvement->exists()) {
 						$result['message'] = __('Invalid');
 						return new CakeResponse(array('body' => json_encode($result)));
 					}
@@ -1384,7 +1384,7 @@ class AdminController extends AppController {
 
 					## make sure we have a valid improvement field
 					$this->Improvement->ImprovementField->id = $data['fieldId'];
-					if(!$this->Improvement->ImprovementField->exists()) {
+					if (!$this->Improvement->ImprovementField->exists()) {
 						$result['message'] = __('Invalid Field');
 						return new CakeResponse(array('body' => json_encode($result)));
 					}
@@ -1393,7 +1393,7 @@ class AdminController extends AppController {
 					$this->Improvement->ImprovementField->saveField('status', 99);   ## DECLINED
 					$this->Improvement->ImprovementField->saveField('admin_user_id', $this->Auth->user('id'));
 
-					if($this->Improvement->ImprovementField->find('count', array('conditions' => array('ImprovementField.improvement_id' => $data['id'], 'ImprovementField.status' => 0))) == 0) {
+					if ($this->Improvement->ImprovementField->find('count', array('conditions' => array('ImprovementField.improvement_id' => $data['id'], 'ImprovementField.status' => 0))) == 0) {
 						$this->Improvement->id = $data['id'];
 						$this->Improvement->saveField('status', 99);   ## CLOSED
 						$this->Improvement->saveField('admin_user_id', 0);
@@ -1421,7 +1421,7 @@ class AdminController extends AppController {
 
 	public function improvementsCancel($id=null) {
 		$this->Improvement->id = $id;
-		if(!$this->Improvement->exists()) {
+		if (!$this->Improvement->exists()) {
 			$this->Session->setFlash(__('Not Found'), 'alert', array(
 				'plugin' => 'TwitterBootstrap',
 				'class' => 'alert-error'
@@ -1445,12 +1445,12 @@ class AdminController extends AppController {
 	}
 
 	public function appMessagesNew() {
-		if($this->request->is('post') || $this->request->is('put')) {
+		if ($this->request->is('post') || $this->request->is('put')) {
 			$data = Sanitize::clean($this->request->data);
 
 			$data['AppMessage']['user_id'] = $this->Auth->user('id');
 
-			if($this->AppMessage->save($data)) {
+			if ($this->AppMessage->save($data)) {
 				$this->Session->setFlash(__('Message Saved'), 'alert', array(
 					'plugin' => 'TwitterBootstrap',
 					'class' => 'alert-success'

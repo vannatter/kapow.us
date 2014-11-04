@@ -28,7 +28,7 @@ class ProfileController extends AppController {
 		}
 
 		$email = $user['User']['email'];
-		$default = "http://kapow.us/img/noprofile.png";
+		$default = "http://kapow.us/theme/Kapow/img/noprofile.png";
 		$size = 300;
 		$grav_url = "http://www.gravatar.com/avatar/" . md5( strtolower( trim( $email ) ) ) . "?d=" . urlencode( $default ) . "&s=" . $size;
 
@@ -36,7 +36,7 @@ class ProfileController extends AppController {
 		$this->_getProfileData($user);
 
 		## see if the current user (if there is one), fav'd this publisher
-		if($userFav = $this->UserFavorite->findByFavoriteItemIdAndUserIdAndItemType($user['User']['id'], $this->Auth->user('id'), 6)) {
+		if ($userFav = $this->UserFavorite->findByFavoriteItemIdAndUserIdAndItemType($user['User']['id'], $this->Auth->user('id'), 6)) {
 			$this->set('userFav', true);
 		} else {
 			$this->set('userFav', false);

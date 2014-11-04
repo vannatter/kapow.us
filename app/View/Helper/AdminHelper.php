@@ -46,7 +46,7 @@ class AdminHelper extends Helper {
 	}
 
 	public function cleanDate($datetime, $wrap=false) {
-		if(substr($datetime, 0, 10) == '0000-00-00') {
+		if (substr($datetime, 0, 10) == '0000-00-00') {
 			$clean = '';
 		} else {
 			$clean = $this->Time->format('m/d/Y', $datetime);

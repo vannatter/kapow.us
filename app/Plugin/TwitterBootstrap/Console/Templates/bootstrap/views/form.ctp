@@ -13,7 +13,7 @@
 						if ($field == $primaryKey) {
 							$id = "\t\t\t\techo \$this->BootstrapForm->hidden('{$field}');\n";
 						} else {
-							if($this->templateVars['schema'][$field]['null'] == false){
+							if ($this->templateVars['schema'][$field]['null'] == false){
 								$required = ", array(\n\t\t\t\t\t'required' => 'required',\n\t\t\t\t\t'helpInline' => '<span class=\"label label-important\">' . __('Required') . '</span>&nbsp;')\n\t\t\t\t";
 							} else {
 								$required = null;

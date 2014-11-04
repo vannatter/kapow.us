@@ -1143,7 +1143,7 @@ class CI_Image_lib {
 							return FALSE;
 						}
 
-						return imagecreatefromgif($path);
+						return imagecreatefromgif ($path);
 				break;
 			case 2 :
 						if ( ! function_exists('imagecreatefromjpeg'))
@@ -1193,7 +1193,7 @@ class CI_Image_lib {
 							return FALSE;
 						}
 
-						if ( ! @imagegif($resource, $this->full_dst_path))
+						if ( ! @imagegif ($resource, $this->full_dst_path))
 						{
 							$this->set_error('imglib_save_failed');
 							return FALSE;
@@ -1252,7 +1252,7 @@ class CI_Image_lib {
 
 		switch ($this->image_type)
 		{
-			case 1		:	imagegif($resource);
+			case 1		:	imagegif ($resource);
 				break;
 			case 2		:	imagejpeg($resource, '', $this->quality);
 				break;

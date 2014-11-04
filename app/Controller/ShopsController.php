@@ -69,7 +69,7 @@ class ShopsController extends AppController {
 
 	public function viewById($id) {
 		$this->Store->id = $id;
-		if(!$this->Store->exists()) {
+		if (!$this->Store->exists()) {
 			$this->Session->setFlash(__('Store Not Found!'), 'alert', array(
 				'plugin' => 'TwitterBootstrap',
 				'class' => 'alert-error'
@@ -83,7 +83,7 @@ class ShopsController extends AppController {
 	}
 
 	public function getStores() {
-		if($this->request->is('ajax')) {
+		if ($this->request->is('ajax')) {
 			$result = array('error' => true, 'message' => '');
 
 			$lat = '';
@@ -92,14 +92,14 @@ class ShopsController extends AppController {
 
 			$radius = 25;
 
-			if(isset($this->request->query['lat']) && isset($this->request->query['long'])) {
+			if (isset($this->request->query['lat']) && isset($this->request->query['long'])) {
 				$lat = $this->request->query['lat'];
 				$long = $this->request->query['long'];
 
 				$url = sprintf('http://maps.googleapis.com/maps/api/geocode/json?latlng=%s,%s&sensor=false', $lat, $long);
 				$address = json_decode(file_get_contents($url));
 
-				if($address && $address->status === "OK") {
+				if ($address && $address->status === "OK") {
 					$comps = $address->results;
 					$comps = $comps[0];
 
@@ -127,22 +127,22 @@ class ShopsController extends AppController {
 
 					$coordAddress = '';
 
-					if(!empty($city)) {
+					if (!empty($city)) {
 						$coordAddress = $city;
 					}
-					if(!empty($state)) {
+					if (!empty($state)) {
 						$coordAddress .= ', ' . $state;
 					}
-					if(!empty($zip)) {
+					if (!empty($zip)) {
 						$coordAddress .= ', ' . $zip;
 					}
 				} else {
 					$result['message'] = __('ERROR: %s', $address->status);
 				}
-			} elseif(isset($this->request->query['location'])) {
+			} elseif (isset($this->request->query['location'])) {
 				$coordAddress = $this->request->query['location'];
 
-				if(isset($this->request->query['radius'])) {
+				if (isset($this->request->query['radius'])) {
 					$radius = (int)$this->request->query['radius'];
 				}
 
@@ -150,7 +150,7 @@ class ShopsController extends AppController {
 				$locUrl = sprintf('http://maps.googleapis.com/maps/api/geocode/json?address=%s&sensor=false', str_replace(' ', '+', $coordAddress));
 				$loc = json_decode(file_get_contents($locUrl));
 
-				if($loc->status == 'OK') {
+				if ($loc->status == 'OK') {
 					$loc = $loc->results;
 					$loc = $loc[0];
 
@@ -159,8 +159,8 @@ class ShopsController extends AppController {
 				}
 			}
 
-			if(!empty($lat) && !empty($long)) {
-				if($data = $this->Store->radius($lat, $long, $radius)) {
+			if (!empty($lat) && !empty($long)) {
+				if ($data = $this->Store->radius($lat, $long, $radius)) {
 					$result['location'] = $coordAddress;
 					$result['latitude'] = $lat;
 					$result['longitude'] = $long;
@@ -255,14 +255,14 @@ class ShopsController extends AppController {
 	public function add() {
 		parent::hasSession();
 
-		if($this->request->is('post') || $this->request->is('put')) {
+		if ($this->request->is('post') || $this->request->is('put')) {
 			$data = Sanitize::clean($this->request->data, array('encode' => false, 'escape' => false));
 
 			$data['Store']['user_id'] = $this->Auth->user('id');
 			$data['Store']['status_id'] = 2;   ### needs approval
 
 			$address = '';
-			if(!empty($data['Store']['address']) && !empty($data['Store']['city']) && !empty($data['Store']['state'])) {
+			if (!empty($data['Store']['address']) && !empty($data['Store']['city']) && !empty($data['Store']['state'])) {
 				$address = $data['Store']['address'] . ' ';
 				$address .= $data['Store']['address_2'] .  ' ';
 				$address .= $data['Store']['city'] . ' ';
@@ -272,7 +272,7 @@ class ShopsController extends AppController {
 				$locUrl = sprintf('http://maps.googleapis.com/maps/api/geocode/json?address=%s&sensor=false', str_replace(' ', '+', $address));
 				$loc = json_decode(file_get_contents($locUrl));
 
-				if($loc->status == 'OK') {
+				if ($loc->status == 'OK') {
 					$loc = $loc->results;
 					$loc = $loc[0];
 
@@ -281,21 +281,21 @@ class ShopsController extends AppController {
 				}
 			}
 
-			if($this->Store->save($data)) {
+			if ($this->Store->save($data)) {
 				$this->Session->setFlash(__('Shop submitted for approval'), 'flash_pos');
 			}
 		}
 	}
 
 	public function claim($shopId=null) {
-		if(!$shopId) {
+		if (!$shopId) {
 			$this->Session->setFlash(__('Invalid Shop'), 'flash_neg');
 			$this->redirect('/shops');
 			exit;
 		}
 
 		## make sure the shop is valid
-		if($shop = $this->Store->findById($shopId)) {
+		if ($shop = $this->Store->findById($shopId)) {
 			$this->set('title_for_layout', __('Claim Shop'));
 
 			$this->set('shop', $shop);

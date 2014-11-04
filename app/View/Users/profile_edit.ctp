@@ -56,7 +56,7 @@
 		<?php echo $this->Form->submit(__('Save Profile'), array('class'=>'btn btn-custom')); ?>
 		<?php echo $this->Form->end(); ?>
 
-		<?php if(empty($this->request->data['User']['facebook'])) { ?>
+		<?php if (empty($this->request->data['User']['facebook'])) { ?>
 		<h3><?php echo __('Change Password'); ?></h3>
 		<?php echo $this->Form->create('User', array('class' => 'form-horizontal')); ?>
 		<?php echo $this->Form->input('clear_password', array('type' => 'password', 'label' => __('Password'), 'class' => 'span4')); ?>

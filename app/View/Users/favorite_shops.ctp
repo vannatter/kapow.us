@@ -6,11 +6,11 @@
 <?php $this->Html->script('page/users.favorites', array('inline' => false)); ?>
 <?php echo $this->Element('headers/users/favorite_shops'); ?>
 
-<?php if(isset($shops) && is_array($shops) && count($shops) > 0) { ?>
+<?php if (isset($shops) && is_array($shops) && count($shops) > 0) { ?>
 	<div id="item-scroll-list">
 		<?php $row = 0; ?>
 		<?php foreach($shops as $shop) { ?>
-			<?php if($row == 0) { ?>
+			<?php if ($row == 0) { ?>
 				<div class="row thisweek scroll-list-item">
 			<?php } ?>
 			<?php $row++; ?>
@@ -19,16 +19,16 @@
 				$id = $shop['Store']['id'];
 				$name = $shop['Store']['name'];
 
-				if(isset($shop['Store']['StorePhoto'][0])) {
+				if (isset($shop['Store']['StorePhoto'][0])) {
 					$img = $shop['Store']['StorePhoto'][0]['photo_path'];
 
-					if(empty($img)) {
-						$img = "/img/nocover.png";
+					if (empty($img)) {
+						$img = "/theme/Kapow/img/nocover.png";
 					} else {
 						$img = $this->Common->thumb($img);
 					}
 				} else {
-					$img = "/img/nocover.png";
+					$img = "/theme/Kapow/img/nocover.png";
 				}
 
 				$seoString = $this->Common->seoize($id, $name);
@@ -59,17 +59,15 @@
 				<h4><?php echo $this->Html->link($name, sprintf('/shops/%s', $seoString)); ?></h4>
 
 			</div>
-			<?php if($row == 6) { ?>
+			<?php if ($row == 6) { ?>
 				</div>
 				<?php $row = 0; ?>
 			<?php } ?>
 		<?php } ?>
 	</div>
-	<?php if($this->Paginator->hasNext()) { ?>
+	<?php if ($this->Paginator->hasNext()) { ?>
 		<div id="item-scroll-nav">
-			<div class="pagination">
-				<?php echo $this->Paginator->next('next'); ?>
-			</div>
+			<div class="pagination"><ul><?php echo $this->Paginator->next('next'); ?></ul></div>
 		</div>
 	<?php } ?>
 <?php } ?>

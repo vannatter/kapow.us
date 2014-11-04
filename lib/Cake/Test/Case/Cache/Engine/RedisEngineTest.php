@@ -34,7 +34,7 @@ class RedisEngineTest extends CakeTestCase {
  * @return void
  */
 	public function setUp() {
-		$this->skipIf(!class_exists('Redis'), 'Redis is not installed or configured properly.');
+		$this->skipif (!class_exists('Redis'), 'Redis is not installed or configured properly.');
 
 		$this->_cacheDisable = Configure::read('Cache.disable');
 		Configure::write('Cache.disable', false);

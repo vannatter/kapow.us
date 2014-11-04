@@ -147,7 +147,7 @@ class MysqlTest extends CakeTestCase {
  * @return void
  */
 	public function testLocalizedFloats() {
-		$this->skipIf(DS === '\\', 'The locale is not supported in Windows and affect the others tests.');
+		$this->skipif (DS === '\\', 'The locale is not supported in Windows and affect the others tests.');
 
 		$restore = setlocale(LC_NUMERIC, 0);
 		setlocale(LC_NUMERIC, 'de_DE');
@@ -3814,7 +3814,7 @@ class MysqlTest extends CakeTestCase {
 		$this->Dbo->useNestedTransactions = true;
 		if ($this->Dbo->nestedTransactionSupported() === false) {
 			$this->Dbo->useNestedTransactions = $nested;
-			$this->skipIf(true, 'The MySQL server do not support nested transaction');
+			$this->skipif (true, 'The MySQL server do not support nested transaction');
 		}
 
 		$this->loadFixtures('Inno');

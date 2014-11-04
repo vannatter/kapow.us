@@ -31,7 +31,7 @@
 		}
 		?>
 		<div class="span2 preview_block <?php if ($hasPull) { echo "preview_block_on"; } ?>">
-			<div class="preview_img"><a href="/items/<?php echo $this->Common->seoize($item['Item']['id'], $item['Item']['item_name']); ?>"><?php if ($item['Item']['img_fullpath'] == "/img/covers") { ?><img alt="<?php echo $item['Item']['item_name']; ?>" src="/img/nocover.png" width="210" height="140" /><?php } else { ?><img alt="<?php echo $item['Item']['item_name']; ?>" src="<?php echo $this->Common->thumb($item['Item']['img_fullpath']); ?>" /><?php } ?></a></div>
+			<div class="preview_img"><a href="/items/<?php echo $this->Common->seoize($item['Item']['id'], $item['Item']['item_name']); ?>"><?php if ($item['Item']['img_fullpath'] == "/img/covers") { ?><img alt="<?php echo $item['Item']['item_name']; ?>" src="/theme/Kapow/img/nocover.png" width="210" height="140" /><?php } else { ?><img alt="<?php echo $item['Item']['item_name']; ?>" src="<?php echo $this->Common->thumb($item['Item']['img_fullpath']); ?>" /><?php } ?></a></div>
 
 			<?php echo $this->Element('users/my/pull_list_menu', array("item" => $item)); ?>
 
@@ -70,11 +70,9 @@
 
 </div>
 	
-<?php if($this->Paginator->hasNext()) { ?>
+<?php if ($this->Paginator->hasNext()) { ?>
 	<div id="item-scroll-nav">
-		<div class="pagination">
-			<?php echo $this->Paginator->next('next'); ?>
-		</div>
+		<div class="pagination"><ul><?php echo $this->Paginator->next('next'); ?></ul></div>
 	</div>
 <?php } ?>
 

@@ -50,8 +50,8 @@ class UserFavorite extends AppModel {
 		$returnType = 1;   ## ADD
 
 		## if the fav already exists, remove it
-		if($fav = $this->find('first', array('conditions' => array('UserFavorite.user_id' => $userId, 'UserFavorite.favorite_item_id' => $id, 'UserFavorite.item_type' => $type), 'recursive' => -1))) {
-			if(!$forceAdd) {   ## special logic for when forcing a type
+		if ($fav = $this->find('first', array('conditions' => array('UserFavorite.user_id' => $userId, 'UserFavorite.favorite_item_id' => $id, 'UserFavorite.item_type' => $type), 'recursive' => -1))) {
+			if (!$forceAdd) {   ## special logic for when forcing a type
 				## remove
 				$this->delete($fav['UserFavorite']['id']);
 
@@ -77,7 +77,7 @@ class UserFavorite extends AppModel {
 			switch($type) {
 				case 2:
 					$this->bindModel(array('hasOne' => array('Item' => array('foreignKey' => 'favorite_item_id'))));
-					if($items = $this->Item->find('list', array('conditions' => array('Item.series_id' => $id), 'fields' => array('id')))) {
+					if ($items = $this->Item->find('list', array('conditions' => array('Item.series_id' => $id), 'fields' => array('id')))) {
 						foreach($items as $item) {
 							$this->ItemUserFavorite->add($userId, $item, 2, $this->id);
 						}
@@ -86,7 +86,7 @@ class UserFavorite extends AppModel {
 					break;
 				case 3:
 					$this->bindModel(array('hasOne' => array('Item' => array('foreignKey' => 'favorite_item_id'))));
-					if($items = $this->Item->ItemCreator->find('list', array('conditions' => array('ItemCreator.creator_id' => $id), 'fields' => array('item_id')))) {
+					if ($items = $this->Item->ItemCreator->find('list', array('conditions' => array('ItemCreator.creator_id' => $id), 'fields' => array('item_id')))) {
 						foreach($items as $item) {
 							$this->ItemUserFavorite->add($userId, $item, 3, $this->id);
 						}
@@ -95,7 +95,7 @@ class UserFavorite extends AppModel {
 					break;
 				case 4:
 					$this->bindModel(array('hasOne' => array('Item' => array('foreignKey' => 'favorite_item_id'))));
-					if($items = $this->Item->find('list', array('conditions' => array('Item.publisher_id' => $id), 'fields' => array('id')))) {
+					if ($items = $this->Item->find('list', array('conditions' => array('Item.publisher_id' => $id), 'fields' => array('id')))) {
 						foreach($items as $item) {
 							$this->ItemUserFavorite->add($userId, $item, 4, $this->id);
 						}

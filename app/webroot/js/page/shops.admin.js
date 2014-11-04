@@ -12,7 +12,7 @@ $(document).ready(function() {
 		boxes.attr("disabled", true);
 
 		$.getJSON('/admin/stores/setPrimaryPhoto', { 'photoId': id, 'storeId': storeId }, function(data) {
-			if(data.error) {
+			if (data.error) {
 				alert(data.message);
 			} else {
 				boxes.prop("checked", false);

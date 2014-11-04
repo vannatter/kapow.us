@@ -8408,7 +8408,7 @@ tinymce.create('tinymce.ui.Toolbar:tinymce.ui.Container', {
 					case "exact":
 						l = s.elements || '';
 
-						if(l.length > 0) {
+						if (l.length > 0) {
 							each(explode(l), function(v) {
 								if (DOM.get(v)) {
 									ed = new tinymce.Editor(v, s);

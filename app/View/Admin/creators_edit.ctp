@@ -10,7 +10,7 @@
 <?php echo $this->Form->input('creator_facebook', array('class' => 'span6')); ?>
 <?php echo $this->Form->input('creator_twitter', array('class' => 'span6')); ?>
 <?php echo $this->Form->input('creator_photo', array('class' => 'span6', 'disabled' => true)); ?>
-<?php if(!empty($this->request->data['Creator']['creator_photo'])) { ?>
+<?php if (!empty($this->request->data['Creator']['creator_photo'])) { ?>
 	<div class="control-group">
 		<div class="controls">
 			<?php echo $this->Html->image($this->request->data['Creator']['creator_photo'], array('class' => 'span6')); ?>

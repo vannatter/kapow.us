@@ -634,7 +634,7 @@ class CakeLogTest extends CakeTestCase {
  * test levels customization
  */
 	public function testLevelCustomization() {
-		$this->skipIf(DIRECTORY_SEPARATOR === '\\', 'Log level tests not supported on Windows.');
+		$this->skipif (DIRECTORY_SEPARATOR === '\\', 'Log level tests not supported on Windows.');
 
 		$levels = CakeLog::defaultLevels();
 		$this->assertNotEmpty($levels);

@@ -39,7 +39,7 @@
 	</div>
 	
 	<div class="span9 item_detail">
-		<?php if(!isset($public) || !$public) { ?>
+		<?php if (!isset($public) || !$public) { ?>
 		<?php echo $this->Element('users/my/actions'); ?>
 		<?php } ?>
 		<?php echo $this->Element('users/my/pull_list'); ?>

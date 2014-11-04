@@ -34,7 +34,7 @@ class UserItem extends AppModel {
 	public function toggle($id, $userId) {
 		$return = 1;
 
-		if($ui = $this->findByItemIdAndUserId($id, $userId)) {
+		if ($ui = $this->findByItemIdAndUserId($id, $userId)) {
 			$this->delete($ui['UserItem']['id']);
 			$return = 2;
 		} else {
@@ -47,7 +47,7 @@ class UserItem extends AppModel {
 			);
 
 			$this->create($toAdd);
-			if($this->save($toAdd)) {
+			if ($this->save($toAdd)) {
 				$return = 1;
 			}
 		}

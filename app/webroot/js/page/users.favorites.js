@@ -6,7 +6,7 @@ $(document).ready(function() {
 		var block = $(this).parent();
 
 		$.getJSON('/favorites/myRemove', { id: id }, function(result) {
-			if(result.error) {
+			if (result.error) {
 				alert(result.message);
 			} else {
 				block.remove();

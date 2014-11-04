@@ -243,7 +243,7 @@ class CakeSocketTest extends CakeTestCase {
  * @return void
  */
 	public function testEnableCryptoSocketExceptionNoSsl() {
-		$this->skipIf(!extension_loaded('openssl'), 'OpenSSL is not enabled cannot test SSL.');
+		$this->skipif (!extension_loaded('openssl'), 'OpenSSL is not enabled cannot test SSL.');
 		$configNoSslOrTls = array('host' => 'localhost', 'port' => 80, 'timeout' => 0.1);
 
 		// testing exception on no ssl socket server for ssl and tls methods
@@ -273,7 +273,7 @@ class CakeSocketTest extends CakeTestCase {
  * @return void
  */
 	protected function _connectSocketToSslTls() {
-		$this->skipIf(!extension_loaded('openssl'), 'OpenSSL is not enabled cannot test SSL.');
+		$this->skipif (!extension_loaded('openssl'), 'OpenSSL is not enabled cannot test SSL.');
 		$configSslTls = array('host' => 'smtp.gmail.com', 'port' => 465, 'timeout' => 5);
 		$this->Socket = new CakeSocket($configSslTls);
 		try {
@@ -357,7 +357,7 @@ class CakeSocketTest extends CakeTestCase {
  * @return void
  */
 	public function testGetContext() {
-		$this->skipIf(!extension_loaded('openssl'), 'OpenSSL is not enabled cannot test SSL.');
+		$this->skipif (!extension_loaded('openssl'), 'OpenSSL is not enabled cannot test SSL.');
 		$config = array(
 			'host' => 'smtp.gmail.com',
 			'port' => 465,

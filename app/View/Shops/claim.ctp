@@ -12,7 +12,7 @@
 		<?php if (@$shop['StorePhoto'][0]['photo_path']) { ?>
 			<div class="row">
 				<?php
-				if(isset($shop['PrimaryPhoto']['photo_path'])) {
+				if (isset($shop['PrimaryPhoto']['photo_path'])) {
 					$photoPath = $shop['PrimaryPhoto']['photo_path'];
 				} else {
 					$photoPath = $shop['StorePhoto'][0]['photo_path'];
@@ -22,7 +22,7 @@
 			</div>
 		<?php } ?>
 
-		<?php if($shop['Store']['latitude'] && $shop['Store']['longitude']) { ?>
+		<?php if ($shop['Store']['latitude'] && $shop['Store']['longitude']) { ?>
 			<div class="row">
 				<div id="shop-map" class="span4" data-lat="<?php echo $shop['Store']['latitude']; ?>" data-long="<?php echo $shop['Store']['longitude']; ?>"></div>
 			</div>

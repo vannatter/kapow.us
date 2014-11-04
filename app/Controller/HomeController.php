@@ -53,7 +53,7 @@ class HomeController extends AppController {
 		$this->set('welcome', 'Welcome to Kapow!');
 		$this->set('title_for_layout', '');
 
-		$this->set('og_image', 'http://kapow.us/img/kapow_fb.png');
+		$this->set('og_image', 'http://kapow.us/theme/Kapow/img/kapow_fb.png');
 	}
 	
 	public function sitemap() {

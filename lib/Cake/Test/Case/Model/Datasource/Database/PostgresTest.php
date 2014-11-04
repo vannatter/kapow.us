@@ -217,7 +217,7 @@ class PostgresTest extends CakeTestCase {
 	public function setUp() {
 		Configure::write('Cache.disable', true);
 		$this->Dbo = ConnectionManager::getDataSource('test');
-		$this->skipIf(!($this->Dbo instanceof Postgres));
+		$this->skipif (!($this->Dbo instanceof Postgres));
 		$this->Dbo2 = new DboPostgresTestDb($this->Dbo->config, false);
 		$this->model = new PostgresTestModel();
 	}
@@ -940,7 +940,7 @@ class PostgresTest extends CakeTestCase {
  */
 	public function testNestedTransaction() {
 		$this->Dbo->useNestedTransactions = true;
-		$this->skipIf($this->Dbo->nestedTransactionSupported() === false, 'The Postgres server do not support nested transaction');
+		$this->skipif ($this->Dbo->nestedTransactionSupported() === false, 'The Postgres server do not support nested transaction');
 
 		$this->loadFixtures('Article');
 		$model = new Article();

@@ -29,7 +29,7 @@ class TagsController extends AppController {
 
 	public function view($id, $name) {
 		$this->Tag->id = $id;
-		if(!$this->Tag->exists()) {
+		if (!$this->Tag->exists()) {
 			$this->Session->setFlash(__('Tag Not Found'), 'alert', array(
 				'plugin' => 'TwitterBootstrap',
 				'class' => 'alert-error'
@@ -52,7 +52,7 @@ class TagsController extends AppController {
 	}
 
 	public function viewById($id) {
-		if($tag = $this->Tag->findById($id)) {
+		if ($tag = $this->Tag->findById($id)) {
 			$this->redirect(sprintf('/tags/%s', parent::seoize($id, $tag['Tag']['tag_name'])), 301);
 		}
 	}

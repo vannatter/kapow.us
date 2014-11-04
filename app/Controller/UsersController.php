@@ -35,15 +35,15 @@ class UsersController extends AppController {
 	}
 
 	public function login() {
-		if($this->request->ext == 'json') {
+		if ($this->request->ext == 'json') {
 			$result = array('error' => true, 'message' => '', 'user' => array());
 
-			if(@$this->params['form']['user'] && @$this->params['form']['pass']) {
+			if (@$this->params['form']['user'] && @$this->params['form']['pass']) {
 				$data = array('User' => array('email' => $this->params['form']['user'], 'password' => $this->params['form']['pass']));
 
 				$data = $this->Auth->hashPasswords($data);
 
-				if($this->Auth->login($data)) {
+				if ($this->Auth->login($data)) {
 					$result['error'] = false;
 
 					$result['user'] = array('id' => $this->Auth->user('id'), 'username' => $this->Auth->user('username'), 'email' => $this->Auth->user('email'));
@@ -58,7 +58,7 @@ class UsersController extends AppController {
 		} elseif ($this->request->is('post')) {
 			if ($this->Auth->login()) {
 				$username = $this->Auth->user('username');
-				if(empty($username)) {
+				if (empty($username)) {
 					$this->redirect('/users/setUsername');
 				} else {
 					$this->redirect($this->Auth->redirect());
@@ -66,7 +66,7 @@ class UsersController extends AppController {
 			} else {
 				$this->Session->setFlash(__('Invalid username or password, try again'), 'flash_neg');
 			}
-		} elseif($this->Auth->user()) {
+		} elseif ($this->Auth->user()) {
 			$this->redirect('/');
 		}
 		
@@ -196,7 +196,7 @@ class UsersController extends AppController {
 		$user = $this->User->read();
 
 		$email = $user['User']['email'];
-		$default = "http://kapow.us/img/noprofile.png";
+		$default = "http://kapow.us/theme/Kapow/img/noprofile.png";
 		$size = 300;
 		$grav_url = "http://www.gravatar.com/avatar/" . md5( strtolower( trim( $email ) ) ) . "?d=" . urlencode( $default ) . "&s=" . $size;
 
@@ -386,14 +386,14 @@ class UsersController extends AppController {
 		$this->User->id = $this->Auth->user('id');
 		$user = $this->User->read();
 
-		if($this->request->is('post') || $this->request->is('put')) {
+		if ($this->request->is('post') || $this->request->is('put')) {
 			$data = Sanitize::clean($this->request->data);
 
 			$data['User']['id'] = $this->Auth->user('id');
 
-			if($this->User->save($data)) {
+			if ($this->User->save($data)) {
 				$message = __('Profile Saved');
-				if(isset($data['User']['clear_password'])) {
+				if (isset($data['User']['clear_password'])) {
 					$message = __('Password Changed');
 				}
 				$this->Session->setFlash($message, 'flash_pos');
@@ -401,7 +401,7 @@ class UsersController extends AppController {
 			}
 		}
 
-		if(isset($this->request->data)) {
+		if (isset($this->request->data)) {
 			$this->request->data = array_merge($this->request->data, $user);
 		} else {
 			$this->request->data = $user;
@@ -490,12 +490,12 @@ class UsersController extends AppController {
 	public function setUsername() {
 		parent::hasSession();
 
-		if($this->request->is('post') || $this->request->is('put')) {
+		if ($this->request->is('post') || $this->request->is('put')) {
 			$data = Sanitize::clean($this->request->data);
 
 			$data['User']['id'] = $this->Auth->user('id');
 
-			if($this->User->save($data)) {
+			if ($this->User->save($data)) {
 				$this->Session->write('Auth', $this->User->read(null, $this->Auth->User('id')));
 
 				$this->Session->setFlash(__('Username saved!'), 'flash_pos');
@@ -506,15 +506,15 @@ class UsersController extends AppController {
 	}
 
 	public function libraryRemove($itemId=null) {
-		if($this->request->is('ajax')) {
+		if ($this->request->is('ajax')) {
 			$result = array('error' => true, 'message' => __('Invalid'), 'type' => 1);
 
 			$itemId = $this->request->query['id'];
 
-			if($this->Auth->user()) {
+			if ($this->Auth->user()) {
 				## make sure the this favorite belongs to the user
-				if($item = $this->UserItem->find('first', array('conditions' => array('UserItem.id' => $itemId), 'recursive' => -1))) {
-					if($item['UserItem']['user_id'] == $this->Auth->user('id')) {
+				if ($item = $this->UserItem->find('first', array('conditions' => array('UserItem.id' => $itemId), 'recursive' => -1))) {
+					if ($item['UserItem']['user_id'] == $this->Auth->user('id')) {
 						$this->UserItem->delete($itemId);
 
 						$result['error'] = false;

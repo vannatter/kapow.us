@@ -40,17 +40,16 @@
 							$name = $improve['Store']['name'];
 							break;
 					}
-
 					echo substr($name, 0, 30);
 					?>
 				</td>
 				<td><?php echo $this->Admin->cleanDate($improve['Improvement']['created']); ?></td>
 				<td>
 					<?php
-					if($improve['Improvement']['status'] == 0 || $improve['Improvement']['admin_user_id'] == $this->Session->read('Auth.User.id')) {
+					if ($improve['Improvement']['status'] == 0 || $improve['Improvement']['admin_user_id'] == $this->Session->read('Auth.User.id')) {
 						echo $this->Html->link(__('Open'), sprintf('/admin/improvements/view/%s', $improve['Improvement']['id']), array(
 							'class' => 'btn btn-small btn-inverse'));
-					} elseif($improve['Improvement']['status'] == 1) {
+					} elseif ($improve['Improvement']['status'] == 1) {
 						echo $improve['Admin']['username'];
 					}
 					?>
@@ -59,4 +58,4 @@
 		<?php } ?>
 		</tbody>
 	</table>
-<?= $this->Paginator->pagination(); ?>
+<?php echo $this->Paginator->pagination(); ?>

@@ -1048,13 +1048,13 @@ class ToolsController extends AppController {
 				if (strpos($value, 'last verified:') !== false) {
 					## get the store name
 					$storeName = substr($value, 0, strpos($value, ':'));
-				} elseif(substr_count($value, ',') == 3) {
+				} elseif (substr_count($value, ',') == 3) {
 					$address = $value;
 
 					## address can use a little cleanup
 					$address = str_replace(', ....', '', $address);
 
-				} elseif(strpos($value, 'Ph:') !== false) {
+				} elseif (strpos($value, 'Ph:') !== false) {
 					$phoneNo = $value;
 				}
 
@@ -1110,14 +1110,14 @@ class ToolsController extends AppController {
 	}
 
 	private function _googlePlacesSearch($searchText=null, $log=null) {
-		if($searchText) {
+		if ($searchText) {
 			$url = sprintf(Configure::read('Settings.API.google.places_url'), $searchText, Configure::read('Settings.API.google.key'));
 
 			$this->log(sprintf('googlePlacesSearch: %s', $url));
 
 			$results = file_get_contents($url);
 
-			if($log) {
+			if ($log) {
 				file_put_contents($log, print_r($results, true), FILE_APPEND);
 			}
 
@@ -1139,14 +1139,14 @@ class ToolsController extends AppController {
 	}
 
 	private function _googleDetailsSearch($reference=null, $log=null) {
-		if($reference) {
+		if ($reference) {
 			$url = sprintf(Configure::read('Settings.API.google.details_url'), $reference, Configure::read('Settings.API.google.key'));
 
 			$this->log(sprintf('googleDetailsSearch: %s', $url));
 
 			$results = file_get_contents($url);
 
-			if($log) {
+			if ($log) {
 				file_put_contents($log, print_r($results, true), FILE_APPEND);
 			}
 
@@ -1168,7 +1168,7 @@ class ToolsController extends AppController {
 	}
 
 	private function _processStore($data=null) {
-		if(!$data) {
+		if (!$data) {
 			$file = APP . 'tmp' . DS . 'logs' . DS . 'storeDetails.txt';
 			$data = json_decode(file_get_contents($file));
 		}
@@ -1203,7 +1203,7 @@ class ToolsController extends AppController {
 		);
 
 		foreach($data->result->address_components as $addressParts) {
-			if(@$addressParts->types[0]) {
+			if (@$addressParts->types[0]) {
 				switch($addressParts->types[0]) {
 					case 'street_number':
 						$store['address'] = $addressParts->long_name;
@@ -1224,22 +1224,22 @@ class ToolsController extends AppController {
 			}
 		}
 
-		if(isset($data->result->formatted_phone_number)) {
+		if (isset($data->result->formatted_phone_number)) {
 			$store['phone_no'] = $data->result->formatted_phone_number;
 		}
 
-		if(isset($data->result->geometry->location->lat) && isset($data->result->geometry->location->lng)) {
+		if (isset($data->result->geometry->location->lat) && isset($data->result->geometry->location->lng)) {
 			$store['latitude'] = $data->result->geometry->location->lat;
 			$store['longitude'] = $data->result->geometry->location->lng;
 		}
 
-		if(isset($data->result->name)) {
+		if (isset($data->result->name)) {
 			$store['name'] = $data->result->name;
 		}
 
-		if(isset($data->result->opening_hours->periods)) {
+		if (isset($data->result->opening_hours->periods)) {
 			foreach($data->result->opening_hours->periods as $day) {
-				if(@$day->close->day) {
+				if (@$day->close->day) {
 					switch($day->close->day) {
 						case 0:   ## SUNDAY
 							$store['Hour']['sunday_close'] = (int)$day->close->time;
@@ -1274,11 +1274,11 @@ class ToolsController extends AppController {
 			}
 		}
 
-		if(isset($data->result->website)) {
+		if (isset($data->result->website)) {
 			$store['website'] = $data->result->website;
 		}
 
-		if(isset($data->result->reference)) {
+		if (isset($data->result->reference)) {
 			$store['google_reference'] = $data->result->reference;
 		}
 
@@ -1387,7 +1387,7 @@ class ToolsController extends AppController {
 			'recursive' => -1
 		));
 
-		if($items) {
+		if ($items) {
 			$this->log(sprintf('%s items to process', count($items)));
 
 			foreach($items as $item) {
@@ -1396,7 +1396,7 @@ class ToolsController extends AppController {
 
 				$img_fullPath = str_replace('//', '/', $img_fullPath);
 
-				if(is_file($img_fullPath)) {
+				if (is_file($img_fullPath)) {
 					$ext = pathinfo($img, PATHINFO_EXTENSION);
 
 					foreach($thumbs as $thumb) {

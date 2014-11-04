@@ -13,14 +13,14 @@ class SearchController extends AppController {
 	public $uses = array('Item', 'Publisher', 'Creator', 'Series');
 
 	public function index() {
-		if($this->request->is('post') || $this->request->is('put')) {
+		if ($this->request->is('post') || $this->request->is('put')) {
 			$data = Sanitize::clean($this->request->data);
 
-			if(isset($data['Search']['terms']) && isset($data['Search']['type'])) {
+			if (isset($data['Search']['terms']) && isset($data['Search']['type'])) {
 				$terms = $data['Search']['terms'];
 				$type = $data['Search']['type'];
 
-				if(empty($terms)) {
+				if (empty($terms)) {
 					$this->redirect('/search');
 				}
 
@@ -28,7 +28,7 @@ class SearchController extends AppController {
 			}
 		}
 
-		if(isset($this->request->query['terms']) && isset($this->request->query['type'])) {
+		if (isset($this->request->query['terms']) && isset($this->request->query['type'])) {
 			$terms = $this->request->query['terms'];
 			$type = $this->request->query['type'];
 
