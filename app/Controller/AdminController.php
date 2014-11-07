@@ -21,9 +21,17 @@ App::uses('AppController', 'Controller');
  * @property AppMessage $AppMessage
  */
 class AdminController extends AppController {
+	public $theme = 'Admin';
 	public $name = 'Admin';
 	public $uses = array('Item', 'Creator', 'Publisher', 'Series', 'Store', 'User', 'Category', 'CreatorType', 'Section', 'Report', 'StorePhoto', 'Blog', 'Flag', 'UserActivity', 'Improvement', 'AppMessage');
-	public $helpers = array('States', 'TinyMCE.TinyMCE', 'Admin');
+	public $helpers = array(
+		'States',
+		'TinyMCE.TinyMCE',
+		'Admin',
+		'Html' => array('className' => 'BoostCake.BoostCakeHtml'),
+		'Form' => array('className' => 'BoostCake.BoostCakeForm'),
+		'Paginator' => array('className' => 'BoostCake.BoostCakePaginator'),
+	);
 	public $components = array('Upload');
 	public $paginate = array(
 		'Item' => array(
@@ -83,8 +91,6 @@ class AdminController extends AppController {
 	public function beforeFilter() {
 		parent::beforeFilter();
 		parent::hasAdminSession();
-
-		$this->layout = 'admin';
 
 		## some stat stuff
 		$this->set('photoQueueTotal', $this->Store->StorePhoto->find('count', array(
