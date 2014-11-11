@@ -902,16 +902,18 @@ class ToolsController extends AppController {
 					$this->ItemUserFavorite->add($fav['UserFavorite']['user_id'], $item_id, 2, $fav['UserFavorite']['id']);
 				}
 
-				foreach($updatedTypes['creator'] as $creator) {
-					$favCreator = $this->UserFavorite->find('all', array(
-						'conditions' => array(
-							'UserFavorite.favorite_item_id' => $creator['creator_id'],
-							'UserFavorite.item_type' => 3
-						)
-					));
-
-					foreach($favCreator as $fav) {
-						$this->ItemUserFavorite->add($fav['UserFavorite']['user_id'], $item_id, 3, $fav['UserFavorite']['id']);
+				if (@$updatedTypes['creator']) {
+					foreach($updatedTypes['creator'] as $creator) {
+						$favCreator = $this->UserFavorite->find('all', array(
+							'conditions' => array(
+								'UserFavorite.favorite_item_id' => $creator['creator_id'],
+								'UserFavorite.item_type' => 3
+							)
+						));
+	
+						foreach($favCreator as $fav) {
+							$this->ItemUserFavorite->add($fav['UserFavorite']['user_id'], $item_id, 3, $fav['UserFavorite']['id']);
+						}
 					}
 				}
 				///*************************************************************************************

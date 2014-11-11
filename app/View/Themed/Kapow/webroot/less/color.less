@@ -19,12 +19,8 @@ A:hover {
 	color: lighten(@kapow_blue, 20%) !important;
 }
 
-H1, H2, H3, H4, H5, H6 {
-	color: #333333;
-}
-
 H2 {
-	color: @kapow_h2_color !important;
+	color: @kapow_h2_color;
 }
 
 HR {
@@ -36,6 +32,12 @@ HR {
 	background-color: rgb(44,83,158);
 	background-image: url(/theme/Kapow/img/bg.png) !important;
 	background-repeat: no-repeat !important;
+}
+
+#infscr-loading {
+	border: 1px solid #152a53;
+	background-color: #3f69bb;	
+	color: #fff !important;
 }
 
 #map-canvas, #shop-map {
@@ -50,6 +52,10 @@ HR {
 	background: -o-radial-gradient(center, ellipse cover,  rgba(44,83,158,1) 0%,rgba(44,83,158,1) 100%);
 	background: -ms-radial-gradient(center, ellipse cover,  rgba(44,83,158,1) 0%,rgba(44,83,158,1) 100%);
 	background: radial-gradient(ellipse at center,  rgba(44,83,158,1) 0%,rgba(44,83,158,1) 100%);
+}
+
+.bread h3 {
+	color: lighten(@kapow_blue, 60%);
 }
 
 .btn.disabled {
@@ -79,8 +85,24 @@ HR {
 .btn-off {
 	background-color: #213A6B !important;
 	background-image: none !important;
-	color: #fff !important;
+	color: @kapow_white !important;
 	border-color: darken(#213A6B, 5%) !important;
+}
+
+.control-group.error .checkbox, .control-group.error .radio, .control-group.error input, .control-group.error select, .control-group.error textarea {
+	color: @kapow_black;
+}
+
+.create_account a, .create_account, .create_account:hover {
+	color: @kapow_white !important;
+}
+
+.creator_desc {
+	color: @kapow_detail_txt_color;
+}
+
+.creator_name {
+	color: @kapow_white;
 }
 
 .creator_type h4, .store_hours h4 {
@@ -91,8 +113,31 @@ HR {
 	border: 3px solid @kapow_img_brdr_color;
 }
 
+.element_sideblock h4 {
+	color: @kapow_white;
+}
+
+.fav_label a {
+	color: @kapow_white !important;
+}
+
 .fav_menu a {
 	color: @kapow_fav_lnk_color !important;
+}
+
+.fav_menu > li > a:hover, .fav_menu > li > a:focus {
+  background-color: #ddd !important;
+  background-image: none;
+  filter: none;
+}
+
+.fav_on a {
+	color: @kapow_white !important;
+	background-color: darken(@kapow_blue, 3%);
+}
+
+.fav_on a:hover {
+	color: @kapow_black !important;
 }
 
 .filter_box {
@@ -107,6 +152,24 @@ HR {
 .filter_tab_on {
 	background-color: darken(@kapow_blue, 20%);
 	color: lighten(@kapow_blue, 35%);
+}
+
+.flash_neg {
+	background: fade(@kapow_red, 90%);
+	color: @kapow_black;
+}
+   	
+.flash_pos, .flash_msg {
+	background: fade(darken(@kapow_blue, 20%), 90%);
+	color: @kapow_white;
+}
+
+.footnote {
+	color: @kapow_footer_color;
+}
+
+.footnote a {
+	color: @kapow_footer_color;
 }
 
 .item_actions {
@@ -126,6 +189,31 @@ HR {
 
 .item_grid_lbl {
 	color: @kapow_white;
+}
+
+.item_tags {
+	color: @kapow_white;
+}
+
+.label {
+	background-color: darken(@kapow_blue, 30%);
+}
+
+.label, .badge {
+	background-color: @kapow_black;
+}
+
+.loading {
+	color: @kapow_white;
+}
+
+.login_block {
+	background-color: darken(@kapow_blue, 15%);
+	color: @kapow_white;
+}
+
+.login_intro, .login_intro p {
+	color: #78b0e9;
 }
 
 .navbar-inner {
@@ -174,6 +262,3 @@ HR {
 	border-top-color: @kapow_white !important;
 	border-bottom-color: @kapow_white !important;
 }
-
-
-//dpv 

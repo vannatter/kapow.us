@@ -24,6 +24,10 @@ BODY {
 	background-attachment: fixed;
 }
 
+LI A.pull_list_btn {
+	margin-right: 0 !important;
+}
+
 P {
 	font-size: 16px;
 }
@@ -45,6 +49,25 @@ P {
 	margin-top: 0px;
 	padding-left: 0 !important;
 	padding-right: 0 !important;
+}
+
+#hotness { 
+	width: 75%; 
+	margin-left: auto; 
+	margin-right: auto; 
+}
+
+#infscr-loading {
+	text-align: center;
+	padding: 10px;
+	font-style: normal !important;
+	clear: both;
+	overflow: hidden;
+	margin-top: 40px !important;
+}
+
+#infscr-loading img {
+	text-align: center;
 }
 
 #main-container {
@@ -69,9 +92,18 @@ P {
 	height: 200px;
 }
 
+#storeList {
+	display: block;
+}
+
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // class definitions ///////////////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+.badge {
+	font-size: 16px;
+	padding: 5px 10px 5px 10px;
+}
 
 .blog_date {
 	clear: both;
@@ -85,7 +117,6 @@ P {
 }
 
 .bread h3 {
-	color: lighten(@kapow_blue, 60%);
 	margin: 0;
 	padding: 0;
 	font-size: 20px;
@@ -100,6 +131,20 @@ P {
 	text-shadow: none !important;	
 	-webkit-font-smoothing: antialiased;
 	font-weight: bold;
+}
+
+.btn-hgh {
+	margin-left: 4px;
+	padding-top: 5px !important;
+	padding-bottom: 5px !important;
+}
+
+.btn-lrgr {
+	font-size: 14px;
+}
+
+.btn-lrgr i {
+	margin-top: 3px;
 }
 
 .btn-on {
@@ -118,14 +163,49 @@ P {
 	padding-right: 10px;
 }
 
+.create_account a, .create_account, .create_account:hover {
+	font-weight: bold !important;
+	width: 70%;
+}
+
+.creator_desc {
+	text-align: left;
+	clear: both;
+	font-size: 16px;
+	margin-top: 10px;	
+}
+
+.creator_name {
+	text-align: left;
+	clear: both;
+	margin-top: 20px;	
+	font-size: 20px;
+}
+
 .creator_type h4, .store_hours h4 {
 	padding-bottom: 2px;
 	margin: 5px 0px 0px 0px;
 }
 
+.element_sideblock {
+	font-size: 16px;
+	text-align: left;
+	word-wrap: break-word;
+	line-height: 14px;
+}
+
+.element_sideblock h4 {
+	font-size: 16px;
+	margin: 10px 0 0 0;
+}
+
 .fav_menu a {
 	font-size: 15px;
 	padding-left: 10px !important;
+}
+
+.fb_login_connect {
+	padding-top: 4px;
 }
 
 .filter_box {
@@ -138,11 +218,10 @@ P {
 
 .filter_tab {
 	float: right;
-	margin-right: 5px;
+	margin: 20px 5px auto auto;
 	overflow: hidden;
 	padding: 2px 10px 0 10px;
 	font-size: 14px;
-	margin-top: 20px;
 }
 
 .flash_pos, .flash_neg, .flash_msg {
@@ -153,13 +232,45 @@ P {
 	width: 100%;
 	height: 25px;
 	border: none;
-	text-align:center;
+	text-align: center;
 	padding: 5px 0 0 0;
 	margin: 0;
 	font-weight: normal;
 	font-size: 17px;
-	text-transform:capitalize;
+	text-transform: capitalize;
 	cursor: pointer;
+}
+
+.float-left {
+	float: left;
+}
+
+.float-right {
+	float: right;
+}
+
+.footcopy {
+	float: left;
+}
+
+.footlinks {
+	float: right;
+}
+
+.footlinks a {
+	margin-left: 10px;
+}
+
+.footnote {
+	margin-top: 40px;
+}
+
+.icon-white {
+	margin-top: 3px;
+}
+
+.infin_txt {
+	font-size: 18px;
 }
 
 .item_actions {
@@ -190,13 +301,51 @@ P {
 	text-align: center;
 }	
 
-
 .item_grid {
 	margin-top: 30px;
 }
 
 .item_grid_row {
 	margin-bottom: 5px;
+}
+
+.item_tags {
+	margin-top: 20px;
+}
+
+.label {
+	font-size: 12px;
+	font-weight: normal;
+	margin: 3px 3px 0 0;
+	padding: 5px 10px 5px 10px;
+}
+
+.label .icon-white {
+	margin-top: 1px;
+}
+
+.loading {
+	font-size: 18px;
+}
+
+.login_block {
+	padding: 12px;	
+	margin-bottom: 10px;
+	clear: both;
+	overflow: hidden;
+	font-size: 18px !important;
+}
+
+.login_btn {
+	margin-right: 40px;
+}
+
+.login_intro, .login_intro p {
+	font-size: 20px;
+}
+
+.login_ipt {
+	width: 97%;
 }
 
 .map_marker {
@@ -234,6 +383,10 @@ P {
 	box-shadow: none;
 }
 
+.pad_it {
+	padding: 10px;
+}
+
 .preview_block {
 	min-height: 400px;
 	max-height: 500px;
@@ -258,6 +411,10 @@ P {
 	overflow: hidden;
 }
 
+.pull_list_btn {
+	margin-right: 5px;
+}
+
 .shop_photo img {
 	max-width: 60px;
 	overflow: hidden;
@@ -270,7 +427,7 @@ P {
 }
 
 .store_map_listing {
-	font-size: 14px;	
+	font-size: 14px;
 }
 
 .store_map_listing h5 {
@@ -298,7 +455,12 @@ P {
 	margin: 5px 2px 0 0;
 }
 
+
+////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////
 //dpv ///
+////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////
 
 
 
@@ -310,122 +472,12 @@ P {
 
 
 
-
-
-
-
-
-
-
-
-
-.fav_menu > li > a:hover, .fav_menu > li > a:focus {
-  background-color: #ddd !important;
-  background-image: none;
-  filter: none;
-}
-
-.item_tags {
-	margin-top: 20px;
-	color: #fff;
-}
-
-.label, .badge {
-	background-color: #000;	
-	font-size: 16px;
-	padding: 5px 10px 5px 10px;
-}
-
-.pull_list_btn {
-	margin-right: 5px;	
-}
-li a.pull_list_btn {
-	margin-right: 0 !important;
-}
-
-#infscr-loading {
-	border: 1px solid #152a53;
-	text-align: center;
-	background-color: #3f69bb;	
-	padding: 10px;
-	color: #fff !important;
-	font-style: normal !important;
-	clear: both;
-	overflow: hidden;
-	margin-top: 40px !important;
-}
-
-#infscr-loading img {
-	text-align: center;
-}
-
-.infin_txt {
-	font-size: 18px;
-}
-
-.login_block {
-	background-color: darken(@kapow_blue, 15%);
-	padding: 12px;	
-	margin-bottom: 10px;
-	clear: both;
-	overflow: hidden;
-	font-size: 18px !important;
-	color: #fff;
-}
-
-.float-left {
-	float: left;
-}
-.float-right {
-	float: right;
-}
-.login_btn {
-	margin-right: 40px;
-}
-.fb_login_connect {
-	padding-top: 4px;
-	
-}
-
-.login_ipt {
-	width: 97%;
-}
-
-.login_intro, .login_intro p {
-	color: #78b0e9;
-	font-size: 20px;
-}
-
-.create_account a, .create_account, .create_account:hover {
-	color: #fff !important;
-	font-weight: bold !important;
-	width: 70%;
-}
-
-.footnote {
-	margin-top: 40px;
-	color: #547ac4;
-}
-.footnote a {
-	color: #547ac4;
-}
-
-.publisher_desc, .creator_desc {
+.publisher_desc {
 	color: #78b0e9;
 	text-align: left;
 	clear: both;
-	margin-top: 20px;	
 	font-size: 16px;
-}
-.creator_desc {
-	margin-top: 10px;	
-}
-.creator_name {
-	color: #fff;
-	text-align: left;
-	clear: both;
 	margin-top: 20px;	
-	font-size: 20px;
 }
 
 .navbar-inner {
@@ -450,59 +502,8 @@ li a.pull_list_btn {
   margin-right: 20px;
 }
 
-.btn-hgh {
-	margin-left: 4px;
-	padding-top: 5px !important;
-	padding-bottom: 5px !important;
-}
-
-.element_sideblock {
-	font-size: 16px;
-	text-align: left;
-	word-wrap: break-word;
-	line-height: 14px;
-}
-.element_sideblock h4 {
-	color: #fff;
-	font-size: 16px;
-	margin: 10px 0 0 0;
-}
 
 
-
-.flash_neg {
-	background: fade(@kapow_red, 90%);
-	color:#000;
-}
-   	
-.flash_pos, .flash_msg {
-	background: fade(darken(@kapow_blue, 20%), 90%);
-	color: #fff;
-}
-
-.loading {
-	font-size: 18px;
-	color: #fff;
-}
-
-.fav_on a {
-	color: #fff !important;
-	background-color: darken(@kapow_blue, 3%);
-}
-.fav_on a:hover {
-	color: #000 !important;
-}
-
-.control-group.error .control-label, .control-group.error .help-block, .control-group.error .help-inline {
-	color: yellow;
-}
-
-.control-group.error input, .control-group.error select, .control-group.error textarea {
-	border-color: yellow;
-}
-.control-group.error .checkbox, .control-group.error .radio, .control-group.error input, .control-group.error select, .control-group.error textarea {
-	color: #000;
-}
 
 .creator_collabs {
 	margin-top: 20px;
@@ -548,15 +549,6 @@ li a.pull_list_btn {
 	padding-left: 0;
 }   
 
-.footcopy {
-	float: left;
-}
-.footlinks {
-	float: right;
-}
-.footlinks a {
-	margin-left: 10px;
-}
 
 .item-by-date-header {
 	margin-top: 10px;
@@ -606,8 +598,6 @@ li a.pull_list_btn {
 	margin-left: 0;
 }
 
-
-
 .well input, .well select, .well textarea {
 	border: 1px solid darken(@kapow_blue, 18%);
 }
@@ -621,9 +611,7 @@ li a.pull_list_btn {
 	outline: 2px solid darken(@kapow_blue, 19%);
 }
 
-.pad_it {
-	padding: 10px;
-}
+
 
 .random_item {
 	margin-bottom: 20px;
@@ -653,10 +641,6 @@ li a.pull_list_btn {
 	max-height: 404px;
 	overflow: hidden;
 	min-height: 404px;
-}
-.hot_sect {
-}
-.hot_block {
 }
 
 .hot_desc {
@@ -704,20 +688,11 @@ li a.pull_list_btn {
 	border-bottom: 1px solid #fff;
 }
 
-.btn-lrgr {
-	font-size: 14px;
-}
-.btn-lrgr i {
-	margin-top: 3px;
-}
+
 
 .private_profile {
 	font-size: 16px;
 	color: #fff;
-}
-
-#storeList {
-	display: block;
 }
 
 .search_row .search_img {
@@ -737,64 +712,11 @@ li a.pull_list_btn {
 	max-height: 150px;
 	overflow: hidden;
 	margin-bottom: 10px;
-/* 	margin-left: 0; */
 }
 
 .search_row .desc {
 	max-height: 100px;
 	overflow: hidden;
-}
-
-.label {
-	background-color: darken(@kapow_blue, 30%);
-	font-size: 12px;
-	font-weight: normal;
-	margin: 3px 3px 0 0;
-}
-
-.icon_tiny {
-}
-
-.fav_label a {
-	color: #FFF !important;
-}
-
-/* from core.css */
-
-
-.bs-docs-sidenav {
-	padding: 0;
-	background-color: #fff;
-	-webkit-border-radius: 6px;
-	-moz-border-radius: 6px;
-	border-radius: 6px;
-	-webkit-box-shadow: 0 1px 4px rgba(0,0,0,.065);
-	-moz-box-shadow: 0 1px 4px rgba(0,0,0,.065);
-	box-shadow: 0 1px 4px rgba(0,0,0,.065);
-	margin-bottom:20px;
-}
-
-.bs-docs-sidenav > li > a {
-	display: block;
-	padding: 8px 14px;
-	border: 1px solid #e5e5e5;
-	margin: 0 0 -1px;
-}
-.bs-docs-sidenav > li:first-child > a {
-	-webkit-border-radius: 6px 6px 0 0;
-	-moz-border-radius: 6px 6px 0 0;
-	border-radius: 6px 6px 0 0;
-}
-.bs-docs-sidenav > li:last-child > a {
-	-webkit-border-radius: 0 0 6px 6px;
-	-moz-border-radius: 0 0 6px 6px;
-	border-radius: 0 0 6px 6px;
-}
-
-#hotness { 
-	width: 75%; 
-	margin-left: auto; 
-	margin-right: auto; 
 }
 
 .pagination ul>li>a, .pagination ul>li>span {
@@ -806,15 +728,6 @@ li a.pull_list_btn {
 	border: none;
 	border-left-width: 0;
 	display: none;
-}
-
-
-
-.icon-white {
-	margin-top: 3px;
-}
-.label .icon-white {
-	margin-top: 1px;
 }
 
 @import "media_min768max979.less";
