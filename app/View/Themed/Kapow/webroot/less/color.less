@@ -25,7 +25,7 @@ H2 {
 
 HR {
   border-top: 1px solid #e5e5e5;
-  border-bottom: 1px solid #ffffff;
+  border-bottom: 1px solid @kapow_white;
 }
 
 #header {
@@ -37,12 +37,17 @@ HR {
 #infscr-loading {
 	border: 1px solid #152a53;
 	background-color: #3f69bb;	
-	color: #fff !important;
+	color: @kapow_white !important;
 }
 
 #map-canvas, #shop-map {
 	border: 3px solid darken(@kapow_blue, 90%);
 }
+
+#setusername_frm .form-actions {
+	background-color: transparent;	
+}
+
 
 .blu {
 	background-color: rgb(44,83,158);
@@ -52,6 +57,14 @@ HR {
 	background: -o-radial-gradient(center, ellipse cover,  rgba(44,83,158,1) 0%,rgba(44,83,158,1) 100%);
 	background: -ms-radial-gradient(center, ellipse cover,  rgba(44,83,158,1) 0%,rgba(44,83,158,1) 100%);
 	background: radial-gradient(ellipse at center,  rgba(44,83,158,1) 0%,rgba(44,83,158,1) 100%);
+}
+
+.blog_list_well {
+	color: @kapow_detail_txt_color;	
+}
+
+.blog_list_well h4 a {
+	color: @kapow_white !important;
 }
 
 .bread h3 {
@@ -72,7 +85,7 @@ HR {
 	background-image: -o-linear-gradient(top, #2365c1, #153c74) !important;
 	background-image: linear-gradient(#2365c1, #153c74) !important;
 	border-color: #153c74 #153c74 hsl(215, 69%, 22.5%) !important;
-	color: #fff !important;
+	color: @kapow_white !important;
 }
 
 .btn-on {
@@ -95,6 +108,10 @@ HR {
 
 .create_account a, .create_account, .create_account:hover {
 	color: @kapow_white !important;
+}
+
+.creator_collabs li {
+	color: #5d85d3;
 }
 
 .creator_desc {
@@ -126,9 +143,9 @@ HR {
 }
 
 .fav_menu > li > a:hover, .fav_menu > li > a:focus {
-  background-color: #ddd !important;
-  background-image: none;
-  filter: none;
+	background-color: #ddd !important;
+	background-image: none;
+	filter: none;
 }
 
 .fav_on a {
@@ -172,11 +189,31 @@ HR {
 	color: @kapow_footer_color;
 }
 
+.home_hdr {
+	color: @kapow_white;
+	background-image: url(/theme/Kapow/img/bg.png);
+	border-bottom: 2px solid darken(@kapow_blue, 15%);
+	border-left: 2px solid darken(@kapow_blue, 15%);
+}
+
+.home_hdr h4 {
+	color: @kapow_white;
+}
+
+.home_main h2 a {
+	color: @kapow_black;
+}
+
+.hot_desc {
+	color: @kapow_detail_txt_color;
+}
+
 .item_actions {
 	background-color: darken(@kapow_blue, 15%);
-	padding: 12px;	
-	margin-bottom: 10px;
-	clear: both;
+}
+
+.item-by-date {
+	color: @kapow_white;
 }
 
 .item_desc, .item_desc p {
@@ -213,7 +250,26 @@ HR {
 }
 
 .login_intro, .login_intro p {
-	color: #78b0e9;
+	color: @kapow_detail_txt_color;
+}
+
+.my_block h5 {
+	color: @kapow_white;
+	border-bottom: 2px solid darken(@kapow_blue, 15%);
+}
+
+.navbar .btn-navbar {
+  background-color: hsl(215, 69%, 27%) !important;
+  background-image: -khtml-gradient(linear, left top, left bottom, from(#2365c1), to(#153c74));
+  background-image: -moz-linear-gradient(top, #2365c1, #153c74);
+  background-image: -ms-linear-gradient(top, #2365c1, #153c74);
+  background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #2365c1), color-stop(100%, #153c74));
+  background-image: -webkit-linear-gradient(top, #2365c1, #153c74);
+  background-image: -o-linear-gradient(top, #2365c1, #153c74);
+  background-image: linear-gradient(#2365c1, #153c74);
+  border-color: #153c74 #153c74 hsl(215, 69%, 22.5%);
+  color: @kapow_white !important;
+  text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.29);
 }
 
 .navbar-inner {
@@ -226,8 +282,58 @@ HR {
 	text-shadow: 0 1px 0 darken(@kapow_blue, 20%);
 }
 
+.pad {
+	color: @kapow_detail_txt_color;
+}
+
+.pad h3 {
+	color: @kapow_white;
+}
+
+.pagination ul>li>a, .pagination ul>li>span {
+	background-color: transparent !important;
+}
+
+.photo_upload_block h5 {
+	color: @kapow_white;
+}
+
 .preview_img img {
 	border: 3px solid darken(@kapow_blue, 90%);
+}
+
+.private_profile {
+	color: @kapow_white;
+}
+
+.profile_edit_block h3 {
+	color: @kapow_white;
+	border-bottom: 1px solid @kapow_white;
+}
+
+.profile_edit_block .form-actions {
+	background-color: transparent;	
+}
+
+.publisher_desc {
+	color: @kapow_detail_txt_color;
+}
+
+.random_block {
+	background-color: darken(@kapow_blue, 17%);
+	outline: 2px solid darken(@kapow_blue, 19%);
+}
+
+.random_block .home_hdr {
+	border-bottom: 3px solid darken(@kapow_blue, 19%);
+}
+
+.random_item .item_description {
+	color: @kapow_white;
+}
+
+.search_row .search_img {
+	border: 2px solid @kapow_black;
 }
 
 .shop_photo img {
@@ -250,12 +356,25 @@ HR {
 	background-color: darken(@kapow_blue, 15%);
 }
 
+.store_search_bar input, .store_search_bar select, .store_search_bar textarea {
+	border: 1px solid darken(@kapow_blue, 18%);
+}
+
 .thisweek h4, .thisweek h4 a {
 	color: darken(@kapow_blue, 90%);
 }
 
 .usr_img {
 	border: 1px solid @kapow_img_brdr_color;
+}
+
+.well {
+	background-color: darken(@kapow_blue, 15%);
+	border: 1px solid darken(@kapow_blue, 18%);
+}
+
+.well input, .well select, .well textarea {
+	border: 1px solid darken(@kapow_blue, 18%);
 }
 
 .white-caret {
