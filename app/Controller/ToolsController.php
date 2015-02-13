@@ -545,9 +545,11 @@ class ToolsController extends AppController {
 		list ($d, $i) = $this->Curl->getRaw($url);
 		$d = trim($d);
 		
+/*
 		echo "<pre>";
 		print_r($d);
 		echo "</pre>";
+*/
 		
 		$arr = explode("\n", $d);
 		
@@ -571,8 +573,6 @@ class ToolsController extends AppController {
 				$date = trim(substr($a, 9));
 			}
 			
-//			echo "date=" . $date . "<br/>";
-			
 			$a = trim($a);
 			$parts = explode("  ", $a);
 			$part_1 = @$parts[0];
@@ -580,29 +580,20 @@ class ToolsController extends AppController {
 			$part_1 = trim($part_1);
 			$part_2 = trim($part_2);
 			
-/*
-			echo "part_1=[" . $part_1 . "]<br/>";
-			echo "part_2=[" . $part_2 . "]<br/>";
-*/
-			
 			if (!$part_2) {
-/* 				echo "trying other way... <br/>"; */
 				## try getting it w/ tabs
 				$parts = explode("	", $a);
 				$part_1 = @$parts[0];
 				$part_2 = @$parts[1];
 				$part_1 = trim($part_1);
 				$part_2 = trim($part_2);
-/* 				echo "part_1=" . $part_1 . "<br/>"; */
 			} elseif ($part_2 == "PI") {
-/* 				echo "trying final way... <br/>"; */
 				## try getting it w/ tabs
 				$parts = explode(" ", $a);
 				$part_1 = @$parts[0];
 				$part_2 = @$parts[1];
 				$part_1 = trim($part_1);
 				$part_2 = trim($part_2);
-/* 				echo "part_1=" . $part_1 . "<br/>";				 */
 			}
 			
 			if ($check_next_for_section) {
@@ -617,6 +608,7 @@ class ToolsController extends AppController {
 			}
 			
 			if ($part_2) {
+//				echo "get item -> " . $part_1 . " - " . $part_2 . " - " . $section . " - " . $date . "<br/>";
 				$this->_getItem($part_1, $part_2, $section, $date);		
 				$cnt++;
 			}
@@ -633,7 +625,7 @@ class ToolsController extends AppController {
 		$print = 1;
 		$rand = rand(500,999);
 		$url = Configure::read('Settings.root_domain') . Configure::read('Settings.root_domain_path') . $rand . "?stockItemID=" . $item_id;
-
+		
 		// check if we need this item, if its already been parsed, don't do it again..
 		$item = $this->Item->find('first', array('conditions' => array('Item.item_id' => $item_id), 'limit' => 1, 'recursive' => 1));
 		if (!$item) {
@@ -648,78 +640,69 @@ class ToolsController extends AppController {
 			$item = array();
 			$item['item_id'] = $item_id;
 			$item['item_date'] = date("Y-m-d", strtotime($date));
-	
-			// name and stock_id				
-			$stock_code_desc = $xpath->query('//div[@class="StockCodeDescription"]/a');
-			foreach ($stock_code_desc as $tag) {
+			
+			$item['item_name'] = $item_name;
+			echo "item_name  = [" . $item['item_name'] . "]<br/>";
+			
+			// fix 'of x' formatting..
+			$item['item_name'] = trim(str_replace("Of(1)", "[OF 1]", $item['item_name']));
+			$item['item_name'] = trim(str_replace("Of(2)", "[OF 2]", $item['item_name']));
+			$item['item_name'] = trim(str_replace("Of(3)", "[OF 3]", $item['item_name']));
+			$item['item_name'] = trim(str_replace("Of(4)", "[OF 4]", $item['item_name']));
+			$item['item_name'] = trim(str_replace("Of(5)", "[OF 5]", $item['item_name']));
+			$item['item_name'] = trim(str_replace("Of(6)", "[OF 6]", $item['item_name']));
+			$item['item_name'] = trim(str_replace("Of(7)", "[OF 7]", $item['item_name']));
+			$item['item_name'] = trim(str_replace("Of(8)", "[OF 8]", $item['item_name']));
+			$item['item_name'] = trim(str_replace("Of(9)", "[OF 9]", $item['item_name']));
+			$item['item_name'] = trim(str_replace("Of(10)", "[OF 10]", $item['item_name']));
+			$item['item_name'] = trim(str_replace("Of(11)", "[OF 11]", $item['item_name']));
+			$item['item_name'] = trim(str_replace("Of(12)", "[OF 12]", $item['item_name']));
+			$item['item_name'] = trim(str_replace("Of(13)", "[OF 13]", $item['item_name']));
+			$item['item_name'] = trim(str_replace("Of(14)", "[OF 14]", $item['item_name']));
+			$item['item_name'] = trim(str_replace("Of(15)", "[OF 15]", $item['item_name']));
+			$item['item_name'] = trim(str_replace("Of(16)", "[OF 16]", $item['item_name']));
+			$item['item_name'] = trim(str_replace("Of(17)", "[OF 17]", $item['item_name']));
+			$item['item_name'] = trim(str_replace("Of(18)", "[OF 18]", $item['item_name']));
 
-#				$item['item_name'] = trim($tag->nodeValue);
-				$item['item_name'] = $item_name;
-				echo "item_name  = [" . $item['item_name'] . "]<br/>";
-				
-				// fix 'of x' formatting..
-				$item['item_name'] = trim(str_replace("Of(1)", "[OF 1]", $item['item_name']));
-				$item['item_name'] = trim(str_replace("Of(2)", "[OF 2]", $item['item_name']));
-				$item['item_name'] = trim(str_replace("Of(3)", "[OF 3]", $item['item_name']));
-				$item['item_name'] = trim(str_replace("Of(4)", "[OF 4]", $item['item_name']));
-				$item['item_name'] = trim(str_replace("Of(5)", "[OF 5]", $item['item_name']));
-				$item['item_name'] = trim(str_replace("Of(6)", "[OF 6]", $item['item_name']));
-				$item['item_name'] = trim(str_replace("Of(7)", "[OF 7]", $item['item_name']));
-				$item['item_name'] = trim(str_replace("Of(8)", "[OF 8]", $item['item_name']));
-				$item['item_name'] = trim(str_replace("Of(9)", "[OF 9]", $item['item_name']));
-				$item['item_name'] = trim(str_replace("Of(10)", "[OF 10]", $item['item_name']));
-				$item['item_name'] = trim(str_replace("Of(11)", "[OF 11]", $item['item_name']));
-				$item['item_name'] = trim(str_replace("Of(12)", "[OF 12]", $item['item_name']));
-				$item['item_name'] = trim(str_replace("Of(13)", "[OF 13]", $item['item_name']));
-				$item['item_name'] = trim(str_replace("Of(14)", "[OF 14]", $item['item_name']));
-				$item['item_name'] = trim(str_replace("Of(15)", "[OF 15]", $item['item_name']));
-				$item['item_name'] = trim(str_replace("Of(16)", "[OF 16]", $item['item_name']));
-				$item['item_name'] = trim(str_replace("Of(17)", "[OF 17]", $item['item_name']));
-				$item['item_name'] = trim(str_replace("Of(18)", "[OF 18]", $item['item_name']));
-
-				$item['item_name'] = trim(preg_replace("/\(C\:[^)]+\)/","",$item['item_name']));
-				$item['item_name'] = trim(preg_replace("/\(C\: [^)]+\)/","",$item['item_name']));
-				$item['item_name'] = trim(preg_replace("/\(PP[^)]+\)/","",$item['item_name']));
-				$item['item_name'] = trim(preg_replace("/\(NET\)/","",$item['item_name']));
-				$item['item_name'] = trim(preg_replace("/\(Net\)/","",$item['item_name']));
-				$item['item_name'] = trim(preg_replace("/\(MR\)/","",$item['item_name']));
-				$item['item_name'] = trim(preg_replace("/\(N52\)/","",$item['item_name']));
-				$item['item_name'] = trim(preg_replace("/\(RES\)/","",$item['item_name']));
-				$item['item_name'] = trim(preg_replace("/\(O\/A\)/","",$item['item_name']));
-				
-				$item['item_name'] = trim(preg_replace("/\(JAN[^)]+\)/","",$item['item_name']));
-				$item['item_name'] = trim(preg_replace("/\(FEB[^)]+\)/","",$item['item_name']));
-				$item['item_name'] = trim(preg_replace("/\(MAR[^)]+\)/","",$item['item_name']));
-				$item['item_name'] = trim(preg_replace("/\(APR[^)]+\)/","",$item['item_name']));
-				$item['item_name'] = trim(preg_replace("/\(MAY[^)]+\)/","",$item['item_name']));
-				$item['item_name'] = trim(preg_replace("/\(JUN[^)]+\)/","",$item['item_name']));
-				$item['item_name'] = trim(preg_replace("/\(JUL[^)]+\)/","",$item['item_name']));
-				$item['item_name'] = trim(preg_replace("/\(AUG[^)]+\)/","",$item['item_name']));
-				$item['item_name'] = trim(preg_replace("/\(SEP[^)]+\)/","",$item['item_name']));
-				$item['item_name'] = trim(preg_replace("/\(OCT[^)]+\)/","",$item['item_name']));
-				$item['item_name'] = trim(preg_replace("/\(NOV[^)]+\)/","",$item['item_name']));
-				$item['item_name'] = trim(preg_replace("/\(DEC[^)]+\)/","",$item['item_name']));
-				
-				// remove 'COMBO PACK'..
-				$item['item_name'] = trim(str_replace("COMBO PACK", "", $item['item_name']));
-				
-			    $stock_url = $tag->getAttribute('href');
-				$stock_parts = split("=", $stock_url);		
-				$item['stock_id'] = $stock_parts[1];
-				
-				// parse item_name by # to get series name..
-				$series_parts = split("#", $item['item_name']);				
-				
-				$item['series_name'] = trim($series_parts[0]);
-				$item['series_name'] = trim(preg_replace("/\([^)]+\)/","",$item['series_name']));
-				$item['series_name'] = trim(str_replace(" TP", "", $item['series_name']));
-						
-				if (@$series_parts[1]) {
-					$series_num_parts = explode("\t", $series_parts[1]);
-					$item['series_num'] = (int) $series_num_parts[0];
-				}
+			$item['item_name'] = trim(preg_replace("/\(C\:[^)]+\)/","",$item['item_name']));
+			$item['item_name'] = trim(preg_replace("/\(C\: [^)]+\)/","",$item['item_name']));
+			$item['item_name'] = trim(preg_replace("/\(PP[^)]+\)/","",$item['item_name']));
+			$item['item_name'] = trim(preg_replace("/\(NET\)/","",$item['item_name']));
+			$item['item_name'] = trim(preg_replace("/\(Net\)/","",$item['item_name']));
+			$item['item_name'] = trim(preg_replace("/\(MR\)/","",$item['item_name']));
+			$item['item_name'] = trim(preg_replace("/\(N52\)/","",$item['item_name']));
+			$item['item_name'] = trim(preg_replace("/\(RES\)/","",$item['item_name']));
+			$item['item_name'] = trim(preg_replace("/\(O\/A\)/","",$item['item_name']));
+			
+			$item['item_name'] = trim(preg_replace("/\(JAN[^)]+\)/","",$item['item_name']));
+			$item['item_name'] = trim(preg_replace("/\(FEB[^)]+\)/","",$item['item_name']));
+			$item['item_name'] = trim(preg_replace("/\(MAR[^)]+\)/","",$item['item_name']));
+			$item['item_name'] = trim(preg_replace("/\(APR[^)]+\)/","",$item['item_name']));
+			$item['item_name'] = trim(preg_replace("/\(MAY[^)]+\)/","",$item['item_name']));
+			$item['item_name'] = trim(preg_replace("/\(JUN[^)]+\)/","",$item['item_name']));
+			$item['item_name'] = trim(preg_replace("/\(JUL[^)]+\)/","",$item['item_name']));
+			$item['item_name'] = trim(preg_replace("/\(AUG[^)]+\)/","",$item['item_name']));
+			$item['item_name'] = trim(preg_replace("/\(SEP[^)]+\)/","",$item['item_name']));
+			$item['item_name'] = trim(preg_replace("/\(OCT[^)]+\)/","",$item['item_name']));
+			$item['item_name'] = trim(preg_replace("/\(NOV[^)]+\)/","",$item['item_name']));
+			$item['item_name'] = trim(preg_replace("/\(DEC[^)]+\)/","",$item['item_name']));
+			
+			// remove 'COMBO PACK'..
+			$item['item_name'] = trim(str_replace("COMBO PACK", "", $item['item_name']));
+			$item['stock_id'] = $item_id;
+			
+			// parse item_name by # to get series name..
+			$series_parts = split("#", $item['item_name']);				
+			
+			$item['series_name'] = trim($series_parts[0]);
+			$item['series_name'] = trim(preg_replace("/\([^)]+\)/","",$item['series_name']));
+			$item['series_name'] = trim(str_replace(" TP", "", $item['series_name']));
+					
+			if (@$series_parts[1]) {
+				$series_num_parts = explode("\t", $series_parts[1]);
+				$item['series_num'] = (int) $series_num_parts[0];
 			}
-
+			
 			if (strpos($item['item_name'], "2ND PTG")) {
 				$print = 2;
 			}
@@ -923,14 +906,6 @@ class ToolsController extends AppController {
 
 		} else {
 			echo "already have this item (" . $item_id . ") <br/>\n";
-			
-			## go ahead and update the date field..
-/*
-			$save = array();			
-			$save['id'] = $item['Item']['id'];
-			$save['item_date'] = date("Y-m-d", strtotime($date));
-			$this->Item->save($save);
-*/
 		}
 	}
 
