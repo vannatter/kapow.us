@@ -33,11 +33,29 @@
 				<?php $row = 0; ?>
 			<?php } ?>
 		<?php } ?>
+		
+		<?php if ($row == 6) { ?>
+		<?php } else { ?>
+			<?php if ($row == 0) { ?>
+			
+			<?php } else { ?>
+				<?
+					$fill = 6 - $row;
+					for ($i = 0; $i < $fill; $i++) {
+						?>
+							<div class="span2 preview_block <?php if ($hasPull) { echo "preview_block_on"; } ?>">xxx</div>
+						<?						
+					}
+				?>
+				</div>
+			<?php } ?>
+		<?php } ?>
+				
 	</div>
+	
 <?php if ($this->Paginator->hasNext()) { ?>
 	<div id="item-scroll-nav">
 		<div class="pagination"><ul><?php echo $this->Paginator->next('next'); ?></ul></div>
 	</div>
 <?php } ?>
 
-</div>
