@@ -103,6 +103,7 @@ class UsersController extends AppController {
 	public function library() {
 		$this->set('title_for_layout','My Library');
 
+/*
 		$items = $this->UserItem->find('all', array(
 			'conditions' => array(
 				'UserItem.user_id' => $this->Auth->user('id')
@@ -168,7 +169,22 @@ class UsersController extends AppController {
 			$items[$k]['ItemTag'] = $tags;
 		}
 
-		$this->set('items', $items);
+ 		$this->set('items', $items);
+*/
+
+
+		$this->paginate = array(
+			'UserItem' => array(
+				'order' => array(
+					'UserItem.created' => 'DESC'
+				),
+				'limit' => 24
+			)
+		);
+
+		$list = $this->paginate('UserItem', array('UserItem.user_id' => $this->Auth->user('id')));
+		$this->set('items', $list);		
+		
 	}
 	
 	public function pull_list() {

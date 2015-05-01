@@ -43,7 +43,7 @@
 					$fill = 6 - $row;
 					for ($i = 0; $i < $fill; $i++) {
 						?>
-							<div class="span2 preview_block <?php if ($hasPull) { echo "preview_block_on"; } ?>">xxx</div>
+							<div class="span2 preview_block"></div>
 						<?						
 					}
 				?>
