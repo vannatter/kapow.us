@@ -171,6 +171,10 @@ class ItemsController extends AppController {
 		$this->set('categories', $categories);
 		$this->set('content_type', $content_type);
 		$this->set('release_date_formatted', date("m/d/Y", strtotime($release_date)));
+
+		$this->set('release_date_formatted_prev', date("Y-m-d", strtotime($release_date . " -7 days")));
+		$this->set('release_date_formatted_next', date("Y-m-d", strtotime($release_date . " +7 days")));
+
 		$this->set('title_for_layout','New Next Week (' . date("m/d/Y", strtotime($release_date)) . ')');
 	}
 
@@ -215,6 +219,10 @@ class ItemsController extends AppController {
 		$this->set('categories', $categories);
 		$this->set('content_type', $content_type);
 		$this->set('release_date_formatted', date("m/d/Y", strtotime($release_date)));
+		
+		$this->set('release_date_formatted_prev', date("Y-m-d", strtotime($release_date . " -7 days")));
+		$this->set('release_date_formatted_next', date("Y-m-d", strtotime($release_date . " +7 days")));
+		
 		$this->set('title_for_layout','New This Week (' . date("m/d/Y", strtotime($release_date)) . ')');
 	}
 

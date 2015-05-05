@@ -1,5 +1,6 @@
 <div class="filter_box">
-	<div class="bread"><h3><?php echo __('New This Week'); ?> (<?php echo $release_date_formatted; ?>)</h3></div>
+	<div class="bread"><h3><a href="/items/date/<?php echo $release_date_formatted_prev; ?>"><i class="icon-arrow-left icon-white"></i></a> <?php echo __('New This Week'); ?> (<?php echo $release_date_formatted; ?>) <a href="/items/date/<?php echo $release_date_formatted_next; ?>"><i class="icon-arrow-right icon-white"></i></a></h3></div>
+	
 	<?php foreach ($categories as $category) { ?>
 		<a href="/items/this_week/<?php echo $category['Category']['id']; ?>"><div class="filter_tab <?php echo (($content_type == $category['Category']['id']) ? " filter_tab_on ":""); ?>"><?php echo $category['Category']['category_name']; ?></div></a>
 	<?php } ?>
