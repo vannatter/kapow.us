@@ -57,6 +57,9 @@ class UsersController extends AppController {
 			return new CakeResponse(array('body' => json_encode($result)));
 		} elseif ($this->request->is('post')) {
 			if ($this->Auth->login()) {
+				
+				$this->Session->write('Auth.User.logged_in_with', 'kapow');
+				
 				$username = $this->Auth->user('username');
 				if (empty($username)) {
 					$this->redirect('/users/setUsername');
