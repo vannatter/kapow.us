@@ -1,14 +1,23 @@
 
-@kapow_blue:                #3366CC;
+/* @kapow_blue:                #3366CC; */
+@kapow_blue:                #ff0000;
+
+@kapow_secondary_blue:		darken(@kapow_blue, 12%);
+@kapow_bg_grade_color1:     darken(@kapow_secondary_blue, 40%);
+@kapow_bg_grade_color2:     @kapow_secondary_blue;
+
 @kapow_red:                 #e30c0c;
 @kapow_yellow:              #ffaa00;
-@kapow_bg_grade_color1:     #00040c;
-@kapow_bg_grade_color2:     #2c539e;
 @kapow_white:               #FFFFFF;
 @kapow_black:               #000000;
+@kapow_gray:				#dddddd;
 
-@kapow_h2_color:            #000000;
-@kapow_img_brdr_color:      #000000;
-@kapow_detail_txt_color:    #78b0e9;
-@kapow_fav_lnk_color:       #000000;
-@kapow_footer_color:        #547ac4;
+@kapow_h2_color:            @kapow_black;
+@kapow_img_brdr_color:      @kapow_black;
+@kapow_fav_lnk_color:       @kapow_black;
+@kapow_detail_txt_color:    lighten(@kapow_secondary_blue, 35%);
+@kapow_footer_color:        lighten(@kapow_secondary_blue, 20%);
+
+@infiscroll_border:			darken(@kapow_secondary_blue,15%);
+@infiscroll_bg:				lighten(@kapow_secondary_blue,3%);
+@hr_color:					#e5e5e5;
