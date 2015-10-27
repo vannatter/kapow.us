@@ -30,31 +30,6 @@ $(document).ready(function() {
 		}
 	});
 
-	$('#series-items').on('click', 'button.pull_list_btn', function(e) {
-		e.preventDefault();
-
-		var obj = $(this);
-		var id = obj.attr('data-id');
-
-		$.getJSON('/pulls/toggle', { 'id': id }, function(data) {
-			if (data.error) {
-				flash(data.message, 3000);
-			} else {
-				if (data.type == 1) {
-					// added
-					obj.find('span').text('Remove Pull');
-					flash('Added to your pull list', 3000);
-				} else {
-					// removed
-					obj.find('span').text('Pull List');
-					flash('Removed from your pull list', 3000);
-				}
-			}
-		});
-
-		return false;
-	});
-
 	var $items = $('div#series-items');
 	if ($items.length > 0) {
 		var seriesId = $items.attr('data-series-id');

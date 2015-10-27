@@ -3,10 +3,11 @@
 App::uses('AppController', 'Controller');
 
 /**
- * @property Series $Series
- * @property Item $Item
- * @property UserFavorite $UserFavorite
+ * SeriesController class.
+ * 
+ * @extends AppController
  */
+ 
 class SeriesController extends AppController {
 	public $name = 'Series';
 	public $uses = array('Series', 'Item', 'UserFavorite');
@@ -75,6 +76,7 @@ class SeriesController extends AppController {
 				),
 			)
 		));
+		
 		$this->Series->UserFavorite->bindModel(array(
 			'belongsTo' => array(
 				'User' => array(
@@ -143,6 +145,11 @@ class SeriesController extends AppController {
 							'Pull.user_id' => $this->Auth->user('id')
 						)
 					),
+					'UserItem' => array(
+						'conditions' => array(
+							'UserItem.user_id' => $this->Auth->user('id')
+						)
+					),
 					'ItemUserFavorite' => array(
 						'conditions' => array(
 							'ItemUserFavorite.user_id' => $this->Auth->user('id')
@@ -164,6 +171,7 @@ class SeriesController extends AppController {
 					),
 					'contain' => array(
 						'Pull',
+						'UserItem',
 						'ItemUserFavorite'
 					)
 				)

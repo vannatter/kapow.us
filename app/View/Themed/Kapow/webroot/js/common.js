@@ -59,10 +59,38 @@ $(document).ready(function() {
 			}
 		});
 
-		// return false so we don't close the menu
-		// possibly change this later
 		return false;
 	});
+
+
+	$(document).on('click', 'button.lib_btn', function(e) {
+		e.preventDefault();
+
+		var obj = $(this);
+		var id = obj.attr('data-id');
+
+		$.getJSON('/ajax/toggle_library', { 'id': id }, function(data) {
+			if (data.error) {
+				flash(data.message, 3000);
+			} else {
+				if (data.type == 1) {
+					// added
+					obj.find('span').text('Remove Library').parent().removeClass('btn-off').addClass('btn-on').find('i').removeClass('icon-white').addClass('icon-black');
+					$("button.pull_list_btn[data-id='" + id + "']").find('span').text('Pull List').parent().removeClass('btn-on').addClass('btn-off').find('i').removeClass('icon-black').addClass('icon-white');
+					$("button.pull_list_btn[data-id='" + id + "']").hide();
+					flash('Added to your library!', 3000);
+				} else {
+					// removed
+					obj.find('span').text('Add to Library').parent().removeClass('btn-on').addClass('btn-off').find('i').removeClass('icon-black').addClass('icon-white');
+					$("button.pull_list_btn[data-id='" + id + "']").show();
+					flash('Removed from your library!', 3000);
+				}
+			}
+		});
+
+		return false;
+	});	
+
 
 	$(document).on('click', 'button.pull_list_btn', function(e) {
 		e.preventDefault();
@@ -136,7 +164,6 @@ $(document).ready(function() {
 				}
 			}
 		});
-
 		return false;
 	});	
 	

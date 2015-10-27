@@ -9,11 +9,12 @@ App::uses('AppModel', 'Model');
 class UserItem extends AppModel {
 	public $actsAs = array('Containable');
 
-	/**
+/**
  * belongsTo associations
  *
  * @var array
  */
+ 
 	public $belongsTo = array(
 		'User' => array(
 			'className' => 'User',
