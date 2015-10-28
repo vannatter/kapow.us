@@ -48,9 +48,10 @@
  *
  * @see ErrorHandler for more information on error handling and configuration.
  */
+
 	Configure::write('Error', array(
 		'handler' => 'ErrorHandler::handleError',
-		'level' => E_ALL & ~E_DEPRECATED,
+		'level' => E_ALL & ~E_STRICT & ~E_DEPRECATED,
 		'trace' => true
 	));
 
