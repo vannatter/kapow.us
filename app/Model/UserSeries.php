@@ -52,6 +52,7 @@ class UserSeries extends AppModel {
 				)
 			);
 			
+			$this->create();
 			$this->save($toAdd);
 		} else {
 			$this->id = $check['UserSeries']['id'];

@@ -14,7 +14,11 @@ App::uses('SmushIt','Lib');
 class ToolsController extends AppController {
 
 	public $name = 'Tools';
-	public $uses = array('Item','Section','Publisher','Series','Creator','CreatorType','ItemCreator', 'Store','Tag','ItemTag','StorePhoto', 'ItemUserFavorite', 'UserFavorite');
+	public $uses = array(
+		'Item','Section','Publisher','Series','Creator','CreatorType','ItemCreator',
+		'Store','Tag','ItemTag','StorePhoto', 'ItemUserFavorite', 'UserFavorite',
+		'UserSeries', 'UserItem'
+	);
 	public $components = array('Curl');
 	public $helpers = array('Common');
 	
@@ -1418,5 +1422,34 @@ class ToolsController extends AppController {
 		ob_end_flush();
 		@ob_flush();
 		ob_start();
+	}
+	
+	public function buildUserSeries() {
+		Configure::write('debug', 2);
+		set_time_limit(0);   ## FOREVER
+		
+		## get a list of user items first
+		$items = $this->UserItem->find('all', array(
+			'contain' => array(
+				'Item'
+			)
+		));
+		
+		foreach ($items as $item) {
+			$itemId = $item['UserItem']['item_id'];
+			$userId = $item['UserItem']['user_id'];
+			$seriesId = $item['Item']['series_id'];
+			
+			echo sprintf(
+				'item %s - series %s for user %s<br/>',
+				$itemId,
+				$seriesId,
+				$userId
+			);
+			
+			$this->UserSeries->add($userId, $seriesId);
+		}
+		
+		echo 'DONE!'; exit;
 	}
 }
