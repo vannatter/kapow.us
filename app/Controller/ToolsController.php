@@ -1424,7 +1424,7 @@ class ToolsController extends AppController {
 		ob_start();
 	}
 	
-	public function buildUserSeries() {
+	/*public function buildUserSeries() {
 		Configure::write('debug', 2);
 		set_time_limit(0);   ## FOREVER
 		
@@ -1451,5 +1451,5 @@ class ToolsController extends AppController {
 		}
 		
 		echo 'DONE!'; exit;
-	}
+	}*/
 }
