@@ -28,19 +28,19 @@
 					</div>
 				</div>
 			</div>
-			<?php if ($row == 6) { ?>
+			<?php if ($row == 4) { ?>
 				</div>
 				<?php $row = 0; ?>
 			<?php } ?>
 		<?php } ?>
 		
-		<?php if ($row == 6) { ?>
+		<?php if ($row == 4) { ?>
 		<?php } else { ?>
 			<?php if ($row == 0) { ?>
 			
 			<?php } else { ?>
 				<?
-					$fill = 6 - $row;
+					$fill = 4 - $row;
 					for ($i = 0; $i < $fill; $i++) {
 						?>
 							<div class="span2 preview_block"></div>
