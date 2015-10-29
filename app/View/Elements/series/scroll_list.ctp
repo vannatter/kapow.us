@@ -18,7 +18,7 @@
 
 				$img = "/theme/Kapow/img/nocover.png";
 
-				if (isset($ser['Item'][0]['img_fullpath'])) {
+				if (isset($ser['Item'][0]['img_fullpath']) && !($ser['Item'][0]['img_fullpath'] == "/img/covers")) {
 					$img = $ser['Item'][0]['img_fullpath'];
 					$img = $this->Common->thumb($img);
 				}

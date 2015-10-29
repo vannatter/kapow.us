@@ -4,7 +4,7 @@ class Series extends AppModel {
 	public $name = "Series";
 	public $actsAs = array('Containable');
 	public $virtualFields = array(
-		'total_items' => 'SELECT COUNT(*) AS icount FROM items WHERE items.series_id = series.id'
+		'total_items' => 'SELECT COUNT(*) AS icount FROM items WHERE items.series_id = Series.id'
 	);
 
 	public function getsetSeries($series_name) {
