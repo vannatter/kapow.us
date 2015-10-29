@@ -176,6 +176,34 @@ class UsersController extends AppController {
 */
 
 
+		## get a list of all items in the users library
+		$items = $this->UserItem->find('list', array(
+			'conditions' => array(
+				'UserItem.user_id' => $this->Auth->user('id')
+			),
+			'fields' => array(
+				'UserItem.item_id'
+			)
+		));
+		
+		## get a list of all series in library
+		$series = $this->UserItem->Item->find('list', array(
+			'conditions' => array(
+				'Item.id' => $items
+			),
+			'contain' => array(
+				'Series'
+			),
+			'fields' => array(
+				'Series.series_name'
+			),
+			'group' => array(
+				'Series.series_name'
+			)
+		));
+		
+		debug($series); exit;
+		
 		$this->paginate = array(
 			'UserItem' => array(
 				'order' => array(
@@ -186,6 +214,8 @@ class UsersController extends AppController {
 		);
 
 		$list = $this->paginate('UserItem', array('UserItem.user_id' => $this->Auth->user('id')));
+		
+		debug($list); exit;
 		$this->set('items', $list);		
 		
 	}

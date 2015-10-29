@@ -5,7 +5,11 @@ App::uses('AppController', 'Controller');
 class AjaxController extends AppController {
 
 	public $name = 'Ajax';
-	public $uses = array('Item','Section','Publisher','Series','Creator','CreatorType','ItemCreator', 'Store','Tag','ItemTag','StorePhoto', 'UserItem', 'Pull');
+	public $uses = array(
+		'Item','Section','Publisher','Series','Creator', 'CreatorType',
+		'ItemCreator', 'Store','Tag','ItemTag','StorePhoto', 'UserItem', 'Pull',
+		'UserSeries'
+	);
 	public $components = array('Curl');
 	public $helpers = array('Common');
 	
@@ -40,8 +44,22 @@ class AjaxController extends AppController {
 				$result['error'] = false;
 				
 				if ($result['type'] == 1) {
+					## remove the item from the users pull list, since its in their library now
 					if ($pull = $this->Pull->findByItemIdAndUserId($id, $this->Auth->user('id'))) {
 						$this->Pull->delete($pull['Pull']['id']);
+					}
+					
+					## add the series id to the user_series table so we can track series for each user
+					$this->Item->id = $id;
+					$series_id = $this->Item->field('series_id');
+					if ($series_id) {
+						$this->UserSeries->add($this->Auth->user('id'), $series_id);
+					}
+				} else {
+					$this->Item->id = $id;
+					$series_id = $this->Item->field('series_id');
+					if ($series_id) {
+						$this->UserSeries->remove($this->Auth->user('id'), $series_id);
 					}
 				}
 			} else {
