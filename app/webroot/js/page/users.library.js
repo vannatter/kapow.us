@@ -38,4 +38,37 @@ $(document).ready(function() {
 			}
 		});
 	});
+	
+	$('ul.library-series > li > span').on('click', function(e) {
+		$(this).parent().children('ul').toggle();
+	});
+	
+	$('a.issue-link').on('click', function(e) {
+		e.preventDefault();
+		
+		var href = $(this).attr('href');
+		var $frame = $('div.item_detail');
+		
+		$.ajax({
+			url: href
+		})
+		.done( function(data) {
+			$frame.empty().html(data);
+		});
+	})
+	
+	$('input#filter').keyup(function(e) {
+		var $frame = $('div.item_detail');
+		var href = $(this).attr('data-href');
+		var filter = $(this).val();
+		
+		if (filter.length > 3 || filter.length == 0) {
+			$.ajax({
+				url: href + filter
+			})
+			.done( function(data) {
+				$frame.empty().html(data);
+			});
+		}
+	});
 });

@@ -145,6 +145,27 @@ Router::connect(
 );
 
 Router::connect(
+	'/my/library/filter/issue/:filter',
+	array('controller' => 'users', 'action' => 'library_filter_issue'),
+	array(
+		'pass' => array('filter')
+	)
+);
+
+Router::connect(
+	'/my/library/filter/:filter',
+	array('controller' => 'users', 'action' => 'library_filter'),
+	array(
+		'pass' => array('filter')
+	)
+);
+
+Router::connect(
+	'/my/library/filter',
+	array('controller' => 'users', 'action' => 'library_filter')
+);
+
+Router::connect(
 	'/my/favorite/publishers',
 	array('controller' => 'users', 'action' => 'favoritePublishers')
 );

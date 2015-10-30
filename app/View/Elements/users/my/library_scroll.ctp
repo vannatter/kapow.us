@@ -3,7 +3,7 @@
  *@var $this View
  */
 ?>
-<?php $this->Html->script('page/users.pulllist.js', array('inline' => false)); ?>
+<?php $this->Html->script('page/users.library.js', array('inline' => false)); ?>
 	<div id="item-scroll-list">
 		<?php $row = 0; ?>
 		<?php foreach($items as $item) { ?>

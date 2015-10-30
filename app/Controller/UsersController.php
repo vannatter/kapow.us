@@ -182,42 +182,81 @@ class UsersController extends AppController {
 				'Series'
 			),
 			'fields' => array(
+				'Series.id',
 				'Series.series_name'
 			),
 			'order' => array(
 				'Series.series_name'
 			)
 		));
-		$this->set('series_list', $series);
 		
-		## set the paginate settings for getting all library items
-		$this->paginate = array(
-			'UserItem' => array(
+		## loop thru each series and get the issue #'s for each that the user has
+		$tmpSeries = array();
+		foreach ($series as $seriesId=>$seriesName) {
+			$issues = $this->UserItem->find('list', array(
+				'conditions' => array(
+					'Item.series_id' => $seriesId,
+					'UserItem.user_id' => $this->Auth->user('id')
+				),
+				'fields' => array(
+					'Item.series_num'
+				),
 				'contain' => array(
-					'Item',
-					'Series'
-				),
-				'order' => array(
-					'Series.series_name' => 'ASC',
-					'Item.series_num' => 'DESC'
-				),
-				'limit' => 24
-			)
-		);
-		
-		/*$tmp = $this->UserItem->query("
-		SELECT items.item_name, items.series_num, series.series_name
-		FROM user_items
-		LEFT JOIN items ON items.id = user_items.item_id
-		LEFT JOIN series ON series.id = items.series_id
-		ORDER BY series.series_name, items.series_num DESC
-		");
-		debug($tmp); exit;*/
+					'Item'
+				)
+			));
+			
+			if ($issues) {
+				$tmpSeries[] = array(
+					'series_id' => $seriesId,
+					'series_name' => $seriesName,
+					'issues' => $issues
+				);
+			}
+		}
+		$this->set('series_list', $tmpSeries);
 		
 		$list = $this->paginate('UserItem', array('UserItem.user_id = ' . $this->Auth->user('id')));
 		
-		$this->set('items', $list);		
+		$this->set('items', $list);
+	}
+	
+	public function library_filter($filter="") {
+		$this->layout = 'blank';
 		
+		$issue = $this->UserItem->find('all', array(
+			'conditions' => array(
+				'Item.item_name LIKE' => '%' . $filter . '%'
+			),
+			'contain' => array(
+				'Item' => array(
+					'Series'
+				)
+			)
+		));
+		
+		$this->set('items', $issue);
+		
+		$this->render('/Elements/users/my/library_scroll');
+	}
+	
+	public function library_filter_issue($issue) {
+		$this->layout = 'blank';
+		
+		$issue = $this->UserItem->find('all', array(
+			'conditions' => array(
+				'UserItem.id' => $issue
+			),
+			'contain' => array(
+				'Item' => array(
+					'Series'
+				)
+			)
+		));
+		
+		$this->set('items', $issue);
+		
+		$this->render('/Elements/users/my/library_scroll');
 	}
 	
 	public function pull_list() {
