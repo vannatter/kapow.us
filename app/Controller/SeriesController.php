@@ -162,9 +162,11 @@ class SeriesController extends AppController {
 				'Item' => array(
 					'limit' => 24,
 					'order' => array(
-						'Pull.created' => 'DESC',
+/*
 						'ItemUserFavorite.created' => 'DESC',
-						'Item.created' => 'DESC'
+*/
+						'Pull.created' => 'DESC',
+						'Item.series_num' => 'DESC'
 					),
 					'group' => array(
 						'Item.id'
