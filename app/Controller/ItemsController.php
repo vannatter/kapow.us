@@ -126,9 +126,9 @@ class ItemsController extends AppController {
 		$this->set('unique_creators', $unique_creators);
 		$this->set('item', $item);
 		$this->set('title_for_layout', $item['Item']['item_name']);
-		$this->set('meta_description_for_layout','Kapow! ' . $item['Item']['item_name'] . ' - ' . substr(str_replace('"', '', $item['Item']['description']),0,200));
+		$this->set('meta_description_for_layout','Kapow! ' . $item['Item']['item_name'] . ' by ' . $item['Publisher']['publisher_name'] . ' - ' . substr(str_replace('"', '', $item['Item']['description']),0,200));
 		$this->set('meta_keywords_for_layout','Kapow, Kapow.us, Comics, Comic database, Current comics, New comics, Comic app, ' . $item['Item']['item_name'] . ',' . $item['Series']['series_name']); 
-		$this->set('og_description','Kapow! ' . $item['Item']['item_name'] . ' - ' . substr(str_replace('"', '', $item['Item']['description']),0,200));
+		$this->set('og_description','Kapow! ' . $item['Item']['item_name'] . ' by ' . $item['Publisher']['publisher_name'] . ' - ' . substr(str_replace('"', '', $item['Item']['description']),0,200));
 	}
 
 	public function next_week($content_type="1") {
