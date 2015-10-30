@@ -183,20 +183,38 @@ class UsersController extends AppController {
 			),
 			'fields' => array(
 				'Series.series_name'
+			),
+			'order' => array(
+				'Series.series_name'
 			)
 		));
 		$this->set('series_list', $series);
 		
+		## set the paginate settings for getting all library items
 		$this->paginate = array(
 			'UserItem' => array(
+				'contain' => array(
+					'Item',
+					'Series'
+				),
 				'order' => array(
-					'UserItem.created' => 'DESC'
+					'Series.series_name' => 'ASC',
+					'Item.series_num' => 'DESC'
 				),
 				'limit' => 24
 			)
 		);
-
-		$list = $this->paginate('UserItem', array('UserItem.user_id' => $this->Auth->user('id')));
+		
+		/*$tmp = $this->UserItem->query("
+		SELECT items.item_name, items.series_num, series.series_name
+		FROM user_items
+		LEFT JOIN items ON items.id = user_items.item_id
+		LEFT JOIN series ON series.id = items.series_id
+		ORDER BY series.series_name, items.series_num DESC
+		");
+		debug($tmp); exit;*/
+		
+		$list = $this->paginate('UserItem', array('UserItem.user_id = ' . $this->Auth->user('id')));
 		
 		$this->set('items', $list);		
 		
