@@ -245,14 +245,17 @@ class CommonHelper extends Helper {
 
 	public function favRemoveButton($favId) {
 		$caption = sprintf('<i class="icon-heart icon-white"></i> <span>%s</span>', __('Remove'));
-
-		##return $this->Form->button($caption, array('type' => 'button', 'class' => 'btn btn-custom', 'data-id' => $favId));
 		return $this->Html->link($caption, '/favorites/remove/' . $favId, array('class' => 'btn btn-custom btn-lrgr my-favorite-remove', 'escape' => false, 'data-id' => $favId));
 	}
 
 	public function libraryRemoveButton($itemId) {
-		$caption = sprintf('<i class="icon-book icon-white"></i> <span>%s</span>', __('Remove'));
-
-		return $this->Html->link($caption, '/users/libraryRemove/' . $itemId, array('class' => 'btn btn-custom btn-lrgr library-remove', 'escape' => false, 'data-id' => $itemId));
+		$caption = sprintf('<i class="icon-remove icon-white"></i> <span>%s</span>', __('Remove'));
+		return $this->Html->link($caption, '/users/libraryRemove/' . $itemId, array('class' => 'btn btn-custom btn-smllr library-remove', 'escape' => false, 'data-id' => $itemId));
 	}
+	
+	public function visitSeriesButton($series_id, $series_name) {
+		$caption = sprintf('<i class="icon-book icon-white"></i> <span>%s</span>', __('View Series'));
+		return $this->Html->link($caption, '/series/' . $this->seoize($series_id, $series_name), array('class' => 'btn btn-custom btn-smllr', 'escape' => false));
+	}
+	
 }

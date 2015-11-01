@@ -10,7 +10,7 @@ $(document).ready(function() {
 			
 			$('#item-scroll-list').infinitescroll({
 				loading: {
-					finishedMsg: '<div class="row"><div class="span4 offset4 infin_txt">Nothing else!</div></div>',
+					finishedMsg: '',
 					msgText: '',
 					img: '/theme/Kapow/img/ajax-loader.gif'
 				},
