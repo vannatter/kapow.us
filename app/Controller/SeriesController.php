@@ -106,7 +106,9 @@ class SeriesController extends AppController {
 					'UserFavorite' => array(
 						'User'
 					),
-					'Item'
+					'Item' => array(
+						'Publisher'
+					)
 				)
 			)
 		);
@@ -119,6 +121,15 @@ class SeriesController extends AppController {
 
 		$this->set('series', $series);
 		$this->set('title_for_layout', ucwords(strtolower($series['Series']['series_name'])));
+
+		if ($series['Series']['description']) {
+			$desc = ucwords(strtolower($series['Series']['series_name'])) . " by " . $series['Item'][0]['Publisher']['publisher_name'] . " - " . $series['Series']['description'];
+		} else {
+			$desc = ucwords(strtolower($series['Series']['series_name'])) . " by " . $series['Item'][0]['Publisher']['publisher_name'];
+		}	
+		$this->set('meta_description_for_layout','Kapow! ' . $desc);
+		$this->set('og_description','Kapow! ' . $desc);
+		$this->set('meta_keywords_for_layout','Kapow, Kapow.us, Comics, Comic database, Current comics, New comics, Comic app, ' . $series['Series']['series_name'] . ', ' . $series['Item'][0]['Publisher']['publisher_name']); 
 
 		## see if the current user (if there is one), fav'd this publisher
 		if ($userFav = $this->UserFavorite->findByFavoriteItemIdAndUserIdAndItemType($id, $this->Auth->user('id'), 2)) {
