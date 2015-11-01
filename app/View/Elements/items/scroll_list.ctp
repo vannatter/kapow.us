@@ -64,4 +64,10 @@
 		</div>
 	<?php } ?>
 	
+<?php } else { ?>
+
+	<div class="no_items">
+		Sorry, nothing is currently available. Please try again later.
+	</div>
+
 <?php } ?>
