@@ -64,6 +64,18 @@ class UserItem extends AppModel {
     $this->useTable = false;
     $sql = '';
     
+    $where = "";
+    
+    if (is_array($conditions) && count($conditions) > 0) {
+    	foreach ($conditions as $k=>$con) {
+    		if (!empty($where)) {
+    			$where .= " AND ";
+    		}
+    		
+    		$where .= $con;
+    	}
+    }
+    
     $sql .= sprintf("
     SELECT Item.*, Series.series_name, UserItem.*
 		FROM user_items AS UserItem
@@ -73,7 +85,7 @@ class UserItem extends AppModel {
 		ORDER BY Series.series_name, Item.series_num DESC
 		LIMIT
 		",
-		$conditions[0]
+		$where
 		);
     
     // Adding LIMIT Clause
@@ -88,6 +100,18 @@ class UserItem extends AppModel {
   public function paginateCount($conditions = null, $recursive = 0, $extra = array()) {
     $sql = '';
     
+    $where = "";
+    
+    if (is_array($conditions) && count($conditions) > 0) {
+    	foreach ($conditions as $k=>$con) {
+    		if (!empty($where)) {
+    			$where .= " AND ";
+    		}
+    		
+    		$where .= $con;
+    	}
+    }
+    
     $sql .= sprintf("
     SELECT Item.*, Series.series_name, UserItem.*
 		FROM user_items AS UserItem
@@ -96,7 +120,7 @@ class UserItem extends AppModel {
 		WHERE %s
 		ORDER BY Series.series_name, Item.series_num DESC
 		",
-		$conditions[0]
+		$where
 		);
         
     $this->recursive = $recursive;

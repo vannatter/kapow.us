@@ -224,7 +224,7 @@ class UsersController extends AppController {
 	public function library_filter($filter="") {
 		$this->layout = 'blank';
 		
-		$issue = $this->UserItem->find('all', array(
+		/*$issue = $this->UserItem->find('all', array(
 			'conditions' => array(
 				'Item.item_name LIKE' => '%' . $filter . '%'
 			),
@@ -233,9 +233,14 @@ class UsersController extends AppController {
 					'Series'
 				)
 			)
+		));*/
+		
+		$list = $this->paginate('UserItem', array(
+			'UserItem.user_id = ' . $this->Auth->user('id'),
+			'Item.item_name LIKE \'%' . $filter . '%\''
 		));
 		
-		$this->set('items', $issue);
+		$this->set('items', $list);
 		
 		$this->render('/Elements/users/my/library_scroll');
 	}
@@ -243,15 +248,9 @@ class UsersController extends AppController {
 	public function library_filter_issue($issue) {
 		$this->layout = 'blank';
 		
-		$issue = $this->UserItem->find('all', array(
-			'conditions' => array(
-				'UserItem.id' => $issue
-			),
-			'contain' => array(
-				'Item' => array(
-					'Series'
-				)
-			)
+		$issue = $this->paginate('UserItem', array(
+			'UserItem.user_id = ' . $this->Auth->user('id'),
+			'UserItem.id = ' . $issue
 		));
 		
 		$this->set('items', $issue);
