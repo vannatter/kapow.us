@@ -203,6 +203,9 @@ class UsersController extends AppController {
 				),
 				'contain' => array(
 					'Item'
+				),
+				'order' => array(
+					'Item.series_num' => 'DESC'
 				)
 			));
 			
