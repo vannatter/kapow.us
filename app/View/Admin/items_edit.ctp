@@ -4,25 +4,33 @@
  */
 ?>
 
-<?php echo $this->Form->create('Item', array('class' => 'form-horizontal')); ?>
-<?php echo $this->Form->input('item_name', array('class' => 'span6')); ?>
-<?php echo $this->Form->input('section_id', array('class' => 'span6')); ?>
-<?php echo $this->Form->input('publisher_id', array('class' => 'span6')); ?>
-<?php echo $this->Form->input('series_id', array('class' => 'span6')); ?>
-<?php echo $this->Form->input('item_id', array('type' => 'text', 'label' => __('Item ID'), 'class' => 'span6')); ?>
-<?php echo $this->Form->input('printing', array('class' => 'span2')); ?>
-<?php echo $this->Form->input('series_num', array('class' => 'span2')); ?>
-<?php echo $this->Form->input('item_date', array('type' => 'text', 'class' => 'span3 datepicker')); ?>
-<?php echo $this->Form->input('img_fullpath', array('label' => __('Image Fullpath'), 'class' => 'span10')); ?>
-<?php echo $this->Form->input('srp', array('label' => __('SRP'), 'class' => 'span4', 'prepend' => '$')); ?>
-<?php echo $this->Form->input('description', array('class' => 'span8', 'rows' => 5)); ?>
-<div class="control-group">
-	<label class="control-label"><?php echo __('Hotness'); ?></label>
+<?php echo $this->Form->create('Item', array('class' => 'form-horizontal', 'inputDefaults' => array(
+		'div' => 'form-group',
+		'wrapInput' => false,
+		'class' => 'form-control'
+	)
+)); ?>
+<?php echo $this->Form->input('item_name'); ?>
+<?php echo $this->Form->input('section_id'); ?>
+<?php echo $this->Form->input('publisher_id'); ?>
+<?php echo $this->Form->input('series_id'); ?>
+<?php echo $this->Form->input('item_id', array('type' => 'text', 'label' => __('Item ID'))); ?>
+<?php echo $this->Form->input('printing'); ?>
+<?php echo $this->Form->input('series_num'); ?>
+<?php echo $this->Form->input('item_date', array('type' => 'text', 'class' => 'form-control datepicker')); ?>
+<?php echo $this->Form->input('img_fullpath', array('label' => __('Image Fullpath'))); ?>
+<?php echo $this->Form->input('srp', array('label' => __('SRP'), 'prepend' => '$')); ?>
+<?php echo $this->Form->input('description', array('rows' => 5)); ?>
+<div class="form-group">
+	<label ><?php echo __('Hotness'); ?></label>
 	<div class="controls">
 		<div id="hotness" style="width: 50%;"></div>
 	</div>
 </div>
-<?php echo $this->Form->submit(__('Save Item')); ?>
+<?php echo $this->Form->submit(__('Save Item'), array(
+	'div' => 'form-group',
+	'class' => 'btn btn-default'
+)); ?>
 <?php echo $this->Form->end(); ?>
 <script>
 	$(document).ready(function() {

@@ -23,7 +23,11 @@ App::uses('AppController', 'Controller');
 class AdminController extends AppController {
 	public $theme = 'Admin';
 	public $name = 'Admin';
-	public $uses = array('Item', 'Creator', 'Publisher', 'Series', 'Store', 'User', 'Category', 'CreatorType', 'Section', 'Report', 'StorePhoto', 'Blog', 'Flag', 'UserActivity', 'Improvement', 'AppMessage');
+	public $uses = array(
+		'Item', 'Creator', 'Publisher', 'Series', 'Store', 'User', 'Category',
+		'CreatorType', 'Section', 'Report', 'StorePhoto', 'Blog', 'Flag',
+		'UserActivity', 'Improvement', 'AppMessage'
+	);
 	public $helpers = array(
 		'States',
 		'TinyMCE.TinyMCE',
