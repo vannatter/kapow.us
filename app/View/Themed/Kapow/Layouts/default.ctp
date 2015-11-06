@@ -41,7 +41,7 @@
 			echo $this->fetch('css');
 		?>
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
-		<link href='http://fonts.googleapis.com/css?family=Open+Sans+Condensed:300' rel='stylesheet' type='text/css'>
+		<link href='//fonts.googleapis.com/css?family=Open+Sans+Condensed:300' rel='stylesheet' type='text/css'>
  	</head>
 
 	<body>
@@ -60,7 +60,7 @@
 			<div id="flash_msg" class="flash_msg" style="display:none;"></div>
 		</div>
 
-		<script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?key=AIzaSyAf5DtChzuCwa8uGr4gehSrhklvVHjzKhk&amp;sensor=true"></script>
+		<script type="text/javascript" src="//maps.googleapis.com/maps/api/js?key=AIzaSyAf5DtChzuCwa8uGr4gehSrhklvVHjzKhk&amp;sensor=true"></script>
 		<?php echo $this->Facebook->init(); ?>
 		<?php
 			echo $this->AssetCompress->script('js-libs');
