@@ -619,17 +619,35 @@ class ToolsController extends AppController {
 		}
 	}	
 	
+	function get_inner_html( $node ) {
+		$innerHTML= '';
+		$children = $node->childNodes;
+		foreach ($children as $child) {
+			$innerHTML .= $child->ownerDocument->saveXML( $child );
+		}
+		return $innerHTML;
+	}
+
+	function strip_classes($data, $strips) {
+		foreach ($strips as $strip) {
+			$data = preg_replace('#<div class="'.$strip.'">(.*?)</div>#', '', $data);
+		}
+		return $data;
+	}
 
 	function _getItem($item_id, $item_name, $section, $date) {
 
+		echo "<br/>";
 		echo "iname=" . $item_name . "<br/>";
 		
 		$updatedTypes = array();
 
 		$print = 1;
 		$rand = rand(500,999);
-		$url = Configure::read('Settings.root_domain') . Configure::read('Settings.root_domain_path') . $rand . "?stockItemID=" . $item_id;
-		
+//		$url = Configure::read('Settings.root_domain') . Configure::read('Settings.root_domain_path') . $rand . "?stockItemID=" . $item_id;
+		$url = Configure::read('Settings.root_domain') . Configure::read('Settings.root_domain_path') . $item_id;
+
+
 		// check if we need this item, if its already been parsed, don't do it again..
 		$item = $this->Item->find('first', array('conditions' => array('Item.item_id' => $item_id), 'limit' => 1, 'recursive' => 1));
 		if (!$item) {
@@ -640,7 +658,12 @@ class ToolsController extends AppController {
 			$dom = new DOMDocument();
 			@$dom->loadHTML($d);
 			$xpath = new DOMXPath($dom);
-			
+
+			echo "<textarea rows='30' style='width:100%;'>";
+			print_r($d);
+			echo "</textarea>";
+//
+
 			$item = array();
 			$item['item_id'] = $item_id;
 			$item['item_date'] = date("Y-m-d", strtotime($date));
@@ -696,7 +719,7 @@ class ToolsController extends AppController {
 			$item['stock_id'] = $item_id;
 			
 			// parse item_name by # to get series name..
-			$series_parts = split("#", $item['item_name']);				
+			$series_parts = split("#", $item['item_name']);
 			
 			$item['series_name'] = trim($series_parts[0]);
 			$item['series_name'] = trim(preg_replace("/\([^)]+\)/","",$item['series_name']));
@@ -752,13 +775,14 @@ class ToolsController extends AppController {
 			
 			$item['printing'] = $print;
 			
-			$publisher = $xpath->query('//div[@class="StockCodePublisher"]');
+			$publisher = $xpath->query('//div[@class="Publisher"]');
 			foreach ($publisher as $tag) {
-				$pub = substr($tag->nodeValue, 12);
-				$item['publisher'] = $pub;
+//				$pub = substr($tag->nodeValue, 12);
+//				$item['publisher'] = $pub;
+				$item['publisher'] = $tag->nodeValue;
 			}
 			
-			$creators = $xpath->query('//div[@class="StockCodeCreators"]');
+			$creators = $xpath->query('//div[@class="Creators"]');
 			foreach ($creators as $tag) {
 				$creator_array = preg_split("/\(/", $tag->nodeValue);
 				$cz = array();
@@ -767,9 +791,10 @@ class ToolsController extends AppController {
 						$creator_pieces = split(")", $c);
 						$e = split("/", $creator_pieces[0]);
 						foreach ($e as $el) {
-							$creator_names = split(",", $creator_pieces[1]);
+							$creator_names = @split(",", $creator_pieces[1]);
 							foreach ($creator_names as $cn) {
 								$cn = trim($cn);
+								$cn = preg_replace('/\s+/', " ", $cn);
 								if ($cn) {
 									$cn = str_replace("& Various", "", $cn);
 									$cz[$el][] = trim($cn);
@@ -781,22 +806,23 @@ class ToolsController extends AppController {
 				$item['creators'] = $cz;
 			}
 	
-			$description = $xpath->query('//div[@class="PreviewsHtml"]');
-			foreach ($description as $tag) {
-				$item['description'] = trim($tag->nodeValue);
-				$item['description'] = trim(preg_replace('/[^a-zA-Z0-9_ %\;\:\@\*\$\?\,\"\'\!\[\]\.\(\)%&-]/s', ' ', $item['description']));
-			}
-			
-			$img = $xpath->query('//div[@class="StockCodeImage"]/a');
+			$description = $xpath->query('//div[@class="Text"]')[0];
+			$desc = $this->get_inner_html($description);
+			$desc = preg_replace('/\s+/', " ", $desc);
+			$item['description'] = trim($this->strip_classes($desc, ['ItemCode', 'ReleaseDate', 'SRP', 'PPrevue', 'Creators']));
+			$item['description'] = trim(str_replace(array("\n", "\r", "&#13;"), '', $item['description']));
+			$item['description'] = strip_tags($item['description']);
+
+			$img = $xpath->query('//img[@id="MainContentImage"]');
 			foreach ($img as $tag) {
-				$item['img'] = trim($tag->getAttribute('href'));
+				$item['img'] = trim($tag->getAttribute('src'));
 			}
 			
-			$srp = $xpath->query('//div[@class="StockCodeSrp"]');
-			foreach ($srp as $tag) {
-				$pri = substr($tag->nodeValue, 8);
-				$item['srp'] = $pri;
-			}		
+//			$srp = $xpath->query('//div[@class="StockCodeSrp"]');
+//			foreach ($srp as $tag) {
+//				$pri = substr($tag->nodeValue, 8);
+//				$item['srp'] = $pri;
+//			}
 	
 			// see if we have data; site can sometimes respond w/ an error..
 			if (@$item['item_name']) {
@@ -807,13 +833,13 @@ class ToolsController extends AppController {
 
 				// override section_id for items matching t-shirt (T/S) and hoodies..
 				if (strpos($item_name, "T/S")) {
-					$item['section_id'] = 9;				
+					$item['section_id'] = 9;
 				}
 				if (strpos($item_name, "HOODIE")) {
-					$item['section_id'] = 9;				
+					$item['section_id'] = 9;
 				}
 				if (strpos($item_name, "POSTER")) {
-					$item['section_id'] = 9;				
+					$item['section_id'] = 9;
 				}
 
 				// check for digital packs / combo packs, set combo_pack flag if found..
@@ -830,12 +856,13 @@ class ToolsController extends AppController {
 				// get local image
 				echo "img=" . $item['img'] . "<br/>";
 				
-				$imgpath = $this->Curl->getImage($item['img']);
+				$imgpath = $this->Curl->getsetImage($item['img'], $item['item_id']);
 				$item['img_fullpath'] = $imgpath;
 
-				echo "<pre>";
-				print_r($item);
-				echo "</pre>";
+//				echo "<textarea rows=50 style='width:100%;'>";
+//				print_r($item);
+//				echo "</textarea>";
+//				exit;
 				
 				// save item
 				$item_id = $this->Item->saveItem($item);

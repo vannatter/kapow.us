@@ -17,7 +17,37 @@
 
   			return array($f, $i);
 		}
-		
+
+
+		function getsetImage($img, $item_id) {
+			$local_path = Configure::read('Settings.icon_path') . strtolower($img);
+			$web_path   = Configure::read('Settings.icon_web_path') . strtolower($img);
+
+			$local_path = str_replace('?type=1', '', $local_path);
+			$local_path = $local_path . "_" . $item_id . ".jpg";
+
+			$web_path = str_replace('?type=1', '', $web_path);
+			$web_path = $web_path . "_" . $item_id . ".jpg";
+
+			if (file_exists($local_path)) {
+				return $web_path;
+			} else {
+				$img_path = Configure::read('Settings.root_domain') . strtolower($img);
+				@mkdir(dirname($local_path), 0777, true);
+
+				$ch = curl_init();
+				curl_setopt ($ch, CURLOPT_URL, $img_path);
+				curl_setopt ($ch, CURLOPT_RETURNTRANSFER, 1);
+				curl_setopt ($ch, CURLOPT_CONNECTTIMEOUT, 0);
+				$fc = curl_exec($ch);
+				curl_close($ch);
+
+				$new_img = imagecreatefromstring($fc);
+				imagejpeg($new_img, $local_path, 100);
+				return $web_path;
+			}
+		}
+
 		function getImage($img) {
 			$local_path = Configure::read('Settings.icon_path') . strtolower($img);
 			$web_path   = Configure::read('Settings.icon_web_path') . strtolower($img);
