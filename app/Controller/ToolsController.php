@@ -812,7 +812,8 @@ class ToolsController extends AppController {
 				$desc = preg_replace('/\s+/', " ", $desc);
 			}
 
-			$item['description'] = trim($this->strip_classes($desc, ['ItemCode', 'ReleaseDate', 'SRP', 'PPrevue', 'Creators']));
+			$arr = array('ItemCode', 'ReleaseDate', 'SRP', 'PPrevue', 'Creators');
+			$item['description'] = trim($this->strip_classes($desc, $arr));
 			$item['description'] = trim(str_replace(array("\n", "\r", "&#13;"), '', $item['description']));
 			$item['description'] = strip_tags($item['description']);
 
