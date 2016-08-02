@@ -806,7 +806,7 @@ class ToolsController extends AppController {
 				$item['creators'] = $cz;
 			}
 	
-			$description = $xpath->query('//div[@class="Text"]')[0];
+			$description = @$xpath->query('//div[@class="Text"]')[0];
 			$desc = $this->get_inner_html($description);
 			$desc = preg_replace('/\s+/', " ", $desc);
 			$item['description'] = trim($this->strip_classes($desc, ['ItemCode', 'ReleaseDate', 'SRP', 'PPrevue', 'Creators']));
