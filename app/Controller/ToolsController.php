@@ -777,8 +777,6 @@ class ToolsController extends AppController {
 			
 			$publisher = $xpath->query('//div[@class="Publisher"]');
 			foreach ($publisher as $tag) {
-//				$pub = substr($tag->nodeValue, 12);
-//				$item['publisher'] = $pub;
 				$item['publisher'] = $tag->nodeValue;
 			}
 			
@@ -822,11 +820,11 @@ class ToolsController extends AppController {
 				$item['img'] = trim($tag->getAttribute('src'));
 			}
 			
-//			$srp = $xpath->query('//div[@class="StockCodeSrp"]');
-//			foreach ($srp as $tag) {
-//				$pri = substr($tag->nodeValue, 8);
-//				$item['srp'] = $pri;
-//			}
+			$srp = $xpath->query('//div[@class="SRP"]');
+			foreach ($srp as $tag) {
+				$pri = substr($tag->nodeValue, 6);
+				$item['srp'] = $pri;
+			}
 	
 			// see if we have data; site can sometimes respond w/ an error..
 			if (@$item['item_name']) {
@@ -863,10 +861,10 @@ class ToolsController extends AppController {
 				$imgpath = $this->Curl->getsetImage($item['img'], $item['item_id']);
 				$item['img_fullpath'] = $imgpath;
 
-//				echo "<textarea rows=50 style='width:100%;'>";
-//				print_r($item);
-//				echo "</textarea>";
-//				exit;
+				echo "<textarea rows=50 style='width:100%;'>";
+				print_r($item);
+				echo "</textarea>";
+				exit;
 				
 				// save item
 				$item_id = $this->Item->saveItem($item);
