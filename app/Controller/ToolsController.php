@@ -861,10 +861,10 @@ class ToolsController extends AppController {
 				$imgpath = $this->Curl->getsetImage($item['img'], $item['item_id']);
 				$item['img_fullpath'] = $imgpath;
 
-				echo "<textarea rows=50 style='width:100%;'>";
-				print_r($item);
-				echo "</textarea>";
-				exit;
+//				echo "<textarea rows=50 style='width:100%;'>";
+//				print_r($item);
+//				echo "</textarea>";
+//				exit;
 				
 				// save item
 				$item_id = $this->Item->saveItem($item);
