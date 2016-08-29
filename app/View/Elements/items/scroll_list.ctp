@@ -39,7 +39,7 @@
 			<?php echo $this->Common->pullButton($item['Item']['id'], $hasPull); ?>
 
 			<?php if ($this->Session->read('Auth.User.access_level') > 50) { ?>
-			<a href="/tools/repull_img/<?php echo $item['Item']['id']; ?>"><button type="button" class="btn btn-mini repull_img btn-off"><i class="icon-photo icon-white"></i> <span>Repull Image</span></button></a>
+			<a href="/tools/repull_img/<?php echo $item['Item']['id']; ?>"><button type="button" class="btn btn-mini repull_img btn-off"><i class="icon-picture icon-white"></i> <span>Repull Image</span></button></a>
 			<?php } ?>
 
 			<div class="item_blck">
