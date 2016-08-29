@@ -19,7 +19,7 @@
 		}
 
 
-		function getsetImage($img, $item_id) {
+		function getsetImage($img, $item_id, $force=0) {
 			$local_path = Configure::read('Settings.icon_path') . strtolower($img);
 			$web_path   = Configure::read('Settings.icon_web_path') . strtolower($img);
 
@@ -29,7 +29,7 @@
 			$web_path = str_replace('?type=1', '', $web_path);
 			$web_path = $web_path . "_" . $item_id . ".jpg";
 
-			if (file_exists($local_path)) {
+			if (file_exists($local_path) && $force == 0) {
 				return $web_path;
 			} else {
 				$img_path = Configure::read('Settings.root_domain') . strtolower($img);

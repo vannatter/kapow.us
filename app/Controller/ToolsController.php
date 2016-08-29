@@ -642,7 +642,7 @@ class ToolsController extends AppController {
 
 			if (@$img) {
 
-				$imgpath = $this->Curl->getsetImage($update_img['Item']['img'], $item['Item']['item_id']);
+				$imgpath = $this->Curl->getsetImage($update_img['Item']['img'], $item['Item']['item_id'], 1);
 				$update_img['Item']['img_fullpath'] = $imgpath;
 
 				if ($this->Item->save($update_img)) {
