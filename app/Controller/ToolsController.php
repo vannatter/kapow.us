@@ -627,6 +627,7 @@ class ToolsController extends AppController {
 
 			$update_img = array();
 			$update_img['Item']['id'] = $item['Item']['id'];
+			$update_img['Item']['thumbnails_processed'] = 0;
 
 			$url = Configure::read('Settings.root_domain') . Configure::read('Settings.root_domain_path') . $item['Item']['item_id'];
 			list ($d, $i) = $this->Curl->getRaw($url);
@@ -644,6 +645,9 @@ class ToolsController extends AppController {
 
 				$imgpath = $this->Curl->getsetImage($update_img['Item']['img'], $item['Item']['item_id'], 1);
 				$update_img['Item']['img_fullpath'] = $imgpath;
+
+				@unlink($update_img['Item']['img_fullpath'].'_50p.jpg');
+				@unlink($update_img['Item']['img_fullpath'].'_25p.jpg');
 
 				if ($this->Item->save($update_img)) {
 					$this->Session->setFlash(__('Item Image Repulled!'), 'alert', array(
