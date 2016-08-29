@@ -602,7 +602,7 @@ class ToolsController extends AppController {
 			
 			if ($check_next_for_section) {
 				if ( ($part_1) && (!$part_2) ) {
-					$section = $part_1;				
+					$section = $part_1;
 				}
 				$check_next_for_section = false;
 			}
@@ -612,12 +612,55 @@ class ToolsController extends AppController {
 			}
 			
 			if ($part_2) {
-//				echo "get item -> " . $part_1 . " - " . $part_2 . " - " . $section . " - " . $date . "<br/>";
-				$this->_getItem($part_1, $part_2, $section, $date);		
+				$this->_getItem($part_1, $part_2, $section, $date);
 				$cnt++;
 			}
 		}
-	}	
+	}
+	
+	function repull_img($id) {
+
+		## get the item_id for this item..
+		$item = $this->Item->find('first', array('conditions' => array('Item.id' => $id), 'limit' => 1, 'recursive' => 1));
+
+		if ($item) {
+
+			$update_img = array();
+			$update_img['Item']['id'] = $item['Item']['id'];
+
+			$url = Configure::read('Settings.root_domain') . Configure::read('Settings.root_domain_path') . $item['Item']['item_id'];
+			list ($d, $i) = $this->Curl->getRaw($url);
+
+			$dom = new DOMDocument();
+			@$dom->loadHTML($d);
+			$xpath = new DOMXPath($dom);
+
+			$img = $xpath->query('//img[@id="MainContentImage"]');
+			foreach ($img as $tag) {
+				$update_img['Item']['img'] = trim($tag->getAttribute('src'));
+			}
+
+			if (@$img) {
+
+				$imgpath = $this->Curl->getsetImage($update_img['Item']['img'], $item['Item']['item_id']);
+				$update_img['Item']['img_fullpath'] = $imgpath;
+
+				if ($this->Item->save($update_img)) {
+					$this->Session->setFlash(__('Item Image Repulled!'), 'alert', array(
+						'plugin' => 'TwitterBootstrap',
+						'class' => 'alert-success'
+					));
+					$this->redirect('/items/'.$this->seoize($id, $item['Item']['item_name']));
+				}
+			}
+
+		} else {
+			$this->redirect('/');
+			exit;
+		}
+		exit;
+
+	}
 	
 	function get_inner_html( $node ) {
 		$innerHTML= '';
