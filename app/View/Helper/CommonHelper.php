@@ -257,5 +257,15 @@ class CommonHelper extends Helper {
 		$caption = sprintf('<i class="icon-book icon-white"></i> <span>%s</span>', __('View Series'));
 		return $this->Html->link($caption, '/series/' . $this->seoize($series_id, $series_name), array('class' => 'btn btn-custom btn-smllr', 'escape' => false));
 	}
-	
+
+	function randstr($length = 10) {
+		$characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+		$charactersLength = strlen($characters);
+		$randomString = '';
+		for ($i = 0; $i < $length; $i++) {
+			$randomString .= $characters[rand(0, $charactersLength - 1)];
+		}
+		return $randomString;
+	}
+
 }
