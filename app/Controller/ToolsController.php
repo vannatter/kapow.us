@@ -646,13 +646,8 @@ class ToolsController extends AppController {
 				$imgpath = $this->Curl->getsetImage($update_img['Item']['img'], $item['Item']['item_id'], 1);
 				$update_img['Item']['img_fullpath'] = $imgpath;
 
-				echo WWW_ROOT.$update_img['Item']['img_fullpath'].'_50p.jpg' . "<br/>";
-				echo WWW_ROOT.$update_img['Item']['img_fullpath'].'_25p.jpg' . "<br/>";
-				exit;
-
-
-				@unlink($update_img['Item']['img_fullpath'].'_50p.jpg');
-				@unlink($update_img['Item']['img_fullpath'].'_25p.jpg');
+				@unlink(WWW_ROOT.$update_img['Item']['img_fullpath'].'_50p.jpg');
+				@unlink(WWW_ROOT.$update_img['Item']['img_fullpath'].'_25p.jpg');
 
 				if ($this->Item->save($update_img)) {
 					$this->Session->setFlash(__('Item Image Repulled!'), 'alert', array(
