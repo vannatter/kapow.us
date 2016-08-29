@@ -646,8 +646,8 @@ class ToolsController extends AppController {
 				$imgpath = $this->Curl->getsetImage($update_img['Item']['img'], $item['Item']['item_id'], 1);
 				$update_img['Item']['img_fullpath'] = $imgpath;
 
-				echo $update_img['Item']['img_fullpath'].'_50p.jpg' . "<br/>";
-				echo $update_img['Item']['img_fullpath'].'_25p.jpg' . "<br/>";
+				echo WWW_ROOT.$update_img['Item']['img_fullpath'].'_50p.jpg' . "<br/>";
+				echo WWW_ROOT.$update_img['Item']['img_fullpath'].'_25p.jpg' . "<br/>";
 				exit;
 
 
