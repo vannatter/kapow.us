@@ -38,8 +38,6 @@
 				$img_path = Configure::read('Settings.root_domain') . strtolower($img);
 
 				echo "img_path = " . $img_path . "<br/>";
-				exit;
-
 
 				@mkdir(dirname($local_path), 0777, true);
 
@@ -52,6 +50,9 @@
 
 				$new_img = imagecreatefromstring($fc);
 				imagejpeg($new_img, $local_path, 100);
+
+				exit;
+
 				return $web_path;
 			}
 		}
