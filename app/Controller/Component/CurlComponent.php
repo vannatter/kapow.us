@@ -29,6 +29,10 @@
 			$web_path = str_replace('?type=1', '', $web_path);
 			$web_path = $web_path . "_" . $item_id . ".jpg";
 
+			echo "local_path = " . $local_path . "<br/>";
+			echo "web_path = " . $web_path . "<br/>";
+			exit;
+
 			if (file_exists($local_path) && $force == 0) {
 				return $web_path;
 			} else {
