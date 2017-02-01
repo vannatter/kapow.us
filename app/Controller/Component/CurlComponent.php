@@ -31,12 +31,16 @@
 
 			echo "local_path = " . $local_path . "<br/>";
 			echo "web_path = " . $web_path . "<br/>";
-			exit;
 
 			if (file_exists($local_path) && $force == 0) {
 				return $web_path;
 			} else {
 				$img_path = Configure::read('Settings.root_domain') . strtolower($img);
+
+				echo "img_path = " . $img_path . "<br/>";
+				exit;
+
+
 				@mkdir(dirname($local_path), 0777, true);
 
 				$ch = curl_init();
