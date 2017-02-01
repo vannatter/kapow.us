@@ -29,15 +29,10 @@
 			$web_path = str_replace('?type=1', '', $web_path);
 			$web_path = $web_path . "_" . $item_id . ".jpg";
 
-			echo "local_path = " . $local_path . "<br/>";
-			echo "web_path = " . $web_path . "<br/>";
-
 			if (file_exists($local_path) && $force == 0) {
 				return $web_path;
 			} else {
 				$img_path = Configure::read('Settings.root_domain') . strtolower($img);
-
-				echo "img_path = " . $img_path . "<br/>";
 
 				@mkdir(dirname($local_path), 0777, true);
 
@@ -50,8 +45,6 @@
 
 				$new_img = imagecreatefromstring($fc);
 				imagejpeg($new_img, $local_path, 100);
-
-				exit;
 
 				return $web_path;
 			}
