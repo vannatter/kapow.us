@@ -4,8 +4,6 @@
  * NOTE: When testing on MySQL, you must set 'persistent' => false on *both* database connections,
  * or one connection will step on the other.
  *
- * PHP 5
- *
  * CakePHP(tm) Tests <http://book.cakephp.org/2.0/en/development/testing.html>
  * Copyright (c) Cake Software Foundation, Inc. (http://cakefoundation.org)
  *
@@ -23,7 +21,7 @@
 require_once dirname(__FILE__) . DS . 'ModelTestBase.php';
 
 /**
- * Class ModelCrossSchemaHabtmTest
+ * ModelCrossSchemaHabtmTest
  *
  * @package       Cake.Test.Case.Model
  */
@@ -42,14 +40,14 @@ class ModelCrossSchemaHabtmTest extends BaseModelTest {
 /**
  * Don't drop tables if they exist
  *
- * @var boolean
+ * @var bool
  */
 	public $dropTables = false;
 
 /**
  * Don't auto load fixtures
  *
- * @var boolean
+ * @var bool
  */
 	public $autoFixtures = false;
 
@@ -70,8 +68,8 @@ class ModelCrossSchemaHabtmTest extends BaseModelTest {
  */
 	protected function _checkConfigs() {
 		$config = ConnectionManager::enumConnectionObjects();
-		$this->skipif ($this->db instanceof Sqlite, 'This test is not compatible with Sqlite.');
-		$this->skipif (
+		$this->skipIf($this->db instanceof Sqlite, 'This test is not compatible with Sqlite.');
+		$this->skipIf(
 			!isset($config['test']) || !isset($config['test2']),
 			'Primary and secondary test databases not configured, ' .
 			'skipping cross-database join tests.' .
@@ -147,7 +145,7 @@ class ModelCrossSchemaHabtmTest extends BaseModelTest {
 		));
 
 		$results = $Player->saveAll($player, array('validate' => 'first'));
-		$this->assertNotEqual(false, $results);
+		$this->assertNotSame(false, $results);
 		$count = $Player->find('count');
 		$this->assertEquals(5, $count);
 
@@ -181,7 +179,7 @@ class ModelCrossSchemaHabtmTest extends BaseModelTest {
  */
 	public function testHabtmWithThreeDatabases() {
 		$config = ConnectionManager::enumConnectionObjects();
-		$this->skipif (
+		$this->skipIf(
 			!isset($config['test']) || !isset($config['test2']) || !isset($config['test_database_three']),
 			'Primary, secondary, and tertiary test databases not configured,' .
 			' skipping test. To run these tests, you must define ' .

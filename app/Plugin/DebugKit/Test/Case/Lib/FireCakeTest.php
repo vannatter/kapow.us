@@ -1,29 +1,28 @@
 <?php
 /**
- * CakeFirePHP test case
+ * CakeFirePHP Test Case
  *
- * PHP versions 5
+ * PHP 5
  *
  * CakePHP(tm) : Rapid Development Framework (http://cakephp.org)
- * Copyright 2005-2010, Cake Software Foundation, Inc. (http://cakefoundation.org)
+ * Copyright (c) Cake Software Foundation, Inc. (http://cakefoundation.org)
  *
  * Licensed under The MIT License
  * Redistributions of files must retain the above copyright notice.
  *
- * @copyright     Copyright 2005-2010, Cake Software Foundation, Inc. (http://cakefoundation.org)
- * @link          http://cakephp.org
- * @package       debug_kit
- * @subpackage    debug_kit.tests.vendors
+ * @copyright     Copyright (c) Cake Software Foundation, Inc. (http://cakefoundation.org)
+ * @link          http://cakephp.org CakePHP(tm) Project
  * @since         DebugKit 0.1
- * @license       MIT License (http://www.opensource.org/licenses/mit-license.php)
+ * @license       http://www.opensource.org/licenses/mit-license.php MIT License
  **/
+
 App::uses('FireCake', 'DebugKit.Lib');
 require_once CakePlugin::path('DebugKit') . 'Test' . DS . 'Case' . DS . 'TestFireCake.php';
 
 /**
  * Test Case For FireCake
  *
- * @package debug_kit.tests
+ * @since         DebugKit 0.1
  */
 class FireCakeTestCase extends CakeTestCase {
 
@@ -36,10 +35,20 @@ class FireCakeTestCase extends CakeTestCase {
  */
 	public function setUp() {
 		$this->firecake = FireCake::getInstance('TestFireCake');
+		TestFireCake::reset();
 	}
 
 /**
- * test getInstance cheat.
+ * Reset the FireCake counters and headers.
+ *
+ * @return void
+ */
+	public function tearDown() {
+		TestFireCake::reset();
+	}
+
+/**
+ * Test getInstance cheat.
  *
  * If this fails the rest of the test is going to fail too.
  *
@@ -54,7 +63,7 @@ class FireCakeTestCase extends CakeTestCase {
 	}
 
 /**
- * testsetoption
+ * Test setOptions
  *
  * @return void
  */
@@ -64,7 +73,7 @@ class FireCakeTestCase extends CakeTestCase {
 	}
 
 /**
- * test Log()
+ * Test Log()
  *
  * @return void
  */
@@ -82,7 +91,7 @@ class FireCakeTestCase extends CakeTestCase {
 	}
 
 /**
- * test info()
+ * Test info()
  *
  * @return void
  */
@@ -100,7 +109,7 @@ class FireCakeTestCase extends CakeTestCase {
 	}
 
 /**
- * test info()
+ * Test info()
  *
  * @return void
  */
@@ -118,7 +127,7 @@ class FireCakeTestCase extends CakeTestCase {
 	}
 
 /**
- * test error()
+ * Test error()
  *
  * @return void
  */
@@ -136,7 +145,7 @@ class FireCakeTestCase extends CakeTestCase {
 	}
 
 /**
- * test dump()
+ * Test dump()
  *
  * @return void
  */
@@ -147,29 +156,29 @@ class FireCakeTestCase extends CakeTestCase {
 	}
 
 /**
- * test table() generation
+ * Test table() generation
  *
  * @return void
  */
 	public function testTable() {
-		$table[] = array('Col 1 Heading','Col 2 Heading');
-		$table[] = array('Row 1 Col 1','Row 1 Col 2');
-		$table[] = array('Row 2 Col 1','Row 2 Col 2');
-		$table[] = array('Row 3 Col 1','Row 3 Col 2');
+		$table[] = array('Col 1 Heading', 'Col 2 Heading');
+		$table[] = array('Row 1 Col 1', 'Row 1 Col 2');
+		$table[] = array('Row 2 Col 1', 'Row 2 Col 2');
+		$table[] = array('Row 3 Col 1', 'Row 3 Col 2');
 		FireCake::table('myTrace', $table);
 		$expected = '162|[{"Type":"TABLE","Label":"myTrace"},[["Col 1 Heading","Col 2 Heading"],["Row 1 Col 1","Row 1 Col 2"],["Row 2 Col 1","Row 2 Col 2"],["Row 3 Col 1","Row 3 Col 2"]]]|';
 		$this->assertEquals($this->firecake->sentHeaders['X-Wf-1-1-1-1'], $expected);
 	}
 
 /**
- * testStringEncoding
+ * TestStringEncoding
  *
  * @return void
  */
 	public function testStringEncode() {
-		$vars = array(1,2,3);
+		$vars = array(1, 2, 3);
 		$result = $this->firecake->stringEncode($vars);
-		$this->assertEquals($result, array(1,2,3));
+		$this->assertEquals($result, array(1, 2, 3));
 
 		$this->firecake->setOptions(array('maxArrayDepth' => 3));
 		$deep = array(1 => array(2 => array(3)));
@@ -178,7 +187,7 @@ class FireCakeTestCase extends CakeTestCase {
 	}
 
 /**
- * test object encoding
+ * Test object encoding
  *
  * @return void
  */
@@ -192,7 +201,7 @@ class FireCakeTestCase extends CakeTestCase {
 	}
 
 /**
- * test trace()
+ * Test trace()
  *
  * @return void
  */
@@ -207,7 +216,7 @@ class FireCakeTestCase extends CakeTestCase {
 	}
 
 /**
- * test enabling and disabling of FireCake output
+ * Test enabling and disabling of FireCake output
  *
  * @return void
  */
@@ -222,7 +231,7 @@ class FireCakeTestCase extends CakeTestCase {
 	}
 
 /**
- * test correct line continuation markers on multi line headers.
+ * Test correct line continuation markers on multi line headers.
  *
  * @return void
  */
@@ -238,7 +247,7 @@ class FireCakeTestCase extends CakeTestCase {
 	}
 
 /**
- * test inclusion of line numbers
+ * Test inclusion of line numbers
  *
  * @return void
  */
@@ -251,7 +260,7 @@ class FireCakeTestCase extends CakeTestCase {
 	}
 
 /**
- * test Group messages
+ * Test Group messages
  *
  * @return void
  */
@@ -266,7 +275,7 @@ class FireCakeTestCase extends CakeTestCase {
 	}
 
 /**
- * test fb() parameter parsing
+ * Test fb() parameter parsing
  *
  * @return void
  */
@@ -299,7 +308,7 @@ class FireCakeTestCase extends CakeTestCase {
 	}
 
 /**
- * testClientExtensionDetection.
+ * Test DetectClientExtension.
  *
  * @return void
  */
@@ -317,7 +326,7 @@ class FireCakeTestCase extends CakeTestCase {
 	}
 
 /**
- * test of Non Native JSON encoding.
+ * Test of Non Native JSON encoding.
  *
  * @return void
  */
@@ -326,19 +335,11 @@ class FireCakeTestCase extends CakeTestCase {
 		$json = FireCake::jsonEncode(array('one' => 1, 'two' => 2));
 		$this->assertEquals($json, '{"one":1,"two":2}');
 
-		$json = FireCake::jsonEncode(array(1,2,3));
+		$json = FireCake::jsonEncode(array(1, 2, 3));
 		$this->assertEquals($json, '[1,2,3]');
 
 		$json = FireCake::jsonEncode(FireCake::getInstance());
 		$this->assertPattern('/"options"\:\{"maxObjectDepth"\:\d*,/', $json);
 	}
 
-/**
- * reset the FireCake counters and headers.
- *
- * @return void
- */
-	public function tearDown() {
-		TestFireCake::reset();
-	}
 }

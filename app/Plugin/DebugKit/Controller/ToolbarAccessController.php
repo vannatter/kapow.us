@@ -1,27 +1,27 @@
 <?php
 /**
- * DebugKit ToolbarAccess Controller
- *
- * Allows retrieval of information from the debugKit internals.
- *
- * PHP versions 5
- *
  * CakePHP(tm) : Rapid Development Framework (http://cakephp.org)
- * Copyright 2005-2010, Cake Software Foundation, Inc. (http://cakefoundation.org)
+ * Copyright (c) Cake Software Foundation, Inc. (http://cakefoundation.org)
  *
  * Licensed under The MIT License
  * Redistributions of files must retain the above copyright notice.
  *
- * @copyright     Copyright 2005-2010, Cake Software Foundation, Inc. (http://cakefoundation.org)
- * @link          http://cakephp.org
- * @package       debug_kit
- * @subpackage    debug_kit.controllers
+ * @copyright     Copyright (c) Cake Software Foundation, Inc. (http://cakefoundation.org)
+ * @link          http://cakephp.org CakePHP(tm) Project
  * @since         DebugKit 1.1
- * @license       MIT License (http://www.opensource.org/licenses/mit-license.php)
- **/
+ * @license       http://www.opensource.org/licenses/mit-license.php MIT License
+ */
+
 App::uses('Security', 'Utility');
 App::uses('DebugKitAppController', 'DebugKit.Controller');
 
+/**
+ * DebugKit ToolbarAccess Controller
+ *
+ * Allows retrieval of information from the debugKit internals.
+ *
+ * @since         DebugKit 1.1
+ */
 class ToolbarAccessController extends DebugKitAppController {
 
 /**
@@ -78,6 +78,7 @@ class ToolbarAccessController extends DebugKitAppController {
 /**
  * Get a stored history state from the toolbar cache.
  *
+ * @param null $key The key.
  * @return void
  */
 	public function history_state($key = null) {
@@ -87,6 +88,8 @@ class ToolbarAccessController extends DebugKitAppController {
 		$oldState = $this->Toolbar->loadState($key);
 		$this->set('toolbarState', $oldState);
 		$this->set('debugKitInHistoryMode', true);
+		$this->viewClass = null;
+		$this->layout = null;
 	}
 
 /**
@@ -107,7 +110,7 @@ class ToolbarAccessController extends DebugKitAppController {
 		) {
 			throw new BadRequestException('Invalid parameters');
 		}
-		$hash = Security::hash($this->request->data['log']['sql'] . $this->request->data['log']['ds'], null, true);
+		$hash = Security::hash($this->request->data['log']['sql'] . $this->request->data['log']['ds'], 'sha1', true);
 		if ($hash !== $this->request->data['log']['hash']) {
 			throw new BadRequestException('Invalid parameters');
 		}

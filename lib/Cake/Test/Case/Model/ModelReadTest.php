@@ -2,8 +2,6 @@
 /**
  * ModelReadTest file
  *
- * PHP 5
- *
  * CakePHP(tm) Tests <http://book.cakephp.org/2.0/en/development/testing.html>
  * Copyright (c) Cake Software Foundation, Inc. (http://cakefoundation.org)
  *
@@ -89,6 +87,112 @@ class ModelReadTest extends BaseModelTest {
 	}
 
 /**
+ * Test IN operator
+ *
+ * @return void
+ */
+	public function testInOperator() {
+		$this->loadFixtures('Product');
+		$Product = new Product();
+		$expected = array(
+			array(
+				'Product' => array(
+					'id' => 1,
+					'name' => "Park's Great Hits",
+					'type' => 'Music',
+					'price' => 19
+				)
+			)
+		);
+
+		$result = $Product->find('all', array('conditions' => array('Product.id IN' => array(1))));
+		$this->assertEquals($expected, $result);
+
+		$expected = array(
+			array(
+				'Product' => array(
+					'id' => 2,
+					'name' => "Silly Puddy",
+					'type' => 'Toy',
+					'price' => 3
+				)
+			),
+			array(
+				'Product' => array(
+					'id' => 3,
+					'name' => "Playstation",
+					'type' => 'Toy',
+					'price' => 89
+				)
+			),
+			array(
+				'Product' => array(
+					'id' => 4,
+					'name' => "Men's T-Shirt",
+					'type' => 'Clothing',
+					'price' => 32
+				)
+			),
+			array(
+				'Product' => array(
+					'id' => 5,
+					'name' => "Blouse",
+					'type' => 'Clothing',
+					'price' => 34
+				)
+			),
+			array(
+				'Product' => array(
+					'id' => 6,
+					'name' => "Electronica 2002",
+					'type' => 'Music',
+					'price' => 4
+				)
+			),
+			array(
+				'Product' => array(
+					'id' => 7,
+					'name' => "Country Tunes",
+					'type' => 'Music',
+					'price' => 21
+				)
+			),
+			array(
+				'Product' => array(
+					'id' => 8,
+					'name' => "Watermelon",
+					'type' => 'Food',
+					'price' => 9
+				)
+			)
+		);
+		$result = $Product->find('all', array('conditions' => array('Product.id NOT IN' => array(1))));
+		$this->assertEquals($expected, $result);
+
+		$expected = array(
+			array(
+				'Product' => array(
+					'id' => 1,
+					'name' => "Park's Great Hits",
+					'type' => 'Music',
+					'price' => 19
+				)
+			),
+			array(
+				'Product' => array(
+					'id' => 2,
+					'name' => "Silly Puddy",
+					'type' => 'Toy',
+					'price' => 3
+				)
+			),
+		);
+
+		$result = $Product->find('all', array('conditions' => array('Product.id IN' => array(1, 2))));
+		$this->assertEquals($expected, $result);
+	}
+
+/**
  * testGroupBy method
  *
  * These tests will never pass with Postgres or Oracle as all fields in a select must be
@@ -100,7 +204,7 @@ class ModelReadTest extends BaseModelTest {
 		$isStrictGroupBy = $this->db instanceof Postgres || $this->db instanceof Sqlite || $this->db instanceof Oracle || $this->db instanceof Sqlserver;
 		$message = 'Postgres, Oracle, SQLite and SQL Server have strict GROUP BY and are incompatible with this test.';
 
-		$this->skipif ($isStrictGroupBy, $message);
+		$this->skipIf($isStrictGroupBy, $message);
 
 		$this->loadFixtures('Project', 'Product', 'Thread', 'Message', 'Bid');
 		$Thread = new Thread();
@@ -299,7 +403,7 @@ class ModelReadTest extends BaseModelTest {
 		$query .= '.id = ? AND ' . $this->db->fullTableName('articles') . '.published = ?';
 
 		$params = array(1, 'Y');
-		$result = $Article->query($query, $params);
+		$result = $Article->query($query, $params, true);
 		$expected = array(
 			'0' => array(
 				$this->db->fullTableName('articles', false, false) => array(
@@ -334,7 +438,7 @@ class ModelReadTest extends BaseModelTest {
 		$query .= ' WHERE ' . $this->db->fullTableName('articles') . '.title LIKE ?';
 
 		$params = array('%First%');
-		$result = $Article->query($query, $params);
+		$result = $Article->query($query, $params, true);
 		$this->assertTrue(is_array($result));
 		$this->assertTrue(
 			isset($result[0][$this->db->fullTableName('articles', false, false)]['title']) ||
@@ -345,7 +449,7 @@ class ModelReadTest extends BaseModelTest {
 		$query = 'SELECT title FROM ';
 		$query .= $this->db->fullTableName('articles') . ' WHERE title = ? AND published = ?';
 		$params = array('First? Article', 'Y');
-		$Article->query($query, $params);
+		$Article->query($query, $params, true);
 
 		$result = $this->db->getQueryCache($query, $params);
 		$this->assertFalse($result === false);
@@ -358,7 +462,7 @@ class ModelReadTest extends BaseModelTest {
  * @return void
  */
 	public function testParameterMismatch() {
-		$this->skipif ($this->db instanceof Sqlite, 'Sqlite does not accept real prepared statements, no way to check this');
+		$this->skipIf($this->db instanceof Sqlite, 'Sqlite does not accept real prepared statements, no way to check this');
 		$this->loadFixtures('Article', 'User', 'Tag', 'ArticlesTag');
 		$Article = new Article();
 
@@ -396,7 +500,7 @@ class ModelReadTest extends BaseModelTest {
  * @return void
  */
 	public function testRecursiveUnbind() {
-		$this->skipif ($this->db instanceof Sqlserver, 'The test of testRecursiveUnbind test is not compatible with SQL Server, because it check for time columns.');
+		$this->skipIf($this->db instanceof Sqlserver, 'The test of testRecursiveUnbind test is not compatible with SQL Server, because it check for time columns.');
 
 		$this->loadFixtures('Apple', 'Sample');
 		$TestModel = new Apple();
@@ -2181,10 +2285,10 @@ class ModelReadTest extends BaseModelTest {
 
 		$this->assertEquals($expected, $result);
 
-		$result = $TestModel->unbindModel(array('hasMany' => array('Child')));
+		$result = $TestModel->unbindModel(array('hasMany' => 'Child'));
 		$this->assertTrue($result);
 
-		$result = $TestModel->Sample->unbindModel(array('belongsTo' => array('Apple')));
+		$result = $TestModel->Sample->unbindModel(array('belongsTo' => 'Apple'));
 		$this->assertTrue($result);
 
 		$result = $TestModel->find('all');
@@ -3793,7 +3897,7 @@ class ModelReadTest extends BaseModelTest {
  * @return void
  */
 	public function testFindCombinedRelations() {
-		$this->skipif ($this->db instanceof Sqlserver, 'The test of testRecursiveUnbind test is not compatible with SQL Server, because it check for time columns.');
+		$this->skipIf($this->db instanceof Sqlserver, 'The test of testRecursiveUnbind test is not compatible with SQL Server, because it check for time columns.');
 
 		$this->loadFixtures('Apple', 'Sample');
 		$TestModel = new Apple();
@@ -4159,7 +4263,7 @@ class ModelReadTest extends BaseModelTest {
 		$result = $TestModel->find('all', compact('conditions', 'recursive', 'order'));
 		$this->assertEquals($expected, $result);
 
-		$this->skipif ($this->db instanceof Postgres, 'The rest of testFindAllWithConditionsHavingMixedDataTypes test is not compatible with Postgres.');
+		$this->skipIf($this->db instanceof Postgres, 'The rest of testFindAllWithConditionsHavingMixedDataTypes test is not compatible with Postgres.');
 
 		$conditions = array('id' => array('1', 2, '3.0'));
 		$order = 'Article.id ASC';
@@ -6302,7 +6406,7 @@ class ModelReadTest extends BaseModelTest {
 		$this->loadFixtures('User');
 		$TestModel = new User();
 		$TestModel->cacheQueries = false;
-
+		$TestModel->order = null;
 		$expected = array(
 			'conditions' => array(
 				'user' => 'larry'
@@ -6311,9 +6415,7 @@ class ModelReadTest extends BaseModelTest {
 			'joins' => array(),
 			'limit' => null,
 			'offset' => null,
-			'order' => array(
-				0 => null
-			),
+			'order' => array(),
 			'page' => 1,
 			'group' => null,
 			'callbacks' => true,
@@ -6553,11 +6655,42 @@ class ModelReadTest extends BaseModelTest {
 	}
 
 /**
+ * Test that find() with array conditions works when there is only one element.
+ *
+ * @return void
+ */
+	public function testFindAllArrayConditions() {
+		$this->loadFixtures('User');
+		$TestModel = new User();
+		$TestModel->cacheQueries = false;
+
+		$result = $TestModel->find('all', array(
+			'conditions' => array('User.id' => array(3)),
+		));
+		$expected = array(
+			array(
+				'User' => array(
+					'id' => '3',
+					'user' => 'larry',
+					'password' => '5f4dcc3b5aa765d61d8327deb882cf99',
+					'created' => '2007-03-17 01:20:23',
+					'updated' => '2007-03-17 01:22:31'
+			))
+		);
+		$this->assertEquals($expected, $result);
+
+		$result = $TestModel->find('all', array(
+			'conditions' => array('User.user' => array('larry')),
+		));
+		$this->assertEquals($expected, $result);
+	}
+
+/**
  * test find('list') method
  *
  * @return void
  */
-	public function testGenerateFindList() {
+	public function testFindList() {
 		$this->loadFixtures('Article', 'Apple', 'Post', 'Author', 'User', 'Comment');
 
 		$TestModel = new Article();
@@ -6828,6 +6961,60 @@ class ModelReadTest extends BaseModelTest {
 	}
 
 /**
+ * test find('list') method
+ *
+ * @return void
+ */
+	public function testFindListZeroValue() {
+		$this->loadFixtures('Article');
+
+		$model = new Article();
+		$model->displayField = 'title';
+		$model->save(array(
+			'title' => 'Zeroth Article',
+			'user_id' => 0,
+			'published' => 'Y'
+		));
+
+		$result = $model->find('list', array(
+			'fields' => array('title', 'user_id')
+		));
+		$expected = array(
+			'Zeroth Article' => 0,
+			'First Article' => 1,
+			'Second Article' => 3,
+			'Third Article' => 1,
+		);
+		$this->assertEquals($expected, $result);
+	}
+
+/**
+ * Test that find(list) works with array conditions that have only one element.
+ *
+ * @return void
+ */
+	public function testFindListArrayCondition() {
+		$this->loadFixtures('User');
+		$TestModel = new User();
+		$TestModel->cacheQueries = false;
+
+		$result = $TestModel->find('list', array(
+			'fields' => array('id', 'user'),
+			'conditions' => array('User.id' => array(3)),
+		));
+		$expected = array(
+			3 => 'larry'
+		);
+		$this->assertEquals($expected, $result);
+
+		$result = $TestModel->find('list', array(
+			'fields' => array('id', 'user'),
+			'conditions' => array('User.user' => array('larry')),
+		));
+		$this->assertEquals($expected, $result);
+	}
+
+/**
  * testFindField method
  *
  * @return void
@@ -6848,7 +7035,7 @@ class ModelReadTest extends BaseModelTest {
 			'user' => 'mariano'
 		));
 		$this->assertEquals('mariano', $result);
-
+		$TestModel->order = null;
 		$result = $TestModel->field('COUNT(*) AS count', true);
 		$this->assertEquals(4, $result);
 
@@ -6904,6 +7091,7 @@ class ModelReadTest extends BaseModelTest {
 		$this->assertNotRegExp('/ORDER\s+BY/', $log['log'][0]['query']);
 
 		$Article = new Article();
+		$Article->order = null;
 		$Article->recursive = -1;
 		$expected = count($Article->find('all', array(
 			'fields' => array('Article.user_id'),
@@ -6945,8 +7133,8 @@ class ModelReadTest extends BaseModelTest {
  * @return void
  */
 	public function testFindCountDistinct() {
-		$this->skipif ($this->db instanceof Sqlite, 'SELECT COUNT(DISTINCT field) is not compatible with SQLite.');
-		$this->skipif ($this->db instanceof Sqlserver, 'This test is not compatible with SQL Server.');
+		$this->skipIf($this->db instanceof Sqlite, 'SELECT COUNT(DISTINCT field) is not compatible with SQLite.');
+		$this->skipIf($this->db instanceof Sqlserver, 'This test is not compatible with SQL Server.');
 
 		$this->loadFixtures('Project', 'Thread');
 		$TestModel = new Project();
@@ -6964,7 +7152,7 @@ class ModelReadTest extends BaseModelTest {
  * @return void
  */
 	public function testFindCountWithDbExpressions() {
-		$this->skipif ($this->db instanceof Postgres, 'testFindCountWithDbExpressions is not compatible with Postgres.');
+		$this->skipIf($this->db instanceof Postgres, 'testFindCountWithDbExpressions is not compatible with Postgres.');
 
 		$this->loadFixtures('Project', 'Thread');
 		$db = ConnectionManager::getDataSource('test');
@@ -6987,7 +7175,7 @@ class ModelReadTest extends BaseModelTest {
  * @return void
  */
 	public function testFindMagic() {
-		$this->loadFixtures('User');
+		$this->loadFixtures('User', 'Comment', 'Article');
 		$TestModel = new User();
 
 		$result = $TestModel->findByUser('mariano');
@@ -7010,6 +7198,113 @@ class ModelReadTest extends BaseModelTest {
 			'updated' => '2007-03-17 01:18:31'
 		));
 		$this->assertEquals($expected, $result);
+
+		$Comment = new Comment();
+		$Comment->recursive = -1;
+		$results = $Comment->findAllByUserId(1);
+		$expected = array(
+			array(
+				'Comment' => array(
+					'id' => 3,
+					'article_id' => 1,
+					'user_id' => 1,
+					'comment' => 'Third Comment for First Article',
+					'published' => 'Y',
+					'created' => '2007-03-18 10:49:23',
+					'updated' => '2007-03-18 10:51:31'
+				)
+			),
+			array(
+				'Comment' => array(
+					'id' => 4,
+					'article_id' => 1,
+					'user_id' => 1,
+					'comment' => 'Fourth Comment for First Article',
+					'published' => 'N',
+					'created' => '2007-03-18 10:51:23',
+					'updated' => '2007-03-18 10:53:31'
+				)
+			),
+			array(
+				'Comment' => array(
+					'id' => 5,
+					'article_id' => 2,
+					'user_id' => 1,
+					'comment' => 'First Comment for Second Article',
+					'published' => 'Y',
+					'created' => '2007-03-18 10:53:23',
+					'updated' => '2007-03-18 10:55:31'
+				)
+			)
+		);
+		$this->assertEquals($expected, $results);
+
+		$results = $Comment->findAllByUserIdAndPublished(1, 'Y');
+		$expected = array(
+			array(
+				'Comment' => array(
+					'id' => 3,
+					'article_id' => 1,
+					'user_id' => 1,
+					'comment' => 'Third Comment for First Article',
+					'published' => 'Y',
+					'created' => '2007-03-18 10:49:23',
+					'updated' => '2007-03-18 10:51:31'
+				)
+			),
+			array(
+				'Comment' => array(
+					'id' => 5,
+					'article_id' => 2,
+					'user_id' => 1,
+					'comment' => 'First Comment for Second Article',
+					'published' => 'Y',
+					'created' => '2007-03-18 10:53:23',
+					'updated' => '2007-03-18 10:55:31'
+				)
+			)
+		);
+		$this->assertEquals($expected, $results);
+
+		$Article = new CustomArticle();
+		$Article->recursive = -1;
+		$results = $Article->findListByUserId(1);
+		$expected = array(
+			1 => 'First Article',
+			3 => 'Third Article'
+		);
+		$this->assertEquals($expected, $results);
+
+		$results = $Article->findPublishedByUserId(1);
+		$expected = array(
+			array(
+				'CustomArticle' => array(
+					'id' => 1,
+					'user_id' => 1,
+					'title' => 'First Article',
+					'body' => 'First Article Body',
+					'published' => 'Y',
+					'created' => '2007-03-18 10:39:23',
+					'updated' => '2007-03-18 10:41:31'
+				)
+			),
+			array(
+				'CustomArticle' => array(
+					'id' => 3,
+					'user_id' => 1,
+					'title' => 'Third Article',
+					'body' => 'Third Article Body',
+					'published' => 'Y',
+					'created' => '2007-03-18 10:43:23',
+					'updated' => '2007-03-18 10:45:31'
+				)
+			)
+		);
+		$this->assertEquals($expected, $results);
+
+		$results = $Article->findUnPublishedByUserId(1);
+		$expected = array();
+		$this->assertEquals($expected, $results);
 	}
 
 /**
@@ -7760,6 +8055,7 @@ class ModelReadTest extends BaseModelTest {
 			'limit' => 1
 		));
 		$this->assertEquals(2, $result['Post']['id']);
+		$Post->order = null;
 
 		$Post->virtualFields = array('other_field' => 'Post.id + 1');
 		$result = $Post->find('all', array(
@@ -7777,6 +8073,38 @@ class ModelReadTest extends BaseModelTest {
 		$Post->virtualFields = array('other_field' => 'COUNT(Post.id) + 1');
 		$result = $Post->field('other_field');
 		$this->assertEquals(4, $result);
+	}
+
+/**
+ * Test virtualfields that contain subqueries get correctly
+ * quoted allowing reserved words to be used.
+ *
+ * @return void
+ */
+	public function testVirtualFieldSubqueryReservedWords() {
+		$this->loadFixtures('User');
+		$user = ClassRegistry::init('User');
+		$user->cacheMethods = false;
+		$ds = $user->getDataSource();
+
+		$sub = $ds->buildStatement(
+			array(
+				'fields' => array('Table.user'),
+				'table' => $ds->fullTableName($user),
+				'alias' => 'Table',
+				'limit' => 1,
+				'conditions' => array(
+					"Table.id > 1"
+				)
+			),
+			$user
+		);
+		$user->virtualFields = array(
+			'sub_test' => $sub
+		);
+
+		$result = $user->find('first');
+		$this->assertNotEmpty($result);
 	}
 
 /**
@@ -7831,9 +8159,10 @@ class ModelReadTest extends BaseModelTest {
  * Test correct fetching of virtual fields
  * currently is not possible to do Relation.virtualField
  *
+ * @return void
  */
 	public function testVirtualFieldsMysql() {
-		$this->skipif (!($this->db instanceof Mysql), 'The rest of virtualFields test only compatible with Mysql.');
+		$this->skipIf(!($this->db instanceof Mysql), 'The rest of virtualFields test only compatible with Mysql.');
 
 		$this->loadFixtures('Post', 'Author');
 		$Post = ClassRegistry::init('Post');
@@ -7947,6 +8276,27 @@ class ModelReadTest extends BaseModelTest {
 	}
 
 /**
+ * test to assert that != in key together with a single element array will work
+ *
+ * @return void
+ */
+	public function testNotEqualsInArrayWithOneValue() {
+		$this->loadFixtures('Article');
+		$Article = new Article();
+		$Article->recursive = -1;
+
+		$result = $Article->find(
+			'all',
+			array(
+				'conditions' => array(
+					'Article.id !=' => array(1)
+				)
+			)
+		);
+		$this->assertTrue(is_array($result) && !empty($result));
+	}
+
+/**
  * test custom find method
  *
  * @return void
@@ -7966,4 +8316,361 @@ class ModelReadTest extends BaseModelTest {
 		$this->assertEquals(1, count($result));
 	}
 
+/**
+ * test after find callback on related model
+ *
+ * @return void
+ */
+	public function testRelatedAfterFindCallback() {
+		$this->loadFixtures('Something', 'SomethingElse', 'JoinThing');
+		$Something = new Something();
+
+		$Something->bindModel(array(
+			'hasMany' => array(
+				'HasMany' => array(
+					'className' => 'JoinThing',
+					'foreignKey' => 'something_id'
+				)
+			),
+			'hasOne' => array(
+				'HasOne' => array(
+					'className' => 'JoinThing',
+					'foreignKey' => 'something_id'
+				)
+			)
+		));
+
+		$results = $Something->find('all');
+
+		$expected = array(
+			array(
+				'Something' => array(
+					'id' => '1',
+					'title' => 'First Post',
+					'body' => 'First Post Body',
+					'published' => 'Y',
+					'created' => '2007-03-18 10:39:23',
+					'updated' => '2007-03-18 10:41:31'
+				),
+				'HasOne' => array(
+					'id' => '1',
+					'something_id' => '1',
+					'something_else_id' => '2',
+					'doomed' => true,
+					'created' => '2007-03-18 10:39:23',
+					'updated' => '2007-03-18 10:41:31',
+					'afterFind' => 'Successfully added by AfterFind'
+				),
+				'HasMany' => array(
+					array(
+						'id' => '1',
+						'something_id' => '1',
+						'something_else_id' => '2',
+						'doomed' => true,
+						'created' => '2007-03-18 10:39:23',
+						'updated' => '2007-03-18 10:41:31',
+						'afterFind' => 'Successfully added by AfterFind'
+					)
+				),
+				'SomethingElse' => array(
+					array(
+						'id' => '2',
+						'title' => 'Second Post',
+						'body' => 'Second Post Body',
+						'published' => 'Y',
+						'created' => '2007-03-18 10:41:23',
+						'updated' => '2007-03-18 10:43:31',
+						'afterFind' => 'Successfully added by AfterFind',
+						'JoinThing' => array(
+							'doomed' => true,
+							'something_id' => '1',
+							'something_else_id' => '2',
+							'afterFind' => 'Successfully added by AfterFind'
+						)
+					)
+				)
+			),
+			array(
+				'Something' => array(
+					'id' => '2',
+					'title' => 'Second Post',
+					'body' => 'Second Post Body',
+					'published' => 'Y',
+					'created' => '2007-03-18 10:41:23',
+					'updated' => '2007-03-18 10:43:31'
+				),
+				'HasOne' => array(
+					'id' => '2',
+					'something_id' => '2',
+					'something_else_id' => '3',
+					'doomed' => false,
+					'created' => '2007-03-18 10:41:23',
+					'updated' => '2007-03-18 10:43:31',
+					'afterFind' => 'Successfully added by AfterFind'
+				),
+				'HasMany' => array(
+					array(
+						'id' => '2',
+						'something_id' => '2',
+						'something_else_id' => '3',
+						'doomed' => false,
+						'created' => '2007-03-18 10:41:23',
+						'updated' => '2007-03-18 10:43:31',
+						'afterFind' => 'Successfully added by AfterFind'
+					)
+				),
+				'SomethingElse' => array(
+					array(
+						'id' => '3',
+						'title' => 'Third Post',
+						'body' => 'Third Post Body',
+						'published' => 'Y',
+						'created' => '2007-03-18 10:43:23',
+						'updated' => '2007-03-18 10:45:31',
+						'afterFind' => 'Successfully added by AfterFind',
+						'JoinThing' => array(
+							'doomed' => false,
+							'something_id' => '2',
+							'something_else_id' => '3',
+							'afterFind' => 'Successfully added by AfterFind'
+						)
+					)
+				)
+			),
+			array(
+				'Something' => array(
+					'id' => '3',
+					'title' => 'Third Post',
+					'body' => 'Third Post Body',
+					'published' => 'Y',
+					'created' => '2007-03-18 10:43:23',
+					'updated' => '2007-03-18 10:45:31'
+				),
+				'HasOne' => array(
+					'id' => '3',
+					'something_id' => '3',
+					'something_else_id' => '1',
+					'doomed' => true,
+					'created' => '2007-03-18 10:43:23',
+					'updated' => '2007-03-18 10:45:31',
+					'afterFind' => 'Successfully added by AfterFind'
+				),
+				'HasMany' => array(
+					array(
+						'id' => '3',
+						'something_id' => '3',
+						'something_else_id' => '1',
+						'doomed' => true,
+						'created' => '2007-03-18 10:43:23',
+						'updated' => '2007-03-18 10:45:31',
+						'afterFind' => 'Successfully added by AfterFind'
+					)
+				),
+				'SomethingElse' => array(
+					array(
+						'id' => '1',
+						'title' => 'First Post',
+						'body' => 'First Post Body',
+						'published' => 'Y',
+						'created' => '2007-03-18 10:39:23',
+						'updated' => '2007-03-18 10:41:31',
+						'afterFind' => 'Successfully added by AfterFind',
+						'JoinThing' => array(
+							'doomed' => true,
+							'something_id' => '3',
+							'something_else_id' => '1',
+							'afterFind' => 'Successfully added by AfterFind'
+						)
+					)
+				)
+			)
+		);
+		$this->assertEquals($expected, $results, 'Model related with has* afterFind callback fails');
+
+		$JoinThing = new JoinThing();
+		$JoinThing->unbindModel(array(
+			'belongsTo' => array(
+				'Something'
+			)
+		));
+		$results = $JoinThing->find('all');
+
+		$expected = array(
+			array(
+				'JoinThing' => array(
+					'id' => '1',
+					'something_id' => '1',
+					'something_else_id' => '2',
+					'doomed' => true,
+					'created' => '2007-03-18 10:39:23',
+					'updated' => '2007-03-18 10:41:31',
+					'afterFind' => 'Successfully added by AfterFind'
+				),
+				'SomethingElse' => array(
+					'id' => '2',
+					'title' => 'Second Post',
+					'body' => 'Second Post Body',
+					'published' => 'Y',
+					'created' => '2007-03-18 10:41:23',
+					'updated' => '2007-03-18 10:43:31',
+					'afterFind' => 'Successfully added by AfterFind'
+				)
+			),
+			array(
+				'JoinThing' => array(
+					'id' => '2',
+					'something_id' => '2',
+					'something_else_id' => '3',
+					'doomed' => false,
+					'created' => '2007-03-18 10:41:23',
+					'updated' => '2007-03-18 10:43:31',
+					'afterFind' => 'Successfully added by AfterFind'
+				),
+				'SomethingElse' => array(
+					'id' => '3',
+					'title' => 'Third Post',
+					'body' => 'Third Post Body',
+					'published' => 'Y',
+					'created' => '2007-03-18 10:43:23',
+					'updated' => '2007-03-18 10:45:31',
+					'afterFind' => 'Successfully added by AfterFind'
+				)
+			),
+			array(
+				'JoinThing' => array(
+					'id' => '3',
+					'something_id' => '3',
+					'something_else_id' => '1',
+					'doomed' => true,
+					'created' => '2007-03-18 10:43:23',
+					'updated' => '2007-03-18 10:45:31',
+					'afterFind' => 'Successfully added by AfterFind'
+				),
+				'SomethingElse' => array(
+					'id' => '1',
+					'title' => 'First Post',
+					'body' => 'First Post Body',
+					'published' => 'Y',
+					'created' => '2007-03-18 10:39:23',
+					'updated' => '2007-03-18 10:41:31',
+					'afterFind' => 'Successfully added by AfterFind'
+				)
+			)
+		);
+		$this->assertEquals($expected, $results, 'Model related with belongsTo afterFind callback fails');
+	}
+
+/**
+ * Pull out the username from a result set.
+ *
+ * @param array $result The results.
+ * @return string The username.
+ */
+	public static function extractUserNameFromQueryResult(array $result) {
+		return isset($result[0][0]) ? $result[0][0]['user'] : $result[0]['u']['user'];
+	}
+
+/**
+ * Test that query() doesn't override the 2nd argument with a default.
+ *
+ * @return void
+ */
+	public function testQueryRespectsCacheQueriesAsSecondArgument() {
+		$model = new User();
+		$model->save(array('user' => 'Chuck'));
+		$userTableName = $this->db->fullTableName('users');
+
+		$getUserNameFromDb = function ($cacheArgument) use ($model, $userTableName) {
+			$query = sprintf('SELECT u.user FROM %s u WHERE id=%d', $userTableName, $model->id);
+			$users = $model->query($query, $cacheArgument);
+			return ModelReadTest::extractUserNameFromQueryResult($users);
+		};
+
+		$model->cacheQueries = true;
+		$this->assertSame('Chuck', $getUserNameFromDb(true));
+		$this->assertSame('Chuck', $getUserNameFromDb(false));
+
+		$model->updateAll(array('User.user' => "'Sylvester'"), array('User.id' => $model->id));
+		$model->cacheQueries = false;
+		$this->assertSame('Chuck', $getUserNameFromDb(true));
+		$this->assertSame('Sylvester', $getUserNameFromDb(false));
+	}
+
+/**
+ * Test that query() doesn't override the cache param in the 3nd argument
+ * with a default.
+ *
+ * @return void
+ */
+	public function testQueryRespectsCacheQueriesAsThirdArgument() {
+		$model = new User();
+		$model->save(array('user' => 'Chuck'));
+		$userTableName = $this->db->fullTableName('users');
+
+		$getUserNameFromDb = function ($cacheArgument) use ($model, $userTableName) {
+			$query = sprintf('SELECT u.user FROM %s u WHERE id=?', $userTableName);
+			$users = $model->query($query, array($model->id), $cacheArgument);
+			return ModelReadTest::extractUserNameFromQueryResult($users);
+		};
+
+		$model->cacheQueries = true;
+		$this->assertSame('Chuck', $getUserNameFromDb(true));
+		$this->assertSame('Chuck', $getUserNameFromDb(false));
+
+		$model->updateAll(array('User.user' => "'Sylvester'"), array('User.id' => $model->id));
+		$model->cacheQueries = false;
+		$this->assertSame('Chuck', $getUserNameFromDb(true));
+		$this->assertSame('Sylvester', $getUserNameFromDb(false));
+	}
+
+/**
+ * Test that query() uses the cacheQueries property when there is one argument.
+ *
+ * @return void
+ */
+	public function testQueryTakesModelCacheQueriesValueAsDefaultForOneArgument() {
+		$model = new User();
+		$model->save(array('user' => 'Chuck'));
+		$userTableName = $this->db->fullTableName('users');
+
+		$getUserNameFromDb = function () use ($model, $userTableName) {
+			$query = sprintf('SELECT u.user FROM %s u WHERE id=%d', $userTableName, $model->id);
+			$users = $model->query($query);
+			return ModelReadTest::extractUserNameFromQueryResult($users);
+		};
+
+		$model->cacheQueries = true;
+		$this->assertSame('Chuck', $getUserNameFromDb());
+		$model->updateAll(array('User.user' => "'Sylvester'"), array('User.id' => $model->id));
+
+		$this->assertSame('Chuck', $getUserNameFromDb());
+		$model->cacheQueries = false;
+		$this->assertSame('Sylvester', $getUserNameFromDb());
+	}
+
+/**
+ * Test that query() uses the cacheQueries property when there are two arguments.
+ *
+ * @return void
+ */
+	public function testQueryTakesModelCacheQueriesValueAsDefaultForTwoArguments() {
+		$model = new User();
+		$model->save(array('user' => 'Chuck'));
+		$userTableName = $this->db->fullTableName('users');
+
+		$getUserNameFromDb = function () use ($model, $userTableName) {
+			$query = sprintf('SELECT u.user FROM %s u WHERE id=?', $userTableName);
+			$users = $model->query($query, array($model->id));
+			return ModelReadTest::extractUserNameFromQueryResult($users);
+		};
+
+		$model->cacheQueries = true;
+		$this->assertSame('Chuck', $getUserNameFromDb());
+
+		$model->updateAll(array('User.user' => "'Sylvester'"), array('User.id' => $model->id));
+		$this->assertSame('Chuck', $getUserNameFromDb());
+
+		$model->cacheQueries = false;
+		$this->assertSame('Sylvester', $getUserNameFromDb());
+	}
 }

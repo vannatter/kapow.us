@@ -2,8 +2,6 @@
 /**
  * CakeTestFixture file
  *
- * PHP 5
- *
  * CakePHP(tm) Tests <http://book.cakephp.org/2.0/en/development/testing.html>
  * Copyright (c) Cake Software Foundation, Inc. (http://cakefoundation.org)
  *
@@ -67,7 +65,7 @@ class CakeTestFixtureTestFixture extends CakeTestFixture {
 }
 
 /**
- * StringFieldsTestFixture class
+ * StringTestFixture class
  *
  * @package       Cake.Test.Case.TestSuite
  */
@@ -111,6 +109,49 @@ class StringsTestFixture extends CakeTestFixture {
 	);
 }
 
+/**
+ * InvalidTestFixture class
+ *
+ * @package       Cake.Test.Case.TestSuite
+ */
+class InvalidTestFixture extends CakeTestFixture {
+
+/**
+ * Name property
+ *
+ * @var string
+ */
+	public $name = 'Invalid';
+
+/**
+ * Table property
+ *
+ * @var string
+ */
+	public $table = 'invalid';
+
+/**
+ * Fields array - missing "email" row
+ *
+ * @var array
+ */
+	public $fields = array(
+		'id' => array('type' => 'integer', 'key' => 'primary'),
+		'name' => array('type' => 'string', 'length' => '255'),
+		'age' => array('type' => 'integer', 'default' => 10)
+	);
+
+/**
+ * Records property
+ *
+ * @var array
+ */
+	public $records = array(
+		array('name' => 'Mark Doe', 'email' => 'mark.doe@email.com'),
+		array('name' => 'John Doe', 'email' => 'john.doe@email.com', 'age' => 20),
+		array('email' => 'jane.doe@email.com', 'name' => 'Jane Doe', 'age' => 30)
+	);
+}
 
 /**
  * CakeTestFixtureImportFixture class
@@ -175,7 +216,6 @@ class FixturePrefixTest extends Model {
 	public $useDbConfig = 'test';
 }
 
-
 /**
  * Test case for CakeTestFixture
  *
@@ -189,6 +229,7 @@ class CakeTestFixtureTest extends CakeTestCase {
  * @return void
  */
 	public function setUp() {
+		parent::setUp();
 		$methods = array_diff(get_class_methods('DboSource'), array('enabled'));
 		$methods[] = 'connect';
 
@@ -204,6 +245,7 @@ class CakeTestFixtureTest extends CakeTestCase {
  * @return void
  */
 	public function tearDown() {
+		parent::tearDown();
 		unset($this->criticDb);
 		$this->db->config = $this->_backupConfig;
 	}
@@ -233,7 +275,7 @@ class CakeTestFixtureTest extends CakeTestCase {
  * @return void
  */
 	public function testInitDbPrefix() {
-		$this->skipif ($this->db instanceof Sqlite, 'Cannot open 2 connections to Sqlite');
+		$this->skipIf($this->db instanceof Sqlite, 'Cannot open 2 connections to Sqlite');
 		$db = ConnectionManager::getDataSource('test');
 		$Source = new CakeTestFixtureTestFixture();
 		$Source->drop($db);
@@ -274,7 +316,7 @@ class CakeTestFixtureTest extends CakeTestCase {
  * @return void
  */
 	public function testInitDbPrefixDuplication() {
-		$this->skipif ($this->db instanceof Sqlite, 'Cannot open 2 connections to Sqlite');
+		$this->skipIf($this->db instanceof Sqlite, 'Cannot open 2 connections to Sqlite');
 		$db = ConnectionManager::getDataSource('test');
 		$backPrefix = $db->config['prefix'];
 		$db->config['prefix'] = 'cake_fixture_test_';
@@ -304,8 +346,8 @@ class CakeTestFixtureTest extends CakeTestCase {
  * @return void
  */
 	public function testInitModelTablePrefix() {
-		$this->skipif ($this->db instanceof Sqlite, 'Cannot open 2 connections to Sqlite');
-		$this->skipif (!empty($this->db->config['prefix']), 'Cannot run this test, you have a database connection prefix.');
+		$this->skipIf($this->db instanceof Sqlite, 'Cannot open 2 connections to Sqlite');
+		$this->skipIf(!empty($this->db->config['prefix']), 'Cannot run this test, you have a database connection prefix.');
 
 		$Source = new CakeTestFixtureTestFixture();
 		$Source->create($this->db);
@@ -429,7 +471,7 @@ class CakeTestFixtureTest extends CakeTestCase {
  * @param string $table
  * @param string $fields
  * @param string $values
- * @return boolean true
+ * @return bool true
  */
 	public function insertCallback($table, $fields, $values) {
 		$this->insertMulti['table'] = $table;
@@ -482,6 +524,17 @@ class CakeTestFixtureTest extends CakeTestCase {
 			),
 		);
 		$this->assertEquals($expected, $this->insertMulti['fields_values']);
+	}
+
+/**
+ * test the insert method with invalid fixture
+ *
+ * @expectedException CakeException
+ * @return void
+ */
+	public function testInsertInvalid() {
+		$Fixture = new InvalidTestFixture();
+		$Fixture->insert($this->criticDb);
 	}
 
 /**

@@ -2,8 +2,6 @@
 /**
  * WincacheEngineTest file
  *
- * PHP 5
- *
  * CakePHP(tm) Tests <http://book.cakephp.org/2.0/en/development/testing.html>
  * Copyright (c) Cake Software Foundation, Inc. (http://cakefoundation.org)
  *
@@ -34,7 +32,7 @@ class WincacheEngineTest extends CakeTestCase {
  */
 	public function setUp() {
 		parent::setUp();
-		$this->skipif (!function_exists('wincache_ucache_set'), 'Wincache is not installed or configured properly.');
+		$this->skipIf(!function_exists('wincache_ucache_set'), 'Wincache is not installed or configured properly.');
 		$this->_cacheDisable = Configure::read('Cache.disable');
 		Configure::write('Cache.disable', false);
 		Cache::config('wincache', array('engine' => 'Wincache', 'prefix' => 'cake_'));
@@ -130,7 +128,7 @@ class WincacheEngineTest extends CakeTestCase {
  * @return void
  */
 	public function testDecrement() {
-		$this->skipif (
+		$this->skipIf(
 			!function_exists('wincache_ucache_dec'),
 			'No wincache_ucache_dec() function, cannot test decrement().'
 		);
@@ -157,7 +155,7 @@ class WincacheEngineTest extends CakeTestCase {
  * @return void
  */
 	public function testIncrement() {
-		$this->skipif (
+		$this->skipIf(
 			!function_exists('wincache_ucache_inc'),
 			'No wincache_inc() function, cannot test increment().'
 		);
@@ -260,5 +258,24 @@ class WincacheEngineTest extends CakeTestCase {
 		$this->assertTrue(Cache::write('test_groups', 'value2', 'wincache_groups'));
 		$this->assertTrue(Cache::clearGroup('group_b', 'wincache_groups'));
 		$this->assertFalse(Cache::read('test_groups', 'wincache_groups'));
+	}
+
+/**
+ * Test that failed add write return false.
+ *
+ * @return void
+ */
+	public function testAdd() {
+		Cache::delete('test_add_key', 'wincache');
+
+		$result = Cache::add('test_add_key', 'test data', 'wincache');
+		$this->assertTrue($result);
+
+		$expected = 'test data';
+		$result = Cache::read('test_add_key', 'wincache');
+		$this->assertEquals($expected, $result);
+
+		$result = Cache::add('test_add_key', 'test data 2', 'wincache');
+		$this->assertFalse($result);
 	}
 }

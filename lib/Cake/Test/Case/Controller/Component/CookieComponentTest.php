@@ -2,8 +2,6 @@
 /**
  * CookieComponentTest file
  *
- * PHP 5
- *
  * CakePHP(tm) Tests <http://book.cakephp.org/2.0/en/development/testing.html>
  * Copyright (c) Cake Software Foundation, Inc. (http://cakefoundation.org)
  *
@@ -72,6 +70,7 @@ class CookieComponentTest extends CakeTestCase {
  * @return void
  */
 	public function setUp() {
+		parent::setUp();
 		$_COOKIE = array();
 		$this->Controller = new CookieComponentTestController(new CakeRequest(), new CakeResponse());
 		$this->Controller->constructClasses();
@@ -93,6 +92,7 @@ class CookieComponentTest extends CakeTestCase {
  * @return void
  */
 	public function tearDown() {
+		parent::tearDown();
 		$this->Cookie->destroy();
 	}
 
@@ -154,6 +154,24 @@ class CookieComponentTest extends CakeTestCase {
 	}
 
 /**
+ * test read operations on corrupted cookie data.
+ *
+ * @return void
+ */
+	public function testReadCorruptedCookieData() {
+		$this->Cookie->type('aes');
+		$this->Cookie->key = sha1('some bad key');
+
+		$data = $this->_implode(array('name' => 'jill', 'age' => 24));
+		// Corrupt the cookie data by slicing some bytes off.
+		$_COOKIE['CakeTestCookie'] = array(
+			'BadData' => substr(Security::encrypt($data, $this->Cookie->key), 0, -5)
+		);
+		$this->assertFalse($this->Cookie->check('BadData.name'), 'Key does not exist');
+		$this->assertNull($this->Cookie->read('BadData.name'), 'Key does not exist');
+	}
+
+/**
  * testReadPlainCookieData
  *
  * @return void
@@ -167,6 +185,19 @@ class CookieComponentTest extends CakeTestCase {
 		$data = $this->Cookie->read('Plain_multi_cookies');
 		$expected = array('name' => 'CakePHP', 'version' => '1.2.0.x', 'tag' => 'CakePHP Rocks!');
 		$this->assertEquals($expected, $data);
+	}
+
+/**
+ * test read array keys from string data.
+ *
+ * @return void
+ */
+	public function testReadNestedDataFromStrings() {
+		$_COOKIE['CakeTestCookie'] = array(
+			'User' => 'bad data'
+		);
+		$this->assertFalse($this->Cookie->check('User.name'), 'No key');
+		$this->assertNull($this->Cookie->read('User.name'), 'No key');
 	}
 
 /**
@@ -199,6 +230,59 @@ class CookieComponentTest extends CakeTestCase {
 		$result = $this->Cookie->read('Testing');
 
 		$this->assertEquals('value', $result);
+	}
+
+/**
+ * test write() encrypted data with falsey value
+ *
+ * @return void
+ */
+	public function testWriteWithFalseyValue() {
+		$this->skipIf(!extension_loaded('mcrypt'), 'No Mcrypt, skipping.');
+		$this->Cookie->type('aes');
+		$this->Cookie->key = 'qSI232qs*&sXOw!adre@34SAv!@*(XSL#$%)asGb$@11~_+!@#HKis~#^';
+
+		$this->Cookie->write('Testing');
+		$result = $this->Cookie->read('Testing');
+		$this->assertNull($result);
+
+		$this->Cookie->write('Testing', '');
+		$result = $this->Cookie->read('Testing');
+		$this->assertEquals('', $result);
+
+		$this->Cookie->write('Testing', false);
+		$result = $this->Cookie->read('Testing');
+		$this->assertFalse($result);
+
+		$this->Cookie->write('Testing', 1);
+		$result = $this->Cookie->read('Testing');
+		$this->assertEquals(1, $result);
+
+		$this->Cookie->write('Testing', '0');
+		$result = $this->Cookie->read('Testing');
+		$this->assertSame('0', $result);
+
+		$this->Cookie->write('Testing', 0);
+		$result = $this->Cookie->read('Testing');
+		$this->assertSame(0, $result);
+	}
+
+/**
+ * test that two write() calls use the expiry.
+ *
+ * @return void
+ */
+	public function testWriteMultipleShareExpiry() {
+		$this->Cookie->write('key1', 'value1', false);
+		$this->Cookie->write('key2', 'value2', false);
+
+		$name = $this->Cookie->name . '[key1]';
+		$result = $this->Controller->response->cookie($name);
+		$this->assertWithinMargin(time() + 10, $result['expire'], 2, 'Expiry time is wrong');
+
+		$name = $this->Cookie->name . '[key2]';
+		$result = $this->Controller->response->cookie($name);
+		$this->assertWithinMargin(time() + 10, $result['expire'], 2, 'Expiry time is wrong');
 	}
 
 /**
@@ -308,6 +392,44 @@ class CookieComponentTest extends CakeTestCase {
 	}
 
 /**
+ * Test that writing mixed arrays results in the correct data.
+ *
+ * @return void
+ */
+	public function testWriteMixedArray() {
+		$this->Cookie->encrypt = false;
+		$this->Cookie->write('User', array('name' => 'mark'), false);
+		$this->Cookie->write('User.email', 'mark@example.com', false);
+		$expected = array(
+			'name' => $this->Cookie->name . '[User]',
+			'value' => '{"name":"mark","email":"mark@example.com"}',
+			'path' => '/',
+			'domain' => '',
+			'secure' => false,
+			'httpOnly' => false
+		);
+		$result = $this->Controller->response->cookie($this->Cookie->name . '[User]');
+		unset($result['expire']);
+
+		$this->assertEquals($expected, $result);
+
+		$this->Cookie->write('User.email', 'mark@example.com', false);
+		$this->Cookie->write('User', array('name' => 'mark'), false);
+		$expected = array(
+			'name' => $this->Cookie->name . '[User]',
+			'value' => '{"name":"mark"}',
+			'path' => '/',
+			'domain' => '',
+			'secure' => false,
+			'httpOnly' => false
+		);
+		$result = $this->Controller->response->cookie($this->Cookie->name . '[User]');
+		unset($result['expire']);
+
+		$this->assertEquals($expected, $result);
+	}
+
+/**
  * testReadingCookieValue
  *
  * @return void
@@ -359,6 +481,25 @@ class CookieComponentTest extends CakeTestCase {
 		$this->Cookie->delete('Plain_array');
 		$data = $this->Cookie->read('Plain_array');
 		$this->assertNull($data);
+	}
+
+/**
+ * test delete() on corrupted/truncated cookie data.
+ *
+ * @return void
+ */
+	public function testDeleteCorruptedCookieData() {
+		$this->Cookie->type('aes');
+		$this->Cookie->key = sha1('some bad key');
+
+		$data = $this->_implode(array('name' => 'jill', 'age' => 24));
+		// Corrupt the cookie data by slicing some bytes off.
+		$_COOKIE['CakeTestCookie'] = array(
+			'BadData' => substr(Security::encrypt($data, $this->Cookie->key), 0, -5)
+		);
+
+		$this->assertNull($this->Cookie->delete('BadData.name'));
+		$this->assertNull($this->Cookie->read('BadData.name'));
 	}
 
 /**
@@ -538,17 +679,21 @@ class CookieComponentTest extends CakeTestCase {
 
 /**
  * Test reading empty values.
+ *
+ * @return void
  */
 	public function testReadEmpty() {
 		$_COOKIE['CakeTestCookie'] = array(
 			'JSON' => '{"name":"value"}',
 			'Empty' => '',
-			'String' => '{"somewhat:"broken"}'
+			'String' => '{"somewhat:"broken"}',
+			'Array' => '{}'
 		);
 		$this->assertEquals(array('name' => 'value'), $this->Cookie->read('JSON'));
 		$this->assertEquals('value', $this->Cookie->read('JSON.name'));
 		$this->assertEquals('', $this->Cookie->read('Empty'));
 		$this->assertEquals('{"somewhat:"broken"}', $this->Cookie->read('String'));
+		$this->assertEquals(array(), $this->Cookie->read('Array'));
 	}
 
 /**
