@@ -11,6 +11,7 @@ App::uses('SmushIt','Lib');
  * @property ItemUserFavorite $ItemUserFavorite
  * @property UserFavorite $UserFavorite
  */
+
 class ToolsController extends AppController {
 
 	public $name = 'Tools';
@@ -55,7 +56,6 @@ class ToolsController extends AppController {
 		}
 		exit;
 	}
-	
 
 	public function cleanup_item_names() {
 
@@ -339,7 +339,6 @@ class ToolsController extends AppController {
 		exit;
 	}
 
-
 	public function cleanup_series() {
 		
 		## first, start looping the series'...
@@ -366,7 +365,6 @@ class ToolsController extends AppController {
 		}
 		exit;
 	}
-
 
 	public function update_images_filesystem() {
 		set_time_limit(0);	
@@ -691,25 +689,17 @@ class ToolsController extends AppController {
 
 		$print = 1;
 		$rand = rand(500,999);
-//		$url = Configure::read('Settings.root_domain') . Configure::read('Settings.root_domain_path') . $rand . "?stockItemID=" . $item_id;
 		$url = Configure::read('Settings.root_domain') . Configure::read('Settings.root_domain_path') . $item_id;
-
 
 		// check if we need this item, if its already been parsed, don't do it again..
 		$item = $this->Item->find('first', array('conditions' => array('Item.item_id' => $item_id), 'limit' => 1, 'recursive' => 1));
 		if (!$item) {
 			
-			echo "getting url = " . $url . "<br/>";		
 			list ($d, $i) = $this->Curl->getRaw($url);
 			
 			$dom = new DOMDocument();
 			@$dom->loadHTML($d);
 			$xpath = new DOMXPath($dom);
-
-			echo "<textarea rows='30' style='width:100%;'>";
-			print_r($d);
-			echo "</textarea>";
-//
 
 			$item = array();
 			$item['item_id'] = $item_id;
@@ -766,7 +756,7 @@ class ToolsController extends AppController {
 			$item['stock_id'] = $item_id;
 			
 			// parse item_name by # to get series name..
-			$series_parts = split("#", $item['item_name']);
+			$series_parts = explode("#", $item['item_name']);
 			
 			$item['series_name'] = trim($series_parts[0]);
 			$item['series_name'] = trim(preg_replace("/\([^)]+\)/","",$item['series_name']));
@@ -817,7 +807,6 @@ class ToolsController extends AppController {
 			$item['item_name'] = trim(str_replace("4TH PTG", "", $item['item_name']));
 			$item['item_name'] = trim(str_replace("5TH PTG", "", $item['item_name']));
 			$item['item_name'] = trim(str_replace("6TH PTG", "", $item['item_name']));
-
 			$item['item_name'] = trim(str_replace("()", "", $item['item_name']));
 			
 			$item['printing'] = $print;
@@ -833,10 +822,10 @@ class ToolsController extends AppController {
 				$cz = array();
 				foreach ($creator_array as $c) {
 					if ($c) {
-						$creator_pieces = split(")", $c);
-						$e = split("/", $creator_pieces[0]);
+						$creator_pieces = explode(")", $c);
+						$e = explode("/", $creator_pieces[0]);
 						foreach ($e as $el) {
-							$creator_names = @split(",", $creator_pieces[1]);
+							$creator_names = @explode(",", $creator_pieces[1]);
 							foreach ($creator_names as $cn) {
 								$cn = trim($cn);
 								$cn = preg_replace('/\s+/', " ", $cn);
@@ -852,6 +841,7 @@ class ToolsController extends AppController {
 			}
 	
 			$description = @$xpath->query('//div[@class="Text"]');
+			$desc = "";
 			foreach ($description as $tag) {
 				$desc = $this->get_inner_html($tag);
 				$desc = preg_replace('/\s+/', " ", $desc);
@@ -911,8 +901,7 @@ class ToolsController extends AppController {
 //				echo "<textarea rows=50 style='width:100%;'>";
 //				print_r($item);
 //				echo "</textarea>";
-//				exit;
-				
+
 				// save item
 				$item_id = $this->Item->saveItem($item);
 				echo "item-id=>" . $item_id . "<br/>";
@@ -1344,7 +1333,7 @@ class ToolsController extends AppController {
 
 	public function log($data="", $type=4) {
 		echo sprintf('%s<br />', $data);
-		parent::log($data, 'tools');
+		CakeObject::log($data, 'tools');
 	}
 	
 	

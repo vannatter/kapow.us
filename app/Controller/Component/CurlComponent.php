@@ -1,4 +1,4 @@
-<?
+<?php
 	class CurlComponent extends Component {
 	  
 		function getRAW($url) {
@@ -9,15 +9,14 @@
 			curl_setopt($curl, CURLOPT_CONNECTTIMEOUT, 10);
   			curl_setopt($curl, CURLOPT_TIMEOUT, 10);
 			curl_setopt($curl, CURLOPT_FRESH_CONNECT, 1);
-			curl_setopt($curl, CURLOPT_FOLLOWLOCATION, TRUE);			
+			curl_setopt($curl, CURLOPT_FOLLOWLOCATION, TRUE);
 			
   			$f = curl_exec($curl);
 			$i = curl_getinfo($curl);
-  			curl_close($curl);	
+  			curl_close($curl);
 
   			return array($f, $i);
 		}
-
 
 		function getsetImage($img, $item_id, $force=0) {
 			$local_path = Configure::read('Settings.icon_path') . strtolower($img);
@@ -33,7 +32,7 @@
 				return $web_path;
 			} else {
 				$img_path = Configure::read('Settings.root_domain') . strtolower($img);
-
+				$img_path = str_replace('?type=1', '', $img_path);
 				@mkdir(dirname($local_path), 0777, true);
 
 				$ch = curl_init();
@@ -42,10 +41,10 @@
 				curl_setopt ($ch, CURLOPT_CONNECTTIMEOUT, 0);
 				$fc = curl_exec($ch);
 				curl_close($ch);
-
-				$new_img = imagecreatefromstring($fc);
-				imagejpeg($new_img, $local_path, 100);
-
+				if ($fc) {
+					$new_img = imagecreatefromstring($fc);
+					imagejpeg($new_img, $local_path, 100);
+				}
 				return $web_path;
 			}
 		}
@@ -66,9 +65,10 @@
 				curl_setopt ($ch, CURLOPT_CONNECTTIMEOUT, 0);
 				$fc = curl_exec($ch);
 				curl_close($ch);
-
-				$new_img = imagecreatefromstring($fc);
-				imagejpeg($new_img, $local_path, 100);
+				if ($fc) {
+					$new_img = imagecreatefromstring($fc);
+					imagejpeg($new_img, $local_path, 100);
+				}
 				return $web_path;
 			}
 		}
