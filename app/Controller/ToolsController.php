@@ -690,6 +690,7 @@ class ToolsController extends AppController {
 		$print = 1;
 		$rand = rand(500,999);
 		$url = Configure::read('Settings.root_domain') . Configure::read('Settings.root_domain_path') . $item_id;
+		echo "url = " . $url . "<br/>";
 
 		// check if we need this item, if its already been parsed, don't do it again..
 		$item = $this->Item->find('first', array('conditions' => array('Item.item_id' => $item_id), 'limit' => 1, 'recursive' => 1));
