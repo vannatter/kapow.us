@@ -610,7 +610,8 @@ class ToolsController extends AppController {
 			}
 			
 			if ($part_2) {
-				$this->_getItem($part_1, $part_2, $section, $date);
+				echo "part_1 = " . $part_1 . " - part_2 = " . $part_2 . " - section = " . $section . " - date = " . $date . "<br/>";
+//				$this->_getItem($part_1, $part_2, $section, $date);
 				$cnt++;
 			}
 		}
