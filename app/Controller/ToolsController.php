@@ -547,12 +547,10 @@ class ToolsController extends AppController {
 		list ($d, $i) = $this->Curl->getRaw($url);
 		$d = trim($d);
 		
-/*
 		echo "<pre>";
 		print_r($d);
 		echo "</pre>";
-*/
-		
+
 		$arr = explode("\n", $d);
 		
 		$section = "";
@@ -574,14 +572,26 @@ class ToolsController extends AppController {
 			if (substr($a, 0, 9) == "Shipping ") {
 				$date = trim(substr($a, 9));
 			}
-			
+
+			if (substr($a, 0, 33) == "PREVIEWSworld's New Releases For ") {
+				$date = trim(substr($a, 33));
+			}
+
+
 			$a = trim($a);
-			$parts = explode("  ", $a);
+			$parts = explode("\t", $a);
+
+//			$part_1 = @$parts[0];
+//
+//			if ($part_1) {
+//				echo "part 1 = " . $part_1 . "<br/>";
+//			}
+
 			$part_1 = @$parts[0];
 			$part_2 = @$parts[1];
 			$part_1 = trim($part_1);
 			$part_2 = trim($part_2);
-			
+
 			if (!$part_2) {
 				## try getting it w/ tabs
 				$parts = explode("	", $a);
@@ -597,23 +607,25 @@ class ToolsController extends AppController {
 				$part_1 = trim($part_1);
 				$part_2 = trim($part_2);
 			}
-			
+
 			if ($check_next_for_section) {
 				if ( ($part_1) && (!$part_2) ) {
 					$section = $part_1;
 				}
 				$check_next_for_section = false;
 			}
-			
+
 			if ( (!$part_1) && (!$part_2) ) {
 				$check_next_for_section = true;
 			}
-			
+
 			if ($part_2) {
 				echo "part_1 = " . $part_1 . " - part_2 = " . $part_2 . " - section = " . $section . " - date = " . $date . "<br/>";
 //				$this->_getItem($part_1, $part_2, $section, $date);
 				$cnt++;
 			}
+
+
 		}
 	}
 	
