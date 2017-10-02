@@ -44,6 +44,7 @@
 				if ($fc) {
 					$new_img = imagecreatefromstring($fc);
 					imagejpeg($new_img, $local_path, 100);
+					chmod($local_path, 0777);
 				}
 				return $web_path;
 			}
@@ -68,6 +69,7 @@
 				if ($fc) {
 					$new_img = imagecreatefromstring($fc);
 					imagejpeg($new_img, $local_path, 100);
+					chmod($local_path, 0777);
 				}
 				return $web_path;
 			}
@@ -98,6 +100,7 @@
 				if ($fc) {
 					$new_img = imagecreatefromstring($fc);
 					imagejpeg($new_img, $local_path, 100);
+					chmod($local_path, 0777);
 					return $web_path;
 				} else {
 					return '';
