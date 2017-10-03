@@ -390,7 +390,7 @@ class ToolsController extends AppController {
 			@$dom->loadHTML($d);
 			$xpath = new DOMXPath($dom);
 			
-			$img = $xpath->query('//div[@class="StockCodeImage"]/a');
+			$img = $xpath->query('//div[@class="mainContentImage"]/a');
 			$final_img = "";
 			foreach ($img as $tag) {
 				$final_img = trim($tag->getAttribute('href'));
@@ -432,7 +432,7 @@ class ToolsController extends AppController {
 			@$dom->loadHTML($d);
 			$xpath = new DOMXPath($dom);
 			
-			$img = $xpath->query('//div[@class="StockCodeImage"]/a');
+			$img = $xpath->query('//div[@class="mainContentImage"]/a');
 			$final_img = "";
 			foreach ($img as $tag) {
 				$final_img = trim($tag->getAttribute('href'));
