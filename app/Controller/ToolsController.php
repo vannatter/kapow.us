@@ -719,7 +719,8 @@ class ToolsController extends AppController {
 			$item_id_parts = explode(" ", $item_id_raw);
 			$item_id = trim($item_id_parts[0]);
 
-			echo "item_id_1[" . $item_id . "]<br/>";
+			echo "item_id_1.0[" . trim($item_id_parts[0]) . "]<br/>";
+			echo "item_id_1.1[" . trim($item_id_parts[1]) . "]<br/>";
 
 			if (!@$item_id_parts[1]) {
 				$item_id_parts = explode("\t", $item_id_raw);
