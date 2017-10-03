@@ -539,6 +539,15 @@ class ToolsController extends AppController {
 		exit;
 	}
 
+	public function reimport() {
+
+		$items = $this->Item->find('all', array('conditions' => array('Item.item_id like' => "% %"), 'limit' => 2, 'recursive' => 1));
+		foreach ($items as $item) {
+			$this->_regetItem($item['Item']['id']);
+		}
+
+	}
+
 	public function import($url="http://www.previewsworld.com/shipping/newreleases.txt") {
 		$this->_import($url);
 		exit;
@@ -696,6 +705,192 @@ class ToolsController extends AppController {
 			$data = preg_replace('#<div class="'.$strip.'">(.*?)</div>#', '', $data);
 		}
 		return $data;
+	}
+
+	function _regetItem($item_id) {
+
+		$item_info = $this->Item->find('first', array('conditions' => array('Item.item_id' => $item_id), 'limit' => 1, 'recursive' => 1));
+		if ($item_info) {
+
+			$url = Configure::read('Settings.root_domain') . Configure::read('Settings.root_domain_path') . $item_id;
+			list ($d, $i) = $this->Curl->getRaw($url);
+
+			$dom = new DOMDocument();
+			@$dom->loadHTML($d);
+			$xpath = new DOMXPath($dom);
+
+			$item = array();
+			$item['id'] = $item_id;
+//			$item['item_id'] = $item_id;
+
+			$item_name = $xpath->query('//div[@class="Title"]');
+			foreach ($item_name as $tag) {
+				$item['item_name'] = $tag->nodeValue;
+			}
+
+			// fix 'of x' formatting..
+			$item['item_name'] = trim(str_replace("Of(1)", "[OF 1]", $item['item_name']));
+			$item['item_name'] = trim(str_replace("Of(2)", "[OF 2]", $item['item_name']));
+			$item['item_name'] = trim(str_replace("Of(3)", "[OF 3]", $item['item_name']));
+			$item['item_name'] = trim(str_replace("Of(4)", "[OF 4]", $item['item_name']));
+			$item['item_name'] = trim(str_replace("Of(5)", "[OF 5]", $item['item_name']));
+			$item['item_name'] = trim(str_replace("Of(6)", "[OF 6]", $item['item_name']));
+			$item['item_name'] = trim(str_replace("Of(7)", "[OF 7]", $item['item_name']));
+			$item['item_name'] = trim(str_replace("Of(8)", "[OF 8]", $item['item_name']));
+			$item['item_name'] = trim(str_replace("Of(9)", "[OF 9]", $item['item_name']));
+			$item['item_name'] = trim(str_replace("Of(10)", "[OF 10]", $item['item_name']));
+			$item['item_name'] = trim(str_replace("Of(11)", "[OF 11]", $item['item_name']));
+			$item['item_name'] = trim(str_replace("Of(12)", "[OF 12]", $item['item_name']));
+			$item['item_name'] = trim(str_replace("Of(13)", "[OF 13]", $item['item_name']));
+			$item['item_name'] = trim(str_replace("Of(14)", "[OF 14]", $item['item_name']));
+			$item['item_name'] = trim(str_replace("Of(15)", "[OF 15]", $item['item_name']));
+			$item['item_name'] = trim(str_replace("Of(16)", "[OF 16]", $item['item_name']));
+			$item['item_name'] = trim(str_replace("Of(17)", "[OF 17]", $item['item_name']));
+			$item['item_name'] = trim(str_replace("Of(18)", "[OF 18]", $item['item_name']));
+
+			$item['item_name'] = trim(preg_replace("/\(C\:[^)]+\)/","",$item['item_name']));
+			$item['item_name'] = trim(preg_replace("/\(C\: [^)]+\)/","",$item['item_name']));
+			$item['item_name'] = trim(preg_replace("/\(PP[^)]+\)/","",$item['item_name']));
+			$item['item_name'] = trim(preg_replace("/\(NET\)/","",$item['item_name']));
+			$item['item_name'] = trim(preg_replace("/\(Net\)/","",$item['item_name']));
+			$item['item_name'] = trim(preg_replace("/\(MR\)/","",$item['item_name']));
+			$item['item_name'] = trim(preg_replace("/\(N52\)/","",$item['item_name']));
+			$item['item_name'] = trim(preg_replace("/\(RES\)/","",$item['item_name']));
+			$item['item_name'] = trim(preg_replace("/\(O\/A\)/","",$item['item_name']));
+
+			$item['item_name'] = trim(preg_replace("/\(JAN[^)]+\)/","",$item['item_name']));
+			$item['item_name'] = trim(preg_replace("/\(FEB[^)]+\)/","",$item['item_name']));
+			$item['item_name'] = trim(preg_replace("/\(MAR[^)]+\)/","",$item['item_name']));
+			$item['item_name'] = trim(preg_replace("/\(APR[^)]+\)/","",$item['item_name']));
+			$item['item_name'] = trim(preg_replace("/\(MAY[^)]+\)/","",$item['item_name']));
+			$item['item_name'] = trim(preg_replace("/\(JUN[^)]+\)/","",$item['item_name']));
+			$item['item_name'] = trim(preg_replace("/\(JUL[^)]+\)/","",$item['item_name']));
+			$item['item_name'] = trim(preg_replace("/\(AUG[^)]+\)/","",$item['item_name']));
+			$item['item_name'] = trim(preg_replace("/\(SEP[^)]+\)/","",$item['item_name']));
+			$item['item_name'] = trim(preg_replace("/\(OCT[^)]+\)/","",$item['item_name']));
+			$item['item_name'] = trim(preg_replace("/\(NOV[^)]+\)/","",$item['item_name']));
+			$item['item_name'] = trim(preg_replace("/\(DEC[^)]+\)/","",$item['item_name']));
+
+			// remove 'COMBO PACK'..
+			$item['item_name'] = trim(str_replace("COMBO PACK", "", $item['item_name']));
+			$item['stock_id'] = $item_id;
+
+			// parse item_name by # to get series name..
+			$series_parts = explode("#", $item['item_name']);
+
+			$item['series_name'] = trim($series_parts[0]);
+			$item['series_name'] = trim(preg_replace("/\([^)]+\)/","",$item['series_name']));
+			$item['series_name'] = trim(str_replace(" TP", "", $item['series_name']));
+
+			if (@$series_parts[1]) {
+				$series_num_parts = explode("\t", $series_parts[1]);
+				$item['series_num'] = (int) $series_num_parts[0];
+			}
+
+			if (strpos($item['item_name'], "2ND PTG")) {
+				$print = 2;
+			}
+			if (strpos($item['item_name'], "3RD PTG")) {
+				$print = 3;
+			}
+			if (strpos($item['item_name'], "4TH PTG")) {
+				$print = 4;
+			}
+			if (strpos($item['item_name'], "5TH PTG")) {
+				$print = 5;
+			}
+			if (strpos($item['item_name'], "6TH PTG")) {
+				$print = 6;
+			}
+
+			if ($print == 1) {
+				if (strpos($item_name, "2ND PTG")) {
+					$print = 2;
+				}
+				if (strpos($item_name, "3RD PTG")) {
+					$print = 3;
+				}
+				if (strpos($item_name, "4TH PTG")) {
+					$print = 4;
+				}
+				if (strpos($item_name, "5TH PTG")) {
+					$print = 5;
+				}
+				if (strpos($item_name, "6TH PTG")) {
+					$print = 6;
+				}
+			}
+
+			// remove printing strings from item name..
+			$item['item_name'] = trim(str_replace("2ND PTG", "", $item['item_name']));
+			$item['item_name'] = trim(str_replace("3RD PTG", "", $item['item_name']));
+			$item['item_name'] = trim(str_replace("4TH PTG", "", $item['item_name']));
+			$item['item_name'] = trim(str_replace("5TH PTG", "", $item['item_name']));
+			$item['item_name'] = trim(str_replace("6TH PTG", "", $item['item_name']));
+			$item['item_name'] = trim(str_replace("()", "", $item['item_name']));
+
+			$item['printing'] = $print;
+
+			$description = @$xpath->query('//div[@class="Text"]');
+			$desc = "";
+			foreach ($description as $tag) {
+				$desc = $this->get_inner_html($tag);
+				$desc = preg_replace('/\s+/', " ", $desc);
+			}
+
+			$arr = array('ItemCode', 'ReleaseDate', 'SRP', 'PPrevue', 'Creators');
+			$item['description'] = trim($this->strip_classes($desc, $arr));
+			$item['description'] = trim(str_replace(array("\n", "\r", "&#13;"), '', $item['description']));
+			$item['description'] = strip_tags($item['description']);
+
+			$img = $xpath->query('//img[@id="MainContentImage"]');
+			foreach ($img as $tag) {
+				$item['img'] = trim($tag->getAttribute('src'));
+			}
+
+			$srp = $xpath->query('//div[@class="SRP"]');
+			foreach ($srp as $tag) {
+				$pri = substr($tag->nodeValue, 6);
+				$item['srp'] = $pri;
+			}
+
+			// override section_id for items matching t-shirt (T/S) and hoodies..
+			if (strpos($item_name, "T/S")) {
+				$item['section_id'] = 9;
+			}
+			if (strpos($item_name, "HOODIE")) {
+				$item['section_id'] = 9;
+			}
+			if (strpos($item_name, "POSTER")) {
+				$item['section_id'] = 9;
+			}
+
+			// check for digital packs / combo packs, set combo_pack flag if found..
+			if (strpos($item_name, "DIG/P+")) {
+				$item['combo_pack'] = 1;
+				$item['item_name'] .= " (COMBO)";
+			} elseif (strpos($item_name, "COMBO PACK")) {
+				$item['combo_pack'] = 1;
+				$item['item_name'] .= " (COMBO)";
+			} else {
+				$item['combo_pack'] = 0;
+			}
+
+			// get local image
+			echo "img=" . $item['img'] . "<br/>";
+			$imgpath = $this->Curl->getsetImage($item['img'], $item['item_id']);
+			$item['img_fullpath'] = $imgpath;
+
+			echo "<textarea rows=50 style='width:100%;'>";
+			print_r($item);
+			echo "</textarea>";
+
+//			$item_id = $this->Item->updateItem($item);
+
+		} else {
+			echo "cant find this item? <br/>";
+		}
+
 	}
 
 	function _getItem($item_id, $item_name, $section, $date) {
@@ -1354,9 +1549,7 @@ class ToolsController extends AppController {
 		echo sprintf('%s<br />', $data);
 		CakeObject::log($data, 'tools');
 	}
-	
-	
-	
+
 	public function import_store_photos() {
 
 		set_time_limit(0);	
@@ -1507,33 +1700,5 @@ class ToolsController extends AppController {
 		@ob_flush();
 		ob_start();
 	}
-	
-	/*public function buildUserSeries() {
-		Configure::write('debug', 2);
-		set_time_limit(0);   ## FOREVER
-		
-		## get a list of user items first
-		$items = $this->UserItem->find('all', array(
-			'contain' => array(
-				'Item'
-			)
-		));
-		
-		foreach ($items as $item) {
-			$itemId = $item['UserItem']['item_id'];
-			$userId = $item['UserItem']['user_id'];
-			$seriesId = $item['Item']['series_id'];
-			
-			echo sprintf(
-				'item %s - series %s for user %s<br/>',
-				$itemId,
-				$seriesId,
-				$userId
-			);
-			
-			$this->UserSeries->add($userId, $seriesId);
-		}
-		
-		echo 'DONE!'; exit;
-	}*/
+
 }

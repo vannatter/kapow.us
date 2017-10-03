@@ -77,6 +77,11 @@ class Item extends AppModel {
 		
 	}
 
+	function updateItem($item) {
+		$this->save($item);
+		return $this->id;
+	}
+
 	function getRandomItemByDate($date=null) {
 		if (!$date) {
 			$first_day = date("N", strtotime("today"));
