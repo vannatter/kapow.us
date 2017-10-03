@@ -543,8 +543,12 @@ class ToolsController extends AppController {
 
 		$items = $this->Item->find('all', array('conditions' => array('Item.item_id like' => "% %"), 'limit' => 2, 'recursive' => 1));
 		foreach ($items as $item) {
-			$this->_regetItem($item['Item']['id']);
+			echo "id = " . $item['Item']['id'] . "<br/>";
+
+//			$this->_regetItem($item['Item']['id']);
 		}
+
+		exit;
 
 	}
 
