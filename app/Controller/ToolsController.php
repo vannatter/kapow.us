@@ -544,10 +544,8 @@ class ToolsController extends AppController {
 		$items = $this->Item->find('all', array('conditions' => array('Item.item_id like' => "% %"), 'limit' => 2, 'recursive' => 1));
 		foreach ($items as $item) {
 			echo "id = " . $item['Item']['id'] . "<br/>";
-
-//			$this->_regetItem($item['Item']['id']);
+			$this->_regetItem($item['Item']['id']);
 		}
-
 		exit;
 
 	}
@@ -713,7 +711,7 @@ class ToolsController extends AppController {
 
 	function _regetItem($item_id) {
 
-		$item_info = $this->Item->find('first', array('conditions' => array('Item.item_id' => $item_id), 'limit' => 1, 'recursive' => 1));
+		$item_info = $this->Item->find('first', array('conditions' => array('Item.id' => $item_id), 'limit' => 1, 'recursive' => 1));
 		if ($item_info) {
 
 			$url = Configure::read('Settings.root_domain') . Configure::read('Settings.root_domain_path') . $item_id;
@@ -725,7 +723,6 @@ class ToolsController extends AppController {
 
 			$item = array();
 			$item['id'] = $item_id;
-//			$item['item_id'] = $item_id;
 
 			$item_name = $xpath->query('//div[@class="Title"]');
 			foreach ($item_name as $tag) {
