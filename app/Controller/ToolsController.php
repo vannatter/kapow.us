@@ -380,8 +380,8 @@ class ToolsController extends AppController {
 			$save = array();
 			$updated_image = false;
 			$rand = rand(500,999);
-			$url = Configure::read('Settings.root_domain') . Configure::read('Settings.root_domain_path') . $rand . "?stockItemID=" . $item['Item']['item_id'];
-			
+			$url = Configure::read('Settings.root_domain') . Configure::read('Settings.root_domain_path') . $item['Item']['item_id'];
+
 			echo "updating image for (" . $item['Item']['item_id'] . ")  from [" . $url . "] .. <br/>";
 			
 			## first check if we have an image now in the file; sometimes they get updated..
@@ -413,7 +413,7 @@ class ToolsController extends AppController {
 	}
 
 	public function update_images() {
-		set_time_limit(0);	
+		set_time_limit(0);
 		
 		## get a list of items that have no images..
 		$items = $this->Item->find('all', array('conditions' => array('Item.img_fullpath' => "/img/covers"), 'limit' => 2500, 'recursive' => 1));
@@ -422,7 +422,6 @@ class ToolsController extends AppController {
 			$save = array();
 			$updated_image = false;
 			$rand = rand(500,999);
-//			$url = Configure::read('Settings.root_domain') . Configure::read('Settings.root_domain_path') . $rand . "?stockItemID=" . $item['Item']['item_id'];
 			$url = Configure::read('Settings.root_domain') . Configure::read('Settings.root_domain_path') . $item['Item']['item_id'];
 
 			echo "updating image for (" . $item['Item']['item_id'] . ")  from [" . $url . "] .. <br/>";
@@ -499,7 +498,9 @@ class ToolsController extends AppController {
 			}
 			
 			## still nothing?! try something external (google)
-			echo "<br/>";
+			if (!$updated_image) {
+				echo "<br/> try external? ... <br/>";
+			}
 			
 		}
 		
