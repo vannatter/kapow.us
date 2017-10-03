@@ -541,7 +541,7 @@ class ToolsController extends AppController {
 
 	public function reimport() {
 
-		$items = $this->Item->find('all', array('conditions' => array('Item.item_id like' => "% %"), 'limit' => 2, 'recursive' => 1));
+		$items = $this->Item->find('all', array('conditions' => array('Item.item_id like' => "% %"), 'limit' => 500, 'recursive' => 1));
 		foreach ($items as $item) {
 			echo "id = " . $item['Item']['id'] . "<br/>";
 			$this->_regetItem($item['Item']['id']);
