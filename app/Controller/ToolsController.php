@@ -500,6 +500,9 @@ class ToolsController extends AppController {
 			## still nothing?! try something external (google)
 			if (!$updated_image) {
 				echo "<br/> try external? ... <br/>";
+				$save['id'] = $item['Item']['id'];
+				$save['img_fullpath'] = '/theme/Kapow/img/nocover.png';
+				$this->Item->save($save);
 			}
 			
 		}
