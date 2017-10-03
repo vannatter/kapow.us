@@ -422,8 +422,9 @@ class ToolsController extends AppController {
 			$save = array();
 			$updated_image = false;
 			$rand = rand(500,999);
-			$url = Configure::read('Settings.root_domain') . Configure::read('Settings.root_domain_path') . $rand . "?stockItemID=" . $item['Item']['item_id'];
-			
+//			$url = Configure::read('Settings.root_domain') . Configure::read('Settings.root_domain_path') . $rand . "?stockItemID=" . $item['Item']['item_id'];
+			$url = Configure::read('Settings.root_domain') . Configure::read('Settings.root_domain_path') . $item['Item']['item_id'];
+
 			echo "updating image for (" . $item['Item']['item_id'] . ")  from [" . $url . "] .. <br/>";
 			
 			## first check if we have an image now in the file; sometimes they get updated..
