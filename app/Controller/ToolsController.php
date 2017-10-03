@@ -851,8 +851,6 @@ class ToolsController extends AppController {
 			$item['item_name'] = trim(str_replace("6TH PTG", "", $item['item_name']));
 			$item['item_name'] = trim(str_replace("()", "", $item['item_name']));
 
-			$item['printing'] = $print;
-
 			$description = @$xpath->query('//div[@class="Text"]');
 			$desc = "";
 			foreach ($description as $tag) {
@@ -907,7 +905,7 @@ class ToolsController extends AppController {
 			print_r($item);
 			echo "</textarea>";
 
-//			$item_id = $this->Item->updateItem($item);
+			$item_id = $this->Item->updateItem($item);
 
 		} else {
 			echo "cant find this item? <br/>";
