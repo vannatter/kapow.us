@@ -727,6 +727,12 @@ class ToolsController extends AppController {
 				echo "item_id_2[" . $item_id . "]<br/>";
 			}
 
+			if (!@$item_id_parts[1]) {
+				$item_id_parts = explode("	", $item_id_raw);
+				$item_id = trim($item_id_parts[0]);
+				echo "item_id_3[" . $item_id . "]<br/>";
+			}
+
 			$url = Configure::read('Settings.root_domain') . Configure::read('Settings.root_domain_path') . $item_id;
 			list ($d, $i) = $this->Curl->getRaw($url);
 
