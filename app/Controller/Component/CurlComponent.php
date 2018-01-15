@@ -1,21 +1,22 @@
 <?php
 	class CurlComponent extends Component {
-	  
+
 		function getRAW($url) {
 			$curl = curl_init();
-      
+
 			curl_setopt($curl, CURLOPT_URL, $url);
 			curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
 			curl_setopt($curl, CURLOPT_CONNECTTIMEOUT, 10);
-  			curl_setopt($curl, CURLOPT_TIMEOUT, 10);
+			curl_setopt($curl, CURLOPT_TIMEOUT, 10);
 			curl_setopt($curl, CURLOPT_FRESH_CONNECT, 1);
 			curl_setopt($curl, CURLOPT_FOLLOWLOCATION, TRUE);
+			curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);
 			
-  			$f = curl_exec($curl);
+			$f = curl_exec($curl);
 			$i = curl_getinfo($curl);
-  			curl_close($curl);
+			curl_close($curl);
 
-  			return array($f, $i);
+			return array($f, $i);
 		}
 
 		function getsetImage($img, $item_id, $force=0) {
@@ -36,9 +37,10 @@
 				@mkdir(dirname($local_path), 0777, true);
 
 				$ch = curl_init();
-				curl_setopt ($ch, CURLOPT_URL, $img_path);
-				curl_setopt ($ch, CURLOPT_RETURNTRANSFER, 1);
-				curl_setopt ($ch, CURLOPT_CONNECTTIMEOUT, 0);
+				curl_setopt($ch, CURLOPT_URL, $img_path);
+				curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+				curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 0);
+				curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
 				$fc = curl_exec($ch);
 				curl_close($ch);
 				if ($fc) {
@@ -61,9 +63,10 @@
 				@mkdir(dirname($local_path), 0777, true);
 
 				$ch = curl_init();
-				curl_setopt ($ch, CURLOPT_URL, $img_path);
-				curl_setopt ($ch, CURLOPT_RETURNTRANSFER, 1);
-				curl_setopt ($ch, CURLOPT_CONNECTTIMEOUT, 0);
+				curl_setopt($ch, CURLOPT_URL, $img_path);
+				curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+				curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 0);
+				curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
 				$fc = curl_exec($ch);
 				curl_close($ch);
 				if ($fc) {
@@ -90,11 +93,12 @@
 				$img = str_replace('https://', 'http://', $img);
 
 				$ch = curl_init();
-				curl_setopt ($ch, CURLOPT_URL, $img);
+				curl_setopt($ch, CURLOPT_URL, $img);
 				curl_setopt($ch, CURLOPT_HEADER, 0);
-				curl_setopt ($ch, CURLOPT_RETURNTRANSFER, true);
-				curl_setopt ($ch, CURLOPT_TIMEOUT, 2);
+				curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+				curl_setopt($ch, CURLOPT_TIMEOUT, 2);
 				#curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 1);
+				curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
 				$fc = curl_exec($ch);
 
 				if ($fc) {
@@ -139,4 +143,5 @@
 			return $pass;
 		}
 	}
+
 ?>
