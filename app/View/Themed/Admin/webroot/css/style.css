@@ -66,6 +66,10 @@ body {
   background-color: #428bca;
 }
 
+.fullwidth {
+	width: 100%;
+}
+
 
 /*
  * Main content

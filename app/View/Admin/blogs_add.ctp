@@ -4,8 +4,8 @@
  */
 ?>
 <?php echo $this->Form->create('Blog', array('class' => 'form-horizontal')); ?>
-<?php echo $this->Form->input('title', array('class' => 'span10')); ?>
-<?php echo $this->Form->input('body', array('class' => 'span10', 'rows' => 25, 'required' => false)); ?>
+<?php echo $this->Form->input('title', array('class' => 'span10 fullwidth')); ?>
+<?php echo $this->Form->input('body', array('class' => 'span10 fullwidth', 'rows' => 25, 'required' => false)); ?>
 <?php echo $this->TinyMCE->editor(array(
 	'theme' => 'advanced',
 	'mode' => 'textareas',
