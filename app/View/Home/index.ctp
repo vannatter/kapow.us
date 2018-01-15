@@ -164,7 +164,6 @@
 			<div class="span3">
 				<a href="https://twitter.com/kapowus"><img src="/theme/Kapow/img/twitter.png"  alt="Twitter" width="48" height="48" /></a>
 				<a href="https://facebook.com/kapow.us"><img src="/theme/Kapow/img/facebook.png"  alt="Facebook" width="48" height="48" /></a>
-				<a href="https://plus.google.com/112418984867940299271"><img src="/theme/Kapow/img/googleplus.png"  alt="Google+" width="48" height="48" /></a>
 			</div>
 		</div>
 				
