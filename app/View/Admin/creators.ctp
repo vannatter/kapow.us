@@ -2,8 +2,19 @@
 /**
  *@var $this View
  */
+
+if (isset($filter)) {
+	$this->Paginator->options(array('url' => array('filter' => $filter)));
+} else {
+	$filter = 'all';
+}
 ?>
-	<table class="table table-striped">
+
+<?php echo $this->element('admin/page_header', array('title' => __('Creators'))); ?>
+
+
+<div class="table-responsive">
+	<table class="table table-hovertable-striped">
 		<thead>
 		<tr>
 			<th><?php echo $this->Paginator->sort('Creator.id', __('ID')); ?></th>
@@ -55,4 +66,9 @@
 		<?php } ?>
 		</tbody>
 	</table>
-<?php echo $this->Paginator->pagination(); ?>
+
+	<?php echo $this->Paginator->pagination(array(
+		'ul' => 'pagination'
+	)); ?>
+
+</div>
