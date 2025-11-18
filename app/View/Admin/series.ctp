@@ -4,7 +4,7 @@
  */
 ?>
 <div class="row">
-	<div class="pull-right span6">
+	<div class="float-end span6">
 		<?php echo $this->Form->create('Series', array('class' => 'form-inline')); ?>
 		<?php echo $this->Form->input('series_name', array('class' => 'span10', 'value' => @$this->request->query['name'])); ?>
 		<?php echo $this->Form->submit(__('Filter')); ?>

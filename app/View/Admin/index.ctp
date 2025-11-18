@@ -7,7 +7,7 @@
 		</div>
 		<a href="/admin/items">
 			<div class="panel-footer">
-				<span class="pull-left">View Details</span>
+				<span class="float-start">View Details</span>
 				<div class="clearfix"></div>
 			</div>
 		</a>
@@ -21,7 +21,7 @@
 		</div>
 		<a href="/admin/series">
 			<div class="panel-footer">
-				<span class="pull-left">View Details</span>
+				<span class="float-start">View Details</span>
 				<div class="clearfix"></div>
 			</div>
 		</a>
@@ -35,7 +35,7 @@
 		</div>
 		<a href="/admin/creators">
 			<div class="panel-footer">
-				<span class="pull-left">View Details</span>
+				<span class="float-start">View Details</span>
 				<div class="clearfix"></div>
 			</div>
 		</a>
@@ -49,7 +49,7 @@
 		</div>
 		<a href="/admin/publishers">
 			<div class="panel-footer">
-				<span class="pull-left">View Details</span>
+				<span class="float-start">View Details</span>
 				<div class="clearfix"></div>
 			</div>
 		</a>
@@ -63,7 +63,7 @@
 		</div>
 		<a href="/admin/stores">
 			<div class="panel-footer">
-				<span class="pull-left">View Details</span>
+				<span class="float-start">View Details</span>
 				<div class="clearfix"></div>
 			</div>
 		</a>
@@ -77,7 +77,7 @@
 		</div>
 		<a href="/admin/users">
 			<div class="panel-footer">
-				<span class="pull-left">View Details</span>
+				<span class="float-start">View Details</span>
 				<div class="clearfix"></div>
 			</div>
 		</a>

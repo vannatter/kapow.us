@@ -20,7 +20,7 @@
 				</div>
 			<?php } ?>
 			</div>
-			<div class="span2 pull-right text-right">
+			<div class="span2 float-end text-right">
 				<?php echo $this->Html->link(__('MORE %s', strtoupper($tag['Tag']['tag_name'])), $this->Common->seoize($tag['Tag']['id'], $tag['Tag']['tag_name'])); ?>
 			</div>
 		</div>

@@ -8,7 +8,7 @@
 				<li><a href="/report/series/<?php echo $series['Series']['id']; ?>"><?php echo __('Report an issue'); ?></a></li>
 				<li><a href="/flag/series/<?php echo $series['Series']['id']; ?>"><?php echo __('Flag as inappropriate'); ?></a></li>
 				<?php if ($this->Session->read('Auth.User.access_level') > 50) { ?>
-					<li class="divider"></li>
+					<li class="dropdown-divider"></li>
 					<li><a href="/admin/series/edit/<?php echo $series['Series']['id']; ?>"><?php echo __('Edit Series'); ?></a></li>
 				<?php } ?>
 			</ul>

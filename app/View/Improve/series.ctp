@@ -17,7 +17,7 @@
 			<?php echo $this->Form->input('series_name', array('class' => 'span11')); ?>
 			<?php echo $this->Form->input('description', array('class' => 'span11', 'rows' => 20)); ?>
 		</div>
-		<?php echo $this->Form->submit(__('Submit Changes'), array('class' => 'btn btn-custom pull-right')); ?>
+		<?php echo $this->Form->submit(__('Submit Changes'), array('class' => 'btn btn-custom float-end')); ?>
 	</div>
 	<?php echo $this->Form->end(); ?>
 
