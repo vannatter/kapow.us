@@ -63,7 +63,7 @@
 							);
 							?>
 						</li>
-						<li class="divider"></li>
+						<li class="dropdown-divider"></li>
 						<li>
 							<?php
 							echo $this->Html->link(
@@ -89,10 +89,10 @@
 					<li><a href="/flag/item/image/<?php echo $item['Item']['id']; ?>"><?php echo __('Flag Image'); ?></a></li>
 
 					<?php if ($this->Session->read('Auth.User.access_level') > 50) { ?>
-						<li class="divider"></li>
+						<li class="dropdown-divider"></li>
 						<li><a href="/admin/items/edit/<?php echo $item['Item']['id']; ?>"><?php echo __('Edit Item'); ?></a></li>
 						<li><a href="/tools/repull_img/<?php echo $item['Item']['id']; ?>"><?php echo __('Repull Image'); ?></a></li>
-						<li class="divider"></li>
+						<li class="dropdown-divider"></li>
 						<li><div style="display: block; padding: 3px 10px; clear: both; color: #333; font-weight: bold; margin-top: 5px;">Hotness</div><div id="hotness" data-item-id="<?php echo $item['Item']['id']; ?>" data-hotness="<?php echo $item['Item']['hot']; ?>"></div></li>
 					<?php } ?>
 				</ul>

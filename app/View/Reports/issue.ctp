@@ -16,7 +16,7 @@
 		<div class="span11">
 			<?php echo $this->Form->input('description', array('class' => 'input-xlarge span11', 'rows' => 12, 'label' => 'Describe the Issue')); ?>
 		</div>
-		<?php echo $this->Form->submit(__('Submit Issue'), array('class' => 'btn btn-custom pull-right')); ?>
+		<?php echo $this->Form->submit(__('Submit Issue'), array('class' => 'btn btn-custom float-end')); ?>
 	</div>
 	<?php echo $this->Form->end(); ?>
 

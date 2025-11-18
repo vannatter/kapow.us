@@ -33,7 +33,7 @@ We look forward to hearing from you, and we'll try to get back to you as soon as
 			<textarea name="message" id="message" class="input-xlarge span8" rows="10"></textarea>
 		</div>
 	
-		<button type="button" class="contact_btn btn btn-custom pull-right">Send</button>
+		<button type="button" class="contact_btn btn btn-custom float-end">Send</button>
 	</div>
 </form>
 

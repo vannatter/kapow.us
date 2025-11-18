@@ -60,7 +60,9 @@
 			<div id="flash_msg" class="flash_msg" style="display:none;"></div>
 		</div>
 
-		<script type="text/javascript" src="//maps.googleapis.com/maps/api/js?key=AIzaSyAf5DtChzuCwa8uGr4gehSrhklvVHjzKhk&amp;sensor=true"></script>
+		<?php if (Configure::read('GoogleMaps.apiKey')): ?>
+		<script type="text/javascript" src="//maps.googleapis.com/maps/api/js?key=<?php echo Configure::read('GoogleMaps.apiKey'); ?>&amp;sensor=true"></script>
+		<?php endif; ?>
 		<?php echo $this->Facebook->init(); ?>
 		<?php
 			echo $this->AssetCompress->script('js-libs');

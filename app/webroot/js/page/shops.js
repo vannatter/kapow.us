@@ -36,7 +36,7 @@ $(document).ready(function() {
 		return false;
 	});
 
-	$content.find('#map-canvas').gmap().bind('init', function(ev, map) {
+	$content.find('#map-canvas').gmap().on('init', function(ev, map) {
 		if (navigator.geolocation) {
 			navigator.geolocation.getCurrentPosition(function(location) {
 				$.getJSON('/shops/getStores', { 'lat': location.coords.latitude, 'long': location.coords.longitude }, function(data) {

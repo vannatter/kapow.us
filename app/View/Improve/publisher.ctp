@@ -20,7 +20,7 @@
 		<div class="span8">
 			<?php echo $this->Form->input('publisher_bio', array('class' => 'input-xlarge span8', 'rows' => 15, 'label' => 'Publisher Bio')); ?>
 		</div>
-		<?php echo $this->Form->submit(__('Submit Changes'), array('class' => 'btn btn-custom pull-right')); ?>
+		<?php echo $this->Form->submit(__('Submit Changes'), array('class' => 'btn btn-custom float-end')); ?>
 	</div>
 	<?php echo $this->Form->end(); ?>
 

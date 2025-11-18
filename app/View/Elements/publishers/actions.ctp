@@ -11,9 +11,9 @@
 						<li><a href="/report/publisher/<?php echo $publisher['Publisher']['id']; ?>"><?php echo __('Report an issue'); ?></a></li>
 						<li><a href="/flag/publisher/<?php echo $publisher['Publisher']['id']; ?>"><?php echo __('Flag as inappropriate'); ?></a></li>
 						<?php if ($this->Session->read('Auth.User.access_level') > 50) { ?>
-							<li class="divider"></li>
+							<li class="dropdown-divider"></li>
 							<li><a href="/admin/publishers/edit/<?php echo $publisher['Publisher']['id']; ?>"><?php echo __('Edit Publisher'); ?></a></li>
-							<li class="divider"></li>
+							<li class="dropdown-divider"></li>
 								<li><div style="display: block; padding: 3px 10px; clear: both; color: #333; font-weight: bold; margin-top: 5px;" data-publisher-weight="<?php echo $publisher['Publisher']['weight']; ?>" data-publisher-id="<?php echo $publisher['Publisher']['id']; ?>">Weight</div><div id="weight"></div></li>
 						<?php } ?>
 					</ul>

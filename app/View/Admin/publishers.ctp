@@ -9,7 +9,7 @@ if (isset($filter) && $filter) {
 	$filter = 'all';
 }
 ?>
-<div class="pull-right">
+<div class="float-end">
 	<?php echo $this->Form->create('Publisher', array('class' => 'form-inline')); ?>
 	<?php echo $this->Form->input('filter', array('type' => 'select', 'options' => array('all' => 'ALL', 'weighted' => 'WEIGHTED'), 'value' => $filter)); ?>
 	<?php echo $this->Form->submit(__('Filter')); ?>

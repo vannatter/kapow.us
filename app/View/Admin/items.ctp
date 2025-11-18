@@ -13,7 +13,7 @@ if (isset($filter)) {
 <?php echo $this->element('admin/page_header', array('title' => __('Items'))); ?>
 
 <div class="row">
-	<div class="pull-right">
+	<div class="float-end">
 		<?php echo $this->Form->create('Item', array('class' => 'form-inline', 'inputDefaults' => array(
 			'div' => 'form-group',
 			'label' => false,

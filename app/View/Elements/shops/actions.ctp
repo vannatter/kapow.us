@@ -9,12 +9,12 @@
 			<li><?php echo $this->Html->link(__('Report an issue'), sprintf('/report/store/%s', $shop['Store']['id'])); ?></li>
 			<li><?php echo $this->Html->link(__('Flag as inappropriate'), sprintf('/flag/store/%s', $shop['Store']['id'])); ?></li>
 
-			<li class="divider"></li>
+			<li class="dropdown-divider"></li>
 
 			<li><?php echo $this->Html->link(__('Upload store image'), sprintf('/shops/addImage/%s', $shop['Store']['id'])); ?></li>
 
 			<?php if ($this->Session->read('Auth.User.access_level') > 50) { ?>
-				<li class="divider"></li>
+				<li class="dropdown-divider"></li>
 				<li><?php echo $this->Html->link(__('Edit Store'), sprintf('/admin/stores/edit/%s', $shop['Store']['id']), array('target' => '_blank')); ?></li>
 			<?php } ?>
 

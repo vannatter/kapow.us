@@ -28,7 +28,7 @@
 			<?php echo $this->Form->input('twitter_url', array('class' => 'span6', 'label' => 'Twitter URL')); ?>
 			<?php echo $this->Form->input('ebay_url', array('class' => 'span6', 'label' => 'Ebay URL')); ?>
 		</div>
-		<?php echo $this->Form->submit(__('Submit Changes'), array('class' => 'btn btn-custom pull-right')); ?>
+		<?php echo $this->Form->submit(__('Submit Changes'), array('class' => 'btn btn-custom float-end')); ?>
 	</div>
 	<?php echo $this->Form->end(); ?>
 
