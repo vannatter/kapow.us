@@ -24,6 +24,21 @@
  */
 
 /**
+ * Load environment variables from .env file
+ */
+if (file_exists(ROOT . DS . '.env')) {
+	if (class_exists('\Dotenv\Dotenv')) {
+		$dotenv = \Dotenv\Dotenv::createImmutable(ROOT);
+		$dotenv->load();
+	}
+}
+
+/**
+ * Configure Google Maps API
+ */
+Configure::write('GoogleMaps.apiKey', getenv('GOOGLE_MAPS_API_KEY'));
+
+/**
  * Cache Engine Configuration
  * Default settings provided below
  *
