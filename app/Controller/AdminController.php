@@ -200,7 +200,7 @@ class AdminController extends AppController {
 
 	public function itemsEdit($id) {
 		if ($this->request->is('put')) {
-			$data = Sanitize::clean($this->request->data);
+			$data = $this->sanitizeData($this->request->data);
 
 			$data['Item']['id'] = $id;
 
@@ -254,7 +254,7 @@ class AdminController extends AppController {
 
 	public function creatorsEdit($id) {
 		if ($this->request->is('put') || $this->request->is('post')) {
-			$data = Sanitize::clean($this->request->data);
+			$data = $this->sanitizeData($this->request->data);
 
 			$skip = false;
 			if (isset($data['Creator']['photo_upload']['name']) && !empty($data['Creator']['photo_upload']['name'])) {
@@ -347,7 +347,7 @@ class AdminController extends AppController {
 
 	public function creatorTypesEdit($id) {
 		if ($this->request->is('put')) {
-			$data = Sanitize::clean($this->request->data);
+			$data = $this->sanitizeData($this->request->data);
 
 			$data['CreatorType']['id'] = $id;
 
@@ -408,7 +408,7 @@ class AdminController extends AppController {
 
 	public function publishersEdit($id) {
 		if ($this->request->is('put')) {
-			$data = Sanitize::clean($this->request->data);
+			$data = $this->sanitizeData($this->request->data);
 
 			$skip = false;
 			if (isset($data['Publisher']['photo_upload']['name'])) {
@@ -511,7 +511,7 @@ class AdminController extends AppController {
 
 	public function series() {
 		if ($this->request->is('post') || $this->request->is('put')) {
-			$data = Sanitize::clean($this->request->data);
+			$data = $this->sanitizeData($this->request->data);
 
 			if (isset($data['Series']['series_name']) && !empty($data['Series']['series_name'])) {
 				$name = $data['Series']['series_name'];
@@ -521,7 +521,7 @@ class AdminController extends AppController {
 
 		$name = null;
 		if (isset($this->request->query['name'])) {
-			$name = Sanitize::clean($this->request->query['name']);
+			$name = $this->sanitizeData($this->request->query['name']);
 		}
 
 		if ($name) {
@@ -536,7 +536,7 @@ class AdminController extends AppController {
 
 	public function seriesEdit($id) {
 		if ($this->request->is('put')) {
-			$data = Sanitize::clean($this->request->data);
+			$data = $this->sanitizeData($this->request->data);
 
 			$data['Series']['id'] = $id;
 
@@ -569,7 +569,7 @@ class AdminController extends AppController {
 
 	public function storesEdit($id) {
 		if ($this->request->is('put')) {
-			$data = Sanitize::clean($this->request->data);
+			$data = $this->sanitizeData($this->request->data);
 
 			$data['Store']['id'] = $id;
 
@@ -624,8 +624,8 @@ class AdminController extends AppController {
 		$result = array('error' => true, 'message' => __('Invalid'));
 
 		if (isset($this->request->query['photoId']) && isset($this->request->query['storeId'])) {
-			$id = Sanitize::clean($this->request->query['photoId']);
-			$storeId = Sanitize::clean($this->request->query['storeId']);
+			$id = $this->sanitizeData($this->request->query['photoId']);
+			$storeId = $this->sanitizeData($this->request->query['storeId']);
 
 			$this->Store->StorePhoto->id = $id;
 			if ($this->Store->StorePhoto->exists()) {
@@ -717,7 +717,7 @@ class AdminController extends AppController {
 		}
 
 		if ($this->request->is('post') || $this->request->is('put')) {
-			$data = Sanitize::clean($this->request->data, array('escape' => false, 'encode' => false));
+			$data = $this->sanitizeData($this->request->data, array('escape' => false, 'encode' => false));
 
 			$data['Store']['admin_user_id'] = $this->Auth->user('id');
 			$data['Store']['id'] = $storeId;
@@ -745,7 +745,7 @@ class AdminController extends AppController {
 
 	public function usersEdit($id) {
 		if ($this->request->is('put')) {
-			$data = Sanitize::clean($this->request->data);
+			$data = $this->sanitizeData($this->request->data);
 
 			$data['User']['id'] = $id;
 
@@ -778,7 +778,7 @@ class AdminController extends AppController {
 
 	public function categoriesEdit($id) {
 		if ($this->request->is('put')) {
-			$data = Sanitize::clean($this->request->data);
+			$data = $this->sanitizeData($this->request->data);
 
 			$data['Category']['id'] = $id;
 
@@ -811,7 +811,7 @@ class AdminController extends AppController {
 
 	public function sectionsEdit($id) {
 		if ($this->request->is('put')) {
-			$data = Sanitize::clean($this->request->data);
+			$data = $this->sanitizeData($this->request->data);
 
 			$data['Section']['id'] = $id;
 
@@ -1123,7 +1123,7 @@ class AdminController extends AppController {
 
 	public function blogsAdd() {
 		if ($this->request->is('post') || $this->request->is('put')) {
-			$data = Sanitize::clean($this->request->data, array('escape' => false, 'encode' => false));
+			$data = $this->sanitizeData($this->request->data, array('escape' => false, 'encode' => false));
 
 			$data['Blog']['user_id'] = $this->Auth->user('id');
 			$data['Blog']['status'] = 1;   ## VISIBLE/PUBLIC
@@ -1151,7 +1151,7 @@ class AdminController extends AppController {
 		}
 
 		if ($this->request->is('post') || $this->request->is('put')) {
-			$data = Sanitize::clean($this->request->data, array('escape' => false, 'encode' => false));
+			$data = $this->sanitizeData($this->request->data, array('escape' => false, 'encode' => false));
 
 			$data['Blog']['user_id'] = $this->Auth->user('id');
 			$data['Blog']['id'] = $id;
@@ -1192,7 +1192,7 @@ class AdminController extends AppController {
 	}
 
 	public function blogsImageUpload() {
-		$upload = Sanitize::clean($this->params['form']['userfile']);
+		$upload = $this->sanitizeData($this->params['form']['userfile']);
 
 		$uploadPath = APP . 'webroot' . DS . 'img' . DS . 'admin' . DS;
 
@@ -1456,7 +1456,7 @@ class AdminController extends AppController {
 
 	public function appMessagesNew() {
 		if ($this->request->is('post') || $this->request->is('put')) {
-			$data = Sanitize::clean($this->request->data);
+			$data = $this->sanitizeData($this->request->data);
 
 			$data['AppMessage']['user_id'] = $this->Auth->user('id');
 

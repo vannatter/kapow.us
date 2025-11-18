@@ -217,7 +217,7 @@ class ShopsController extends AppController {
 		$shopshop = $this->Store->read(array('id', 'name'));
 
 		if ($this->request->is('post') || $this->request->is('put')) {
-			$data = Sanitize::clean($this->request->data);
+			$data = $this->sanitizeData($this->request->data);
 
 			if (isset($data['StorePhoto']['photo_upload']['name']) && !empty($data['StorePhoto']['photo_upload']['name'])) {
 				$uploadPath = Configure::read('Settings.store_img_path');
@@ -256,7 +256,7 @@ class ShopsController extends AppController {
 		parent::hasSession();
 
 		if ($this->request->is('post') || $this->request->is('put')) {
-			$data = Sanitize::clean($this->request->data, array('encode' => false, 'escape' => false));
+			$data = $this->sanitizeData($this->request->data, array('encode' => false, 'escape' => false));
 
 			$data['Store']['user_id'] = $this->Auth->user('id');
 			$data['Store']['status_id'] = 2;   ### needs approval

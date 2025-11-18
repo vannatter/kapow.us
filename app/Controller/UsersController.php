@@ -23,7 +23,7 @@ class UsersController extends AppController {
 		}
 
 		if ($this->request->is('post')) {
-			$data = Sanitize::clean($this->request->data);
+			$data = $this->sanitizeData($this->request->data);
 
 			if ($this->User->save($data)) {
 				$this->Session->setFlash('User registration successful!', 'flash_pos');
@@ -477,7 +477,7 @@ class UsersController extends AppController {
 		$user = $this->User->read();
 
 		if ($this->request->is('post') || $this->request->is('put')) {
-			$data = Sanitize::clean($this->request->data);
+			$data = $this->sanitizeData($this->request->data);
 
 			$data['User']['id'] = $this->Auth->user('id');
 
@@ -581,7 +581,7 @@ class UsersController extends AppController {
 		parent::hasSession();
 
 		if ($this->request->is('post') || $this->request->is('put')) {
-			$data = Sanitize::clean($this->request->data);
+			$data = $this->sanitizeData($this->request->data);
 
 			$data['User']['id'] = $this->Auth->user('id');
 

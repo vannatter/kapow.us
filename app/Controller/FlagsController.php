@@ -30,7 +30,7 @@ class FlagsController extends AppController {
 		}
 
 		if ($this->request->is('post') || $this->request->is('put')) {
-			$data = Sanitize::clean($this->request->data);
+			$data = $this->sanitizeData($this->request->data);
 
 			$data['Flag']['user_id'] = $this->Auth->user('id');
 			$data['Flag']['item_type'] = 1;   ## ITEM
@@ -65,7 +65,7 @@ class FlagsController extends AppController {
 		}
 
 		if ($this->request->is('post') || $this->request->is('put')) {
-			$data = Sanitize::clean($this->request->data);
+			$data = $this->sanitizeData($this->request->data);
 
 			$data['Flag']['user_id'] = $this->Auth->user('id');
 			$data['Flag']['item_type'] = 3;   ## CREATOR
@@ -101,7 +101,7 @@ class FlagsController extends AppController {
 		}
 
 		if ($this->request->is('post') || $this->request->is('put')) {
-			$data = Sanitize::clean($this->request->data);
+			$data = $this->sanitizeData($this->request->data);
 
 			$data['Flag']['user_id'] = $this->Auth->user('id');
 			$data['Flag']['item_type'] = 2;   ## SERIES
@@ -137,7 +137,7 @@ class FlagsController extends AppController {
 		}
 
 		if ($this->request->is('post') || $this->request->is('put')) {
-			$data = Sanitize::clean($this->request->data);
+			$data = $this->sanitizeData($this->request->data);
 
 			$data['Flag']['user_id'] = $this->Auth->user('id');
 			$data['Flag']['item_type'] = 5;   ## SHOP
@@ -173,7 +173,7 @@ class FlagsController extends AppController {
 		}
 
 		if ($this->request->is('post') || $this->request->is('put')) {
-			$data = Sanitize::clean($this->request->data);
+			$data = $this->sanitizeData($this->request->data);
 
 			$data['Flag']['user_id'] = $this->Auth->user('id');
 			$data['Flag']['item_type'] = 4;   ## PUBLISHER
@@ -209,7 +209,7 @@ class FlagsController extends AppController {
 		}
 
 		if($this->request->is('post') || $this->request->is('put')) {
-			$data = Sanitize::clean($this->request->data);
+			$data = $this->sanitizeData($this->request->data);
 
 			$data['Flag']['user_id'] = $this->Auth->user('id');
 			$data['Flag']['item_type'] = 6;   ## ITEM IMAGE

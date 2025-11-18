@@ -30,7 +30,7 @@ class ReportsController extends AppController {
 		}
 
 		if ($this->request->is('post') || $this->request->is('put')) {
-			$data = Sanitize::clean($this->request->data);
+			$data = $this->sanitizeData($this->request->data);
 
 			$data['Report']['user_id'] = $this->Auth->user('id');
 			$data['Report']['item_type'] = 1;   ## ITEM
@@ -61,7 +61,7 @@ class ReportsController extends AppController {
 		}
 
 		if ($this->request->is('post') || $this->request->is('put')) {
-			$data = Sanitize::clean($this->request->data);
+			$data = $this->sanitizeData($this->request->data);
 
 			$data['Report']['user_id'] = $this->Auth->user('id');
 			$data['Report']['item_type'] = 3;   ## CREATOR
@@ -92,7 +92,7 @@ class ReportsController extends AppController {
 		}
 
 		if ($this->request->is('post') || $this->request->is('put')) {
-			$data = Sanitize::clean($this->request->data);
+			$data = $this->sanitizeData($this->request->data);
 
 			$data['Report']['user_id'] = $this->Auth->user('id');
 			$data['Report']['item_type'] = 2;   ## SERIES
@@ -123,7 +123,7 @@ class ReportsController extends AppController {
 		}
 
 		if ($this->request->is('post') || $this->request->is('put')) {
-			$data = Sanitize::clean($this->request->data);
+			$data = $this->sanitizeData($this->request->data);
 
 			$data['Report']['user_id'] = $this->Auth->user('id');
 			$data['Report']['item_type'] = 5;   ## SHOP
@@ -154,7 +154,7 @@ class ReportsController extends AppController {
 		}
 
 		if ($this->request->is('post') || $this->request->is('put')) {
-			$data = Sanitize::clean($this->request->data);
+			$data = $this->sanitizeData($this->request->data);
 
 			$data['Report']['user_id'] = $this->Auth->user('id');
 			$data['Report']['item_type'] = 4;   ## PUBLISHER

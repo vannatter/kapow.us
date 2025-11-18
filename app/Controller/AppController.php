@@ -78,6 +78,31 @@ class AppController extends Controller {
 		return $id . "--" . strtolower(Inflector::slug($clean, '-'));
 	}
 
+	/**
+	 * Modern replacement for deprecated Sanitize::clean()
+	 * Recursively sanitizes data by removing null bytes and trimming strings
+	 *
+	 * @param mixed $data Data to sanitize
+	 * @return mixed Sanitized data
+	 */
+	protected function sanitizeData($data) {
+		if (is_array($data)) {
+			foreach ($data as $key => $value) {
+				$data[$key] = $this->sanitizeData($value);
+			}
+			return $data;
+		}
+
+		if (is_string($data)) {
+			// Remove null bytes
+			$data = str_replace("\0", '', $data);
+			// Trim whitespace
+			$data = trim($data);
+		}
+
+		return $data;
+	}
+
 	## this is a callback for the Facebook plugin
 	public function afterFacebookLogin() {
 	}

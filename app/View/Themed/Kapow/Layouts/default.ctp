@@ -3,36 +3,36 @@
 	<?php echo $this->Facebook->head(); ?>
 		<?php echo $this->Html->charset(); ?>
 		<title>Kapow! <?php echo $title_for_layout; ?></title>
-	    <? if(isset($meta_description_for_layout)){ ?>
+	    <?php if(isset($meta_description_for_layout)){ ?>
 		<meta name="description" content="<?php echo $meta_description_for_layout;?>" />
-		<? } else { ?>
+		<?php } else { ?>
 		<meta name="description" content="Kapow! is creating a new platform for finding, tracking and interacting with your favorite comics, publishers, artists and local comic shops." />
-	    <? } ?>
+	    <?php } ?>
 
-	    <? if(isset($meta_keywords_for_layout)){ ?>
+	    <?php if(isset($meta_keywords_for_layout)){ ?>
 		<meta name="keywords" content="<?php echo $meta_keywords_for_layout;?>" />
-		<? } else { ?>
+		<?php } else { ?>
 		<meta name="keywords" content="Kapow, Kapow.us, Comics, Comic database, Current comics, New comics, Comic app" />
-	    <? } ?>
+	    <?php } ?>
 
-		<meta property="og:type" content="company" /> 
-		<meta property="og:site_name" content="kapow.us" /> 
+		<meta property="og:type" content="company" />
+		<meta property="og:site_name" content="kapow.us" />
 
-	    <? if(isset($og_title)){ ?>
-		<meta property="og:title" content="<?php echo $og_title; ?>" /> 
-		<? } else { ?>
-		<meta property="og:title" content="Kapow! Comics" /> 
-	    <? } ?>
+	    <?php if(isset($og_title)){ ?>
+		<meta property="og:title" content="<?php echo $og_title; ?>" />
+		<?php } else { ?>
+		<meta property="og:title" content="Kapow! Comics" />
+	    <?php } ?>
 
-	    <? if(isset($og_image)){ ?>
-		<meta property="og:image" content="<?php echo $og_image; ?>" /> 
-	    <? } ?>
+	    <?php if(isset($og_image)){ ?>
+		<meta property="og:image" content="<?php echo $og_image; ?>" />
+	    <?php } ?>
 
-	    <? if(isset($og_description)){ ?>
+	    <?php if(isset($og_description)){ ?>
 		<meta property="og:description" content="<?php echo $og_description;?>" />
-		<? } else { ?>
-		<meta property="og:description" content="Kapow! is creating a new platform for finding, tracking and interacting with your favorite comics, publishers, artists and local comic shops." /> 
-	    <? } ?>
+		<?php } else { ?>
+		<meta property="og:description" content="Kapow! is creating a new platform for finding, tracking and interacting with your favorite comics, publishers, artists and local comic shops." />
+	    <?php } ?>
 	    
 		<?php
 			echo $this->Html->meta('icon');

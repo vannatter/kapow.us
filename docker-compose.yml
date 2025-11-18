@@ -1,0 +1,56 @@
+version: '3.8'
+
+services:
+  web:
+    build: .
+    container_name: kapow_web
+    ports:
+      - "8080:80"
+    volumes:
+      - .:/var/www/html
+      - ./app/tmp:/var/www/html/app/tmp
+    environment:
+      - DB_HOST=db
+      - DB_NAME=kapow
+      - DB_USER=kapow
+      - DB_PASSWORD=kapow_password
+    depends_on:
+      - db
+    networks:
+      - kapow_network
+
+  db:
+    image: mysql:8.0
+    container_name: kapow_db
+    ports:
+      - "3306:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: root_password
+      MYSQL_DATABASE: kapow
+      MYSQL_USER: kapow
+      MYSQL_PASSWORD: kapow_password
+    volumes:
+      - db_data:/var/lib/mysql
+    networks:
+      - kapow_network
+
+  phpmyadmin:
+    image: phpmyadmin:latest
+    container_name: kapow_phpmyadmin
+    ports:
+      - "8081:80"
+    environment:
+      PMA_HOST: db
+      PMA_PORT: 3306
+      MYSQL_ROOT_PASSWORD: root_password
+    depends_on:
+      - db
+    networks:
+      - kapow_network
+
+volumes:
+  db_data:
+
+networks:
+  kapow_network:
+    driver: bridge

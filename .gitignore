@@ -1,14 +1,29 @@
+# CakePHP temporary files
 /app/tmp
 /app/tmp/cache/models/*
 /app/tmp/cache/persistent/*
 /app/tmp/logs/*
 /lib/Cake/Console/Templates/skel/tmp/
+
+# CakePHP configuration
+/app/Config/database.php
+/app/Config/config.php
+/app/Config/core.php
+
+# Vendors
 /vendors
+
+# Build artifacts
 /build
 /dist
-.DS_Store
-._*
-/tags
+/app/webroot/dist/
+/app/webroot/cache_css/
+/app/webroot/cache_js/*
+
+# Generated CSS
+/app/View/Themed/Kapow/webroot/css/style.css
+
+# User uploaded images
 /app/webroot/img/covers
 /app/webroot/img/covers/*
 /app/webroot/img/stores
@@ -17,13 +32,50 @@
 /app/webroot/img/publishers/*
 /app/webroot/img/creators
 /app/webroot/img/creators/*
-/app/Config/database.php
-/app/Config/config.php
-/app/Config/core.php
-/app/webroot/cache_js/*
+
+# Composer
+/vendor/
+composer.lock
+
+# Node.js
+/node_modules/
+npm-debug.log
+yarn-error.log
+package-lock.json
+yarn.lock
+
+# Environment files
+.env
+.env.local
+.env.*.local
+
+# IDE files
+.idea/*
+.vscode/
+*.swp
+*.swo
+*~
+
+# OS files
+.DS_Store
+._*
+Thumbs.db
+
+# Cloud9
 .c9revisions
 .c9revisions/*
-.idea/*
+
+# CodeKit (legacy build tool)
 config.codekit
-/app/View/Themed/Kapow/webroot/css/style.css
+codekit-config.json
+config.codekit3
+
+# Legacy scripts
 assets/doless.sh
+
+# Tags
+/tags
+
+# Testing
+/coverage/
+.phpunit.result.cache
