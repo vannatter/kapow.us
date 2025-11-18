@@ -26,7 +26,7 @@ class ImproveController extends AppController {
 		$item = $this->Improvement->Item->read();
 
 		if ($this->request->is('post') || $this->request->is('put')) {
-			$data = Sanitize::clean($this->request->data, array('encode' => false, 'escape' => false));
+			$data = $this->sanitizeData($this->request->data, array('encode' => false, 'escape' => false));
 
 			$fields = array('section_id', 'publisher_id', 'stock_id', 'printing', 'item_date', 'series_num', 'srp', 'description', 'item_name');
 
@@ -73,7 +73,7 @@ class ImproveController extends AppController {
 		$creator = $this->Improvement->Creator->read();
 
 		if ($this->request->is('post') || $this->request->is('put')) {
-			$data = Sanitize::clean($this->request->data, array('encode' => false, 'escape' => false));
+			$data = $this->sanitizeData($this->request->data, array('encode' => false, 'escape' => false));
 
 			$fields = array('creator_name', 'creator_bio', 'creator_website', 'creator_twitter', 'creator_facebook');
 
@@ -117,7 +117,7 @@ class ImproveController extends AppController {
 		$series = $this->Improvement->Series->read();
 
 		if ($this->request->is('post') || $this->request->is('put')) {
-			$data = Sanitize::clean($this->request->data, array('encode' => false, 'escape' => false));
+			$data = $this->sanitizeData($this->request->data, array('encode' => false, 'escape' => false));
 
 			$fields = array('series_name', 'description');
 
@@ -161,7 +161,7 @@ class ImproveController extends AppController {
 		$publisher = $this->Improvement->Publisher->read();
 
 		if ($this->request->is('post') || $this->request->is('put')) {
-			$data = Sanitize::clean($this->request->data, array('encode' => false, 'escape' => false));
+			$data = $this->sanitizeData($this->request->data, array('encode' => false, 'escape' => false));
 
 			$fields = array('publisher_name', 'publisher_bio', 'publisher_website');
 
@@ -205,7 +205,7 @@ class ImproveController extends AppController {
 		$store = $this->Improvement->Store->read();
 
 		if ($this->request->is('post') || $this->request->is('put')) {
-			$data = Sanitize::clean($this->request->data, array('encode' => false, 'escape' => false));
+			$data = $this->sanitizeData($this->request->data, array('encode' => false, 'escape' => false));
 
 			$fields = array('name', 'address', 'address_2', 'city', 'state', 'zip', 'phone_no', 'website', 'facebook_url', 'twitter_url', 'ebay_url');
 			$toSave = array();

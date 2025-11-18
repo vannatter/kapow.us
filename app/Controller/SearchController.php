@@ -14,7 +14,7 @@ class SearchController extends AppController {
 
 	public function index() {
 		if ($this->request->is('post') || $this->request->is('put')) {
-			$data = Sanitize::clean($this->request->data);
+			$data = $this->sanitizeData($this->request->data);
 
 			if (isset($data['Search']['terms']) && isset($data['Search']['type'])) {
 				$terms = $data['Search']['terms'];
