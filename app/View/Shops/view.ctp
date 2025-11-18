@@ -24,7 +24,7 @@
 
 		<?php if (@$shop['StorePhoto'][1]['photo_path']) { ?>
 
-			<div id="gallery" data-toggle="modal-gallery" data-target="#modal-gallery">
+			<div id="gallery" data-bs-toggle="modal-gallery" data-bs-target="#modal-gallery">
 				<?php $cnt = 0; ?>
 				<?php foreach($shop['StorePhoto'] as $photo) { ?>
 				    <a href="<?php echo $photo['photo_path']; ?>" title="<?php echo $shop['Store']['name']; ?> Photo" class="shop_photo" data-gallery="gallery" <?php if ($cnt==0) { echo " style='display:none;' "; } ?>><img src="<?php echo $photo['photo_path']; ?>" /></a>
